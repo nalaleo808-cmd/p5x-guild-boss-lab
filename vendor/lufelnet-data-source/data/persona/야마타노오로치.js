@@ -1,0 +1,171 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["야마타노오로치"] = {
+  "id": "160",
+  "key": "야마타노오로치",
+  "name": "야마타노오로치",
+  "name_en": "Yamata-no-Orochi",
+  "name_jp": "ヤマタノオロチ",
+  "grade": "7",
+  "star": "5",
+  "position": "반항",
+  "element": "빙결",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "C",
+  "tier_desc": "3턴 동안 적이 받는 TECH 대미지를 25% 강화시킨다. 그러나 TECH 대미지를 활용하는 캐릭터가 적어 가능성은 높으나 실질적으로 활용되고 있지는 않다.",
+  "tier_desc_en": "It increases TECH damage taken by enemies by 25% for 3 turns. However, few characters currently make practical use of TECH damage, so despite its potential it is not seeing real use.",
+  "tier_desc_jp": "3ターンの間、敵が受けるTECHダメージを25%増加させる。ただし、現状TECHダメージを実戦的に活用するキャラが少ないため、可能性はあっても実際の採用例はほとんどない。",
+  "tier_desc_cn": "可使敌人受到的 TECH 伤害在 3 回合内提高 25%。不过目前能稳定利用 TECH 伤害的角色不多，因此虽然有潜力，实际上还没有太多出场空间。",
+  "comment": "",
+  "comment_en": "",
+  "comment_jp": "",
+    "comment_cn": "",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "공격 강화",
+      "priority": 0
+    },
+    {
+      "name": "어드바이스",
+      "priority": 0
+    },
+    {
+      "name": "정교한 타격",
+      "priority": 0
+    },
+    {
+      "name": "마도의 재능",
+      "priority": 0
+    },
+    {
+      "name": "빙결 강화",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 1,
+  "passive_skill": [
+    {
+      "name": "제물의 비명",
+      "name_en": "Sacrificial Screams",
+      "name_jp": "生贄の悲鳴",
+      "desc": "크리티컬 확률이 17.5% 증가한다. 전투 시작 시 『제물의 비명』을 2중첩 획득한다. 자신의 턴 종료 시 『제물의 비명』을 1중첩 획득한다. 자신이 고유 스킬 시전 시 『제물의 비명』을 3중첩 보유한 경우, 『제물의 비명』을 3중첩 소모해 3턴 동안 모든 적을 동결에 빠뜨린다. 또한 2턴 동안 적이 받는 TECH 대미지가 18% 증가한다.",
+      "desc_en": "Increase critical rate by 17.5%. At the start of battle, gain 2 Sacrificial Screams stacks. At the end of the user's action, gain 1 more Sacrificial Screams stack. When using a unique skill with 3 Sacrificial Screams stacks, spend 3 stacks to inflict Freeze on all foes for 3 turns and increase foes' technical damage taken by 18% for 2 turns.",
+      "desc_jp": "クリティカル率が１７.５%上昇する。戦闘開始時に『生贄の悲鳴』を２つ獲得し、自身のターン終了時に『生贄の悲鳴』を１つ獲得する。固有スキルを使用した時、『生贄の悲鳴』が３つ以上の場合、『生贄の悲鳴』を３つ消費し、３ターンの間、敵全体を凍結状態にする。さらに２ターンの間、敵の被テクニカルダメージが１８%上昇する。",
+      "name_cn": "祭品的悲鸣",
+      "desc_cn": "暴击率提升17.5%。战斗开始时获得2层『祭品的悲鸣』。自身回合结束时获得1层『祭品的悲鸣』。自身释放固有技能时，若拥有3层『祭品的悲鸣』，则消耗3层『祭品的悲鸣』改为使所有敌人陷入冻结效果，效果持续3回合，并使敌人受到的TECH伤害提升18%，持续2回合。"
+    },
+    {
+      "name": "제물의 비명Ⅰ",
+      "name_en": "Sacrificial Screams I",
+      "name_jp": "生贄の悲鳴Ⅰ",
+      "desc": "크리티컬 확률이 17.5% 증가한다. 전투 시작 시 『제물의 비명』을 3중첩 획득한다. 자신의 턴 종료 시 『제물의 비명』을 1중첩 획득한다. 자신이 고유 스킬 시전 시 『제물의 비명』을 3중첩 보유한 경우, 『제물의 비명』을 3중첩 소모해 3턴 동안 모든 적을 동결에 빠뜨린다. 또한 2턴 동안 적이 받는 TECH 대미지가 18% 증가한다.",
+      "desc_en": "Increase critical rate by 17.5%. At the start of battle, gain 3 Sacrificial Screams stacks. At the end of the user's action, gain 1 more Sacrificial Screams stack. When using a unique skill with 3 Sacrificial Screams stacks, spend 3 stacks to inflict Freeze on all foes for 3 turns and increase foes' technical damage taken by 18% for 2 turns.",
+      "desc_jp": "クリティカル率が１７.５%上昇する。戦闘開始時に『生贄の悲鳴』を３つ獲得し、自身のターン終了時に『生贄の悲鳴』を１つ獲得する。固有スキルを使用した時、『生贄の悲鳴』が３つ以上の場合、『生贄の悲鳴』を３つ消費し、３ターンの間、敵全体を凍結状態にする。さらに２ターンの間、敵の被テクニカルダメージが１８%上昇する。",
+      "name_cn": "祭品的悲鸣Ⅰ",
+      "desc_cn": "暴击率提升17.5%。战斗开始时获得3层『祭品的悲鸣』。自身回合结束时获得1层『祭品的悲鸣』。自身释放固有技能时，若拥有3层『祭品的悲鸣』，则消耗3层『祭品的悲鸣』改为使所有敌人陷入冻结效果，效果持续3回合，并使敌人受到的TECH伤害提升18%，持续2回合。"
+    },
+    {
+      "name": "제물의 비명Ⅱ",
+      "name_en": "Sacrificial Screams II",
+      "name_jp": "生贄の悲鳴Ⅱ",
+      "desc": "크리티컬 확률이 17.5% 증가한다. 전투 시작 시 『제물의 비명』을 3중첩 획득한다. 자신의 턴 종료 시 『제물의 비명』을 1중첩 획득한다. 자신이 고유 스킬 시전 시 『제물의 비명』을 3중첩 보유한 경우, 『제물의 비명』을 3중첩 소모해 3턴 동안 모든 적을 동결에 빠뜨린다. 또한 3턴 동안 적이 받는 TECH 대미지가 18% 증가한다.",
+      "desc_en": "Increase critical rate by 17.5%. At the start of battle, gain 3 Sacrificial Screams stacks. At the end of the user's action, gain 1 more Sacrificial Screams stack. When using a unique skill with 3 Sacrificial Screams stacks, spend 3 stacks to inflict Freeze on all foes for 3 turns and increase foes' technical damage taken by 18% for 3 turns.",
+      "desc_jp": "クリティカル率が１７.５%上昇する。戦闘開始時に『生贄の悲鳴』を３つ獲得し、自身のターン終了時に『生贄の悲鳴』を１つ獲得する。固有スキルを使用した時、『生贄の悲鳴』が３つ以上の場合、『生贄の悲鳴』を３つ消費し、３ターンの間、敵全体を凍結状態にする。さらに３ターンの間、敵の被テクニカルダメージが１８%上昇する。",
+      "name_cn": "祭品的悲鸣Ⅱ",
+      "desc_cn": "暴击率提升17.5%。战斗开始时获得3层『祭品的悲鸣』。自身回合结束时获得1层『祭品的悲鸣』。自身释放固有技能时，若拥有3层『祭品的悲鸣』，则消耗3层『祭品的悲鸣』改为使所有敌人陷入冻结效果，效果持续3回合，并使敌人受到的TECH伤害提升18%，持续3回合。"
+    },
+    {
+      "name": "제물의 비명Ⅲ",
+      "name_en": "Sacrificial Screams III",
+      "name_jp": "生贄の悲鳴Ⅲ",
+      "desc": "크리티컬 확률이 17.5% 증가한다. 전투 시작 시 『제물의 비명』을 3중첩 획득한다. 자신의 턴 종료 시 『제물의 비명』을 1중첩 획득한다. 자신이 고유 스킬 시전 시 『제물의 비명』을 3중첩 보유한 경우, 『제물의 비명』을 3중첩 소모해 3턴 동안 모든 적을 동결에 빠뜨린다. 또한 3턴 동안 적이 받는 TECH 대미지가 25% 증가한다.",
+      "desc_en": "Increase critical rate by 17.5%. At the start of battle, gain 3 Sacrificial Screams stacks. At the end of the user's action, gain 1 more Sacrificial Screams stack. When using a unique skill with 3 Sacrificial Screams stacks, spend 3 stacks to inflict Freeze on all foes for 3 turns and increase foes' technical damage taken by 25% for 3 turns.",
+      "desc_jp": "クリティカル率が１７.５%上昇する。戦闘開始時に『生贄の悲鳴』を３つ獲得し、自身のターン終了時に『生贄の悲鳴』を１つ獲得する。固有スキルを使用した時、『生贄の悲鳴』が３つ以上の場合、『生贄の悲鳴』を３つ消費し、３ターンの間、敵全体を凍結状態にする。さらに３ターンの間、敵の被テクニカルダメージが２５%上昇する。",
+      "name_cn": "祭品的悲鸣Ⅲ",
+      "desc_cn": "暴击率提升17.5%。战斗开始时获得3层『祭品的悲鸣』。自身回合结束时获得1层『祭品的悲鸣』。自身释放固有技能时，若拥有3层『祭品的悲鸣』，则消耗3层『祭品的悲鸣』改为使所有敌人陷入冻结效果，效果持续3回合，并使敌人受到的TECH伤害提升25%，持续3回合。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "광풍 눈",
+    "name_en": "Raging Blizzard",
+    "name_jp": "狂雪",
+    "desc": "모든 적에게 공격력 100.0%/105.0%/110.0%의 빙결 속성 대미지를 주고, 2턴 동안 100.0%/105.0%/110.0%의 기본 확률로 모든 적을 동결 상태에 빠뜨린다.",
+    "desc_en": "Deal Ice damage to all foes equal to 100.0%/105.0%/110.0% of Attack. 100.0%/105.0%/110.0% chance to inflict Freeze on the main target for 2 turns.",
+    "desc_jp": "敵全体に攻撃力100.0%/105.0%/110.0%の氷結属性ダメージを与え、100.0%/105.0%/110.0%の確率で、２ターンの間、選択した対象を凍結状態にする。",
+    "priority": 1,
+    "icon": "빙결광역",
+    "icon_gl": "",
+    "name_cn": "狂风雪",
+    "desc_cn": "对所有敌人造成100.0%/105.0%/110.0%攻击力的冰冻属性伤害，并有100.0%/105.0%/110.0%基础概率使所有敌人陷入冻结状态，效果持续2回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "1명의 적에게 공격력 360.0%/385.2%/410.4%의 빙결 속성 대미지를 준다.",
+    "desc_en": "Deal Ice damage to 1 foe equal to 360.0%/385.2%/410.4% of Attack.",
+    "desc_jp": "敵単体に攻撃力360.0%/385.2%/410.4%の氷結属性ダメージを与える。",
+    "priority": 0,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "对1名敌人造成360.0%/385.2%/410.4%攻击力的冰冻属性伤害。"
+  },
+  "innate_skill": [
+    {
+      "name": "다이아의 별",
+      "name_en": "Diamond Dust",
+      "name_jp": "ダイアモンドダスト",
+      "desc": "1명의 적에게 공격력 129.5/136.0/142.5%의 빙결 속성 대미지를 주고, 72.0/75.6/79.2%의 기본 확률로 적을 2턴 동안 동결 상태에 빠뜨린다.",
+      "desc_en": "Deal Ice damage to 1 foe equal to 129.5/136.0/142.5% of Attack. 72.0/75.6/79.2% chance to inflict Freeze for 2 turns.",
+      "desc_jp": "敵単体に攻撃力129.5/136.0/142.5%の氷結属性ダメージを与える。72.0/75.6/79.2%の確率で敵を２ターンの間、凍結状態にする。",
+      "cost": "SP 22",
+      "level": "6/7/8",
+      "learn_level": "9",
+      "name_cn": "钻石星辰",
+      "desc_cn": "对1名敌人造成129.5/136.0/142.5%攻击力的冰冻属性伤害，有72.0/75.6/79.2%基础概率使敌人陷入冻结状态，效果持续2回合。"
+    },
+    {
+      "name": "정교한 타격Ⅳ",
+      "name_en": "Pinpoint IV",
+      "name_jp": "ピンポイントⅣ",
+      "desc": "크리티컬 효과가 16.2% 증가한다.",
+      "desc_en": "Increase critical damage by 16.2%.",
+      "desc_jp": "クリティカルダメージが１６.２%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "18",
+      "name_cn": "精准打击Ⅳ",
+      "desc_cn": "暴击效果提升16.2%。"
+    },
+    {
+      "name": "빙결 강화Ⅳ",
+      "name_en": "Ice Boost IV",
+      "name_jp": "氷結ブースタⅣ",
+      "desc": "빙결 속성 대미지가 10.8% 증가한다.",
+      "desc_en": "Increase Ice damage by 10.8%.",
+      "desc_jp": "氷結属性の与ダメージが１０.８%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "27",
+      "name_cn": "冰冻强化Ⅳ",
+      "desc_cn": "冰冻属性伤害提升10.8%。"
+    },
+    {
+      "name": "빙결률 UPⅣ",
+      "name_en": "Freeze Boost IV",
+      "name_jp": "凍結率ＵＰⅣ",
+      "desc": "동결 효과 부여 시 효과 명중이 20.3% 증가한다.",
+      "desc_en": "Increase Freeze accuracy by 20.3%.",
+      "desc_jp": "凍結の命中率が２０.３%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "36",
+      "name_cn": "冰冻率UPⅣ",
+      "desc_cn": "造成冻结效果时，效果命中提升20.3%。"
+    }
+  ],
+  "name_cn": "八岐大蛇"
+};

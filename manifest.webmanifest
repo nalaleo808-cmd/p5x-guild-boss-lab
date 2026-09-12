@@ -1,0 +1,9 @@
+{
+  "name": "P5X Guild Boss Lab",
+  "short_name": "P5X Lab",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090909",
+  "theme_color": "#e61d2f",
+  "icons": []
+}

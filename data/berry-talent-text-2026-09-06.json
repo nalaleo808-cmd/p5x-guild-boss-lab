@@ -1,0 +1,27 @@
+{
+  "source": "Ichigo Shikano in-game Skills screen (Talent and Awareness tabs), user screenshots 2026-09-06",
+  "talents": {
+    "Overflowing Love": "For each Chains of Love stack, increase Ichigo's Attack by 15.0%.",
+    "Melting Ichi-Go Butter": "When Ichigo is present, increase party's continuous damage by 15.0%.",
+    "Mine Alone": "The first time Ichigo activates Vorpal Butterfly, gain 1 Chains of Love stack. Also, each time she activates a Highlight, gain 1 Chains of Love stack. Chains of Love stacks up to 3 times. Gain the following effects based on the number of Chains of Love stacks. 1: For each Lovesick stack inflicted, increase target's damage taken by 4%. 2: Increase critical rate by 15%. Also, all of Ichigo's skill damage is counted as continuous damage. 3: Increase continuous damage by 25%.",
+    "Pounding Heartbeat": "For each Lovesick stack inflicted, decrease target's Defense by 3%. Also, each time a skill is used, inflict 1 more Lovesick stack on the target.",
+    "Power of Love": "At the start of battle, gain 1 Chains of Love stack. Chains of Love now stacks up to 5 times, and gain the following effects based on the number of stacks. 4: Increase critical damage by 36%. 5: The first time Ichigo takes fatal damage, survive with 1 HP and enter a special near-death state, and gain 4 Power of Love stacks. At the end each ally's turn, spend 1 Power of Love stack, and after all Power of Love stacks have been spent, Ichigo will be KO'd.",
+    "Forever My Prince": "Increase the skill levels of My Beloved Prince and Thief Tactics by 3.",
+    "Maiden's True Strength": "Highlight Enhanced: Each time her Highlight is activated, permanently increase Ichigo's Attack by 6%. Stacks up to 5 times.",
+    "Garden of Devotion": "Increase the skill levels of Vorpal Butterfly and Obsessive Rose by 3.",
+    "A World of Our Own": "Lovesick now stacks up to 15 times. Based on the total number of Chains of Love stacks, the following effects can be activated. 1: After activating Vorpal Butterfly, activate Vorpal Butterfly 1 more time on the selected target. 2: After activating Obsessive Rose, activate Obsessive Rose 1 more time on the selected target. 3: After activating My Beloved Prince, activate My Beloved Prince 1 more time on the selected target. 4: During Ichigo's turn, can activate Highlight 1 time on the selected target without spending the Highlight gauge (not affected by Highlight cooldown time). (Each effect can activate only once during battle. If a target is defeated or the skill is nullified, reflected, or absorbed, a different target is selected for the skill effect.)"
+  },
+  "implication": "Mine Alone Chain 2 literally counts all of Ichigo's skill damage as continuous damage, which is the engine's existing Chain 2 conversion. The flat +15% reading is ruled out.",
+  "t1IsolatedHits": {
+    "source": "User recollection 2026-09-06 of the recorded T1 Berry S1 chain",
+    "eachDaisoujouIdol": 547000,
+    "hachiman": 450000,
+    "note": "Approximate displayed damage numbers; the four idol hits were reported as about equal."
+  },
+  "hachimanDefense": {
+    "source": "Lufelnet Defense Reduction Calc, Hachiman row, user screenshot 2026-09-06 (supersedes the 567 x 263.2% area-boss example)",
+    "baseDefense": 821,
+    "bossDefenseCoefficientPercent": 258.4,
+    "model": "1400 / (1400 + baseDefense x (coefficient - defenseReductionSum) x (1 - pierce))"
+  }
+}

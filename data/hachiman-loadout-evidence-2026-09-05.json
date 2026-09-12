@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "1.0",
+  "inventoryId": "hachiman-loadout-evidence-2026-09-05",
+  "subsequentWeaponUpdate": {
+    "source": "WONDER-WEAPON-EVIDENCE-2026-09-05.md",
+    "weaponName": "Cursed Ties",
+    "weaponProfileId": "cursed-ties-live-2026-09-05",
+    "appAndRunnerNowPassWeapon": true,
+    "automaticProcTiming": null,
+    "note": "The inventory below describes the earlier static audit. Its missing-Wonder-weapon entries are superseded by the directly inspected profile and implementation recorded in the source document."
+  },
+  "purpose": "Structured evidence inventory separating the user-confirmed Hachiman setup, the configuration actually supplied by the app and checkpoint runner, and the remaining unknowns.",
+  "scope": {
+    "boss": "Hachiman",
+    "mode": "Multidimensional Dreamscape",
+    "observedGameResult": 6101612096,
+    "observedGameResultIs": "live result-screen arithmetic only",
+    "simulationRun": false,
+    "replayOrOptimizerRun": false,
+    "warning": "The observed result is not a simulator score and is not used to infer missing loadout values."
+  },
+  "sourceFiles": [
+    {
+      "path": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+      "references": ["lines 40-60", "lines 62-95", "lines 99-115", "implementation and omissions sections"],
+      "use": "User-confirmed route, runner configuration summary, observed checkpoints, and equipment/stat limitations."
+    },
+    {
+      "path": "data/ichigo-live-t3-snapshot-2026-09-05.json",
+      "references": ["entire file"],
+      "use": "Direct GUI BERRY stat view at T3 Action 19 after buffs and borrowed effects."
+    },
+    {
+      "path": "src/default-presets.js",
+      "references": ["lines 1-56"],
+      "use": "Saved BERRY equipped-stat preset and Marian Trust + Prosperity migration."
+    },
+    {
+      "path": "src/app.js",
+      "references": ["lines 95-148", "lines 188-205", "lines 235-255", "lines 331-345", "lines 1473-1529", "lines 1567-1591"],
+      "use": "App defaults, local-storage migration, selected navigator behavior, loadout-to-engine mapping, and editable Persona/mask UI."
+    },
+    {
+      "path": "scripts/compare-hachiman-opening.mjs",
+      "references": ["lines 16-38", "lines 59-142", "lines 244-278", "lines 541-568", "lines 607-671"],
+      "use": "Static checkpoint-runner configuration, route, adapters, replay coverage, and omissions."
+    },
+    {
+      "path": "src/generated/lufel-catalog.js",
+      "references": ["lines 22901-22917", "lines 22982-23087", "lines 23102-23129", "J&C character record around lines 22356-22376"],
+      "use": "Local Revelation names, compatibility, source text, supported combat fields, and catalog defaults."
+    }
+  ],
+  "intendedUserConfirmedSetup": {
+    "interpretationRule": "A6R6, weapon names, and shorthand below are preserved as user-confirmed labels from the requested setup. R6 is not expanded into an unverified game field.",
+    "partyOrder": ["J&C", "Wonder", "Beachflower Marian", "Ichigo Berry"],
+    "awareness": {
+      "J&C": 6,
+      "Wonder": 6,
+      "Beachflower Marian": 6,
+      "Ichigo Berry": 6,
+      "MIKU": 6
+    },
+    "loadouts": {
+      "J&C": {
+        "userLabel": "A6R6 Creation + Recon, F/I and E/W",
+        "awareness": 6,
+        "r6Label": "R6",
+        "revelationMain": "Creation",
+        "revelationSetUserLabel": "Recon",
+        "revelationSetLocalCatalogKey": "Reconcilation",
+        "activeMaskElements": {
+          "s1": ["Fire", "Ice"],
+          "s2": ["Electric", "Wind"]
+        },
+        "localAppMaskIds": {
+          "s1": "mischief",
+          "s2": "service"
+        },
+        "weapon": {
+          "name": null,
+          "effect": null,
+          "status": "No exact J&C weapon name or effect is established by the inspected sources."
+        }
+      },
+      "Wonder": {
+        "userLabel": "R6 Curse Dagger",
+        "awareness": 6,
+        "r6Label": "R6",
+        "weapon": {
+          "name": "Curse Dagger",
+          "effect": null,
+          "status": "The label is retained; exact weapon level, stats, and effect are unknown."
+        },
+        "plannedPersonas": ["Dionysus", "Janosik", "Vasuki"],
+        "observedSwitches": [
+          "Opening: Dionysus",
+          "T1: Dionysus to Vasuki for Rakunda",
+          "Later live route: Vasuki to Janosik to Dionysus before Revolution"
+        ],
+        "personaRankAndSkillDetails": "Unknown beyond the named Personas and directly observed skill/cost text."
+      },
+      "Beachflower Marian": {
+        "userLabel": "A6R6 Trust + Prosperity",
+        "awareness": 6,
+        "r6Label": "R6",
+        "revelationMain": "Trust",
+        "revelationSet": "Prosperity",
+        "confirmedLocalEffects": [
+          "Prosperity local catalog combat field: opening Highlight 25, non-stacking.",
+          "Trust + Prosperity party damage +8% after ally-targeted skill for 2 rounds is documented in the checkpoint note and implemented in the live profile."
+        ],
+        "weapon": {
+          "name": null,
+          "effect": null,
+          "status": "No exact Marian weapon name or effect is established by the inspected sources."
+        }
+      },
+      "Ichigo Berry": {
+        "userLabel": "borrowed BERRY A6R6",
+        "awareness": 6,
+        "r6Label": "R6",
+        "borrowed": true,
+        "equippedStatsSource": "The saved Ichigo screenshot preset is used as the exact equipped-stat evidence; borrowed provenance and borrowed weapon/card effects are not separately identified.",
+        "weapon": {
+          "name": null,
+          "effect": null,
+          "status": "Unknown."
+        }
+      },
+      "MIKU": {
+        "userLabel": "A6R6 Integrity + Labor",
+        "awareness": 6,
+        "r6Label": "R6",
+        "revelationMain": "Integrity",
+        "revelationSet": "Labor",
+        "weapon": {
+          "name": null,
+          "effect": null,
+          "status": "No exact MIKU weapon name or effect is established by the inspected sources."
+        }
+      }
+    }
+  },
+  "observedLiveRoute": {
+    "opening": "Automatic Two Masks as One resolved before the first manual command. Opening Wonder Persona was Dionysus.",
+    "t1": [
+      "J&C Gun",
+      "Wonder free switch Dionysus to Vasuki",
+      "Vasuki Rakunda on Hachiman, observed 22 SP and 42.7% Defense reduction for 3 turns",
+      "Marian Gentle Sea Breeze on Berry",
+      "Berry Vorpal Butterfly on the first living add, then live priority cleared minions before the boss"
+    ],
+    "laterObservedPersonaRoute": "The live game showed a Vasuki to Janosik to Dionysus cycle before Revolution, with Harmony and Matarukaja IV visible. Exact intermediate activation timing was not fully captured.",
+    "miku": "MIKU was observed on Heaven, then Spring Storm, then a free selection to Play-With-Fire in the recorded route."
+  },
+  "passedConfig": {
+    "checkpointRunner": {
+      "mechanicsProfile": "live-2026-09-04",
+      "seed": 8,
+      "boss": "Hachiman",
+      "mode": "Multidimensional Dreamscape",
+      "partyOrder": ["J&C", "Wonder", "Beachflower Marian", "Ichigo Berry"],
+      "awareness": "The runner's character(slug) helper sets awareness: 6 for J&C, Marian, Berry, and MIKU; Wonder is created by the engine with its catalog/default awareness path.",
+      "jcMasks": ["mischief", "service"],
+      "navigator": "MIKU",
+      "wonderPersonasActuallyDefined": ["Dionysus", "Vasuki"],
+      "wonderPersonasMissingFromRunner": ["Janosik"],
+      "wonderOpeningPersona": "Dionysus",
+      "wonderT1Persona": "Vasuki",
+      "marianLoadoutPassed": {
+        "revelationMain": "Trust",
+        "revelationSet": "Prosperity",
+        "baseStats": {},
+        "revelationCombat": {
+          "highlightStart": 25
+        },
+        "partyDamageEffect": "The runner passes the set combat fields and the engine's Trust + Prosperity live-profile implementation; exact live expiry boundary remains unverified."
+      },
+      "berryLoadoutPassed": {
+        "statsMode": "equipped",
+        "statsPresetId": "ichigo-character-details-2026-09-05",
+        "baseStats": {
+          "attack": 4927,
+          "defense": 1494,
+          "maxHp": 8634,
+          "maxSp": 100,
+          "speed": 96,
+          "critRate": 54.2,
+          "critMult": 235.5,
+          "spRecovery": 0,
+          "technicalPrecision": 0,
+          "pierceRate": 7.5,
+          "downPoints": 0,
+          "ailmentAccuracy": 3.1,
+          "ailmentResistance": 0,
+          "damageBonus": 55.9,
+          "damageReduction": 0
+        }
+      },
+      "jcRevelationPassed": false,
+      "wonderWeaponPassed": false,
+      "mikuRevelationPassed": false,
+      "berryWeaponOrBorrowedCardsPassed": false,
+      "routeDifferences": [
+        "Runner switches directly Vasuki to Dionysus in T2 and does not define Janosik, Harmony activation, or visible Matarukaja IV reactivation.",
+        "Runner applies Rakunda and Auto-Mataru IV as local adapters because their catalog entries are reference-only.",
+        "Runner uses a local adapter for the observed free MIKU Spring Storm to Play-With-Fire selection."
+      ],
+      "replayCoverage": {
+        "fullBattleImplemented": false,
+        "lastImplementedAction": "T3 J&C S2 and its automatic follow-up",
+        "t3Scope": "Partial turn. Wonder, Marian, and Berry actions after the scripted T3 opening are not scripted.",
+        "freshCombinedValidation": "Pending. This inventory performed static inspection only."
+      }
+    },
+    "appStaticBehavior": {
+      "navigator": {
+        "available": ["Okyann", "ANGE", "MIKU"],
+        "defaultWithoutSavedLocalStorage": "Okyann",
+        "implication": "The user-confirmed MIKU navigator is selectable and can persist in local storage, but it is not the static no-save default."
+      },
+      "jAndC": {
+        "staticDefaultMasks": ["mischief", "absurdity"],
+        "hachimansRunnerMaskPair": ["mischief", "service"],
+        "implication": "The app editor supports selecting Fire + Ice and Electric + Wind, but its generic fresh default is not the Hachiman pair."
+      },
+      "wonder": {
+        "staticDefaultPersonas": ["Alice", "Yoshitsune", "Trumpeter"],
+        "editorCapacity": "Three Personas with six transferable equipment slots each.",
+        "hachimanspecificLoadout": "Not hardcoded in the app default. A saved local build can select the named Personas."
+      },
+      "marian": {
+        "defaultMigration": "Trust + Prosperity is applied once for the named character unless the saved preset id already matches, preserving later edits."
+      },
+      "berry": {
+        "defaultMigration": "The screenshot-based equipped stats are applied once and later deliberate edits are preserved."
+      },
+      "mikuRevelations": {
+        "loadoutFieldSupport": "The app maps non-Wonder revelation main/set fields into engine loadouts.",
+        "hachimanspecificMikuPair": "Integrity + Labor is not hardcoded as a default in the inspected app path."
+      },
+      "weaponSupport": "No inspected app-to-engine loadout field passes exact weapon name, rank, or weapon effect."
+    }
+  },
+  "equippedStatsVersusBuffedSnapshot": {
+    "equippedBerryPreset": {
+      "source": "src/default-presets.js and the Ichigo default-preset test",
+      "statsMode": "equipped",
+      "attack": 4927,
+      "defense": 1494,
+      "maxHp": 8634,
+      "maxSp": 100,
+      "speed": 96,
+      "criticalRatePercent": 54.2,
+      "criticalMultiplierPercent": 235.5,
+      "spRecoveryPercent": 0,
+      "technicalPrecision": 0,
+      "pierceRatePercent": 7.5,
+      "downPoints": 0,
+      "ailmentAccuracyPercent": 3.1,
+      "ailmentResistancePercent": 0,
+      "damageBonusPercent": 55.9,
+      "damageReductionPercent": 0
+    },
+    "buffedBerrySnapshot": {
+      "source": "data/ichigo-live-t3-snapshot-2026-09-05.json",
+      "boundary": "T3 Action 19 after Marian Highlight, DOT-Up, and Beach Basket S1, before BERRY S3",
+      "battleState": {
+        "score": 6676123,
+        "sharedHighlightPercent": 17,
+        "bossShieldPoints": 2,
+        "idolsRemaining": 0,
+        "chainsOfLove": 3,
+        "currentSp": 80
+      },
+      "displayedTotals": {
+        "attack": 11444,
+        "defense": 1984,
+        "maxHp": 11334,
+        "maxSp": 100,
+        "speed": 98.8,
+        "criticalRatePercent": 106.3,
+        "criticalMultiplierPercent": 500.8,
+        "spRecoveryPercent": 5,
+        "pierceRatePercent": 27.6,
+        "ailmentAccuracyPercent": 8.1,
+        "damageMultiplierPercent": 409.6
+      },
+      "statusExamples": [
+        "Feel the Beat: Attack +35.1%, Critical Damage +25.3%, Pierce +12.6%",
+        "Summertime Refresh: final damage +15% for 1 turn",
+        "Special Effect: Curse damage +20% and continuous damage +30%, displayed permanent",
+        "Callous Kindness: Attack +30% and damage taken -20%",
+        "Mask of Mischief: Attack +54.5%",
+        "Mask of Service: damage taken -25%",
+        "Two Masks as One: damage +71.1%",
+        "Summer Garden: damage +45.4%"
+      ],
+      "doNotUseAs": "The snapshot is a buffed and borrowed battle state, not a replacement equipped-stat preset or an exact item/card attribution."
+    }
+  },
+  "implementationCoverage": {
+    "implementedOrPassed": [
+      "A6 character records are used for the runner party and MIKU; J&C mask ids Mischief and Service are passed and engine-valid.",
+      "Marian Trust + Prosperity migration, Prosperity opening Highlight 25, and the live-profile Trust + Prosperity party-damage effect are represented.",
+      "Berry's 15 equipped screenshot values are stored and passed as equipped totals, avoiding double-addition of overlapping Revelation stat percentages.",
+      "MIKU navigator actions and observed song effects are available when MIKU is selected; the runner explicitly derives its navigator definition from the catalog.",
+      "Dionysus Revolution, Universal Theoria, and Tarukaja are runner-defined; Vasuki Venomous Spiral, Media, and Rakunda are runner-defined."
+    ],
+    "partialOrAdapterOnly": [
+      "Rakunda's 42.7% Defense reduction for 3 turns and 22 SP are supplied by a runner adapter because the catalog marks it reference-only.",
+      "Dionysus Auto-Mataru IV's 9.8% party Attack for 2 turns is supplied by a runner adapter and removed when Wonder leaves Dionysus.",
+      "The runner's MIKU free song selection is a local adapter rather than a shared engine command.",
+      "The app has generic three-Persona editing, but the runner only passes Dionysus and Vasuki for this checkpoint."
+    ],
+    "notPassedOrUnsupported": [
+      "J&C Creation + Reconcilation Revelation loadout is absent from the checkpoint runner loadouts.",
+      "MIKU Integrity + Labor Revelation loadout is absent from the checkpoint runner loadouts.",
+      "Wonder Janosik and the observed Vasuki to Janosik to Dionysus transition are absent from the runner path.",
+      "Exact weapon names, ranks, stats, passive effects, and borrowed equipment effects are not passed by the inspected app or runner.",
+      "Exact Revelation card effects for Creation + Reconcilation and Integrity + Labor are not established as battle formulas by this evidence set. Local Labor has an HP combat field, while its Navigator-thief four-piece text is not passed as the full user loadout effect.",
+      "Observed live score conversion, survival bonus, final score, and full late-turn rotation are not implemented as this runner's parity claim."
+    ]
+  },
+  "unknownsAndGuardrails": [
+    "Do not infer exact weapon or Revelation effects from the buffed BERRY snapshot. Its source explicitly says borrowed and stacked effects are not fully identified.",
+    "Do not treat A6R6 as proof of exact weapon/card rank mechanics without a direct source field or screenshot for that rank.",
+    "Do not treat the runner's default seed 8 as a score-calibrated choice. It was selected for a J&C Gun critical after the opening random draw.",
+    "Do not claim full live parity from the 6,101,612,096 result. The checkpoint note identifies unresolved score, damage, role, Persona, and charge differences.",
+    "No simulation, replay test, or optimizer result was generated for this inventory."
+  ]
+}

@@ -1,0 +1,4086 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-28T23:07:36.661Z",
+  "source": {
+    "name": "Lufelnet English",
+    "url": "https://lufel.net/en/character/",
+    "version": "5.0.4",
+    "spoilers": false
+  },
+  "characters": [
+    {
+      "slug": "blitz",
+      "sourceKey": "카타야마",
+      "codename": "BLITZ",
+      "role": "Saboteur",
+      "element": "electric",
+      "pageUrl": "https://lufel.net/en/character/blitz/",
+      "skills": {
+        "name": "Kumi Katayama",
+        "skill1": {
+          "name": "Discharge Sprocket",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 101.7%/112.1%/108.0%/118.4% of Attack, and inflict Hard Knocks for 3 turns. When in Lightning Legs state, also increase this skill's damage by 35%.\nAlso, Secret Technique: Lightning Legs can be used 1 time.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%)."
+        },
+        "skill2": {
+          "name": "Thunderbolt Outrage",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 135.5%/149.3%/143.8%/157.7% of Attack. Decrease Down Points of all targets that take damage by 1 regardless of Electric affinity, and inflict Hard Knocks for 1 turn. When in Lightning Legs state, decrease Down Points of all targets that take damage by 3 more and inflict Detention for 1 turn.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Katayama's Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Katayama's Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%).\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Katayama's Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%)."
+        },
+        "skill3": {
+          "name": "Secret Technique: Lightning Legs",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 25,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 141.9%/156.5%/150.6%/165.2% of Attack. When targets take damage, decrease Down Points by 5 regardless of Electric affinity, and inflict Detention for 1 turn.\nWhen this skill knocks down any target, gain Lightning Legs for 2 turns.\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%).\nLightning Legs: Enhance the skill effects of the next Discharge Sprocket or Thunderbolt Outrage used."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 4,
+          "description": "Deal Electric damage to all foes equal to 317.6%/350.1%/337.1%/369.7% of Attack, and 50% chance to inflict Dizzy on foes for 1 turn. Also, permanently decrease the target's Defense by 29.3%/32.3%/31.1%/34.1% (this effect does not stack). Also, increase damage taken by 19.5%/21.5%/20.7%/22.7% for 3 turns."
+        },
+        "passive1": {
+          "name": "Answer the Call",
+          "element": "패시브",
+          "description": "When an ally attacks a knocked down foe, increase Attack by 36.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "High-Speed Vector",
+          "element": "패시브",
+          "description": "During battle, when Katayama's Speed is above 100, increase Attack by 24 for every 1 point of Speed above 100 (up to 1920).",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 95.23,
+          "defense": 53.4,
+          "HP": 301.71,
+          "SP": 100,
+          "speed": 107,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "speed": 125.8
+        },
+        "a0_lv80": {
+          "HP": 3390.02,
+          "attack": 1069.99,
+          "defense": 599.98
+        },
+        "a1_lv80": {
+          "HP": 3450.82,
+          "attack": 1089.19,
+          "defense": 611.18
+        },
+        "a2_lv80": {
+          "HP": 3512.42,
+          "attack": 1108.39,
+          "defense": 621.58
+        },
+        "a3_lv80": {
+          "HP": 3573.22,
+          "attack": 1127.59,
+          "defense": 632.78
+        },
+        "a4_lv80": {
+          "HP": 3634.02,
+          "attack": 1146.79,
+          "defense": 643.18
+        },
+        "a5_lv80": {
+          "HP": 3694.82,
+          "attack": 1165.99,
+          "defense": 654.38
+        },
+        "a6_lv80": {
+          "HP": 3756.42,
+          "attack": 1185.19,
+          "defense": 664.78
+        }
+      },
+      "setting": {
+        "role": "다운 광역 디버퍼",
+        "video": [
+          "57SfYmK-wac",
+          "bDyJLsMk6wY"
+        ],
+        "video_en": [
+          ""
+        ],
+        "video_jp": [
+          ""
+        ],
+        "main_revelation": [
+          "희망",
+          "창조"
+        ],
+        "sub_revelation": [
+          "변화",
+          "화해"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "속도"
+        ],
+        "sub_option1": [
+          "속도"
+        ],
+        "sub_option2": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_option3": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "속도 180.2",
+          "LV10+5": "속도 194.0",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "속도 187.3",
+          "LV13+5": "속도 205.3"
+        },
+        "battle_plus_stats": "· 마이팰리스 1 (이상) / 마이팰리스 평점",
+        "element_weakness": "빙결",
+        "element_resistance": "전격",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "속도 10!",
+        "mind_stats2": "크리티컬 확률 12%",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "감전 효과",
+                "크리티컬 확률 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "전류 증폭",
+                "자기장 폭풍"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "berry",
+      "sourceKey": "이치고",
+      "codename": "BERRY",
+      "role": "Assassin",
+      "element": "curse",
+      "pageUrl": "https://lufel.net/en/character/berry/",
+      "skills": {
+        "name": "Ichigo Shikano",
+        "skill1": {
+          "name": "Vorpal Butterfly",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 1,
+          "description": "Deal Curse damage to 1 foe equal to 129.0%/142.2%/137.0%/150.2% of Attack, and inflict 2 Lovesick stacks. When the target has over 70% HP remaining, increase skill damage by 200%. If this skill defeats a target, activate this skill again (can be activated consecutively)."
+        },
+        "skill2": {
+          "name": "Obsessive Rose",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Curse damage to 1 foe equal to 106.9%/117.8%/113.4%/124.4% of Attack, and inflict 4 Lovesick stacks."
+        },
+        "skill3": {
+          "name": "My Beloved Prince",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Curse damage to 1 foe equal to 254.8%/280.9%/270.4%/296.6% of Attack + 11.7%/12.9%/12.4%/13.6% for each Lovesick stack. Also, when targets have 10 or more Lovesick stacks, deal bonus Curse damage equal to 118.7%/130.9%/126.1%/138.2% of Attack. After activating this skill, reset the duration of Lovesick stacks."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "주원",
+          "type": "단일피해",
+          "cool": 4,
+          "description": "Deal Curse damage to 1 foe equal to 457.1%/503.9%/485.2%/532.0% of Attack, and Lovesick can activate critical hits for 3 turns.\nAlso, activate all continuous damage effects on the target 1 time, and activate Lovesick effect 2 more times."
+        },
+        "passive1": {
+          "name": "Overflowing Love",
+          "element": "패시브",
+          "description": "For each Chains of Love stack, increase Ichigo's Attack by 15.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Melting Ichi-Go Butter",
+          "element": "패시브",
+          "description": "When Ichigo is present, increase party's continuous damage by 15.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 104,
+          "defense": 48,
+          "HP": 321,
+          "SP": 100,
+          "speed": 96,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3600.02,
+          "attack": 1170.01,
+          "defense": 546.67
+        },
+        "a1_lv80": {
+          "HP": 3664.82,
+          "attack": 1190.81,
+          "defense": 556.27
+        },
+        "a2_lv80": {
+          "HP": 3729.62,
+          "attack": 1212.41,
+          "defense": 566.67
+        },
+        "a3_lv80": {
+          "HP": 3794.42,
+          "attack": 1233.21,
+          "defense": 576.27
+        },
+        "a4_lv80": {
+          "HP": 3859.22,
+          "attack": 1254.01,
+          "defense": 585.87
+        },
+        "a5_lv80": {
+          "HP": 3924.02,
+          "attack": 1275.61,
+          "defense": 596.27
+        },
+        "a6_lv80": {
+          "HP": 3988.82,
+          "attack": 1296.41,
+          "defense": 605.87
+        }
+      },
+      "setting": {
+        "role": "하이라이트 지속 대미지 딜러",
+        "video": [
+          "qZo778THxVI",
+          "Wf3H5gs2iPY"
+        ],
+        "video_en": [
+          "qZo778THxVI",
+          "Qz5w5fk-TeI"
+        ],
+        "video_jp": [
+          "qZo778THxVI",
+          "fHcgm-ihP4M"
+        ],
+        "main_revelation": [
+          "돌파"
+        ],
+        "sub_revelation": [
+          "슬픔"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "대미지 보너스",
+          "공격력"
+        ],
+        "sub_option3": [
+          "크리티컬 확률",
+          "관통"
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "",
+        "element_weakness": "전격",
+        "element_resistance": "주원",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>4>1>2",
+        "mind_stats1": "대미지 보너스 16%",
+        "mind_stats2": "관통 7.5%",
+        "mind_skill1": "S1/S2",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "지속 대미지 증가",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "심연의 속삭임",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "puppet-wavecatcher",
+      "sourceKey": "미유·여름",
+      "codename": "PUPPET·Wavecatcher",
+      "role": "Sweeper",
+      "element": "ice",
+      "pageUrl": "https://lufel.net/en/character/puppet-wavecatcher/",
+      "skills": {
+        "name": "Wavecatcher Miyu",
+        "skill1": {
+          "name": "Jellyfish Splash",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 0,
+          "description": "Deal Ice damage to all foes equal to 100.7%/111.0%/106.9%/117.2% of Attack, and inflict Freeze for 2 turns.\nRestore Wavecatcher Miyu's SP by 40 (this is affected by SP Recovery). This skill can restore SP above max SP (up to the value of max SP)."
+        },
+        "skill2": {
+          "name": "Aerial Tide",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 0,
+          "description": "Deal Ice damage to all foes equal to 178.7%/197.0%/189.7%/208.0% of Attack. When Surf is active, for each Offshore stack, increase this skill's damage by 10%. After activating this skill, remove Surf, and remove all Offshore stacks. This skill is counted as a Resonance."
+        },
+        "skill3": {
+          "name": "Paddle Out",
+          "element": "버프",
+          "type": "Enhance",
+          "sp": 60,
+          "cool": 0,
+          "description": "Remove spiritual ailments from Wavecatcher Miyu, and enter Surf state. When this skill is used again while Surf is active, remove Surf and all Offshore stacks. On the turn when Surf is removed, other skills can be used, but Surf cannot be re-entered.\nSurf: While this state is active, nullify Down, spiritual ailments, and certain unable to act effects, and Wavecatcher Miyu cannot use melee attacks, ranged attacks, or items. Also, extend the duration of buffs and debuffs applied by 1 turn. At the end of an ally's turn, if Wavecatcher Miyu has enough SP to activate Catch a Wave, automatically spend SP and activate Catch a Wave.\nCatch a Wave: Spend 30 SP to deal Ice damage to all foes equal to 50.2%/55.3%/53.3%/58.4% of Attack, and gain 1 Offshore stack. For each Offshore stack, increase the skill damage of Catch a Wave by 5%, and increase the SP cost by 30. Stacks up to 4 times. Catch a Wave is counted as a Resonance, and cannot decrease foes' Down Points."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 4,
+          "description": "Deal Ice damage to all foes equal to 329.4%/363.2%/349.7%/383.4% of Attack. When in Surf state, deal bonus Ice damage equal to 164.7%/181.6%/174.8%/191.7% of Attack 1 time."
+        },
+        "passive1": {
+          "name": "Hang Ten!",
+          "element": "패시브",
+          "description": "During battle, increase Wavecatcher Miyu's Attack based on SP Recovery. At a maximum of 280.0% SP Recovery, increase Attack up to 98.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Ride it Out!",
+          "element": "패시브",
+          "description": "When Surf is active, increase damage by 30.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 105,
+          "defense": 52,
+          "HP": 305,
+          "SP": 200,
+          "speed": 96,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "sp_recover": 188.5
+        },
+        "a0_lv80": {
+          "HP": 3419.97,
+          "attack": 1179.97,
+          "defense": 593.32
+        },
+        "a1_lv80": {
+          "HP": 3481.57,
+          "attack": 1201.57,
+          "defense": 603.72
+        },
+        "a2_lv80": {
+          "HP": 3543.17,
+          "attack": 1222.37,
+          "defense": 614.92
+        },
+        "a3_lv80": {
+          "HP": 3604.77,
+          "attack": 1243.97,
+          "defense": 625.32
+        },
+        "a4_lv80": {
+          "HP": 3666.37,
+          "attack": 1264.77,
+          "defense": 635.72
+        },
+        "a5_lv80": {
+          "HP": 3727.97,
+          "attack": 1286.37,
+          "defense": 646.92
+        },
+        "a6_lv80": {
+          "HP": 3789.57,
+          "attack": 1307.17,
+          "defense": 657.32
+        }
+      },
+      "setting": {
+        "role": "광역 빙결 추가효과 딜러",
+        "video": [
+          "fZzquAemH08",
+          "DfMX3zOm7KQ"
+        ],
+        "video_en": [
+          "ahzTgJFRXqA"
+        ],
+        "video_jp": [
+          "kvkTlSXzjsI",
+          "PaQZtvXyMUM"
+        ],
+        "main_revelation": [
+          "전념"
+        ],
+        "sub_revelation": [
+          "화려"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "SP 회복",
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과",
+          "관통"
+        ],
+        "sub_option2": [
+          "크리티컬 확률",
+          "SP 회복"
+        ],
+        "sub_option3": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "SP 회복 286.7%",
+          "LV10+5": "SP 회복 286.7%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "SP 회복 300.1%",
+          "LV13+5": "SP 회복 300.1%"
+        },
+        "battle_plus_stats": "· 기본 스탯: 188.5% / 마이팰리스: 5% (이상)",
+        "battle_plus_stats_en": "· Base Stat: 188.5% / Thieves Den: 5% (or higher)",
+        "battle_plus_stats_jp": "· 基本ステータス: 188.5% / マイパレス: 5% （以上）",
+        "element_weakness": "축복",
+        "element_resistance": "빙결",
+        "skill1_lv": "MAX",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "공격력 20%!",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "얼음의 수호",
+                "대미지 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "서리 방패 공명",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "marian-beachflower",
+      "sourceKey": "미나미·여름",
+      "codename": "MARIAN·Beachflower",
+      "role": "Strategist",
+      "element": "bless",
+      "pageUrl": "https://lufel.net/en/character/marian-beachflower/",
+      "skills": {
+        "name": "Beachflower Minami",
+        "skill1": {
+          "name": "Beach Basket",
+          "element": "축복광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to all foes equal to 64.4%/71.0%/68.4%/75.0% of Beachflower Minami's max HP, and inflict Bewitching Blossoms for 3 turns.\nBewitching Blossoms: When taking an attack, increase that damage's Attack by 9.8%/10.8%/10.4%/11.4% + 4% more for every 1200 of Beachflower Minami's max HP (up to 11712/12912/12432/13632 of max HP)."
+        },
+        "skill2": {
+          "name": "Summer Garden",
+          "element": "버프",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Increase party's damage by 7.8%/8.6%/8.3%/9.1% + 3.2% more for every 1200 of Beachflower Minami's max HP (up to 11712/12912/12432/13632 of max HP) for 3 turns. Also, grant all allies 1 Blessing stack, and remove 1 debuff."
+        },
+        "skill3": {
+          "name": "Gentle Sea Breeze",
+          "element": "버프",
+          "type": "버프",
+          "sp": 25,
+          "cool": 2,
+          "description": "Increase 1 other ally's critical rate by 15.6%/17.2%/16.6%/18.2%, and increase critical damage by 33.33% of the portion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier). Lasts for 3 turns.\nPassive: When using medicine on an ally, increase the main target's critical damage for 1 turn. This increase is equal to 16.66% of the portion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier)."
+        },
+        "skill_highlight": {
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 4,
+          "description": "Increase 1 other ally's damage by 24.4%/26.9%/25.9%/28.4%, and increase critical damage by 16.66% of the potion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier). Lasts for 2 turns. Also, when Beachflower Minami uses medicine, increase medicine effects by 9.8%/10.8%/10.4%/11.4%."
+        },
+        "passive1": {
+          "name": "Soothing Sunlight",
+          "element": "패시브",
+          "description": "Each time a skill is used on allies, grant 1 Blessing stack to targets.\nWhen Beachflower Minami is present, for each Blessing stack on allies, increase their damage by 6.0% (up to 36.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Blossoms by the Beach",
+          "element": "패시브",
+          "description": "When Beachflower Minami is present, increase allies' Attack by 12.0%, and for each type of buff granted by Potent Medicine, increase Attack by 15.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 80,
+          "defense": 53.99,
+          "HP": 357,
+          "SP": 100,
+          "speed": 104,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "HP_per": 29
+        },
+        "a0_lv80": {
+          "HP": 4020.02,
+          "attack": 899.97,
+          "defense": 606.64
+        },
+        "a1_lv80": {
+          "HP": 4092.02,
+          "attack": 915.97,
+          "defense": 617.84
+        },
+        "a2_lv80": {
+          "HP": 4164.82,
+          "attack": 932.77,
+          "defense": 628.24
+        },
+        "a3_lv80": {
+          "HP": 4236.82,
+          "attack": 948.77,
+          "defense": 639.44
+        },
+        "a4_lv80": {
+          "HP": 4309.62,
+          "attack": 964.77,
+          "defense": 650.64
+        },
+        "a5_lv80": {
+          "HP": 4381.62,
+          "attack": 980.77,
+          "defense": 661.04
+        },
+        "a6_lv80": {
+          "HP": 4454.42,
+          "attack": 997.57,
+          "defense": 672.24
+        }
+      },
+      "setting": {
+        "role": "아이템 활용 버퍼",
+        "video": [
+          "Cr9dMdtTndg",
+          "6dYWOcbntnI"
+        ],
+        "video_en": [
+          "UWfC9QeeTkQ",
+          "QoPSgyDM0AE"
+        ],
+        "video_jp": [
+          "kW8U_S_npjM",
+          "zpDRnTWjQn4"
+        ],
+        "main_revelation": [
+          "신뢰",
+          "창조",
+          "조화"
+        ],
+        "sub_revelation": [
+          "풍요",
+          "화해",
+          "힘"
+        ],
+        "sub_revel2": [
+          "생명",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "생명"
+        ],
+        "sub_option1": [
+          "생명",
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "크리티컬 확률"
+        ],
+        "sub_option3": [
+          "대미지 보너스",
+          "관통"
+        ],
+        "minimum_stats": {
+          "LV10": "생명 11712, 크리티컬 효과 213.4%",
+          "LV10+5": "생명 12912, 크리티컬 효과 229.9%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "생명 12432, 크리티컬 효과 229.9%",
+          "LV13+5": "생명 13632, 크리티컬 효과 246.4%"
+        },
+        "battle_plus_stats": "<b>생명</b>/ 해명의힘 / 직책 8% / 마이팰리스 LV50 260 / 마이팰리스 LV70 560 (이상) / 마이팰리스 평점 <b>크리티컬 효과</b>/ 해명의 힘 / 마이팰리스 2%",
+        "battle_plus_stats_en": "<b>HP</b>/ Eludi. Stat Buff / Labor 8% / Thieves Den LV50 260 / Thieves Den LV70 560 (or higher) / Thieves Den Rating <b>Crit Mult</b>/ Eludi. Stat Buff / Thieves Den 2%",
+        "battle_plus_stats_jp": "<b>HP</b>/ ステータス強化 / 職責 8% / マイパレス LV50 260 / マイパレス LV70 560 （以上） / マイパレス評価 <b>CRT倍率</b>/ ステータス強化 / マイパレス 2%",
+        "element_weakness": "핵열",
+        "element_resistance": "축복",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "생명 20%!",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S1/HL!",
+        "mind_skill2": "S2/S3!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "넘치는 은총",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "신성한 심판",
+                "빛의 강림"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "miku",
+      "sourceKey": "미쿠",
+      "codename": "MIKU",
+      "role": "Elucidator",
+      "element": "support",
+      "pageUrl": "https://lufel.net/en/character/miku/",
+      "skills": {
+        "name": "Hatsune Miku",
+        "skill1": {
+          "name": "Feel the Beat",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "description": "Increase party's Attack by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, increase party's pierce rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical damage by 0.41% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 18.0%/19.8%/20.2%/22.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+          "sync_description": "Increase party's Attack by 2.27% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 100.0%/110.0%/112.0%/122.0%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: Increase party's pierce rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's damage by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical damage by 0.68% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 30.0%/33.0%/33.6%/36.6%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+          "sync_highlight_values": [
+            "2.27%",
+            "100.0%/110.0%/112.0%/122.0%",
+            "0.34%",
+            "15.0%/16.5%/16.8%/18.3%",
+            "0.57%",
+            "25.0%/27.5%/28.0%/30.5%",
+            "0.68%",
+            "30.0%/33.0%/33.6%/36.6%"
+          ]
+        },
+        "skill2": {
+          "name": "Clear Sound",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "description": "Increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, restore HP to party based on 30% of their max HP. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's weakness damage by 0.11% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 4.8%/5.3%/5.4%/5.9%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+          "sync_description": "Increase party's damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 3 turns. Also grant efects to party based on the current song playing.\nHeaven: Restore HP to party based on 30% of their max HP. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's weakness damage by 0.18% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 8.0%/8.8%/9.0%/9.8%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+          "sync_highlight_values": [
+            "1.82%",
+            "80.0%/88.0%/89.6%/97.6%",
+            "0.18%",
+            "8.0%/8.8%/9.0%/9.8%",
+            "0.34%",
+            "15.0%/16.5%/16.8%/18.3%"
+          ]
+        },
+        "skill3": {
+          "name": "Showstopper",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "unlock": "Requires 3 different types of Track.",
+          "description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (these turns are not counted as extra actions and do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra turns, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+          "sync_description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (extra turns do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra actions, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+          "sync_highlight_values": [
+            "1.82%",
+            "80.0%/88.0%/89.6%/97.6%"
+          ]
+        },
+        "skill_highlight": {
+          "name": "Stat Buff",
+          "element": "패시브",
+          "description": "Increase party's stats by 20% of Miku's stats."
+        },
+        "passive1": {
+          "name": "Setlist",
+          "element": "패시브",
+          "description": "When gaining a Track, increase party's Attack by 12.0% for 3 turns. Stacks up to 3 times.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Fan Favorite",
+          "element": "패시브",
+          "description": "When Virtual Concert is active, increase party's damage by 24.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 315,
+          "SP": 100,
+          "attack": 98,
+          "defense": 53,
+          "crit_rate": 0,
+          "crit_mult": 0,
+          "speed": 100
+        },
+        "awake7": {
+          "attack": 29
+        },
+        "a0_lv80": {
+          "HP": 3539.98,
+          "attack": 1100.01,
+          "defense": 599.98
+        },
+        "a1_lv80": {
+          "HP": 3603.98,
+          "attack": 1120.01,
+          "defense": 611.18
+        },
+        "a2_lv80": {
+          "HP": 3667.18,
+          "attack": 1140.01,
+          "defense": 621.58
+        },
+        "a3_lv80": {
+          "HP": 3731.18,
+          "attack": 1159.21,
+          "defense": 632.78
+        },
+        "a4_lv80": {
+          "HP": 3795.18,
+          "attack": 1179.21,
+          "defense": 643.18
+        },
+        "a5_lv80": {
+          "HP": 3858.38,
+          "attack": 1199.21,
+          "defense": 654.38
+        },
+        "a6_lv80": {
+          "HP": 3922.38,
+          "attack": 1219.21,
+          "defense": 664.78
+        }
+      },
+      "setting": {
+        "role": "추가 전투 2턴 해명",
+        "video": [
+          "Wei_GLHARR4"
+        ],
+        "video_en": [
+          "HQkOBd9NSNM",
+          "G8GFpHbqnfo",
+          "cYPx4ZmXm6w"
+        ],
+        "video_jp": [
+          "qwWKpsTCcos",
+          "6csjhyUy3-E",
+          "lfdOfXKt-EQ",
+          "q9XQB7NeeKg"
+        ],
+        "main_revelation": [
+          "진정성"
+        ],
+        "sub_revelation": [
+          "직책"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "공격력"
+        ],
+        "sub_option2": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_option3": [
+          "관통",
+          "대미지 보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "공격력 4400",
+          "LV10+5": "공격력 4840",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "공격력 4928",
+          "LV13+5": "공격력 5368"
+        },
+        "battle_plus_stats": "· 마이팰리스 50LV 65 / 마이팰리스 70LV 110 (이상) / 마이팰리스 평점",
+        "battle_plus_stats_en": "· Thieves Den 50LV 65 / Thieves Den 70LV 110 (or higher) / Thieves Den Rating",
+        "battle_plus_stats_jp": "・マイパレス 50LV 65 / マイパレス 70LV 110 （以上） / マイパレス評価",
+        "element_weakness": "",
+        "element_resistance": "",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "-",
+        "skill_priority": "3>1>2",
+        "mind_stats1": "공격력 20%!",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S2/S3!",
+        "mind_skill2": "S1!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "대미지 증가",
+                "공격력 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "크리티컬 효과 강화",
+                "관통 강화"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "akihiko",
+      "sourceKey": "사나다",
+      "codename": "AKIHIKO",
+      "role": "Sweeper",
+      "element": "electric",
+      "pageUrl": "https://lufel.net/en/character/akihiko/",
+      "skills": {
+        "name": "Akihiko Sanada",
+        "skill1": {
+          "name": "Blitzkrieg",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Gain 1 Grit stack. Deal Electric damage to all foes equal to 122.8%/135.4%/130.3%/142.9% of Attack.\nAlso, increase Sanada's critical damage by 23.4%/25.8%/24.9%/27.3% for 3 turns."
+        },
+        "skill2": {
+          "name": "Spark Impact",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Gain 1 Grit stack. Deal Electric damage to all foes equal to 92.1%/101.6%/97.8%/107.2% of Attack. Also, gain 2 Mettle stacks."
+        },
+        "skill3": {
+          "name": "Lightning Fist",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 24,
+          "cool": 2,
+          "description": "Deal Electric damage to all foes equal to 136.4%/150.4%/144.8%/158.8% of Attack.\nIf Grit is at 2 stacks or higher, spend all Grit stacks, and increase this skill's multiplier by 48.8%/53.8%/51.8%/56.8% for each stack."
+        },
+        "skill_highlight": {
+          "name": "Lightning Spike",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 0,
+          "cool": 0,
+          "description": "Can be activated when Theurgy gauge is at 140. Deal Electric damage to all foes equal to 255.4%/281.6%/271.1%/297.3% of Attack.\nThis Theurgy is guaranteed to activate a critical hit. Also, critical damage will be between a minimum of 250% and maximum of 350%."
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 ally's critical damage by 20% for 1 turn.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "No Rules",
+          "element": "패시브",
+          "description": "When dealing damage to downed foes, increase damage by 30.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Rough Combo",
+          "element": "패시브",
+          "description": "When Sanada activates a critical, increase Attack by 13.5% for 3 turns. Stacks up to 3 times.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 104,
+          "defense": 52,
+          "HP": 308,
+          "SP": 100,
+          "speed": 96,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "crit_rate": 22.4
+        },
+        "a0_lv80": {
+          "HP": 3449.99,
+          "attack": 1170.01,
+          "defense": 593.32
+        },
+        "a1_lv80": {
+          "HP": 3512.39,
+          "attack": 1190.81,
+          "defense": 603.72
+        },
+        "a2_lv80": {
+          "HP": 3573.99,
+          "attack": 1212.41,
+          "defense": 614.92
+        },
+        "a3_lv80": {
+          "HP": 3636.39,
+          "attack": 1233.21,
+          "defense": 625.32
+        },
+        "a4_lv80": {
+          "HP": 3698.79,
+          "attack": 1254.01,
+          "defense": 635.72
+        },
+        "a5_lv80": {
+          "HP": 3760.39,
+          "attack": 1275.61,
+          "defense": 646.92
+        },
+        "a6_lv80": {
+          "HP": 3822.79,
+          "attack": 1296.41,
+          "defense": 657.32
+        }
+      },
+      "setting": {
+        "role": "다운 광역 전격 딜러",
+        "video": [
+          "Wd7BYGJUr4U",
+          "mQFpIXh6s-I"
+        ],
+        "video_en": [
+          "kZ9G4oipSvQ",
+          "bIEE3-k1Tbo"
+        ],
+        "video_jp": [
+          "ovfil9aC398",
+          "NEpvKNnC6Cs"
+        ],
+        "main_revelation": [
+          "돌파",
+          "결심"
+        ],
+        "sub_revelation": [
+          "변화",
+          "신중"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_option2": [
+          "관통",
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_option3": [
+          ""
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "",
+        "element_weakness": "빙결",
+        "element_resistance": "전격",
+        "skill1_lv": "MAX",
+        "skill2_lv": "MAX",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S1/S3!",
+        "mind_skill2": "S2/TH!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "크리티컬 효과 증가",
+                "크리티컬 확률 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "오버클럭 폭파",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "yukari",
+      "sourceKey": "유카리",
+      "codename": "YUKARI",
+      "role": "Medic",
+      "element": "wind",
+      "pageUrl": "https://lufel.net/en/character/yukari/",
+      "skills": {
+        "name": "Yukari Takeba",
+        "skill1": {
+          "name": "Gale Burst",
+          "element": "질풍",
+          "type": "단일 피해",
+          "sp": 23,
+          "cool": 0,
+          "description": "Deal Wind damage to 1 foe equal to 200.1%/220.6%/212.4%/232.9% of Attack. Also, inflict Windswept and Erosion for 2 turns. Multiple foes cannot be inflicted with Erosion at the same time. If a foe with Erosion is defeated, Erosion is transferred to the foe with the highest HP.\nPassive: When an ally attacks a foe with a skill, if any target is inflicted with Erosion, increase that skill's Attack by 8.8%/9.7%/9.3%/10.2% + 0.72% for every 100 points of Yukari's Attack (up to a maximum of 29.3%/32.3%/31.1%/34.1%)."
+        },
+        "skill2": {
+          "name": "Tailwind's Breath",
+          "element": "버프광역",
+          "type": "",
+          "sp": 25,
+          "cool": 0,
+          "description": "Decrease party's damage taken by 29.3%/32.3%/31.1%/34.1% for 3 turns.\nAlso, increase the main target's Attack by 7.8%/8.6%/8.3%/9.1% + 0.78% for every 100 points of Yukari's Attack (up to a maximum of 31.2%/34.4%/33.2%/36.4%), and increase damage by 0.24% for every 100 points of Yukari's Attack (up to a maximum of 9.8%/10.8%/10.4%/11.4%) for 2 turns."
+        },
+        "skill3": {
+          "name": "Arrow of Life",
+          "element": "치료광역",
+          "type": "",
+          "sp": 27,
+          "cool": 0,
+          "description": "Restore HP to all allies equal to 39.1%/43.1%/41.5%/45.6% of Yukari's Attack + 2507/3158/3081/3773.\nSpend all Whisperwind stacks, and for each stack spent, increase the main target's Theurgy gauge by 17.5, and after the next time the target activates a Theurgy, increase Attack by 29.3%/32.3%/31.1%/34.1% for 2 turns. This effect stacks up to 2 times. If the Theurgy gauge is increased above the maximum, the amount above the maximum is temporarily reserved for up to 2 turns, and returned after the Theurgy is activated.\nIf the main target has a Highlight, the next time they activate a Highlight, increase final damage amplification by 9.8%/10.8%/10.4%/11.4% for every Whisperwind stack spent."
+        },
+        "skill_highlight": {
+          "name": "Cyclone Arrow",
+          "element": "질풍",
+          "type": "",
+          "description": "Can be activated when Theurgy gauge is at 70. Deal Wind damage to 1 foe equal to 406.0%/447.6%/431.0%/472.6% of Attack. Also, remove 2 buffs from the target, and inflict Windswept and Erosion.\nAlso, increase party's damage by 0.48% for every 100 points of Yukari's Attack (up to a maximum of 19.5%/21.5%/20.7%/22.7%) for 2 turns.",
+          "cool": 0
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "",
+          "description": "Remove 1 debuff from 1 ally.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "Tailwind's Air",
+          "element": "패시브",
+          "description": "When Yukari is present, increase party's Highlight and Theurgy damage by 45.0%. When an ally activates a Highlight or Theurgy, increase that ally's damage by 20.0% for 2 turns.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Archer's Courage",
+          "element": "패시브",
+          "description": "During battle, increase max HP by 60 for every 100 points of Yukari's Attack (up to a maximum of 2700).",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 95,
+          "defense": 55,
+          "HP": 308,
+          "SP": 100,
+          "speed": 103,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3449.99,
+          "attack": 1069.99,
+          "defense": 619.97
+        },
+        "a1_lv80": {
+          "HP": 3512.39,
+          "attack": 1089.19,
+          "defense": 631.17
+        },
+        "a2_lv80": {
+          "HP": 3573.99,
+          "attack": 1108.39,
+          "defense": 642.37
+        },
+        "a3_lv80": {
+          "HP": 3636.39,
+          "attack": 1127.59,
+          "defense": 653.57
+        },
+        "a4_lv80": {
+          "HP": 3698.79,
+          "attack": 1146.79,
+          "defense": 664.77
+        },
+        "a5_lv80": {
+          "HP": 3760.39,
+          "attack": 1165.99,
+          "defense": 675.97
+        },
+        "a6_lv80": {
+          "HP": 3822.79,
+          "attack": 1185.19,
+          "defense": 687.17
+        },
+        "a0_lv100": {
+          "HP": 4268.13,
+          "attack": 1323.73,
+          "defense": 766.99
+        },
+        "a1_lv100": {
+          "HP": 4346.13,
+          "attack": 1347.73,
+          "defense": 780.99
+        },
+        "a2_lv100": {
+          "HP": 4423.13,
+          "attack": 1371.73,
+          "defense": 794.99
+        },
+        "a3_lv100": {
+          "HP": 4501.13,
+          "attack": 1395.73,
+          "defense": 808.99
+        },
+        "a4_lv100": {
+          "HP": 4579.13,
+          "attack": 1419.73,
+          "defense": 822.99
+        },
+        "a5_lv100": {
+          "HP": 4656.13,
+          "attack": 1443.73,
+          "defense": 836.99
+        },
+        "a6_lv100": {
+          "HP": 4734.13,
+          "attack": 1467.73,
+          "defense": 850.99
+        }
+      },
+      "setting": {
+        "role": "테우르기아 충전 버퍼",
+        "video": [
+          "pi4PpABMZDQ",
+          "KW2Xg1If2iY"
+        ],
+        "video_en": [
+          "yhloLeFhKOY"
+        ],
+        "video_jp": [
+          "E0aLpo9AbQI",
+          "bWFxm3g28EA"
+        ],
+        "main_revelation": [
+          "창조",
+          "진정성"
+        ],
+        "sub_revelation": [
+          "화해",
+          "고집"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스",
+          "치료 효과"
+        ],
+        "sub_revel3": [
+          "공격력"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "공격력"
+        ],
+        "sub_option2": [
+          "대미지 보너스"
+        ],
+        "sub_option3": [
+          "관통"
+        ],
+        "minimum_stats": {
+          "LV10": "공격력 4500",
+          "LV10+5": "공격력 4584",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "공격력 4667",
+          "LV13+5": "공격력 5084"
+        },
+        "battle_plus_stats": "· 해명의힘 / 직책 8% / 마이팰리스 50LV 65 / 마이팰리스 70LV 110 (이상) / 마이팰리스 평점",
+        "element_weakness": "전격",
+        "element_resistance": "질풍",
+        "skill1_lv": "MAX",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>2>4>1",
+        "mind_stats1": "SP 회복",
+        "mind_stats2": "공격력",
+        "mind_skill1": "S1/S3!",
+        "mind_skill2": "S2/TH!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "질풍 강습",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "정화의 바람",
+                "소용돌이의 중심"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "makoto",
+      "sourceKey": "유키 마코토",
+      "codename": "MAKOTO",
+      "role": "Assassin",
+      "element": "fire",
+      "pageUrl": "https://lufel.net/en/character/makoto/",
+      "skills": {
+        "name": "Makoto Yuki",
+        "skill1": {
+          "name": "Melody of Flames",
+          "element": "화염",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 59.8%/66.0%/63.5%/69.6% of Attack (3 hits). Also, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times.\nAlso, when spending Moon Phase to use Scarlet Hades, increase skill multiplier by 32.5%/35.8%/34.5%/37.8% for 2 turns."
+        },
+        "skill2": {
+          "name": "Nocturne of Battle",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 20,
+          "cool": 0,
+          "description": "Increase party's critical damage by 23.4%/25.8%/24.9%/27.3%, and increase Makoto's Attack by 19.5%/21.5%/20.7%/22.7% for 2 turns.\nAlso, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times."
+        },
+        "skill3": {
+          "name": "Scarlet Hades",
+          "element": "화염",
+          "type": "단일피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Can be activated with 2 or more Moon Phase stacks. Spend all Moon Phase stacks, and deal Fire damage to 1 foe equal to 91.5%/100.8%/97.1%/106.5% of Makoto's Attack (1 hit per stack spent). Afterwards, spend all Full Moon stacks, and deal Fire damage to 1 foe equal to 150.7%/166.2%/160.0%/175.5% of Makoto's Attack (1 hit per stack spent).\nWhen this skill is activated with 4 Moon Phase stacks, increase Makoto's pierce rate by 11.7%/12.9%/12.4%/13.6%, and increase damage by 24.4%/26.9%/25.9%/28.4%."
+        },
+        "skill_highlight": {
+          "name": "Ardhanari",
+          "element": "화염",
+          "type": "",
+          "description": "Can be activated when Theurgy Gauge is at 100. Deal Fire damage to 1 foe equal to 147.5%/162.6%/156.5%/171.6% of Makoto's Attack (4 hits).\nAlso, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+          "cool": 0
+        },
+        "skill_highlight2": {
+          "name": "Cadenza",
+          "element": "버프",
+          "type": "버프",
+          "description": "Can be activated when Theurgy Gauge is at 100. Increase party's Attack by 24.4%/26.9%/25.9%/28.4%, and increase damage by 19.5%/21.5%/20.7%/22.7% for 2 turns. Also, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+          "cool": 0
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 ally's Attack by 20% for 1 turn.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "On-Site Leader",
+          "element": "패시브",
+          "description": "After activating a Theurgy, increase party's Attack by 40.0% for 2 turns, and increase Attack of SEES members by 30.0% more.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Entrusted Hope",
+          "element": "패시브",
+          "description": "When receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), increase critical damage by 7.2% for 2 turns. Stacks up to 3 times.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 105,
+          "defense": 52,
+          "HP": 292,
+          "SP": 100,
+          "speed": 98,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3270.01,
+          "attack": 1190,
+          "defense": 593.32
+        },
+        "a1_lv80": {
+          "HP": 3329.21,
+          "attack": 1211.6,
+          "defense": 603.72
+        },
+        "a2_lv80": {
+          "HP": 3387.61,
+          "attack": 1233.2,
+          "defense": 614.92
+        },
+        "a3_lv80": {
+          "HP": 3446.81,
+          "attack": 1254,
+          "defense": 625.32
+        },
+        "a4_lv80": {
+          "HP": 3505.21,
+          "attack": 1275.6,
+          "defense": 635.72
+        },
+        "a5_lv80": {
+          "HP": 3564.41,
+          "attack": 1297.2,
+          "defense": 646.92
+        },
+        "a6_lv80": {
+          "HP": 3622.81,
+          "attack": 1318.8,
+          "defense": 657.32
+        }
+      },
+      "setting": {
+        "role": "아군 버프 화염 단일 딜러",
+        "video": [
+          "etterGepdkQ",
+          "NNXAdUF8lxY",
+          "r9_USx-h-_I"
+        ],
+        "video_en": [
+          "76-BOcMklO0",
+          "nLIniuzcdG4"
+        ],
+        "video_jp": [
+          "76-BOcMklO0",
+          "BkAXmnjloX4",
+          "DrlZCEJgJvk"
+        ],
+        "main_revelation": [
+          "희망"
+        ],
+        "sub_revelation": [
+          "고집"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_option2": [
+          "공격력",
+          "대미지 보너스",
+          "관통"
+        ],
+        "sub_option3": [],
+        "minimum_stats": {},
+        "battle_plus_stats": "",
+        "element_weakness": "주원",
+        "element_resistance": "화염",
+        "skill1_lv": "MAX",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "대미지 보너스 16%",
+        "mind_stats2": "관통 7.5%",
+        "mind_skill1": "S1/S2",
+        "mind_skill2": "S3/TH!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "불꽃 분신",
+                "대미지 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "화염 폭파",
+                "전소"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "ange",
+      "sourceKey": "마나카",
+      "codename": "ANGE",
+      "role": "Elucidator",
+      "element": "support",
+      "pageUrl": "https://lufel.net/en/character/ange/",
+      "skills": {
+        "name": "Manaka Nagao",
+        "skill1": {
+          "name": "Winged Canon",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's damage by 7.0%/7.7%/7.8%/8.5% for 2 turns (for every 164 points of Manaka's Attack, increase by 1% more, up to a maximum of 28.0%/30.8%/31.4%/34.2%).\nAlso, gain 4 Musical Note stacks.\nCooldown Time: 4 ally actions"
+        },
+        "skill2": {
+          "name": "Prayer Refrain",
+          "element": "치료광역",
+          "type": "치료",
+          "cool": 0,
+          "description": "Restore HP to party equal to 10.0%/10.0%/11.2%/11.2% of Manaka's Attack + 681/816/989/1124, and remove 1 debuff.\nWhen Manaka has Musical Note, spend 1 Musical Note stack, and reduce skill cooldown by 1 action. (this effect can reduce cooldowns by up to 4 actions).\nIf this skill is selected and used, increase healing by 50%.\nCooldown Time: 8 ally actions\nAutomatic Effect: For every 12 Musical Note stacks gained during battle, activate this skill's healing effect 1 time."
+        },
+        "skill3": {
+          "name": "Melody of Steps",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's Attack by 11% of Manaka's Attack + 128/140/143/156 for 2 turns.\nSpend all Musical Note stacks, and for each stack spent, increase party's pierce rate by 0.1% for every 460 points of Manaka's Attack, and increase party's Attack by 0.1% for every 460 points of Manaka's Attack. Lasts for 2 turns.\nThis skill applies up to 4600/5060/5980/6440 of Manaka's Attack.\nCooldown Time: 4 ally actions"
+        },
+        "skill_highlight": {
+          "name": "Stat Buff",
+          "element": "패시브",
+          "description": "Increase party's stats by 20% of Manaka's stats."
+        },
+        "passive1": {
+          "name": "Crescendo",
+          "element": "패시브",
+          "description": "Increase Attack of allies with Da Capo by 37.5%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Heavenly Voice",
+          "element": "패시브",
+          "description": "Based on the total number of Musical Note stacks gained, increase party's pierce rate by 1.0% for each stack. Counts up to 12 stacks.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 102.35,
+          "defense": 53,
+          "HP": 300,
+          "SP": 100,
+          "speed": 100,
+          "crit_rate": 0,
+          "crit_mult": 0
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3360,
+          "attack": 1150.02,
+          "defense": 599.98
+        },
+        "a1_lv80": {
+          "HP": 3420.8,
+          "attack": 1170.82,
+          "defense": 611.18
+        },
+        "a2_lv80": {
+          "HP": 3480.8,
+          "attack": 1191.62,
+          "defense": 621.58
+        },
+        "a3_lv80": {
+          "HP": 3541.6,
+          "attack": 1212.42,
+          "defense": 632.78
+        },
+        "a4_lv80": {
+          "HP": 3601.6,
+          "attack": 1233.22,
+          "defense": 643.18
+        },
+        "a5_lv80": {
+          "HP": 3662.4,
+          "attack": 1253.22,
+          "defense": 654.38
+        },
+        "a6_lv80": {
+          "HP": 3723.2,
+          "attack": 1274.02,
+          "defense": 664.78
+        }
+      },
+      "setting": {
+        "role": "턴 회귀 해명",
+        "video": [
+          "vaCx1adEqQc",
+          "TzQUocwd2Fo"
+        ],
+        "video_en": [
+          ""
+        ],
+        "video_jp": [
+          "kAB57z7BBAo",
+          "n4vYACV5fUw"
+        ],
+        "main_revelation": [
+          "희망",
+          "진정성"
+        ],
+        "sub_revelation": [
+          "직책",
+          "직책"
+        ],
+        "sub_revel2": [
+          "공격력"
+        ],
+        "sub_revel3": [
+          "크리티컬 확률/크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "공격력"
+        ],
+        "sub_option2": [
+          "크리티컬 확률/크리티컬 효과"
+        ],
+        "sub_option3": [
+          "관통/대미지 보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "공격력 4600",
+          "LV10+5": "공격력 5060",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "공격력 5980",
+          "LV13+5": "공격력 6440"
+        },
+        "battle_plus_stats": "· 마이팰리스 50LV 65 / 마이팰리스 70LV 110 (이상) / 마이팰리스 평점",
+        "element_weakness": "",
+        "element_resistance": "",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "-",
+        "skill_priority": "3>1>2",
+        "mind_stats1": "생명 20%",
+        "mind_stats2": "공격력 20%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "대미지 증가",
+                "공격력 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "크리티컬 효과 강화",
+                "관통 강화"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "luce",
+      "sourceKey": "쇼키",
+      "codename": "LUCE",
+      "role": "Strategist",
+      "element": "bless",
+      "pageUrl": "https://lufel.net/en/character/luce/",
+      "skills": {
+        "name": "Shoki Ikenami",
+        "skill1": {
+          "name": "Followspot",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 151.8%/167.3%/158.0%/173.5% of Attack.\nAlso, grant 2 Blessing stacks to all allies, and for 2 turns, increase damage by 0.8% for every 100 points of Shoki's Attack (up to a maximum of 35.1%/38.7%/36.6%/40.2%)."
+        },
+        "skill2": {
+          "name": "Adlib",
+          "element": "버프",
+          "type": "버프",
+          "sp": 24,
+          "cool": 2,
+          "description": "Increase Defense of 1 ally except Shoki by 0.83% for every 100 points of Shoki's Attack (up to a maximum of 36.6%/40.4%/38.1%/41.8%), and nullify Dizzy, Sleep, Confuse, and Forget. Lasts for 2 turns.\nCooldown: 2 turns."
+        },
+        "skill3": {
+          "name": "Improvise",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 24,
+          "cool": 0,
+          "description": "Increase party's Attack by 15% of Shoki's Attack (up to a maximum of 569/627/592/650) for 2 turns.\nAlso, based on Shoki's Improv state, grant the following additional effect to the main target.\nBlazing Passion: Increase the main target's continuous damage by 14.0%/15.4%/14.5%/16.0%, and increase ailment accuracy by 30% for 2 turns.\nChilling Intensity: Increase the main target's Technical Precision by 655/723/682/749 for 2 turns. Also, when activating a technical, increase Attack by 20%.\nElectrifying Performance: Increase the main target's critical damage by 24.4%/26.9%/25.4%/27.9% for 2 turns.\nTempestuous Drama: Increase the main target's pierce rate by 12.0%/13.2%/12.5%/13.7% for 2 turns."
+        },
+        "skill_highlight": {
+          "element": "버프광역",
+          "type": "버프",
+          "description": "Increase party's Attack by 6.5% of Shoki's Attack (up to a maximum of 284/314/296/325), and increase ailment resistance by 82.0%/90.4%/85.3%/93.7% for 2 turns.\nAlso, grant 1 Blessing stack.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Supporting Role",
+          "element": "패시브",
+          "description": "When allies gain a Blessing, increase damage by 5% for each Blessing stack (up to a maximum of 25.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Method Acting",
+          "element": "패시브",
+          "description": "Increase Attack by 0.72% for every 1% of Shoki's ailment accuracy (up to a maximum of 72.0%).",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 68,
+          "defense": 44,
+          "HP": 231,
+          "SP": 100,
+          "speed": 104,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "ailment_accuracy": 26.1
+        },
+        "a0_lv80": {
+          "HP": 2587.71,
+          "attack": 765.42,
+          "defense": 495.38
+        },
+        "a1_lv80": {
+          "HP": 2617.31,
+          "attack": 774.22,
+          "defense": 500.98
+        },
+        "a2_lv80": {
+          "HP": 2647.71,
+          "attack": 783.02,
+          "defense": 506.58
+        },
+        "a3_lv80": {
+          "HP": 2677.31,
+          "attack": 791.82,
+          "defense": 512.18
+        },
+        "a4_lv80": {
+          "HP": 2706.91,
+          "attack": 800.62,
+          "defense": 518.58
+        },
+        "a5_lv80": {
+          "HP": 2737.31,
+          "attack": 809.42,
+          "defense": 524.18
+        },
+        "a6_lv80": {
+          "HP": 2766.91,
+          "attack": 818.22,
+          "defense": 529.78
+        }
+      },
+      "setting": {
+        "role": "범용 서포터",
+        "video": [
+          "a22KxjFDxbo"
+        ],
+        "video_en": [
+          ""
+        ],
+        "video_jp": [
+          "wRcKHrQgyyk"
+        ],
+        "main_revelation": [
+          "신뢰",
+          "창조"
+        ],
+        "sub_revelation": [
+          "풍요",
+          "화해"
+        ],
+        "sub_revel2": [
+          "공격력, 생명"
+        ],
+        "sub_revel3": [
+          "효과 명중"
+        ],
+        "sub_revel4": [
+          "공격력, 생명"
+        ],
+        "sub_option1": [
+          "효과 명중"
+        ],
+        "sub_option2": [
+          "공격력"
+        ],
+        "sub_option3": [
+          ""
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": "공격력 4591, 효과 명중 100%",
+          "LV12+5": "공격력 4868, 효과 명중 100%",
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "· 마이팰리스 공격력 65 (이상) / 마이팰리스 효과명중 2.3% (이상) / 마이팰리스 평점 / 4성 무기 : 효과 명중 40% / 해명의 힘",
+        "element_weakness": "핵열",
+        "element_resistance": "축복",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "8",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "효과 명중 24%",
+        "mind_skill1": "S1/S2",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "crow",
+      "sourceKey": "아케치",
+      "codename": "CROW",
+      "role": "Sweeper",
+      "element": "almighty",
+      "pageUrl": "https://lufel.net/en/character/crow/",
+      "skills": {
+        "name": "Goro Akechi",
+        "skill1": {
+          "name": "Flash of Intuition",
+          "element": "축복광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to all foes equal to 93.2%/102.8%/98.9%/108.5% of Attack. Also, restore all allies' HP by 1561/1561/1657/1657 and grant 1 Blessing stack.\nAlso, gain Suspicion, and gain Deduction for 2 turns. With Deduction, increase party's damage by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "skill2": {
+          "name": "Decisive Scheme",
+          "element": "주원광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Curse damage to all foes equal to 116.5%/128.5%/123.7%/135.6% of Attack.\nAlso, gain Suspicion, and gain Stratagem for 2 turns. With Stratagem, decrease all foes' Defense by 25.4%/28.0%/26.9%/29.5%. Also increase Arrow of Perjury's number of hits by 1, and increase damage dealt by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "skill3": {
+          "name": "Rain of Justice",
+          "element": "만능광역",
+          "type": "광역피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Usable with Suspicion.\nSpend all Arrow of Truth stacks, deal a fixed amount of Almighty damage to all foes equal to 19.5%/21.5%/20.7%/22.7% of the damage recorded by each Arrow of Truth stack, and lose Suspicion.\nThen, activate Arrow of Perjury on random foes, dealing Almighty damage equal to 77.4%/85.3%/82.2%/90.1% (4 hits). From the second hit, prioritize new targets, and decrease damage to 15% for hits on the same target.\nIf Akechi has Mastermind, Arrow of Truth gains 240% of the Almighty damage of Arrow of Perjury."
+        },
+        "skill_highlight": {
+          "element": "만능",
+          "type": "광역피해",
+          "description": "Deal Bless damage to all foes equal to 124.1%/136.9%/131.8%/144.5% of Attack, and Curse damage equal to 124.1%/136.9%/131.8%/144.5% of Attack (1 hit each).\nAlso, for 4 turns, increase Arrow of Perjury's number of hits by 2.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Rival's Pride",
+          "element": "패시브",
+          "description": "Can activate Flames of Desire effects with all allies in the party. At the start of battle, for each Flames of Desire effect activated, increase Akechi's damage by 15.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Rending Arrow",
+          "element": "패시브",
+          "description": "When dealing Almighty damage, for every 1% of the target's decreased Defense, increase Akechi's damage dealt by 0.5% (up to a maximum of 120.0%).",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 99,
+          "defense": 55,
+          "HP": 316,
+          "SP": 100,
+          "speed": 95,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3539.98,
+          "attack": 1120,
+          "defense": 619.97
+        },
+        "a1_lv80": {
+          "HP": 3603.98,
+          "attack": 1140,
+          "defense": 631.17
+        },
+        "a2_lv80": {
+          "HP": 3667.18,
+          "attack": 1160,
+          "defense": 642.37
+        },
+        "a3_lv80": {
+          "HP": 3731.18,
+          "attack": 1180.8,
+          "defense": 653.57
+        },
+        "a4_lv80": {
+          "HP": 3795.18,
+          "attack": 1200.8,
+          "defense": 664.77
+        },
+        "a5_lv80": {
+          "HP": 3858.38,
+          "attack": 1220.8,
+          "defense": 675.97
+        },
+        "a6_lv80": {
+          "HP": 3922.38,
+          "attack": 1240.8,
+          "defense": 687.17
+        }
+      },
+      "setting": {
+        "role": "만능 광역 딜러 (서브)",
+        "video": [
+          "vf8BbijxPYg",
+          "9xW_MiGs0FA"
+        ],
+        "video_en": [
+          ""
+        ],
+        "video_jp": [
+          ""
+        ],
+        "main_revelation": [
+          "여정",
+          "자유",
+          "신뢰"
+        ],
+        "sub_revelation": [
+          "풍요",
+          "실망",
+          "힘"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 확률",
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "관통",
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_option3": [
+          ""
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "nan",
+        "element_weakness": "주원",
+        "element_resistance": "축복",
+        "skill1_lv": "MAX",
+        "skill2_lv": "MAX",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "대미지보너스 16%",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "대미지 증가",
+                "만능 속성 대미지 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "철벽의 천적",
+                "조화의 힘"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "turbo",
+      "sourceKey": "마유미",
+      "codename": "TURBO",
+      "role": "Strategist",
+      "element": "physical",
+      "pageUrl": "https://lufel.net/en/character/turbo/",
+      "skills": {
+        "name": "Mayumi Hashimoto",
+        "skill1": {
+          "name": "Shockwave",
+          "element": "물리광역",
+          "type": "광역피해",
+          "hp": 8,
+          "cool": 0,
+          "description": "Deal Physical damage to all foes equal to 134.2%/148.0%/142.5%/156.2% of Attack.\nAlso, increase party's damage by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 10 points of Speed, increase by 2% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%).\nWhen used on an extra action, increase skill damage by 50%, and activate a guaranteed critical hit on the main target."
+        },
+        "skill2": {
+          "name": "Aero Setup",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Increase party's Attack by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 10 points of Speed, increase by 2% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%). Also, increase party's Defense by 9.8%/10.8%/10.4%/11.4% for 2 turns (for every 10 points of Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%).\nWhen used on an extra action, grant a shield to all allies equal to 2204/2354/2294/2444. This effect lasts for 2 turns."
+        },
+        "skill3": {
+          "name": "Power Setup",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 25,
+          "cool": 0,
+          "description": "Increase party's pierce rate by 1.0%/1.1%/1.0%/1.1% for 2 turns (for every 10 points of Speed, increase by 0.22% more, up to a maximum of 3.9%/4.3%/4.1%/4.5%). Also, increase party's Attack by 12.7%/14.0%/13.5%/14.8% for 2 turns (for every 10 points of Speed, increase by 2.89% more, up to a maximum of 50.8%/56.0%/53.9%/59.1%).\nWhen used on an extra action, also increase the main target's pierce rate by 2.0%/2.2%/2.1%/2.3% for 1 turn (for every 10 points of Speed, increase by 0.44% more, up to a maximum of 7.8%/8.6%/8.3%/9.1%)."
+        },
+        "skill_highlight": {
+          "element": "버프광역",
+          "type": "버프",
+          "description": "Increase party's Attack by 5.9%/6.5%/6.2%/6.8% for 2 turns (for every 10 points of Speed, increase by 1.33% more, up to a maximum of 23.4%/25.8%/24.9%/27.3%). Also, increase party's damage by 5.9%/6.5%/6.2%/6.8% for 2 turns (for every 10 points of Speed, increase by 1.33% more, up to a maximum of 23.4%/25.8%/24.9%/27.3%). Also, when the selected ally of this Highlight next deals direct damage to foes, decrease the selected foe's Down Points by 1 more.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Team Ambassador",
+          "element": "패시브",
+          "description": "When Mayumi is present, increase party's damage during extra actions by 45.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Overtaking",
+          "element": "패시브",
+          "description": "When Mayumi is present, increase party's damage dealt to downed foes by 30.0%. Also, when Mayumi knocks down a foe, deal more Physical damage equal to 60.0% of Attack.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 93,
+          "defense": 55,
+          "HP": 302,
+          "SP": 100,
+          "speed": 107,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "speed": 125.8
+        },
+        "a0_lv80": {
+          "HP": 3390.02,
+          "attack": 1050,
+          "defense": 619.97
+        },
+        "a1_lv80": {
+          "HP": 3450.82,
+          "attack": 1069.2,
+          "defense": 631.17
+        },
+        "a2_lv80": {
+          "HP": 3512.42,
+          "attack": 1087.6,
+          "defense": 642.37
+        },
+        "a3_lv80": {
+          "HP": 3573.22,
+          "attack": 1106.8,
+          "defense": 653.57
+        },
+        "a4_lv80": {
+          "HP": 3634.02,
+          "attack": 1126,
+          "defense": 664.77
+        },
+        "a5_lv80": {
+          "HP": 3694.82,
+          "attack": 1144.4,
+          "defense": 675.97
+        },
+        "a6_lv80": {
+          "HP": 3756.42,
+          "attack": 1163.6,
+          "defense": 687.17
+        }
+      },
+      "setting": {
+        "role": "추가 턴 관통 버퍼",
+        "video": [
+          "zg_tCvikQn8",
+          "MOtLTH646YI"
+        ],
+        "video_en": [
+          ""
+        ],
+        "video_jp": [
+          ""
+        ],
+        "main_revelation": [
+          "창조",
+          "신뢰",
+          "신뢰"
+        ],
+        "sub_revelation": [
+          "화해",
+          "풍요",
+          "힘"
+        ],
+        "sub_revel2": [
+          "대미지보너스",
+          "공격력"
+        ],
+        "sub_revel3": [
+          "크리티컬 확률/크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "속도"
+        ],
+        "sub_option1": [
+          "속도"
+        ],
+        "sub_option2": [
+          "크리티컬 확률"
+        ],
+        "sub_option3": [
+          "크리티컬 효과",
+          "대미지 보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "속도 176 (180)",
+          "LV10+5": "속도 194",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "속도 189",
+          "LV13+5": "속도 207"
+        },
+        "battle_plus_stats": "· 마이팰리스 1 (이상) / 마이팰리스 평점",
+        "element_weakness": "총격",
+        "element_resistance": "물리",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>2>4",
+        "mind_stats1": "속도 10!",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S1/S2",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "중상 취약",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "약점 추격"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "violet",
+      "sourceKey": "카스미",
+      "codename": "VIOLET",
+      "role": "Assassin",
+      "element": "bless",
+      "pageUrl": "https://lufel.net/en/character/violet/",
+      "skills": {
+        "name": "Kasumi Yoshizawa",
+        "skill1": {
+          "name": "Cinderella Glow",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 23,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 186.9%/206.1%/198.4%/217.5% of Attack, and gain Lead Step.\nIf this skill is activated by an ally with Dance Partner, deal Bless damage to 1 foe equal to 121.6%/134.1%/129.1%/141.5%, and gain 1 Lead Step.\nLead Step stacks up to 3 times."
+        },
+        "skill2": {
+          "name": "Invitation",
+          "element": "버프",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Grant Dance Partner to 1 ally for 1 turn. Only 1 ally may have Dance Partner at one time.\nIncrease Attack of Kasumi and the selected ally by 32.4%/35.7%/34.4%/37.7% for 3 turns. Also, Kasumi gains Follow Step. This effect does not stack.\nWhen an ally with Dance Partner uses a skill, immediately activate Cinderella Glow 1 time on 1 random foe (if the skill is activated on a foe, activate Cinderella Glow 1 time on that foe)."
+        },
+        "skill3": {
+          "name": "Midnight Magic",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 27,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 249.1%/274.6%/264.4%/289.9% of Attack.\nWhen using this skill while in Masquerade mode, increase skill damage by 30%, and critical damage by 29.3%/29.3%/31.1%/31.1%."
+        },
+        "skill_highlight": {
+          "element": "축복",
+          "type": "단일피해",
+          "unlock": "자신이 『가면무도회』 상태.",
+          "description": "Can be activated in Masquerade mode. Deal Bless damage to 1 foe equal to 273.1%/301.0%/289.8%/317.8% of Attack. Also, with Step stacks, gain additional effects accordingly.\nLead Step: Increase Highlight damage by 15% for each stack.\nFollow Step: Increase Highlight critical rate by 10%, and critical damage by 20%.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "Rhythm Count",
+          "element": "패시브",
+          "description": "For every Step stack, increase Bless damage by 15% (up to 45.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Steps of Faith",
+          "element": "패시브",
+          "description": "When an ally except Kasumi uses a Highlight or Theurgy, increase Kasumi's Attack by 45.0% for 2 turns. Stacks up to 2 times.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 301.71,
+          "SP": 100,
+          "attack": 103.24,
+          "defense": 49.84,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 102
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3390.02,
+          "attack": 1159.98,
+          "defense": 560
+        },
+        "a1_lv80": {
+          "HP": 3450.82,
+          "attack": 1180.78,
+          "defense": 570.4
+        },
+        "a2_lv80": {
+          "HP": 3512.42,
+          "attack": 1201.58,
+          "defense": 580
+        },
+        "a3_lv80": {
+          "HP": 3573.22,
+          "attack": 1222.38,
+          "defense": 590.4
+        },
+        "a4_lv80": {
+          "HP": 3634.02,
+          "attack": 1243.18,
+          "defense": 600
+        },
+        "a5_lv80": {
+          "HP": 3694.82,
+          "attack": 1264.78,
+          "defense": 610.4
+        },
+        "a6_lv80": {
+          "HP": 3756.42,
+          "attack": 1285.58,
+          "defense": 620.8
+        }
+      },
+      "setting": {
+        "role": "축복 단일 딜러",
+        "video": [
+          "zu8O2gSQrQE",
+          "lWHaLYD1lb4"
+        ],
+        "video_en": [
+          "ddPOSrXKxQU"
+        ],
+        "video_jp": [
+          "ddPOSrXKxQU"
+        ],
+        "main_revelation": [
+          "지혜",
+          "여정"
+        ],
+        "sub_revelation": [
+          "미덕",
+          "주권"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "관통",
+          "크리티컬 확률"
+        ],
+        "sub_option3": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "nan",
+        "element_weakness": "주원",
+        "element_resistance": "축복",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "4>3>2>1",
+        "mind_stats1": "대미지보너스 16%",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "대미지 증가",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "rin-firecracker",
+      "sourceKey": "야오링·사자무",
+      "codename": "RIN·Firecracker",
+      "role": "Sweeper",
+      "element": "fire",
+      "pageUrl": "https://lufel.net/en/character/rin-firecracker/",
+      "skills": {
+        "name": "Firecracker Yaoling",
+        "skill1": {
+          "name": "Scarlet Surprise",
+          "element": "화염광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 120.4%/132.8%/127.8%/140.2% of Attack, and increase Firecracker Yaoling's critical rate by 10% for 2 turns.\nAlso, for 1 turn, Yanhua Slash deals more Fire damage equal to 72.8%/80.3%/77.3%/84.7% of Attack."
+        },
+        "skill2": {
+          "name": "Firework Finale",
+          "element": "화염광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 73.8%/81.3%/78.3%/85.9% of Attack, with a 90% chance to inflict Burn, and a 90% chance to inflict 1 Year-End Flames stack for 2 turns.\nAlso, for 1 turn, Yanhua Slash has a 90% chance to inflict 1 Year-End Flames stack.\nYear-End Flames: Take Fire damage equal to 63.4%/69.9%/67.3%/73.8% of Firecracker Yaoling's Attack for 2 turns. Stacks up to 4 times."
+        },
+        "skill3": {
+          "name": "Orange Blossom Blade",
+          "element": "버프",
+          "type": "버프",
+          "sp": 24,
+          "cool": 1,
+          "description": "Gain Flaming Sword Dance: Increase damage by 34.3%/37.8%/36.4%/39.9%, and melee attack evolves to Yanhua Slash. After activating Yanhua Slash, or at the end of the turn, remove this effect.\nThis skill has a cooldown time of 1 turn, and after using it, other skills can be used on the same turn (this skill is not treated as a normal skill).\nYanhua Slash: Deal Fire damage to all foes equal to 127.4%/140.4%/135.2%/148.2% of Attack, and can activate Fire Technicals. When Fireburn is activated, the damage increase effect becomes 20%."
+        },
+        "skill_highlight": {
+          "element": "화염광역",
+          "type": "광역피해",
+          "description": "Deal Fire damage to all foes equal to 226.5%/249.7%/240.5%/263.7% of Attack.\nIncrease Firecracker Yaoling's Attack by 19.5%/21.5%/20.7%/22.7%, and damage dealt by Yanhua Slash by 19.5%/21.5%/20.7%/22.7% for 2 turns.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Prosperity in Red",
+          "element": "패시브",
+          "description": "Increase damage to foes inflicted with Burn by 36.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Happy New Year!",
+          "element": "패시브",
+          "description": "At the start of battle, increase Attack by 42.0% for 2 turns. When Firecracker Yaoling or allies activate a Technical, this effect's duration is reset, and the increase effect becomes 51.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 106,
+          "defense": 52,
+          "HP": 301.71,
+          "SP": 100,
+          "speed": 95,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3390.02,
+          "attack": 1200.03,
+          "defense": 593.32
+        },
+        "a1_lv80": {
+          "HP": 3450.82,
+          "attack": 1221.63,
+          "defense": 603.72
+        },
+        "a2_lv80": {
+          "HP": 3512.42,
+          "attack": 1243.23,
+          "defense": 614.92
+        },
+        "a3_lv80": {
+          "HP": 3573.22,
+          "attack": 1264.83,
+          "defense": 625.32
+        },
+        "a4_lv80": {
+          "HP": 3634.02,
+          "attack": 1286.43,
+          "defense": 635.72
+        },
+        "a5_lv80": {
+          "HP": 3694.82,
+          "attack": 1308.03,
+          "defense": 646.92
+        },
+        "a6_lv80": {
+          "HP": 3756.42,
+          "attack": 1329.63,
+          "defense": 657.32
+        },
+        "a0_lv100": {
+          "HP": 4193.94,
+          "attack": 1484.61,
+          "defense": 734.02
+        },
+        "a1_lv100": {
+          "HP": 4269.94,
+          "attack": 1511.61,
+          "defense": 747.02
+        },
+        "a2_lv100": {
+          "HP": 4346.94,
+          "attack": 1538.61,
+          "defense": 761.02
+        },
+        "a3_lv100": {
+          "HP": 4422.94,
+          "attack": 1565.61,
+          "defense": 774.02
+        },
+        "a4_lv100": {
+          "HP": 4498.94,
+          "attack": 1592.61,
+          "defense": 787.02
+        },
+        "a5_lv100": {
+          "HP": 4574.94,
+          "attack": 1619.61,
+          "defense": 801.02
+        },
+        "a6_lv100": {
+          "HP": 4651.94,
+          "attack": 1646.61,
+          "defense": 814.02
+        }
+      },
+      "setting": {
+        "role": "화염 광역 딜러",
+        "video": [
+          "0FCv7kZyfpE",
+          "XVkekmUVS4Y"
+        ],
+        "video_en": [
+          "uv-e4x_FxLI"
+        ],
+        "video_jp": [
+          "uv-e4x_FxLI",
+          "jNzdkC3WMDY"
+        ],
+        "main_revelation": [
+          "수락"
+        ],
+        "sub_revelation": [
+          "분쟁"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "크리티컬 확률",
+          "관통"
+        ],
+        "sub_option3": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "nan",
+        "element_weakness": "질풍",
+        "element_resistance": "화염",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S1/HL!",
+        "mind_skill2": "S2/S3!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "스킬 마스터 증가",
+                "불꽃 분신"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "화염 폭파",
+                "전소"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "matoi",
+      "sourceKey": "미오",
+      "codename": "MATOI",
+      "role": "Saboteur",
+      "element": "ice",
+      "pageUrl": "https://lufel.net/en/character/matoi/",
+      "skills": {
+        "name": "Mio Natsukawa",
+        "skill1": {
+          "name": "Sub-Zero Torrent",
+          "element": "빙결광역",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Gain 1 Extinguish stack, and deal Ice damage to all foes equal to 97.6%/107.6%/103.6%/113.6% of Attack. 50% chance to inflict Freeze.\nAlso, decrease Defense by 7.8%/8.6%/8.3%/9.1% for 3 turns (for every 5.47% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%). When an ally attacks a foe whose Defense has been decreased by this skill, increase Technical Precision by 195/195/207/207.\nIf at least 1 foe is inflicted with Burn, remove Burn and inflict Scald on all foes (cannot be inflicted if Scald is already active).\nScald: Counts as Burn. Lasts for 3 turns. When allies attack the affected foe, increase Technical Precision by 1186/1308/1259/1381."
+        },
+        "skill2": {
+          "name": "Freezing Prison",
+          "element": "빙결",
+          "type": "제어",
+          "sp": 24,
+          "cool": 0,
+          "description": "Deal Ice damage to 1 foe equal to 195.2%/215.2%/207.2%/227.2% of Attack, and can activate an Ice Technical. When Deepfreeze is activated, 48.0%/52.9%/51.0%/55.9% chance to inflict Icebound."
+        },
+        "skill3": {
+          "name": "Extinguishing Guidance",
+          "element": "빙결광역",
+          "type": "버프",
+          "sp": 25,
+          "cool": 0,
+          "description": "Can be used at 2 or more Extinguish stacks. Spend 2 Extinguish stacks to deal Ice damage to all foes equal to 109.8%/121.0%/116.6%/127.8% of Attack. Also, decrease Defense by 7.3%/8.1%/7.8%/8.5% for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 9.8%/10.8%/10.4%/11.4% (for every 4.38% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%).\nAt 4 or more Extinguish stacks, evolve this skill to Requiem Guidance.\nSpend 4 Extinguish stacks to deal Ice damage to all foes equal to 131.8%/145.3%/139.9%/153.4% of Attack. Also, decrease Defense by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 4.86% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 11.7%/12.9%/12.4%/13.6% (for every 3.65% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 46.8%/51.6%/49.7%/54.5%)."
+        },
+        "skill_highlight": {
+          "element": "빙결광역",
+          "type": "디버프",
+          "description": "Deal Ice damage to all foes equal to 39.0%/43.0%/41.4%/45.4% of Attack, and increase their damage taken for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Deepfreeze is activated, 32% chance to inflict Icebound. Also, increase damage taken by enemies inflicted with Freeze by this Highlight (for every 17.5% of Natsukawa's ailment accuracy, increase damage taken by 1%, up to a maximum of 9.8%/10.8%/10.4%/11.4%).\nThen, deal additional Ice damage to all foes equal to 117.1%/129.1%/124.3%/136.3% of Attack.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Disaster Preparedness",
+          "element": "패시브",
+          "description": "Each time Natsukawa activates a Technical, grant all allies a shield that protects against 1050 damage for 2 turns.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Biting Cold",
+          "element": "패시브",
+          "description": "When Natsukawa is present, increase damage taken of foes inflicted with Freeze by 27.0%, and increase damage taken of foes inflicted with Icebound by 27.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 90,
+          "defense": 55,
+          "HP": 316,
+          "SP": 100,
+          "speed": 104,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "ailment_accuracy": 34.9
+        },
+        "a0_lv80": {
+          "HP": 3539.98,
+          "attack": 1019.98,
+          "defense": 626.63
+        },
+        "a1_lv80": {
+          "HP": 3603.98,
+          "attack": 1038.38,
+          "defense": 637.83
+        },
+        "a2_lv80": {
+          "HP": 3667.18,
+          "attack": 1056.78,
+          "defense": 649.03
+        },
+        "a3_lv80": {
+          "HP": 3731.18,
+          "attack": 1075.18,
+          "defense": 660.23
+        },
+        "a4_lv80": {
+          "HP": 3795.18,
+          "attack": 1093.58,
+          "defense": 671.43
+        },
+        "a5_lv80": {
+          "HP": 3858.38,
+          "attack": 1111.98,
+          "defense": 683.43
+        },
+        "a6_lv80": {
+          "HP": 3922.38,
+          "attack": 1130.38,
+          "defense": 694.63
+        }
+      },
+      "setting": {
+        "role": "광역 디버퍼",
+        "video": [
+          "62-u95gz60Y",
+          "7sitIWOr_zc"
+        ],
+        "video_en": [
+          "B9FjBMor1OI",
+          "KkCg9RAN8yk"
+        ],
+        "video_jp": [
+          "B9FjBMor1OI",
+          "2Gaec29WRIo"
+        ],
+        "main_revelation": [
+          "신념"
+        ],
+        "sub_revelation": [
+          "헛수고"
+        ],
+        "sub_revel2": [
+          "공격력/대미지보너스"
+        ],
+        "sub_revel3": [
+          "효과명중/크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "효과명중"
+        ],
+        "sub_option2": [
+          "크리티컬 확률/크리티컬 효과"
+        ],
+        "sub_option3": [
+          "공격력, 대미지보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "효과명중 171%",
+          "LV10+5": "효과명중 189%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "효과명중 182%",
+          "LV13+5": "효과명중 200%"
+        },
+        "battle_plus_stats": "· 마이팰리스 2.3% (이상) / 마이팰리스 평점 / 헛수고 : 2턴 동안 30% 효과명중 증가",
+        "battle_plus_stats_en": "Thieves Den 2.3% (or higher) / Thieves Den Rating / Futility : 2 turns of 30% Ailment Accuracy increase",
+        "battle_plus_stats_jp": "マイパレス 2.3% （以上） / マイパレス評価 / 徒労 : 2ターン分 30% 状態異常命中増加",
+        "element_weakness": "축복",
+        "element_resistance": "빙결",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "대미지보너스 16%",
+        "mind_stats2": "효과명중 24%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "wind-tempest",
+      "sourceKey": "리코·매화",
+      "codename": "WIND·Tempest",
+      "role": "Strategist",
+      "element": "wind",
+      "pageUrl": "https://lufel.net/en/character/wind-tempest/",
+      "skills": {
+        "name": "Tempest Riko",
+        "skill1": {
+          "name": "Storm of Petals",
+          "element": "질풍",
+          "type": "단일 피해",
+          "cool": 0,
+          "description": "Deal Wind damage to 1 foe equal to 183.0%/201.8%/194.2%/213.0% of Attack, and inflict Windswept and Falling Petals for 2 turns.\nFalling Petals: When taking Wind damage, increase Attack for that damage. The increase is equal to 18.3% of the portion of Tempest Riko's critical multiplier that exceeds 100% (up to 388.0%/418.0%/418.0%/448.0% of critical multiplier).\nAlso, restore Tempest Riko's SP by 16.",
+          "sp": 0
+        },
+        "skill2": {
+          "name": "Arrival of Spring",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's Attack for 2 turns. The increase is equal to 12.8% of the portion of Tempest Riko's critical multiplier that exceeds 100% (up to 388.0%/418.0%/418.0%/448.0% of critical multiplier). Also, restore party's SP by 4.\nFor one time only while this effect is active, when an ally deals damage with a skill, Resonance, Highlight, or Theurgy, restore Tempest Riko's SP by 12.",
+          "sp": 0
+        },
+        "skill3": {
+          "name": "Blossoming Season",
+          "element": "버프",
+          "type": "버프",
+          "sp": "50 - 200",
+          "cool": 0,
+          "description": "Spend all SP, and increase 1 other ally's critical rate by 16.0%/17.0%/17.0%/18.0% for 2 turns. Also, apply the following effects based on the amount of SP spent. For every 2 SP spent, increase the effect by 1%.\n50 SP or higher: For every 1% of Tempest Riko's critical multiplier that exceeds 100%, increase Attack by 2.4.\n100 SP or higher: Increase critical damage by 12% of the portion of Tempest Riko's critical multiplier that exceeds 100%.\n150 SP or higher: Increase critical damage more by 6% of the portion of Tempest Riko's critical multiplier that exceeds 100%.\nThese effects count up to 388.0%/418.0%/418.0%/448.0% of Tempest Riko's critical multiplier."
+        },
+        "skill_highlight": {
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 other ally's Attack (for every 1% of Tempest Riko's critical multiplier that exceeds 100%, increase Attack by 2.5, up to 388.0%/418.0%/418.0%/448.0% of critical multiplier) and increase critical damage by 24.4%/26.9%/25.9%/28.4% for 2 turns.\nAlso, restore 20 SP to all allies besides Tempest Riko.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Vernal Splendor",
+          "element": "패시브",
+          "description": "After using Blossoming Season, grant Unravel to the target for 2 turns.\nUnravel: Each time skill damage is dealt, gain 1 Blossom stack.\nBlossom: Increase Attack by 30 for 3 turns. Stacks up to 10 times. After gaining 5 Blossom stacks, increase Attack more by 8.0% of the portion of Tempest Riko's critical multiplier that exceeds 100%, and increase critical damage by 5.0% of the portion of her critical multiplier that exceeds 100%. After gaining 10 Blossom stacks, critical damage is increased more. This increase is equal to 5.0% of the portion of her critical multiplier that exceeds 100%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Sun-kissed Blooms",
+          "element": "패시브",
+          "description": "During battle, increase critical damage and HP based on Tempest Riko's SP Recovery. At a maximum of 450.0% SP Recovery, increase critical damage by 84.0%, and HP by 1800.0.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 323.07,
+          "SP": 200,
+          "attack": 87.22,
+          "defense": 56.96,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 104
+        },
+        "awake7": {
+          "sp_recover": 188.5
+        },
+        "a0_lv80": {
+          "HP": 3629.97,
+          "attack": 980,
+          "defense": 640.03
+        },
+        "a1_lv80": {
+          "HP": 3695.57,
+          "attack": 997.6,
+          "defense": 651.23
+        },
+        "a2_lv80": {
+          "HP": 3760.37,
+          "attack": 1015.2,
+          "defense": 663.23
+        },
+        "a3_lv80": {
+          "HP": 3825.97,
+          "attack": 1032.8,
+          "defense": 674.43
+        },
+        "a4_lv80": {
+          "HP": 3891.57,
+          "attack": 1050.4,
+          "defense": 686.43
+        },
+        "a5_lv80": {
+          "HP": 3956.37,
+          "attack": 1068,
+          "defense": 697.63
+        },
+        "a6_lv80": {
+          "HP": 4021.97,
+          "attack": 1085.6,
+          "defense": 708.83
+        },
+        "a0_lv100": {
+          "HP": 4490.79,
+          "attack": 1212.4,
+          "defense": 791.81
+        },
+        "a1_lv100": {
+          "HP": 4572.79,
+          "attack": 1234.4,
+          "defense": 805.81
+        },
+        "a2_lv100": {
+          "HP": 4653.79,
+          "attack": 1256.4,
+          "defense": 820.81
+        },
+        "a3_lv100": {
+          "HP": 4735.79,
+          "attack": 1278.4,
+          "defense": 834.81
+        },
+        "a4_lv100": {
+          "HP": 4817.79,
+          "attack": 1300.4,
+          "defense": 849.81
+        },
+        "a5_lv100": {
+          "HP": 4898.79,
+          "attack": 1322.4,
+          "defense": 863.81
+        },
+        "a6_lv100": {
+          "HP": 4980.79,
+          "attack": 1344.4,
+          "defense": 877.81
+        }
+      },
+      "setting": {
+        "role": "단일/광역 버퍼",
+        "video": [
+          "csjd73u9dLA"
+        ],
+        "video_en": [
+          "dZunweE9CUA"
+        ],
+        "video_jp": [
+          "dZunweE9CUA",
+          "yo_z1Fkg3B0"
+        ],
+        "main_revelation": [
+          "창조"
+        ],
+        "sub_revelation": [
+          "우려"
+        ],
+        "sub_revel2": [
+          "-"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "SP회복"
+        ],
+        "sub_option1": [
+          "SP회복",
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "-"
+        ],
+        "sub_option3": [
+          "-"
+        ],
+        "minimum_stats": {
+          "LV10": "SP회복 450.1% , 크리티컬 효과 388%",
+          "LV10+5": "SP회복 450.1% , 크리티컬 효과 418%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "SP회복 450.1% , 크리티컬 효과 418%",
+          "LV13+5": "SP회복 450.1% , 크리티컬 효과 448%"
+        },
+        "battle_plus_stats": "<b>SP회복</b>/ 기본 스탯: 188.5% / 의식 0: 60% / 마이팰리스: 5% (이상) <b>크리티컬 효과</b>/ 해명의 힘 / 패시브(활기): 84% / 창조우려: 45% / 마이팰리스: 2% (이상)",
+        "battle_plus_stats_en": "<b>SP recovery</b>/ Base Stat: 188.5% / Awareness 0: 60% / Thieves Den: 5% (or higher) <b>Crit Mult</b>/ Eludi. Stat Buff / Passive: 84% / Creation+Worry: 45% / Thieves Den: 2% (or higher)",
+        "battle_plus_stats_jp": "<b>SP回復</b>/ 基本スタット: 188.5% / 意識 0: 60% / マイパレス: 5% （以上） <b>CRT倍率</b>/ 解明の力 / パッシブ: 84% / 結造+憂慮: 45% / マイパレス: 2% （以上）",
+        "element_weakness": "염동",
+        "element_resistance": "질풍",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S1/HL!",
+        "mind_skill2": "S2/S3!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "질풍 강습",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "소용돌이의 중심",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "howler",
+      "sourceKey": "루우나",
+      "codename": "HOWLER",
+      "role": "Saboteur",
+      "element": "fire",
+      "pageUrl": "https://lufel.net/en/character/howler/",
+      "skills": {
+        "skill1": {
+          "name": "Welcome Hug",
+          "element": "화염광역",
+          "type": "디버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 73.2%/80.7%/77.7%/85.2% of Attack.\nDecrease target's Defense by 15.4% of Runa's ailment accuracy for 2 turns (up to 26.4%/29.1%/28.0%/30.7%). Also, when the target of this effect takes Fire, Ice, Electric, or Wind skill damage, decrease Defense by 26.4%/26.4%/28.0%/28.0% more. The Defense decrease effects from this skill and Furrious Bark do not stack.\nAlso, 50% chance to inflict Burn on the target, and gain Big Welcome for 2 turns."
+        },
+        "skill2": {
+          "name": "Furrious Bark",
+          "element": "화염",
+          "type": "디버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 170.8%/188.3%/181.3%/198.8% of Attack.\nDecrease target's Defense by 14.6%/14.6%/15.5%/15.5% + 31.4% of Runa's ailment accuracy (up to 53.7%/59.2%/57.0%/62.5%) for 2 turns. The Defense decrease effects from this skill and Welcome Hug do not stack.\nAlso, gain Furrocious Follow-Up for 2 turns."
+        },
+        "skill3": {
+          "name": "Woof Woof Blaze",
+          "element": "화염광역",
+          "type": "디버프",
+          "sp": 26,
+          "cool": 0,
+          "description": "Usable when Big Welcome or Furrocious Follow-Up are active, and activates various effects based on which is active. If both effects are active at the same time, prioritize Big Welcome.\nRemove Big Welcome and Furrocious Follow-Up after effect activates.\nBig Welcome: Deal Fire damage to all foes equal to 109.8%/109.8%/116.6%/116.6% of Attack. This skill's damage is counted as a Resonance.\nIncrease target's damage taken by 24% of Runa's ailment accuracy (up to 41.0%/45.2%/43.5%/47.7%), and Fire, Ice, Electric and Wind damage taken by 20.5%/22.6%/21.8%/23.9% for 2 turns.\nFurrocious Follow-Up: Deal Fire damage to 1 foe equal to 219.6%/219.6%/233.1%/233.1% of Attack. This skill's damage is counted as a Resonance.\nIncrease target's damage taken by 34.3% of Runa's ailment accuracy (up to 58.6%/64.6%/62.2%/68.2%), and Resonance damage taken by 39.0%/43.0%/41.4%/45.4% for 2 turns."
+        },
+        "passive1": {
+          "name": "Peppy Guard Dog",
+          "element": "패시브",
+          "cool": 0,
+          "description": "During battle, increase Runa's Attack by 60.0% of her ailment accuracy."
+        },
+        "passive2": {
+          "name": "Faithful Dog",
+          "element": "패시브",
+          "cool": 0,
+          "description": "When Runa inflicts a debuff on a foe with a skill, increase her Attack by 33.0% for 1 turn. When an ally deals Fire, Ice, Electric or Wind damage or Resonance damage, grant them the same Attack increase effect."
+        },
+        "skill_highlight": {
+          "element": "화염광역",
+          "type": "디버프",
+          "cool": 4,
+          "description": "Deal Fire damage to all foes equal to 214.7%/236.7%/227.9%/249.9% of Attack.\nPermanently inflict 2 Enthusiastic Fuse stacks on foes. Stacks up to 2 times (remove as wave progresses).\nEnthusiastic Fuse: When any foe takes Fire, Ice, Electric, or Wind skill damage or Resonance damage, spend 1 Enthusiastic Fuse stack, and increase the damage by 22.9% of Runa's ailment accuracy (up to 53.7%/59.2%/57.0%/62.5%). If Runa's skills and Resonance activate this effect, Enthusiastic Fuse will not be spent."
+        },
+        "name": "Runa Dogenzaka"
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 288.36,
+          "SP": 100,
+          "attack": 94.34,
+          "defense": 58.15,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 105
+        },
+        "awake7": {
+          "ailment_accuracy": 34.9
+        },
+        "a0_lv80": {
+          "HP": 3239.99,
+          "attack": 1060.03,
+          "defense": 653.36
+        },
+        "a1_lv80": {
+          "HP": 3298.39,
+          "attack": 1079.23,
+          "defense": 665.36
+        },
+        "a2_lv80": {
+          "HP": 3356.79,
+          "attack": 1098.43,
+          "defense": 676.56
+        },
+        "a3_lv80": {
+          "HP": 3415.19,
+          "attack": 1117.63,
+          "defense": 688.56
+        },
+        "a4_lv80": {
+          "HP": 3473.59,
+          "attack": 1136.03,
+          "defense": 700.56
+        },
+        "a5_lv80": {
+          "HP": 3531.99,
+          "attack": 1155.23,
+          "defense": 712.56
+        },
+        "a6_lv80": {
+          "HP": 3589.59,
+          "attack": 1174.43,
+          "defense": 723.76
+        }
+      },
+      "setting": {
+        "role": "화염 디버퍼",
+        "video": [
+          "Dv_rI-K7UnY",
+          "gh3HhqBiBbQ"
+        ],
+        "video_en": [
+          "OBAr3ttwUIA",
+          "OmTj0OFlSDc"
+        ],
+        "video_jp": [
+          "CuopE0_v5BI"
+        ],
+        "main_revelation": [
+          "자유",
+          "여정",
+          "창조"
+        ],
+        "sub_revelation": [
+          "좌절",
+          "주권",
+          "화해"
+        ],
+        "sub_revel2": [
+          "-"
+        ],
+        "sub_revel3": [
+          "효과명중"
+        ],
+        "sub_revel4": [
+          "-"
+        ],
+        "sub_option1": [
+          "효과명중"
+        ],
+        "sub_option2": [
+          "크리티컬 확률",
+          "크리티컬 효과",
+          "대미지보너스"
+        ],
+        "sub_option3": [
+          "공격력",
+          "관통"
+        ],
+        "minimum_stats": {
+          "LV10": "효과명중 171.5%",
+          "LV10+5": "효과명중 189.0%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "효과명중 181.9%",
+          "LV13+5": "효과명중 199.4%"
+        },
+        "battle_plus_stats": "· 전용무기 : 효과명중 / 마이팰리스 2.3% (이상) / 마이팰리스 평점 ",
+        "element_weakness": "질풍",
+        "element_resistance": "화염",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>2>4",
+        "mind_stats1": "대미지보너스 16%",
+        "mind_stats2": "효과명중 24%!",
+        "mind_skill1": "S3/HL!",
+        "mind_skill2": "S1/S2!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "mont-frostgale",
+      "sourceKey": "몽타뉴·백조",
+      "codename": "MONT·Frostgale",
+      "role": "Assassin",
+      "element": "wind",
+      "pageUrl": "https://lufel.net/en/character/mont-frostgale/",
+      "skills": {
+        "skill1": {
+          "name": "Éclat de Vent / Iceburst",
+          "element": "질풍빙결",
+          "type": "단일 피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Spring mode: Deal Wind damage to 1 foe equal to 73.8%/81.3%/78.3%/85.9% of Attack (3 hits), with a 30% chance to inflict Windswept. When Spring's Edge is active, also gain 1 Spring's Vestige stack and inflict Spiral Sequence for 2 turns. When Frostgale Kotone attacks a foe with Spiral Sequence, increase critical damage by 29.3%/29.3%/31.1%/31.1%.\nWinter mode: Deal Ice damage to 1 foe equal to 152.7%/168.4%/162.1%/177.8% of Attack, with a 97.6%/97.6%/103.6%/103.6% chance to inflict Freeze. If the target is already Frozen, inflict On Ice for 2 turns. Increase Ice damage taken by 13.7%/13.7%/14.5%/14.5% for foes with On Ice."
+        },
+        "skill2": {
+          "name": "Zephyr / Sapphire Storm",
+          "element": "질풍빙결광역",
+          "sp": 24,
+          "cool": 0,
+          "description": "Spring mode: Deal Wind damage to all foes equal to 31.3%/34.5%/33.3%/36.5% of Attack (3 hits). When Spring's Edge is active, also gain 2 Spring's Vestige stacks.\nWinter mode: Deal Ice damage to all foes equal to 83.8%/92.4%/89.0%/97.6% of Attack, with a 48.8%/48.8%/51.8%/51.8% chance to inflict Freeze. When Winter's Edge is active, increase this skill's damage by 20%."
+        },
+        "skill3": {
+          "name": "Ailes au Vent / Frozen Wings",
+          "element": "질풍빙결",
+          "type": "단일 피해",
+          "sp": 28,
+          "cool": 0,
+          "description": "Spring mode: Activate Spring's Edge for 1 turn, and deal Wind damage to 1 foe equal to 92.8%/102.3%/98.5%/108.0% of Attack (3 hits). While Spring's Edge is active, when allies deal Wind damage with a skill, Highlight, Theurgy or Resonance, deal Wind damage to the selected target equal to 20% of Frostgale Kotone's Attack, and gain 1 Spring's Vestige stack. When Spring's Edge ends, spend all Spring's Vestige stacks, and deal Wind damage to the target selected that turn equal to (number of Spring's Vestige stacks + 4) x 36.4%/40.1%/38.6%/42.3% of Attack. This damage is counted as a Resonance.\nWinter mode: Activate Winter's Edge for 1 turn, and deal Ice damage to 1 foe equal to 229.0%/252.5%/243.1%/266.5% of Attack. While Winter's Edge is active, when an ally takes an attack, grant Glacial Heart to all allies for 2 turns, protecting them from up to 1301/1301/1380/1380 damage. This effect can be activated up to 2 times. Also, when allies deal Ice damage with a skill, Highlight, Theurgy, or Resonance, gain 1 Winter's Vestige stack. When Winter's Edge ends, spend all Winter's Vestige stacks, and deal Ice damage to the target selected that turn equal to (number of Winter's Vestige stacks + 4) x 27.9%/30.8%/29.6%/32.5% of Attack. This damage is counted as a Resonance."
+        },
+        "passive1": {
+          "name": "Performance Scoring",
+          "element": "패시브",
+          "cool": 0,
+          "description": "At the start of battle, if a Wind ally is in the party, increase Frostgale Kotone's Wind damage by 33.0%.\nAt the start of battle, if an Ice ally is in the party, increase Frostgale Kotone's Ice damage by 33.0%."
+        },
+        "passive2": {
+          "name": "Technical Scoring",
+          "element": "패시브",
+          "cool": 0,
+          "description": "While in Spring mode, each time an ally attacks with the Wind attribute, increase party's Attack by 8.1% for 2 turns. Stacks up to 5 times.\nWhile in Winter mode, each time Frostgale Kotone gains a shield, increase party's Defense by 9.0% for 2 turns. Stacks up to 4 times."
+        },
+        "skill_highlight": {
+          "element": "질풍빙결",
+          "cool": 4,
+          "description": "Spring mode: Deal Wind damage to 1 foe equal to 212.5%/234.2%/225.5%/247.3% of Attack (3 hits). When Spring's Edge is active, gain 1 more Spring's Vestige stack (this additional stack can exceed the maximum limit). If Spring's Edge is not active, deal 1 more hit of Wind damage to selected target.\nWinter mode: Deal Ice damage to 1 foe equal to 380.6%/419.6%/404.0%/443.0% of Attack, with a 68.3%/68.3%/72.5%/72.5% chance to inflict Icebound. When Winter's Edge is active, increase chance to inflict Icebound by 29.3%/29.3%/31.1%/31.1%. If Winter's Edge is not active, increase Highlight damage by 20%."
+        },
+        "name": "Frostgale Kotone"
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 309.72,
+          "SP": 100,
+          "attack": 102.35,
+          "defense": 50.43,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 98
+        },
+        "awake7": {
+          "crit_mult": 184.9
+        },
+        "a0_lv80": {
+          "HP": 3480.01,
+          "attack": 1150.02,
+          "defense": 566.66
+        },
+        "a1_lv80": {
+          "HP": 3542.41,
+          "attack": 1170.82,
+          "defense": 577.06
+        },
+        "a2_lv80": {
+          "HP": 3605.61,
+          "attack": 1191.62,
+          "defense": 587.46
+        },
+        "a3_lv80": {
+          "HP": 3668.01,
+          "attack": 1212.42,
+          "defense": 597.06
+        },
+        "a4_lv80": {
+          "HP": 3730.41,
+          "attack": 1233.22,
+          "defense": 607.46
+        },
+        "a5_lv80": {
+          "HP": 3793.61,
+          "attack": 1253.22,
+          "defense": 617.86
+        },
+        "a6_lv80": {
+          "HP": 3856.01,
+          "attack": 1274.02,
+          "defense": 628.26
+        },
+        "a0_lv100": {
+          "HP": 4305.27,
+          "attack": 1422.74,
+          "defense": 701.04
+        },
+        "a1_lv100": {
+          "HP": 4383.27,
+          "attack": 1448.74,
+          "defense": 714.04
+        },
+        "a2_lv100": {
+          "HP": 4462.27,
+          "attack": 1474.74,
+          "defense": 727.04
+        },
+        "a3_lv100": {
+          "HP": 4540.27,
+          "attack": 1500.74,
+          "defense": 739.04
+        },
+        "a4_lv100": {
+          "HP": 4618.27,
+          "attack": 1526.74,
+          "defense": 752.04
+        },
+        "a5_lv100": {
+          "HP": 4697.27,
+          "attack": 1551.74,
+          "defense": 765.04
+        },
+        "a6_lv100": {
+          "HP": 4775.27,
+          "attack": 1577.74,
+          "defense": 778.04
+        }
+      },
+      "setting": {
+        "role": "질풍/빙결 단일 딜러",
+        "video": [
+          "3KRF2yYXtNs",
+          "EAjvUE4zwI4"
+        ],
+        "video_en": [
+          "fMyHydppGbk",
+          "Q26LetmkD-Q"
+        ],
+        "video_jp": [
+          "k6KIc0MogGg",
+          "JvtXPM693JM"
+        ],
+        "main_revelation": [
+          "자유",
+          "전념",
+          "자아"
+        ],
+        "sub_revelation": [
+          "개선",
+          "화려",
+          "반성"
+        ],
+        "sub_revel2": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 효과",
+          "크리티컬 확률"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 확률",
+          "크리티컬 효과"
+        ],
+        "sub_option2": [
+          "공격력",
+          "대미지보너스",
+          "관통"
+        ],
+        "sub_option3": [],
+        "minimum_stats": {
+          "LV10": false,
+          "LV10+5": false,
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": false,
+          "LV13+5": false
+        },
+        "battle_plus_stats": "nan",
+        "element_weakness": "염동",
+        "element_resistance": "질풍",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>1>4>2",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "크리티컬 확률 12%!",
+        "mind_skill1": "S1/HL!",
+        "mind_skill2": "S2/S3!",
+        "nature_skill_order": [
+          "Wind",
+          "Ice"
+        ],
+        "nature_skill_recommend": {
+          "Wind": {
+            "501": [
+              {
+                "skill": 70604,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              },
+              {
+                "skill": 70602,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              }
+            ],
+            "502": [
+              {
+                "skill": 70607,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              },
+              {
+                "skill": 70606,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              }
+            ]
+          },
+          "Ice": {
+            "501": [
+              {
+                "skill": 70405,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              },
+              {
+                "skill": 70402,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              },
+              {
+                "skill": 70401,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              }
+            ],
+            "502": [
+              {
+                "skill": 70406,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              },
+              {
+                "skill": 70407,
+                "note": "",
+                "note_en": "",
+                "note_jp": "",
+                "note_cn": ""
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "slug": "j-c",
+      "sourceKey": "J&C",
+      "codename": "J&C",
+      "role": "Virtuoso",
+      "element": "almighty",
+      "pageUrl": "https://lufel.net/en/character/j-c/",
+      "skills": {
+        "skill1": {
+          "name": "Mask of Mischief & Innocence",
+          "type": "단일 피해",
+          "element": "화염빙결",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Ice damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, increase party's Attack by 39.0%/43.0%/41.4%/45.4% for every 100 points of Desire Level for 3 turns.\nGain Facade of Mischief & Innocence."
+        },
+        "skill2": {
+          "name": "Mask of Service & Admonition",
+          "type": "단일 피해",
+          "element": "전격질풍",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Electric damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Wind damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, decrease party's damage taken by 9.8%/10.8%/10.4%/11.4% and 9.8%/10.8%/10.4%/11.4% more for every 100 points of Desire Level for 3 turns. Also, restore party's HP by 34.7%/38.3%/36.9%/40.4% of Justine & Caroline's Attack + 2225/2934/2735/3480.\nGain Facade of Service & Admonition."
+        },
+        "skill3": {
+          "name": "Mask of Absurdity & Nonsense",
+          "type": "단일 피해",
+          "element": "염동핵열",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Nuclear damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, increase pierce rate for Justine & Caroline and the Sweeper or Assassin ally with the highest Attack by 4.9%/5.4%/5.2%/5.7% and 4.9%/5.4%/5.2%/5.7% more for every 100 points of Desire Level for 3 turns.\nGain Facade of Absurdity & Nonsense."
+        },
+        "skill4": {
+          "name": "Mask of Luck & Loss",
+          "type": "단일 피해",
+          "element": "축복주원",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Curse damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every point of Desire Level).\nAlso, increase Justine & Caroline's Attack by 14.6%/16.1%/15.5%/17.0% + 14.6%/16.1%/15.5%/17.0% for every 100 points of Desire Level, damage dealt by 9.8%/10.8%/10.4%/11.4% + 9.8%/10.8%/10.4%/11.4% for every 100 points of Desire Level, and critical rate by 4.9%/5.4%/5.2%/5.7% + 4.9%/5.4%/5.2%/5.7% for every 100 points of Desire Level for 3 turns.\nGain Facade of Luck & Loss."
+        },
+        "skill5": {
+          "name": "Two Masks as One",
+          "type": "단일 피해",
+          "element": "만능",
+          "sp": 25,
+          "cool": 0,
+          "description": "Usable when any 2 types of Facade have been gained. Deal Almighty damage to 1 foe equal to 126.9%/139.9%/134.7%/147.7% of Attack (increase this effect by 1% for every 1 point of Desire Level). Also, spend all Facades to activate the following effects based on their combination.\nFacade of Mischief & Innocence + Facade of Service & Admonition: Restore party's HP equal to 52.2%/57.6%/55.4%/60.8% of Attack + 3344/4409/4111/5230. Also, increase party's damage dealt by 43.9%/48.4%/46.6%/51.1% for every 100 points of Desire Level for 2 turns.\nFacade of Mischief & Innocence + Facade of Absurdity & Nonsense: Grant other allies 14.6%/16.1%/15.5%/17.0% of Skill Amplification for 2 turns. Also, increase party's critical damage by 19.5%/21.5%/20.7%/22.7% for every 100 points of Desire Level.\nSkill Amplification: Increase the values of skills and Thief Tactics that are increased when leveled up. This effect is calculated separately from other effects.\nFacade of Mischief & Innocence + Facade of Luck & Loss: Change this skill's target to all foes.\nFacade of Service & Admonition + Facade of Absurdity & Nonsense: Grant all allies a shield equal to 41.8%/46.1%/44.3%/48.6% of Justine & Caroline's Attack + 2675/3527/3289/4184 and 1 Down Point for 2 turns. Also, increase party's Defense by 48.8%/53.8%/51.8%/56.8% for every 100 points of Desire Level.\nFacade of Service & Admonition + Facade of Luck & Loss: Inflict Shock, Windswept and 2 Curse stacks on the main target, and gain 2 Blessing stacks. These effects last for 2 turns. Also, decrease all foes' Defense by 25.4%/28.0%/26.9%/29.5% + 25.4%/28.0%/26.9%/29.5% for every 100 point of Desire Level for 2 turns.\nFacade of Absurdity & Nonsense + Facade of Luck & Loss: This skill deals 1 more hit of Almighty damage. Also, gain Rebel Surveillance for 2 turns.\nRebel Surveillance: When using a skill, temporarily gain 4.9%/5.4%/5.2%/5.7% of Effects stats from the Sweeper or Assassin ally with the highest Attack (excluding Justine & Caroline)."
+        },
+        "passive1": {
+          "name": "Overseer of Rehabilitation",
+          "element": "패시브",
+          "description": "At the start of battle, increase Desire Level based on Justine & Caroline's base stats.\nFor every 100 points of Attack, increase Desire Level by 1 (up to 45).\nFor every 2% of Damage Mult. +, increase Desire Level by 1 (up to 15).\nFor every 6% of Critical Multiplier above 100%, increase Desire Level by 1 (up to 15).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Oxymoron",
+          "element": "패시브",
+          "description": "Gain stat bonuses based on the selected Persona combinations:\nMask of Mischief & Innocence + Mask of Service & Admonition: Increase healing by 21.0%. Also, when on the field, increase party's damage dealt by 24.0%.\nMask of Mischief & Innocence + Mask of Absurdity & Nonsense: Increase Speed by 5. Also, when on the field, increase party's Attack by 30.0%.\nMask of Mischief & Innocence + Mask of Luck & Loss: Increase critical rate by 15.0%.\nMask of Service & Admonition + Mask of Absurdity & Nonsense: Increase Justine & Caroline's shield by 21.0%.\nMask of Service & Admonition + Mask of Luck & Loss: Increase Speed by 5. Also, when on the field, increase all foes' damage taken by 24.0%.\nMask of Absurdity & Nonsense + Mask of Luck & Loss: Increase critical damage by 30.0%.",
+          "cool": 0
+        },
+        "skill_highlight": {
+          "element": "만능",
+          "cool": 4,
+          "description": "When activating a Highlight, choose 1 of the 2 selected Persona sets and activate its Highlight below (cooldown times for each Highlight are calculated independently).\nMask of Mischief & Innocence: Increase the party's Attack by 24.4%/26.9%/25.9%/28.4% and damage by 34.2%/37.7%/36.3%/39.8% for 2 turns.\nMask of Service & Admonition: Restore the party's HP by 43.4%/47.9%/46.1%/50.6% of Justine & Caroline's Attack + 2782/3667/3419/4350.\nIncrease the party's max HP by 9.8%/10.8%/10.4%/11.4% for 2 turns.\nMask of Absurdity & Nonsense: Deal Psychokinesis damage to 1 foe equal to 244.0%/269.0%/259.0%/284.0% of Attack, and Nuclear damage equal to 244.0%/269.0%/259.0%/284.0% of Attack (1 hit each, can inflict critical damage).\nIncrease Attack by 34.2%/37.7%/36.3%/39.8% for Justine & Caroline and the ally with the highest Attack (prioritizing Assassins or Sweepers).\nMask of Luck & Loss: Deal Bless damage to all foes equal to 122.0%/134.5%/129.5%/142.0% of Attack, and deal Curse damage equal to 122.0%/134.5%/129.5%/142.0% of Attack (1 hit each, can inflict critical damage).\nFor 2 turns, increase Justine & Caroline's Attack by 29.3%/32.3%/31.1%/34.1% and critical damage by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "name": "Justine & Caroline"
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 417,
+          "SP": 100,
+          "attack": 113,
+          "defense": 77,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 104
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3600.02,
+          "attack": 999.99,
+          "defense": 666.68
+        },
+        "a1_lv80": {
+          "HP": 3664.82,
+          "attack": 1018.39,
+          "defense": 678.68
+        },
+        "a2_lv80": {
+          "HP": 3729.62,
+          "attack": 1035.99,
+          "defense": 690.68
+        },
+        "a3_lv80": {
+          "HP": 3794.42,
+          "attack": 1054.39,
+          "defense": 702.68
+        },
+        "a4_lv80": {
+          "HP": 3859.22,
+          "attack": 1071.99,
+          "defense": 714.68
+        },
+        "a5_lv80": {
+          "HP": 3924.02,
+          "attack": 1090.39,
+          "defense": 726.68
+        },
+        "a6_lv80": {
+          "HP": 3988.82,
+          "attack": 1107.99,
+          "defense": 738.68
+        },
+        "a0_lv100": {
+          "HP": 4453.74,
+          "attack": 1237.13,
+          "defense": 824.78
+        },
+        "a1_lv100": {
+          "HP": 4534.74,
+          "attack": 1260.13,
+          "defense": 839.78
+        },
+        "a2_lv100": {
+          "HP": 4615.74,
+          "attack": 1282.13,
+          "defense": 854.78
+        },
+        "a3_lv100": {
+          "HP": 4696.74,
+          "attack": 1305.13,
+          "defense": 869.78
+        },
+        "a4_lv100": {
+          "HP": 4777.74,
+          "attack": 1327.13,
+          "defense": 884.78
+        },
+        "a5_lv100": {
+          "HP": 4858.74,
+          "attack": 1350.13,
+          "defense": 899.78
+        },
+        "a6_lv100": {
+          "HP": 4939.74,
+          "attack": 1372.13,
+          "defense": 914.78
+        }
+      },
+      "setting": {
+        "role": "자율 직업 선택",
+        "video": [
+          "A5eX8ipPqtE",
+          "nEtIbMs9wf8"
+        ],
+        "video_en": [
+          "Wulo8Bz00wA",
+          "Oe6celXfnYQ",
+          "DYgC5fleSaw"
+        ],
+        "video_jp": [
+          "F3_7JnVGcgs",
+          "XZ7Mb_zUrk0",
+          "NoeIyxXOFts",
+          "Jsd7kxEiHPw"
+        ],
+        "main_revelation": [
+          "탄생",
+          "자유",
+          "희망"
+        ],
+        "sub_revelation": [
+          "힘",
+          "실망",
+          "변화"
+        ],
+        "sub_revel2": [
+          "대미지 보너스",
+          "공격력"
+        ],
+        "sub_revel3": [
+          "크리티컬 확률",
+          "크리티컬 효과"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "크리티컬 확률"
+        ],
+        "sub_option2": [
+          "크리티컬 효과"
+        ],
+        "sub_option3": [
+          "대미지 보너스",
+          "공격력",
+          "관통"
+        ],
+        "minimum_stats": {
+          "LV10": "공격력 4500, 크리티컬 효과 190%, 대미지 보너스 30%",
+          "LV10+5": "공격력 4500, 크리티컬 효과 190%, 대미지 보너스 30%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "공격력 4500, 크리티컬 효과 190%, 대미지 보너스 30%",
+          "LV13+5": "공격력 4500, 크리티컬 효과 190%, 대미지 보너스 30%"
+        },
+        "battle_plus_stats": "<b>공격력</b>/ 마이팰리스 50LV 65 / 마이팰리스 70LV 110 (이상) / 마이팰리스 평점 / 해명의힘 <b>크리티컬 효과</b>/ 마이팰리스 2% / 해명의힘 <b>대미지 보너스</b>/ 마이팰리스 / 해명의힘",
+        "battle_plus_stats_en": "<b>Attack</b>/ Thieves Den 50LV 65 / Thieves Den 70LV 110 (or higher) / Thieves Den Rating / Eludi. Stat Buff <b>Crit Mult</b>/ Thieves Den 2% / Eludi. Stat Buff <b>Damage Mult</b>/ Thieves Den / Eludi. Stat Buff",
+        "battle_plus_stats_jp": "<b>攻撃力</b>/ マイパレス 50LV 65 / マイパレス 70LV 110 （以上） / マイパレス評価 / ステータス強化 <b>CRT効果</b>/ マイパレス 2% / ステータス強化 <b>ダメージボーナス</b>/ マイパレス / ステータス強化",
+        "element_weakness": "",
+        "element_resistance": "",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "MAX!",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX",
+        "skill_priority": "3>2>1>4",
+        "mind_stats1": "대미지 보너스 16%",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S1/S2!",
+        "mind_skill2": "S3/HL!",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": [
+                "대미지 증가",
+                "만능 속성 대미지 증가"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": [
+                "철벽의 천적",
+                "조화의 힘"
+              ],
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "noir",
+      "sourceKey": "하루",
+      "codename": "NOIR",
+      "role": "Sweeper",
+      "element": "psychic",
+      "pageUrl": "https://lufel.net/en/character/noir/",
+      "skills": {
+        "name": "Haru Okumura",
+        "skill1": {
+          "name": "Extrasensory Aim",
+          "element": "염동광역",
+          "type": "광역피해",
+          "sp": 26,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to all foes equal to 75.8%/83.6%/80.5%/88.3% of Attack (2 hits). 97.6%/97.6%/103.6%/103.6% chance to inflict 1 Target Audience stack on the main target and 53.7%/53.7%/57.0%/57.0% chance to inflict 1 Target Audience stack on other foes. Then, transfer Target Audience stacks on foes to Haru and change Target Audience's duration to 3 turns. Also gain 1 Focused Round stack.\nFocused Round: When using a ranged attack with Target Audience, increase skill damage by 29.3%/32.3%/31.1%/34.1%. After the ranged attack, remove all Target Audience stacks granted to Haru."
+        },
+        "skill2": {
+          "name": "Precise Volley",
+          "element": "총격",
+          "type": "단일 피해",
+          "hp": 12,
+          "cool": 0,
+          "description": "Deal Gun damage to 1 foe equal to 151.6%/167.1%/160.9%/176.4% of Attack. When Haru has Target Audience, increase this skill's pierce rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Painpoint Round.\nPainpoint Round: When using a ranged attack, also deal Psychokinesis damage to the main target equal to 39.0%/43.0%/41.4%/45.4% of Attack (can gain skill damage increases from Focused Round)."
+        },
+        "skill3": {
+          "name": "Mindful Release",
+          "element": "염동광역",
+          "type": "광역피해",
+          "sp": 26,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to all foes equal to 142.1%/156.7%/150.8%/165.4% of Attack. When Haru has Target Audience, increase this skill's critical rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Spillover Round stack.\nSpillover Round: When using a ranged attack, also deal Psychokinesis damage to all foes equal to 29.3%/32.3%/31.1%/34.1% of Attack (can gain skill damage increases from Focused Round)."
+        },
+        "skill_highlight": {
+          "element": "염동광역",
+          "type": "광역피해",
+          "description": "Deal Psychokinesis damage to all foes equal to 206.9%/228.1%/219.6%/240.8% of Attack. Gain 1 Overload Round if Haru doesn't have any Overload Round stacks and is below maximum Thoughtful Round stacks.\nOverload Round: When using a ranged attack, increase critical rate by 14.6%/14.6%/15.5%/15.5%.\nIf Haru hasn't gained any Overload Round stacks, increase this skill damage by 14.6%/16.1%/15.5%/17.0%.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Heiress's Leadership",
+          "element": "패시브",
+          "description": "During battle, increase Attack by 1% for every 1.45% of ailment accuracy (up to 165.0% of Attack). Also increase critical damage by 20% for every 50% of ailment accuracy (stacks up to 3 times).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Helping Others",
+          "element": "패시브",
+          "description": "Permanently gain 1 Area to Improve stack for each Thoughtful Round stack gained. Gain the following effects based on the number of Area to Improve stacks.\n1 stack: Increase ailment accuracy by 18.0% and ailment resistance by 18.0%.\n2 stacks: Increase Attack by 18.0% and Defense by 18.0%.\n3 stacks: Increase critical damage by 18.0%.",
+          "cool": 0
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "HP": 288.36,
+          "SP": 100,
+          "attack": 102.35,
+          "defense": 57.55,
+          "crit_rate": 5,
+          "crit_mult": 150,
+          "speed": 97
+        },
+        "awake7": {
+          "ailment_accuracy": 34.9
+        },
+        "a0_lv80": {
+          "HP": 3239.99,
+          "attack": 1150.02,
+          "defense": 646.69
+        },
+        "a1_lv80": {
+          "HP": 3298.39,
+          "attack": 1170.82,
+          "defense": 658.69
+        },
+        "a2_lv80": {
+          "HP": 3356.79,
+          "attack": 1191.62,
+          "defense": 669.89
+        },
+        "a3_lv80": {
+          "HP": 3415.19,
+          "attack": 1212.42,
+          "defense": 681.89
+        },
+        "a4_lv80": {
+          "HP": 3473.59,
+          "attack": 1233.22,
+          "defense": 693.09
+        },
+        "a5_lv80": {
+          "HP": 3531.99,
+          "attack": 1253.22,
+          "defense": 705.09
+        },
+        "a6_lv80": {
+          "HP": 3589.59,
+          "attack": 1274.02,
+          "defense": 716.29
+        }
+      },
+      "setting": {
+        "role": "염동 광역 딜러",
+        "video": [
+          "YVCUzXdvD6E",
+          "dBUktg0nRuw"
+        ],
+        "video_en": [
+          "Yy3glHRq1ow",
+          "dBUktg0nRuw"
+        ],
+        "video_jp": [
+          "ptUU2aWKuRs",
+          "dBUktg0nRuw"
+        ],
+        "main_revelation": [
+          "지혜"
+        ],
+        "sub_revelation": [
+          "환희"
+        ],
+        "sub_revel2": [
+          "대미지 보너스"
+        ],
+        "sub_revel3": [
+          "크리티컬 확률",
+          "효과명중"
+        ],
+        "sub_revel4": [
+          "공격력"
+        ],
+        "sub_option1": [
+          "효과명중"
+        ],
+        "sub_option2": [
+          "관통",
+          "크리티컬 확률",
+          "크리티컬 효과"
+        ],
+        "sub_option3": [
+          "공격력",
+          "대미지보너스"
+        ],
+        "minimum_stats": {
+          "LV10": "효과명중 150%",
+          "LV10+5": "효과명중 150%",
+          "LV12": false,
+          "LV12+5": false,
+          "LV13": "효과명중 150%",
+          "LV13+5": "효과명중 150%"
+        },
+        "battle_plus_stats": "· 마이팰리스 2.3% (이상) / 마이팰리스 평점",
+        "element_weakness": "핵열",
+        "element_resistance": "염동",
+        "skill1_lv": "MAX!",
+        "skill2_lv": "8",
+        "skill3_lv": "MAX!",
+        "skill4_lv": "MAX!",
+        "skill_priority": "3>4>1>2",
+        "mind_stats1": "공격력 20%",
+        "mind_stats2": "크리티컬 효과 24%!",
+        "mind_skill1": "S3/HL!",
+        "mind_skill2": "S1/S2",
+        "nature_skill_recommend": {
+          "501": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ],
+          "502": [
+            {
+              "skill": "",
+              "note": "",
+              "note_en": "",
+              "note_jp": "",
+              "note_cn": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

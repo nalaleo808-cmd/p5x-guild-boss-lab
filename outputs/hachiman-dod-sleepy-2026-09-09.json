@@ -1,0 +1,371 @@
+{
+  "generatedAt": "2026-09-12T21:14:10.333Z",
+  "seed": 8,
+  "rules": {
+    "preBreakHpCap": 405499,
+    "lockFloor": 4054,
+    "breakPointMultiplier": 3,
+    "turnLimit": 120,
+    "hpLock": "holds HP at 1% of max (4,054)",
+    "shields": "normal",
+    "evidence": "two_runs_401445_locked_405499_base_2026-09-10"
+  },
+  "assumptions": [
+    "J&C, Marian, Wonder and MIKU stats are Joker's panels, not Sleepy's.",
+    "Hachiman's Dreamscape stage effects (+30% continuous damage, +20% Curse, the skill/Resonance critical conversion, the composition +20% final damage taken) apply in DOD as in Multidimensional Dreamscape (Joker, 2026-09-09).",
+    "Difficulty bonus and survival bonus for DOD are unknown; the result is reported as points, with x8 shown only as a what-if.",
+    "\"Takemedic\" is modeled as Marian using DOT-Up on Berry from her prescriptions. Sleepy's \"Item + skill\" pairs are read as her free Potent Medicine (an ordinary item ends her turn); only the second B2 item (HL-Up) is an ordinary item.",
+    "\"Guard or Heal\" rounds use Guard for everyone.",
+    "Item stock is set to 3 of each Dreamscape item so the route's repeated DoT and DMG items are legal; the real DOD inventory is unknown.",
+    "True Desire (\"A6 button\") presses that the recharge (eight J&C counted actions, Joker's live run 2026-09-10) has not restored are skipped rather than failing the route.",
+    "A6 Summer Marian's basket does not consume medicine (Joker, 2026-09-11); one basket use per Marian turn is the only limit.",
+    "Sleepy's Janosik carries Matarukaja; Joker's does not (Tatra Shot, Rakunda, Tarukaja) and Joker's Dionysus has Tarukaja instead of Rakunda (live run 2026-09-10)."
+  ],
+  "recordedScore": 9565851160,
+  "points": 1231298623,
+  "preBreakDamage": 405499,
+  "breakDamage": 410297708,
+  "projectedScore": 9851388984,
+  "recordedBreakdown": {
+    "baseDamagePoints": 405499,
+    "weakenedDamagePoints": 1195200896,
+    "bossAttackPoints": 125000,
+    "difficultyBonus": 8
+  },
+  "phase": "results",
+  "outcome": "break_window_complete",
+  "forcedGauge": [
+    {
+      "label": "B2 Twins F/I Highlight",
+      "shortfall": 24
+    }
+  ],
+  "skippedOptional": [
+    "B3 Twins A6 button"
+  ],
+  "failure": null,
+  "turns": [
+    {
+      "turn": "T1",
+      "points": 334875,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 5,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": [
+        {
+          "label": "T1 Berry S1 on first add",
+          "points": 334875
+        }
+      ]
+    },
+    {
+      "turn": "T2",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 3,
+      "lock": true,
+      "weakened": false,
+      "highlight": 34,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T3",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 3,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T4",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 3,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T5",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 2,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T6",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 0,
+      "lock": true,
+      "weakened": false,
+      "highlight": 68,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T7",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 0,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T8",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 0,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T9",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 6,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T10",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 6,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T11",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 5,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T12",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 4,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T13",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 4,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T14",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 4,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T15",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 2,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T16",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 2,
+      "lock": true,
+      "weakened": false,
+      "highlight": 51,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T17",
+      "points": 0,
+      "cumulative": 401445,
+      "bossHp": 4054,
+      "shield": 1,
+      "lock": true,
+      "weakened": false,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": []
+    },
+    {
+      "turn": "T18",
+      "points": 4054,
+      "cumulative": 405499,
+      "bossHp": 0,
+      "shield": 0,
+      "lock": false,
+      "weakened": true,
+      "highlight": 72,
+      "phase": "battle",
+      "actions": [
+        {
+          "label": "T18 Berry S3 boss (break)",
+          "points": 4054
+        }
+      ]
+    },
+    {
+      "turn": "B1",
+      "points": 113215854,
+      "cumulative": 113621353,
+      "bossHp": 0,
+      "shield": 0,
+      "lock": false,
+      "weakened": true,
+      "highlight": 76,
+      "phase": "battle",
+      "actions": [
+        {
+          "label": "B1 Twins S1 F/I boss (A6 nuke)",
+          "points": 13960593
+        },
+        {
+          "label": "B1 Berry S3 boss",
+          "points": 99255261
+        }
+      ]
+    },
+    {
+      "turn": "B2",
+      "points": 991784742,
+      "cumulative": 1105406095,
+      "bossHp": 0,
+      "shield": 0,
+      "lock": false,
+      "weakened": true,
+      "highlight": 42,
+      "phase": "battle",
+      "actions": [
+        {
+          "label": "B2 Twins S2 P/N boss",
+          "points": 4431300
+        },
+        {
+          "label": "B2 Berry Highlight boss",
+          "points": 95775627
+        },
+        {
+          "label": "B2 Berry free Highlight boss",
+          "points": 125560647
+        },
+        {
+          "label": "B2 Berry Alt S3 boss",
+          "points": 766017168
+        }
+      ]
+    },
+    {
+      "turn": "B3",
+      "points": 62135205,
+      "cumulative": 1167541300,
+      "bossHp": 0,
+      "shield": 6,
+      "lock": false,
+      "weakened": true,
+      "highlight": 100,
+      "phase": "battle",
+      "actions": [
+        {
+          "label": "B3 Twins S1 F/I boss",
+          "points": 4699458
+        },
+        {
+          "label": "B3 Berry S3 boss",
+          "points": 57435747
+        }
+      ]
+    },
+    {
+      "turn": "B4",
+      "points": 63757323,
+      "cumulative": 1231298623,
+      "bossHp": 0,
+      "shield": 5,
+      "lock": false,
+      "weakened": false,
+      "highlight": 72,
+      "phase": "results",
+      "actions": [
+        {
+          "label": "B4 Twins P/N Highlight",
+          "points": 3186015
+        },
+        {
+          "label": "B4 Twins S2 P/N boss",
+          "points": 2601954
+        },
+        {
+          "label": "B4 Berry S3 boss",
+          "points": 57969354
+        }
+      ]
+    }
+  ]
+}

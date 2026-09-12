@@ -1,0 +1,74 @@
+title: 페르소나5 더 팬텀 X - 루페르넷
+description: 페르소나5 더 팬텀 X 공략 사이트 루페르넷 - 괴도, 페르소나, 계시, 택틱 등 다양한 게임 정보와 전략을 제공합니다.
+url: "https://lufel.net"
+baseurl: ""
+author: 루트
+
+# 플러그인 설정
+safe: true
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+# defaults 설정
+defaults:
+  # 기본 설정
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      language: kr
+
+  # 리다이렉트 설정
+  - scope:
+      path: "apps/character"
+    values:
+      redirect_from: /character
+  - scope:
+      path: "apps/persona"
+    values:
+      redirect_from: /persona
+  - scope:
+      path: "apps/revelations"
+    values:
+      redirect_from: /revelations
+  - scope:
+      path: "apps/tactic"
+    values:
+      redirect_from: /tactic
+
+# multilingual settings
+languages: ["kr", "en", "jp", "cn"]
+default_lang: "kr"
+exclude_from_localization: ["assets", "img", "css", "js", "music", "index.html"]
+parallel_localization: false
+
+# URL processing related settings
+include: ["assets"]
+
+# exclude files/folders
+exclude:
+  - .git
+  - .gitignore
+  - node_modules
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - scripts/seo/README.md
+  - package.json
+  - package-lock.json
+  - .jekyll-cache
+  - .jekyll-metadata
+  - data/external/before
+  - config_db
+  - "apps/patch-console/**"
+
+keep_files:
+  - assets
+  - _site/assets
+
+# 증분 빌드 활성화
+incremental: true

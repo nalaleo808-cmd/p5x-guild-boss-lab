@@ -1,0 +1,55 @@
+{
+  "source": "In-battle Details status lists at the start of T2, before MIKU acted, user screenshots 2026-09-06",
+  "hachiman": {
+    "level": 82, "hpPercent": 100,
+    "affinities": { "weak": ["curse"], "strong": ["fire", "ice", "electric", "bless"] },
+    "statuses": [
+      { "name": "Lovesick", "stacks": 15, "duration": "3 Turns", "text": "Take set amount of dmg every turn." },
+      { "name": "Damage Taken Up", "stacks": 4, "duration": "Perm.", "text": "Increase dmg taken by 10%." },
+      { "name": "Special Effect", "duration": "Perm.", "text": "Increase final dmg taken by 20% and decrease final dmg dealt by 60%." },
+      { "name": "Berserk", "stacks": 2, "duration": "Perm.", "text": "Gain a set amount of increased dmg." }
+    ],
+    "note": "Only four entries were visible; no Defense-down entry (Rakunda, Pounding Heartbeat) and no separate Lovesick damage-taken entry appeared in the captured portion."
+  },
+  "berry": {
+    "level": 80, "spRecovery": 5, "speed": 98,
+    "statuses": [
+      { "name": "Chains of Love", "stacks": 2, "duration": "Perm." },
+      { "name": "Special Effect", "duration": "Perm.", "text": "When dealing continuous dmg, increase dmg by 30%." },
+      { "name": "Special Effect", "duration": "Perm.", "text": "Increase Curse dmg by 20%." },
+      { "name": "Callous Kindness", "duration": "1 Turns", "text": "Increase Atk by 30%." },
+      { "name": "Callous Kindness", "duration": "1 Turns", "text": "Decrease dmg taken by 20%." },
+      { "name": "Two Masks As One", "duration": "1 Turns", "text": "Increase dmg by 71.1%." },
+      { "name": "Gentle Sea Breeze", "duration": "2 Turns", "text": "Increase crit rate by 18.2%." },
+      { "name": "Gentle Sea Breeze", "duration": "2 Turns", "text": "Increase crit dmg by 48.8%." },
+      { "name": "A World of Our Own", "duration": "Perm.", "text": "After using Vorpal Butterfly, activate Vorpal Butterfly 1 more time on selected target." },
+      { "name": "A World of Our Own", "duration": "Perm.", "text": "After using Obsessive Rose, activate Obsessive Rose 1 more time on selected target." },
+      { "name": "Mine Alone", "duration": "Perm.", "text": "Increase crit rate by 15%." },
+      { "name": "Overflowing Love", "duration": "Perm.", "text": "Increase Atk by 30%." },
+      { "name": "Melting Ichi-Go Butter", "duration": "Perm.", "text": "Increase continuous dmg by 15%." },
+      { "name": "Blessing", "duration": "1 Turns", "text": "Continuously restore HP." },
+      { "name": "Soothing Sunlight", "duration": "Perm.", "text": "Increase dmg by 6%." },
+      { "name": "Blossoms by the Beach", "duration": "Perm.", "text": "Increase Atk by 12%." },
+      { "name": "Scythe of Obsession", "duration": "Perm.", "text": "Increase dmg by 41.5%." },
+      { "name": "One-Winged Butterfly", "stacks": 2, "duration": "1 Turns", "text": "Increase dmg by 25%." },
+      { "name": "One-Winged Butterfly", "stacks": 2, "duration": "1 Turns", "text": "Increase crit dmg by 25%." },
+      { "name": "Legendary Diva", "duration": "Perm.", "text": "Increase crit dmg by 34.3%." },
+      { "name": "Sorrow", "duration": "2 Turns", "text": "Increase dmg by 20%." },
+      { "name": "Trust & Prosperity", "duration": "1 Turns", "text": "Increase dmg by 8%." },
+      { "name": "Creation & Reconciliation", "duration": "Perm.", "text": "Increase dmg by 12%." },
+      { "name": "Perseverance & Sorrow", "duration": "Perm.", "text": "Increase continuous dmg effect by 16%." },
+      { "name": "Matarukaja IV", "duration": "1 Turns", "text": "Increase Atk by 9.8%." },
+      { "name": "Marakukaja III", "duration": "1 Turns", "text": "Increase Def by 11.8%." },
+      { "name": "Sparkling Flower Basket", "duration": "1 Turns", "text": "Increase Atk by 19%." },
+      { "name": "Oxymoron", "duration": "Perm.", "text": "Increase dmg by 24%." },
+      { "name": "Labor", "duration": "Perm.", "text": "Increase HP, Atk, and Def by 8%." },
+      { "name": "Special Effect", "duration": "Perm.", "text": "Cannot activate critical hits, but increase final dmg by 270.2%." }
+    ]
+  },
+  "t1Components": {
+    "totalRaw": 557866, "note": "T1 points 278,933 at weight 0.5",
+    "jcGun": 26396, "berryVorpalButterflyOnHachiman": 431626, "openingTwoMasksAsOne": 83000,
+    "remainderForLovesickTick": 16840,
+    "remainderObservation": "15 stacks x 18% x 6,057 Attack (panel plus navigator share, no buffs) = 16,354, within 3%. Alternatives within the 5% variance band: 18% x buffed Attack 10,903 x 15 x the 0.5976 Defense multiplier = 17,592. One tick cannot separate these."
+  }
+}

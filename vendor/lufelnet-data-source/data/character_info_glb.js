@@ -1,0 +1,238 @@
+window.characterList = window.characterList || {
+    mainParty: [
+        "렌", "루페르", "레오", "루우나", "류지", "리코·매화", "마코토", "마사키", "모르가나", "마유미",
+        "모토하", "모토하·여름", "몽타뉴", "몽타뉴·백조", "미나미", "미오", "사나다", "슌", "쇼키",
+        "세이지", "아야카", "안", "아케치",  "야오링", "야오링·사자무",  "유키 마코토",
+        "원더", "유스케", "유카리", "유키미", "YUI", "카스미",
+        "키요시", "키라", "치즈코", "토모코", "토모코·여름", "토시야", "하루",
+        "하루나","J&C"
+    ],
+    supportParty: [
+        "유우미", "리코", "마나카", "미유", "카요", "후타바", "미쿠"
+    ]
+};
+
+// Character data (basic info only - detailed info will be merged from KR data)
+window.characterData = window.characterData || {};
+Object.assign(window.characterData, {
+    "원더": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "release_order": 0
+    },
+    "미쿠": {
+        "release_order": 30
+    },
+    "사나다": {
+        "release_order": 29
+    },
+    "유카리": {
+        "release_order": 28
+    },
+    "유키 마코토": {
+        "release_order": 27
+    },
+    "마나카": {
+        "release_order": 26
+    },
+    "쇼키": {
+        "release_order": 25
+    },
+    "아케치": {
+        "release_order": 24
+    },
+    "마유미": {
+        "release_order": 23
+    },
+    "카스미": {
+        "release_order": 22
+    },
+    "야오링·사자무": {
+        "release_order": 21
+    },
+    "미오": {
+        "release_order": 20
+    },
+    "리코·매화": {
+        "release_order": 19
+    },
+    "루우나": {
+        "release_order": 18
+    },
+    "몽타뉴·백조": {
+        "release_order": 17
+    },
+    "J&C": {
+        "release_order": 16
+    },
+    "하루": {
+        "release_order": 15
+    },
+    "마사키": {
+        "release_order": 14
+    },
+    "후타바": {
+        "release_order": 13
+    },
+    "키라": {
+        "release_order": 12
+    },
+    "토모코·여름": {
+        "release_order": 11
+    },
+    "모토하·여름": {
+        "release_order": 10
+    },
+    "아야카": {
+        "release_order": 9
+    },
+    "리코": {
+        "release_order": 8
+    },
+    "유우미": {
+        "release_order": 7
+    },
+    "마코토": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "release_order": 6
+    },
+    "치즈코": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "release_order": 5
+    },
+    "유스케": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "limit": true,
+        "release_order": 4
+    },
+    "YUI": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "limit": true,
+        "release_order": 3
+    },
+    "미나미": {
+        "role": "",
+        "tag": "",
+        "persona": "",
+        "release_order": 2
+    },
+    "렌": {
+        "role": "",
+        "tag": "",
+        "persona": "아르센",
+        "limit": true,
+        "release_order": 1
+    },
+    "루페르": {
+        "role": "",
+        "tag": "",
+        "persona": "로브로이",
+        "release_order": 0
+    },
+    "레오": {
+        "role": "",
+        "tag": "",
+        "persona": "에리테이아",
+        "release_order": 0
+    },
+    "류지": {
+        "role": "",
+        "tag": "",
+        "persona": "캡틴 키드",
+        "release_order": 0
+    },
+    "모르가나": {
+        "role": "",
+        "tag": "",
+        "persona": "조로",
+        "release_order": 0
+    },
+    "모토하": {
+        "role": "",
+        "tag": "",
+        "persona": "아르빌다",
+        "release_order": 0
+    },
+    "몽타뉴": {
+        "role": "",
+        "tag": "",
+        "persona": "테르프시코레",
+        "release_order": 0
+    },
+    "슌": {
+        "role": "",
+        "tag": "",
+        "persona": "만돌란",
+        "release_order": 0
+    },
+    "세이지": {
+        "role": "",
+        "tag": "",
+        "persona": "레우코테아",
+        "release_order": 0
+    },
+    "안": {
+        "role": "",
+        "tag": "",
+        "persona": "카르멘",
+        "release_order": 0
+    },
+    "야오링": {
+        "role": "",
+        "tag": "",
+        "persona": "맹파",
+        "release_order": 0
+    },
+    "유키미": {
+        "role": "",
+        "tag": "",
+        "persona": "스틱스",
+        "release_order": 0
+    },
+    "키요시": {
+        "role": "",
+        "tag": "",
+        "persona": "프로심나",
+        "release_order": 0
+    },
+    "토모코": {
+        "role": "",
+        "tag": "",
+        "persona": "프로심나",
+        "release_order": 0
+    },
+    "토시야": {
+        "role": "",
+        "tag": "",
+        "persona": "고르귀라",
+        "release_order": 0
+    },
+    "하루나": {
+        "role": "",
+        "tag": "",
+        "persona": "다에이라",
+        "release_order": 0
+    },
+    "미유": {
+        "role": "",
+        "tag": "",
+        "persona": "네메르테스",
+        "release_order": 0
+    },
+    "카요": {
+        "role": "",
+        "tag": "",
+        "persona": "클레오도라",
+        "release_order": 0
+    }
+    // P3R 캐릭터 제외: "사나다", "유카리", "유키 마코토"
+});

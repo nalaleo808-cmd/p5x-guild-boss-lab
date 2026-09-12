@@ -1,0 +1,153 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["미트라스"] = {
+  "id": "249",
+  "key": "미트라스",
+  "name": "미트라스",
+  "name_en": "Mithras",
+  "name_jp": "ミトラス",
+  "grade": "4",
+  "star": "3",
+  "position": "방위",
+  "element": "핵열",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "C",
+  "tier_desc": "동료의 방어력을 증가시킬 수 있다. 페르소나 산달폰과 킹 프로스트가 없으면서 방어력 강화가 필요할 경우 고려될 수 있다.",
+  "tier_desc_en": "It can increase allies' Defense. It can be considered if you need a Defense buff and do not have Sandalphon or King Frost.",
+  "tier_desc_jp": "味方の防御力を上げられる。サンダルフォンやキングフロストがいない状態で、防御力強化が必要な時に検討できる。",
+  "tier_desc_cn": "可以提升同伴的防御力。若没有圣德芬和霜精之王，又需要防御强化时可以考虑。",
+  "comment": "",
+  "comment_en": "",
+  "comment_jp": "",
+    "comment_cn": "",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "라쿠카쟈",
+      "priority": 3
+    },
+    {
+      "name": "리벨리온",
+      "priority": 3
+    },
+    {
+      "name": "어드바이스",
+      "priority": 3
+    }
+  ],
+  "passive_priority": 2,
+  "passive_skill": [
+    {
+      "name": "태양의 비호",
+      "name_en": "Sun's Protection",
+      "name_jp": "太陽の守護",
+      "desc": "생명이 11.6% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 방어력이 11.5% 증가한다. 생명이 50% 이상일 시 효과가 추가로 50% 증가한다.",
+      "desc_en": "Increase max HP by 11.6%. After using a skill on an ally, increase target's Defense by 11.5%. If HP is over 50%, increase Defense by 50% more. Lasts for 2 turns.",
+      "desc_jp": "ＨＰが１１.６%上昇する。味方にスキルを使用した時、２ターンの間、対象の防御力が１１.５%上昇、ＨＰが５０%を超える場合、防御力がさらに５０%上昇する。",
+      "name_cn": "炎日的庇佑",
+      "desc_cn": "生命值提升11.6%。以同伴为目标释放人格面具技能后，使其防御力提升11.5%，若其生命值高于50%，则效果额外提升50%，效果持续2回合。"
+    },
+    {
+      "name": "태양의 비호Ⅰ",
+      "name_en": "Sun's Protection I",
+      "name_jp": "太陽の守護Ⅰ",
+      "desc": "생명이 11.6% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 방어력이 13% 증가한다. 생명이 50% 이상일 시 효과가 추가로 50% 증가한다.",
+      "desc_en": "Increase max HP by 11.6%. After using a skill on an ally, increase target's Defense by 13%. If HP is over 50%, increase Defense by 50% more. Lasts for 2 turns.",
+      "desc_jp": "ＨＰが１１.６%上昇する。味方にスキルを使用した時、２ターンの間、対象の防御力が１３%上昇、ＨＰが５０%を超える場合、防御力がさらに５０%上昇する。",
+      "name_cn": "炎日的庇佑Ⅰ",
+      "desc_cn": "生命值提升11.6%。以同伴为目标释放人格面具技能后，使其防御力提升13%，若其生命值高于50%，则效果额外提升50%，效果持续2回合。"
+    },
+    {
+      "name": "태양의 비호Ⅱ",
+      "name_en": "Sun's Protection II",
+      "name_jp": "太陽の守護Ⅱ",
+      "desc": "생명이 11.6% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 방어력이 14.5% 증가한다. 생명이 50% 이상일 시 효과가 추가로 50% 증가한다.",
+      "desc_en": "Increase max HP by 11.6%. After using a skill on an ally, increase target's Defense by 14.5%. If HP is over 50%, increase Defense by 50% more. Lasts for 2 turns.",
+      "desc_jp": "ＨＰが１１.６%上昇する。味方にスキルを使用した時、２ターンの間、対象の防御力が１４.５%上昇、ＨＰが５０%を超える場合、防御力がさらに５０%上昇する。",
+      "name_cn": "炎日的庇佑Ⅱ",
+      "desc_cn": "生命值提升11.6%。以同伴为目标释放人格面具技能后，使其防御力提升14.5%，若其生命值高于50%，则效果额外提升50%，效果持续2回合。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "마하라쿠카쟈",
+    "name_en": "Marakukaja",
+    "name_jp": "マハラクカジャ",
+    "desc": "모든 동료의 방어력이 16.3%/17.1%/17.9% 증가하고, 자신의 방어력 500마다 2.7%/2.8%/3.0% 추가 증가한다. 상한은 10.8%/11.3%/11.9%이며, 효과는 3턴 동안 지속된다.",
+    "desc_en": "Increase party's Defense by 16.3%/17.1%/17.9%. For every 500 of the user's Defense, increase party's Defense by 2.7%/2.8%/3.0% more, up to 10.8%/11.3%/11.9%. Lasts for 3 turns.",
+    "desc_jp": "３ターンの間、味方全体の防御力が16.3%/17.1%/17.9%上昇する。自身の防御力が５００ごとに、味方の防御力がさらに2.7%/2.8%/3.0%上昇する（最大10.8%/11.3%/11.9%まで）。",
+    "priority": 1,
+    "icon": "버프광역",
+    "icon_gl": "",
+    "name_cn": "玛哈拉库卡加",
+    "desc_cn": "使所有同伴的防御力提升16.3%/17.1%/17.9%，自身每500防御力额外提升2.7%/2.8%/3.0%，上限10.8%/11.3%/11.9%。效果持续3回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 동료가 공격력 48.6%/52.0%/55.4%+1471/1854/2275의 실드를 획득하며 2턴 동안 지속된다.",
+    "desc_en": "Grant a shield to party equal to 48.6%/52.0%/55.4% Attack + 1471/1854/2275 for 2 turns.",
+    "desc_jp": "２ターンの間、味方全体に攻撃力48.6%/52.0%/55.4%＋1471/1854/2275のシールドを付与する。",
+    "priority": 0,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "使所有同伴获得48.6%/52.0%/55.4%攻击力+1471/1854/2275的护盾，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "마하라쿠카 오토Ⅱ",
+      "name_en": "Auto-Maraku II",
+      "name_jp": "マハラクカオートⅡ",
+      "desc": "전투 시작 시 전원의 방어력이 9.1% 증가하며, 이 효과는 2턴 동안 또는 페르소나를 전환할 때까지 지속된다.",
+      "desc_en": "At the start of battle, increase party's Defense by 9.1% for 2 turns or until user changes Personas.",
+      "desc_jp": "戦闘開始時、２ターンもしくはペルソナを切り替えるまでの間、味方全体の防御力が９.１%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "5",
+      "name_cn": "自动玛哈拉库卡Ⅱ",
+      "desc_cn": "战斗开始时全员防御力提升9.1%，持续2回合或持续至切换面具。"
+    },
+    {
+      "name": "프레이라",
+      "name_en": "Freila",
+      "name_jp": "フレイラ",
+      "desc": "1명의 적에게 공격력 124.2/129.1/134.0%의 핵열 속성 대미지를 주고, 원소 이상 상태의 적에게 TECHNICAL을 준다. 스킬 대미지는 18% 증가한다.",
+      "desc_en": "Deal Nuclear damage to 1 foe equal to 124.2/129.1/134.0% of Attack. Deal a Technical and increase damage by 18% for foes with an elemental ailment.",
+      "desc_jp": "敵単体に攻撃力124.2/129.1/134.0%の核熱属性ダメージを与える。属性異常の敵に対してテクニカルが発生しダメージが１８%上昇する。",
+      "cost": "SP 20",
+      "level": "6/7/8",
+      "learn_level": "10",
+      "name_cn": "芙雷拉",
+      "desc_cn": "对1名敌人造成124.2/129.1/134.0%攻击力的核热属性伤害，对处于元素异常状态的敌人造成TECHNICAL，技能伤害提升18%。"
+    },
+    {
+      "name": "굳건한 산Ⅱ",
+      "name_en": "Ironclad Resolve II",
+      "name_jp": "堅守の覚悟Ⅱ",
+      "desc": "속도가 9포인트 감소하고, 생명이 22% 증가한다.",
+      "desc_en": "Decrease Speed by 9. Increase HP by 22%.",
+      "desc_jp": "速さが９低下し、ＨＰが２２%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "15",
+      "name_cn": "不动如山Ⅱ",
+      "desc_cn": "速度降低9点，生命值提升22%。"
+    },
+    {
+      "name": "대미지 면역Ⅱ",
+      "name_en": "Reduction Boost II",
+      "name_jp": "レデュースブースタⅡ",
+      "desc": "받는 대미지가 6.7% 감소한다.",
+      "desc_en": "Decrease damage taken by 6.7%.",
+      "desc_jp": "被ダメージを６.７%低下させる。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "20",
+      "name_cn": "免伤强化Ⅱ",
+      "desc_cn": "受到的伤害降低6.7%。"
+    }
+  ],
+  "name_cn": "米特拉斯"
+};

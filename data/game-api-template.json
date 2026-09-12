@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "3.0",
+  "metadata": {
+    "gameVersion": "4.7",
+    "region": "global",
+    "retrievedAt": "2026-08-28T00:00:00Z",
+    "source": "public-api-or-export",
+    "confidence": "official"
+  },
+  "rules": {
+    "attackTurnLimit": 5,
+    "personaSelectionConsumesAction": false,
+    "navigatorConsumesAction": false,
+    "highlightConsumesAction": false,
+    "downedDamageTakenMultiplier": 1.1,
+    "statusDurationTicksAt": "end-of-attack-turn"
+  },
+  "characters": [
+    {
+      "id": "character-id",
+      "name": "Character Name",
+      "codename": "CODENAME",
+      "role": "Sweeper",
+      "element": "curse",
+      "rarity": 5,
+      "awareness": 0,
+      "level": 90,
+      "turnPriority": 100,
+      "actionsPerTurn": 1,
+      "stats": {
+        "hp": 1000,
+        "sp": 180,
+        "attack": 250,
+        "defense": 200,
+        "critRate": 0.1,
+        "critDamage": 1.5
+      },
+      "gun": {
+        "ammo": 8,
+        "power": 0.6,
+        "element": "gun"
+      },
+      "skillIds": ["skill-id"],
+      "highlightSkillId": "highlight-id",
+      "passiveIds": ["passive-id"],
+      "evidence": {
+        "source": "URL, screenshot, or video timestamp",
+        "confidence": "official"
+      }
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-id",
+      "name": "Skill Name",
+      "element": "curse",
+      "target": "one-enemy",
+      "spCost": 20,
+      "power": 1.75,
+      "hitCount": 1,
+      "accuracy": 1,
+      "effects": [
+        {
+          "trigger": "on-hit",
+          "target": "main-target",
+          "kind": "defense-down",
+          "value": 0.2,
+          "duration": 2,
+          "chance": 1,
+          "maxStacks": 1,
+          "sourceType": "character-skill"
+        }
+      ],
+      "evidence": {
+        "source": "URL, screenshot, or video timestamp",
+        "confidence": "official"
+      }
+    }
+  ],
+  "personas": [
+    {
+      "id": "persona-id",
+      "name": "Dionysus",
+      "element": "psychic",
+      "innateSkillIds": [],
+      "transferableSkillIds": ["rebellion"],
+      "passiveIds": []
+    }
+  ],
+  "revelations": [],
+  "bosses": [
+    {
+      "id": "boss-id",
+      "name": "Boss Name",
+      "attackTurnLimit": 5,
+      "scoreMultiplier": 1,
+      "stats": {
+        "hp": null,
+        "defense": 385
+      },
+      "affinities": {
+        "curse": "weak",
+        "physical": "resist"
+      },
+      "downPoints": 6,
+      "phases": [],
+      "summons": [],
+      "scriptedActions": [],
+      "scoreRules": []
+    }
+  ]
+}

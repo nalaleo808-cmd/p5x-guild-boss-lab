@@ -1,0 +1,165 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["벨페고르"] = {
+  "id": "190",
+  "key": "벨페고르",
+  "name": "벨페고르",
+  "name_en": "Belphegor",
+  "name_jp": "ベルフェゴール",
+  "grade": "4",
+  "star": "4",
+  "position": "굴복",
+  "element": "빙결",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "C",
+  "tier_desc": "원더를 통한 빙결 대미지를 부여할 때 채용한다.",
+  "tier_desc_en": "Used when Wonder needs to deal Ice damage.",
+  "tier_desc_jp": "ワンダーで氷結属性ダメージを与えたい時に採用する。",
+  "tier_desc_cn": "在需要由 WONDER 造成冰冻伤害时会采用。",
+  "comment": "",
+  "comment_en": "",
+  "comment_jp": "",
+    "comment_cn": "",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "다이아의 별",
+      "priority": 3
+    },
+    {
+      "name": "공격 강화",
+      "priority": 0
+    },
+    {
+      "name": "어드바이스",
+      "priority": 0
+    },
+    {
+      "name": "정교한 타격",
+      "priority": 0
+    },
+    {
+      "name": "마도의 재능",
+      "priority": 0
+    },
+    {
+      "name": "빙결 강화",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 1,
+  "passive_skill": [
+    {
+      "name": "한파의 나태함",
+      "name_en": "Ice the Slackers",
+      "name_jp": "怠惰への寒波",
+      "desc": "효과 저항이 17% 증가한다. 적을 목표로 페르소나 스킬을 시전한 후 2턴 동안 스킬 메인 목표가 받는 빙결 속성 대미지가 11.3% 증가한다. 생명이 50% 미만일 시 효과가 추가로 40% 증가한다.",
+      "desc_en": "Increase ailment resistance by 17%. After using a skill on a foe, increase main target's Ice damage taken by 11.3% for 2 turns. If target's HP is below 50%, increase effect by 40% more.",
+      "desc_jp": "状態異常抵抗が１７%上昇する。敵にスキルを使用した時、２ターンの間、選択した対象の氷結属性の被ダメージが１１.３%上昇し、対象のＨＰが５０%未満の時、効果がさらに４０%上昇する。",
+      "name_cn": "寒流上的怠惰",
+      "desc_cn": "效果抵抗提升17%。以敌人为目标释放人格面具技能后，使技能主目标受到的冰冻属性伤害提升11.3%，效果持续2回合，若其生命值低于50%，则效果额外提升40%。"
+    },
+    {
+      "name": "한파의 나태함Ⅰ",
+      "name_en": "Ice the Slackers I",
+      "name_jp": "怠惰への寒波Ⅰ",
+      "desc": "효과 저항이 17% 증가한다. 적을 목표로 페르소나 스킬을 시전한 후 2턴 동안 스킬 메인 목표가 받는 빙결 속성 대미지가 12.9% 증가한다. 생명이 50% 미만일 시 효과가 추가로 40% 증가한다.",
+      "desc_en": "Increase ailment resistance by 17%. After using a skill on a foe, increase main target's Ice damage taken by 12.9% for 2 turns. If target's HP is below 50%, increase effect by 40% more.",
+      "desc_jp": "状態異常抵抗が１７%上昇する。敵にスキルを使用した時、２ターンの間、選択した対象の氷結属性の被ダメージが１２.９%上昇し、対象のＨＰが５０%未満の時、効果がさらに４０%上昇する。",
+      "name_cn": "寒流上的怠惰Ⅰ",
+      "desc_cn": "效果抵抗提升17%。以敌人为目标释放人格面具技能后，使技能主目标受到的冰冻属性伤害提升12.9%，效果持续2回合，若其生命值低于50%，则效果额外提升40%。"
+    },
+    {
+      "name": "한파의 나태함Ⅱ",
+      "name_en": "Ice the Slackers II",
+      "name_jp": "怠惰への寒波Ⅱ",
+      "desc": "효과 저항이 17% 증가한다. 적을 목표로 페르소나 스킬을 시전한 후 2턴 동안 스킬 메인 목표가 받는 빙결 속성 대미지가 14.4% 증가한다. 생명이 50% 미만일 시 효과가 추가로 40% 증가한다.",
+      "desc_en": "Increase ailment resistance by 17%. After using a skill on a foe, increase main target's Ice damage taken by 14.4% for 2 turns. If target's HP is below 50%, increase effect by 40% more.",
+      "desc_jp": "状態異常抵抗が１７%上昇する。敵にスキルを使用した時、２ターンの間、選択した対象の氷結属性の被ダメージが１４.４%上昇し、対象のＨＰが５０%未満の時、効果がさらに４０%上昇する。",
+      "name_cn": "寒流上的怠惰Ⅱ",
+      "desc_cn": "效果抵抗提升17%。以敌人为目标释放人格面具技能后，使技能主目标受到的冰冻属性伤害提升14.4%，效果持续2回合，若其生命值低于50%，则效果额外提升40%。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "라쿤다",
+    "name_en": "Rakunda",
+    "name_jp": "ラクンダ",
+    "desc": "3턴 동안 적 1명의 방어력이 38.8%/40.7%/42.7% 감소한다.",
+    "desc_en": "Decrease 1 foe's Defense by 38.8%/40.7%/42.7% for 3 turns.",
+    "desc_jp": "３ターンの間、敵単体の防御力が38.8%/40.7%/42.7%低下する。",
+    "priority": 1,
+    "icon": "디버프",
+    "icon_gl": "버프",
+    "name_cn": "拉昆达",
+    "desc_cn": "使1名敌人的防御力降低38.8%/40.7%/42.7%，效果持续3回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 적에게 공격력 90.0%/96.3%/102.6%의 빙결 속성 대미지를 주며, 적이 받는 대미지가 19.6%/21.0%/22.3% 증가한다. 효과는 2턴 동안 지속된다.",
+    "desc_en": "Deal Ice damage to all foes equal to 90.0%/96.3%/102.6% of Attack. Increase damage taken by 19.6%/21.0%/22.3% for 2 turns.",
+    "desc_jp": "敵全体に攻撃力90.0%/96.3%/102.6%の氷結属性ダメージを与える。さらに２ターンの間、被ダメージが19.6%/21.0%/22.3%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "对所有敌人造成90.0%/96.3%/102.6%攻击力的冰冻属性伤害，并使其受到的伤害提升19.6%/21.0%/22.3%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "부흐라",
+      "name_en": "Bufula",
+      "name_jp": "ブフーラ",
+      "desc": "1명의 적에게 공격력 114.0/119.7/125.4%의 빙결 속성 대미지를 주고, 63.3/66.5/69.6%의 기본 확률로 적을 2턴 동안 동결 상태에 빠뜨린다.",
+      "desc_en": "Deal Ice damage to 1 foe equal to 114.0/119.7/125.4% of Attack. 63.3/66.5/69.6% chance to inflict Freeze for 2 turns.",
+      "desc_jp": "敵単体に攻撃力114.0/119.7/125.4%の氷結属性ダメージを与える。63.3/66.5/69.6%の確率で敵を２ターンの間、凍結状態にする。",
+      "cost": "SP 20",
+      "level": "6/7/8",
+      "learn_level": "5",
+      "name_cn": "布芙拉",
+      "desc_cn": "对1名敌人造成114.0/119.7/125.4%攻击力的冰冻属性伤害，有63.3/66.5/69.6%基础概率使敌人陷入冻结状态，效果持续2回合。"
+    },
+    {
+      "name": "공격의 마음가짐Ⅱ",
+      "name_en": "Attack Master II",
+      "name_jp": "攻撃の心得Ⅱ",
+      "desc": "전투 시작 시 2턴 동안 공격력이 12.1% 증가한다.",
+      "desc_en": "At the start of battle, increase Attack by 12.1% for 2 turns.",
+      "desc_jp": "戦闘開始時、２ターンの間、自身の攻撃力が１２.１%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "10",
+      "name_cn": "攻击的心得Ⅱ",
+      "desc_cn": "战斗开始时攻击力提升12.1%，持续2回合。"
+    },
+    {
+      "name": "망각 내성Ⅱ",
+      "name_en": "Resist Forget II",
+      "name_jp": "忘却耐性Ⅱ",
+      "desc": "망각 효과를 받을 시 효과 저항이 12.5% 증가한다.",
+      "desc_en": "Increase Forget resistance by 12.5%.",
+      "desc_jp": "忘却の抵抗率が１２.５%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "15",
+      "name_cn": "遗忘耐性Ⅱ",
+      "desc_cn": "受到遗忘效果时，效果抵抗提升12.5%。"
+    },
+    {
+      "name": "마하부흐라",
+      "name_en": "Mabufula",
+      "name_jp": "マハブフーラ",
+      "desc": "모든 적에게 공격력 57.0/59.8/62.7%의 빙결 속성 대미지를 주고, 31.7/33.3/34.9%의 기본 확률로 적을 2턴 동안 동결 상태에 빠뜨린다.",
+      "desc_en": "Deal Ice damage to all foes equal to 57.0/59.8/62.7% of Attack. 31.7/33.3/34.9% chance to inflict Freeze for 2 turns.",
+      "desc_jp": "敵全体に攻撃力57.0/59.8/62.7%の氷結属性ダメージを与える。31.7/33.3/34.9%の確率で敵を２ターンの間、凍結状態にする。",
+      "cost": "SP 20",
+      "level": "6/7/8",
+      "learn_level": "20",
+      "name_cn": "玛哈布芙拉",
+      "desc_cn": "对所有敌人造成57.0/59.8/62.7%攻击力的冰冻属性伤害，有31.7/33.3/34.9%基础概率使敌人陷入冻结状态，效果持续2回合。"
+    }
+  ],
+  "name_cn": "贝尔芬格"
+};

@@ -1,0 +1,26 @@
+{
+  "mode": "multidimensional_dreamscape",
+  "boss": "hachiman",
+  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "observed": {
+    "t7Navigator": "MIKU's ready Spring Storm Feel the Beat executes after both Concert rounds",
+    "t7Marian": "Gentle Sea Breeze is ready and executes for 25 SP",
+    "t2BerryBeforeS3SP": 91,
+    "t2SettledJcSP": 91,
+    "t3MarianBeforeS1SP": 75
+  },
+  "latestReplay": {
+    "output": "outputs/hachiman-continuation-2026-09-05.json",
+    "completedThrough": "T6",
+    "earliestIllegalAction": "T7 Marian S3 on Berry",
+    "marianSPAtBlock": 1,
+    "requiredSP": 25
+  },
+  "implemented": {
+    "navigatorAfterConcert": "Clear lastUsedAttackTurn when live Concert finishes; preserve skill cooldowns. The normal Attack Turn has not advanced, but the recording permits the ready support action."
+  },
+  "unresolved": [
+    "Identify the source, amount, timing, and modifiers of missing SP restoration from skill or equipment evidence before implementing a general rule.",
+    "No SP override or command substitution has been used to bypass the T7 block."
+  ]
+}

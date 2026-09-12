@@ -1,0 +1,41 @@
+{
+  "id": "hachiman-damage-formula-research-2026-09-05",
+  "scope": "Live Hachiman Multidimensional Dreamscape damage calculation",
+  "status": "Community research formula with provisional encounter inputs; not a calibrated game score",
+  "sources": [
+    {
+      "url": "https://forum.gamer.com.tw/G2.php?bsn=71034&sn=112",
+      "kind": "Original author reports damage experiments",
+      "findings": [
+        "Defense factor is 1400 divided by 1400 plus effective defense.",
+        "Defense reduction acts on base defense; penetration acts on the resulting defense.",
+        "Damage bonuses, elemental bonuses and increased damage taken share an additive category."
+      ],
+      "limitation": "Historical community research, not an official current-mode formula specification."
+    },
+    {
+      "url": "https://lufel.net/en/defense-calc/",
+      "kind": "Original calculator publisher",
+      "limitation": "Publisher explicitly labels its enemy inputs as launch-period data with current exact values unobtainable and unverifiable."
+    }
+  ],
+  "replacedAssumptions": [
+    "Artificial 100x damage normalization",
+    "760 / (260 + defense) defense multiplier",
+    "Independent multiplication of each generic damage buff and exposure",
+    "70 percent ceiling on defense reduction and penetration"
+  ],
+  "remainingUnknowns": [
+    "Hachiman and Daisoujou base defense versus total defense",
+    "Actual Daisoujou maximum HP",
+    "Equipped totals for J&C, Wonder and Marian",
+    "Current version affinity coefficients and some final/source-specific multiplier classifications",
+    "Dreamscape damage-to-Foe-Defense-Points accumulation",
+    "Missing continuous-damage coefficients and equipment effects"
+  ],
+  "constraints": [
+    "Do not fit any coefficient to the final recorded score.",
+    "Do not lower minion HP to force the recorded kill chain.",
+    "Preserve the archived damage branch and recorded Nexus calibration."
+  ]
+}

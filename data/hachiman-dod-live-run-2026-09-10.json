@@ -1,0 +1,79 @@
+{
+  "source": "Joker's Devourer of Dreams Hachiman attempt driven through computer use on 2026-09-10, read from the in-battle HUD and the result screen",
+  "result": { "finalScore": 8136960536, "baseDamagePoints": 405499, "weakenedDamagePoints": 1016589568, "bossAttackPoints": 125000, "difficultyBonus": 8, "formulaCheck": "(405499 + 1016589568 + 125000) x 8 = 8136960536" },
+  "partyOrderInHud": ["Wonder (named Shinichi Kudo, 13936 HP)", "Berry co-op (11606 HP)", "Beachflower Marian (18103 HP)", "J&C (12953 HP)"],
+  "loadoutsObserved": {
+    "wonderPersonas": {
+      "Dionysus": ["Revolution 22 SP", "Universal Theoria 24 SP", "Tarukaja 22 SP"],
+      "Vasuki": ["Venomous Spiral 24 SP", "Media 23 SP", "Rakunda 22 SP"],
+      "Janosik": ["Tatra Shot 1115 HP", "Rakunda 22 SP", "Tarukaja 22 SP"]
+    },
+    "marianBasketAtT6": { "Attacker Tablet": 1, "Defender Tonic": 1, "Fighter Salve": 1, "DOT-Up": 11, "Reso-Up": 48, "Technica-Up": 10, "HL-Up": 28, "1More-Up": 49, "Recov-R S": 2, "Recov-R M": 0, "Recov-R L": 0, "Takemedic-All": 13, "Takemedic-All V": 18 },
+    "midsummerPrescriptions": { "readAtB1BeforeFighterSalve": 2, "usedBefore": ["T8 Defender Tonic", "T13 Takemedic-All V", "T15 Takemedic-All V", "T17 DOT-Up", "T18 Attacker Tablet"], "inferredTotal": null, "note": "One basket use per Marian turn; the basket button disappears after a use. Joker (2026-09-11): A6 Summer Marian does not consume medicine, so the x2 reading is not a remaining-use count and the basket is unlimited." }
+  },
+  "tooltips": {
+    "attackerTablet": "Increase 1 ally's Attack by 30% for 1 turn.",
+    "defenderTonic": "Increase 1 ally's Defense by 45% for 1 turn.",
+    "fighterSalve": "Increase 1 ally's damage by 25% for 1 turn.",
+    "dotUp": "Increase 1 ally's continuous damage by 2.5% for 1 turn (when used by Minami or Beachflower Minami, increase continuous damage by 10%).",
+    "hlUp": "Increase 1 ally's Highlight or Theurgy damage by 2.5% for 1 turn (when used by Minami or Beachflower Minami, increase Highlight or Theurgy damage by 10%).",
+    "takemedicAllV": "Restores all allies' HP by 30%. Effect increased by 10%.",
+    "media": "Restore party's HP (18.3% Atk + 749).",
+    "rakunda": "Decrease 1 foe's Def 42.7% (3 turns).",
+    "tarukaja": "Increase 1 ally's Atk 17.1% + 1.4% for every 500 of user's Atk (up to 11.4%, 3 turns).",
+    "universalTheoria": "Increase party's Atk 33.0%, and also increase main target's dmg 22.0% (2 turns).",
+    "venomousSpiral": "Increase 1 foe's dmg taken 17.6% and inflict 1 Serpent's Venom (3 turns). Serpent's Venom: every turn, take Curse dmg (14.1% Atk of ally with the highest Atk, up to 300% of Wonder's Atk).",
+    "revolution": "Increase party's crit rate 7.2% + 1.2% for every 10% of user's crit rate (up to 4.8%, 3 turns).",
+    "maskOfMischiefInnocence": "Fire dmg to 1 foe (86.7% Atk) and Ice dmg (86.7% Atk), 1 hit each (increase this skill's effect 1% per 1 Desire Level). Increase party's Atk 45.4% per 100 Desire Level (3 turns).",
+    "maskOfAbsurdityNonsense": "Psy dmg to 1 foe (86.7% Atk) and Nuke dmg (86.7% Atk), 1 hit each (increase this effect 1% per 1 Desire Level). For Justine & Caroline and Sweeper or Assassin ally with highest Atk, increase ...",
+    "jcMischiefHighlight": "Increase party's Atk 28.4% and dmg 39.8% (2 turns).",
+    "jcAbsurdityHighlight": "Psy dmg to 1 foe (284.0% Atk), and Nuke dmg (284.0% Atk), 1 hit each, can crit. Increase Atk 39.8% for Justine & Caroline and ally with highest Atk (prioritizing Assassins and Sweepers, 2 turns).",
+    "wonderHighlight": "Gun dmg to all foes (102.6% Atk) and increase dmg taken 22.3% (2 turns).",
+    "berryHighlight": "Curse dmg to 1 foe (532.0% Atk), and Lovesick can activate crit hits (3 turns). Also, activate all continuous dmg effects on target 1 time, and activate Lovesick 2 more times.",
+    "marianHighlight": "Increase 1 other ally's dmg 28.4%, and increase crit dmg by 16.66% of Beachflower Minami's crit mult over 100% (up to 246.4% of crit mult, 2 turns). Also, when Beachflower Minami uses medicine, increase medicine effects 11.4%.",
+    "beachBasket": "Bless damage to all foes (75.0% of Beachflower Minami's max HP), and inflict Bewitching Blossoms (3 turns). Bewitching Blossoms: when taking attack, increase that dmg's Atk 11.4% + ...",
+    "summerGarden": "Increase party's dmg 9.1% + 3.2% per 1200 of Beachflower Minami's max HP (up to 13632 of max HP, 3 turns). Also, grant all allies 1 Blessing, and remove 1 debuff.",
+    "gentleSeaBreeze": "Increase 1 other ally's crit rate 18.2%, and increase crit dmg by 33.33% of Beachflower Minami's crit mult over 100% (up to 246.4% of crit mult, 3 turns). 2-turn cooldown.",
+    "feelTheBeat": "Increase party's Atk 0.57% per 100 of Miku's Atk (up to 5368 of Miku's Atk, max 30.5%, 3 turns). Also grant effects to party based on current song.",
+    "clearSound": "Increase party's dmg 0.34% per 100 of Miku's Atk (up to 5368 of Miku's Atk, max 18.3%, 3 turns). Also grant effects to party based on current song. Heaven: heal.",
+    "showstopper": "Requires 3 different types of Track. Spend all Tracks to activate Virtual Concert, and change song to Ghost Rule. Stop foes' turn and grant allies extra turns for 2 turns.",
+    "myBelovedPrince": "Curse dmg to 1 foe (296.6% Atk + 13.6% per Lovesick). Also, with 10+ Lovesick, bonus Curse dmg (138.2% Atk). After activating skill, reset Lovesick duration.",
+    "vorpalButterfly": "Curse dmg to 1 foe (150.2% Atk), and inflict 2 Lovesick. When target has over 70% HP, increase skill dmg 200%. If this skill defeats target, activate again. 1-turn cooldown."
+  },
+  "mechanicsObserved": [
+    "Guard grants +17% shared Highlight gauge, the same as any counted action (0 to 17 to 34 to 51 across the T1 guards).",
+    "True Desire: pressed at T1 (button vanished); the Alt button was next visible at the start of T10 (Actions 37) and not at T3 through T9; pressed again at T18 and not visible at B3 or B4. Consistent with 8 J&C counted actions (or 8 rounds), not 8 party actions.",
+    "Pre-break score with Life Sustainment on stopped at exactly 401,445, the same figure as Sleepy's run. Base Damage Points 405,499 in both runs. Reading: boss max HP 405,499 and the lock floor is 1% of max HP (4,054), not 1 HP.",
+    "The S3 that opened the break added only the remaining pre-break HP (401,445 to 405,499); no weakened points were credited during that action. Score at the start of B1 was 405,499.",
+    "Weakened Turns Left stayed at 2 through both Concert rounds and went 2 to 1 after the boss action following B3; B3 and B4 were the weakened turns.",
+    "Virtual Concert start healed the party (Berry 1,633 to 5,133 at T6).",
+    "MIKU song advances to the next song after each MIKU skill use; H cycles it manually (Spring Storm to Play-With-Fire to Heaven).",
+    "Feel the Beat and Clear Sound were available again on the next normal turn after use (4-action cooldown).",
+    "Marian's three skills were all available at B3 despite S3 at T18 and S2 at B1 and S1 at B2 (Concert rounds and the reset).",
+    "Berry's T1 S1 on a minion chained through all four Daisoujou by its kill-reset and then the boss; score after T1 was 362,043 (76,743 opening Two Masks + 285,300)."
+  ],
+  "scoreCheckpoints": [
+    { "point": "opening automatic Two Masks", "score": 76743 },
+    { "point": "after T1 (Berry S1 chain)", "score": 362043 },
+    { "point": "T2 Berry Highlight, lock on", "score": 401445 },
+    { "point": "T3 to T18 pre-break (locked)", "score": 401445 },
+    { "point": "B1 start (after break-opening S3)", "score": 405499 },
+    { "point": "B1 after twins S1 + enhanced Two Masks", "score": 8903515 },
+    { "point": "B1 after Berry S3 (end of B1)", "score": 103922603 },
+    { "point": "B2 after twins S2", "score": 105563819 },
+    { "point": "B2 after Marian Beach Basket", "score": 106299627 },
+    { "point": "B2 after Berry Highlight", "score": 204334347 },
+    { "point": "B2 after Berry free Highlight", "score": 302751163 },
+    { "point": "B2 after Alt S3 and Neverending Song echo (Concert end)", "score": 911862459 },
+    { "point": "B3 after twins S1 + Two Masks", "score": 914171771 },
+    { "point": "B3 end (after Berry S3)", "score": 972618555 },
+    { "point": "B4 after twins Absurdity Highlight", "score": 974341179 },
+    { "point": "B4 after twins S2", "score": 975325819 },
+    { "point": "final points (result screen)", "score": 1017120067 }
+  ],
+  "deviationsFromRoute": [
+    "T7 Wonder Media (Vasuki) instead of Guard; T11 MIKU Clear Sound on Heaven and Wonder Media; T13 Wonder Media; T8 Defender Tonic; T13 and T15 Takemedic-All V instead of DOT-Up (pre-break damage is capped, so no score cost).",
+    "B2 Wonder Tarukaja (Dionysus) instead of Matarukaja (not on Joker's Janosik); B2 DOT-Up skipped (no prescription left); B4 Fighter Salve skipped (none left and only one owned); no A6 press at B3 (button not available).",
+    "T3 and T18 MIKU song changes: Heaven at T16 reached by two H presses."
+  ]
+}

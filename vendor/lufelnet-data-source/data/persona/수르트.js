@@ -1,0 +1,163 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["수르트"] = {
+  "id": "213",
+  "key": "수르트",
+  "name": "수르트",
+  "name_en": "Surt",
+  "name_jp": "スルト",
+  "grade": "6",
+  "star": "3",
+  "position": "굴복",
+  "element": "화염",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "A",
+  "tier_desc": "마하라쿤다 스킬카드 외 유일한 마하라쿤다를 소유한 페르소나로 광역 방어력 감소를 적용할 수 있다.",
+  "tier_desc_en": "The only Persona besides the Marakunda skill card that has Marakunda, allowing it to apply AoE Defense reduction.",
+  "tier_desc_jp": "マハラクンダのスキルカード以外で、唯一マハラクンダを所持しているペルソナ。広域の防御力減少を付与できる。",
+  "tier_desc_cn": "作为除『玛哈拉昆达』技能卡之外唯一持有『玛哈拉昆达』的人格面具，它可以提供群体防御力降低。",
+  "comment": "",
+  "comment_en": "",
+  "comment_jp": "",
+    "comment_cn": "",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "치료 촉진",
+      "priority": 1
+    },
+    {
+      "name": "대미지 면역",
+      "priority": 0
+    },
+    {
+      "name": "방어 강화",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 0,
+  "passive_skill": [
+    {
+      "name": "맹렬한 불길의 군주",
+      "name_en": "Lord of Flames",
+      "name_jp": "烈焔の君主",
+      "desc": "효과 명중이 20.9% 증가한다. 화상 효과를 부여할 때 효과 명중이 35% 증가한다. 생명이 50% 이상인 적에 대한 해당 효과가 30% 추가 증가한다.",
+      "desc_en": "Increase ailment accuracy by 20.9%. Increase Burn accuracy by 35%. If foe's HP is 50% or more, increase effect by 30% more.",
+      "desc_jp": "状態異常命中が２０.９%上昇する。炎上の命中率が３５%上昇する。敵のＨＰが５０%以上の時、効果がさらに３０%上昇する。",
+      "name_cn": "烈焰的君主",
+      "desc_cn": "效果命中提升20.9%。造成燃烧效果时，效果命中提升35%。对生命值高于50%的敌人该效果额外提升30%。"
+    },
+    {
+      "name": "맹렬한 불길의 군주Ⅰ",
+      "name_en": "Lord of Flames I",
+      "name_jp": "烈焔の君主Ⅰ",
+      "desc": "효과 명중이 20.9% 증가한다. 화상 효과를 부여할 때 효과 명중이 40% 증가한다. 생명이 50% 이상인 적에 대한 해당 효과가 30% 추가 증가한다.",
+      "desc_en": "Increase ailment accuracy by 20.9%. Increase Burn accuracy by 40%. If foe's HP is 50% or more, increase effect by 30% more.",
+      "desc_jp": "状態異常命中が２０.９%上昇する。炎上の命中率が４０%上昇する。敵のＨＰが５０%以上の時、効果がさらに３０%上昇する。",
+      "name_cn": "烈焰的君主Ⅰ",
+      "desc_cn": "效果命中提升20.9%。造成燃烧效果时，效果命中提升40%。对生命值高于50%的敌人该效果额外提升30%。"
+    },
+    {
+      "name": "맹렬한 불길의 군주Ⅱ",
+      "name_en": "Lord of Flames II",
+      "name_jp": "烈焔の君主Ⅱ",
+      "desc": "효과 명중이 20.9% 증가한다. 화상 효과를 부여할 때 효과 명중이 45% 증가한다. 생명이 50% 이상인 적에 대한 해당 효과가 30% 추가 증가한다.",
+      "desc_en": "Increase ailment accuracy by 20.9%. Increase Burn accuracy by 45%. If foe's HP is 50% or more, increase effect by 30% more.",
+      "desc_jp": "状態異常命中が２０.９%上昇する。炎上の命中率が４５%上昇する。敵のＨＰが５０%以上の時、効果がさらに３０%上昇する。",
+      "name_cn": "烈焰的君主Ⅱ",
+      "desc_cn": "效果命中提升20.9%。造成燃烧效果时，效果命中提升45%。对生命值高于50%的敌人该效果额外提升30%。"
+    },
+    {
+      "name": "맹렬한 불길의 군주Ⅲ",
+      "name_en": "Lord of Flames III",
+      "name_jp": "烈焔の君主Ⅲ",
+      "desc": "효과 명중이 20.9% 증가한다. 화상 효과를 부여할 때 효과 명중이 50% 증가한다. 생명이 50% 이상인 적에 대한 해당 효과가 30% 추가 증가한다.",
+      "desc_en": "Increase ailment accuracy by 20.9%. Increase Burn accuracy by 50%. If foe's HP is 50% or more, increase effect by 30% more.",
+      "desc_jp": "状態異常命中が２０.９%上昇する。炎上の命中率が５０%上昇する。敵のＨＰが５０%以上の時、効果がさらに３０%上昇する。",
+      "name_cn": "烈焰的君主Ⅲ",
+      "desc_cn": "效果命中提升20.9%。造成燃烧效果时，效果命中提升50%。对生命值高于50%的敌人该效果额外提升30%。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "마하라쿤다",
+    "name_en": "Marakunda",
+    "name_jp": "マハラクンダ",
+    "desc": "3턴 동안 모든 적의 방어력이 27.1%/28.5%/29.8% 감소한다.",
+    "desc_en": "Decrease all foes' Defense by 27.1%/28.5%/29.8% for 3 turns.",
+    "desc_jp": "３ターンの間、敵全体の防御力を27.1%/28.5%/29.8%低下させる。",
+    "priority": 3,
+    "icon": "디버프광역",
+    "icon_gl": "버프광역",
+    "name_cn": "玛哈拉昆达",
+    "desc_cn": "使所有敌人的防御力降低27.1%/28.5%/29.8%，效果持续3回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 적에게 공격력 90.0%/96.3%/102.6%의 화염 속성 대미지를 주며, 적이 받는 대미지가 19.6%/21.0%/22.3% 증가한다. 효과는 2턴 동안 지속된다.",
+    "desc_en": "Deal Fire damage to all foes equal to 90.0%/96.3%/102.6% of Attack. Increase damage taken by 19.6%/21.0%/22.3% for 2 turns.",
+    "desc_jp": "敵全体に攻撃力90.0%/96.3%/102.6%の火炎属性ダメージを与える。さらに２ターンの間、被ダメージが19.6%/21.0%/22.3%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "对所有敌人造成90.0%/96.3%/102.6%攻击力的火焰属性伤害，并使其受到的伤害提升19.6%/21.0%/22.3%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "화염 강화Ⅲ",
+      "name_en": "Fire Boost III",
+      "name_jp": "火炎ブースタⅢ",
+      "desc": "화염 속성 대미지가 8.7% 증가한다.",
+      "desc_en": "Increase Fire damage by 8.7%.",
+      "desc_jp": "火炎属性の与ダメージが８.７%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "8",
+      "name_cn": "火焰强化Ⅲ",
+      "desc_cn": "火焰属性伤害提升8.7%。"
+    },
+    {
+      "name": "아기다인",
+      "name_en": "Agidyne",
+      "name_jp": "アギダイン",
+      "desc": "1명의 적에게 공격력 121.7/127.8/133.9%의 화염 속성 대미지를 주고, 67.6/71.0/74.4%의 기본 확률로 적을 2턴 동안 화상 상태에 빠뜨린다.",
+      "desc_en": "Deal Fire damage to 1 foe equal to 121.7/127.8/133.9% of Attack. 67.6/71.0/74.4% chance to inflict Burn for 2 turns.",
+      "desc_jp": "敵単体に攻撃力121.7/127.8/133.9%の火炎属性ダメージを与える。67.6/71.0/74.4%の確率で敵を２ターンの間、炎上状態にする。",
+      "cost": "SP 21",
+      "level": "6/7/8",
+      "learn_level": "16",
+      "name_cn": "亚基达因",
+      "desc_cn": "对1名敌人造成121.7/127.8/133.9%攻击力的火焰属性伤害，有67.6/71.0/74.4%基础概率使敌人陷入燃烧状态，效果持续2回合。"
+    },
+    {
+      "name": "브레이브 재퍼",
+      "name_en": "Brave Blade",
+      "name_jp": "ブレイブザッパー",
+      "desc": "1명의 적에게 공격력 154.5/162.2/170.0%의 물리 속성 대미지를 준다.",
+      "desc_en": "Deal Physical damage to 1 foe equal to 154.5/162.2/170.0% of Attack.",
+      "desc_jp": "敵単体に攻撃力154.5/162.2/170.0%の物理属性ダメージを与える。",
+      "cost": "체력 9.0%",
+      "level": "6/7/8",
+      "learn_level": "24",
+      "name_cn": "勇气之声",
+      "desc_cn": "对1名敌人造成154.5/162.2/170.0%攻击力的物理属性伤害。"
+    },
+    {
+      "name": "저항 강화Ⅲ",
+      "name_en": "Resistance Boost III",
+      "name_jp": "異常抵抗ブースタⅢ",
+      "desc": "효과 저항이 13% 증가한다.",
+      "desc_en": "Increase ailment resistance by 13%.",
+      "desc_jp": "状態異常抵抗が１３%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "32",
+      "name_cn": "抵抗强化Ⅲ",
+      "desc_cn": "效果抵抗提升13%。"
+    }
+  ],
+  "name_cn": "斯尔特"
+};

@@ -1,0 +1,35 @@
+{
+  "sourceType": "direct_user_supplied_tooltip",
+  "character": "Justine & Caroline",
+  "awareness": 6,
+  "wonderBonus": { "skillLevelIncrease": 1, "thiefTacticsLevelIncrease": 1, "requiresTwinsInParty": false, "requiresUnlock": true, "numericalCoefficients": "pending_per_level_data" },
+  "desireBonus": { "tooltip": "increase Desire Level by 20%", "existingImplementation": "20_displayed_points", "additiveVsRelative": "unresolved" },
+  "trueDesire": {
+    "openingStacks": 1,
+    "rechargeInterval": 8,
+    "rechargeUnit": "actions",
+    "rechargeRequiresSpent": true,
+    "actionScope": "normal_turn_wonder_actions",
+    "actionScopeEvidence": "direct_user_correction_Wonders_actions",
+    "extraTurnsCount": false,
+    "extraTurnsEvidence": "direct_user_correction_Extra_wonder_turns_dont_count",
+    "rechargeAnchor": "periodic_eighth_normal_Wonder_action_from_battle_start",
+    "rechargeAnchorBasis": "implementation_interpretation_of_every_eight_actions_if_spent",
+    "activation": "at_start_of_twins_turn",
+    "spendTiming": "spend_one_on_activation",
+    "storedEffect": "enhance_next_Two_Masks_as_One"
+  },
+  "enhancedTwoMasks": {
+    "facades": "all_facade_effects",
+    "bonusTarget": "main_target_only",
+    "bonusHitCount": 8,
+    "attackCoefficientPerHit": 0.4,
+    "desireScaling": "multiply_each_bonus_hit_effect_by_1_plus_desire_level_divided_by_100",
+    "elements": ["fire", "ice", "electric", "wind", "psychic", "nuclear", "bless", "curse"]
+  },
+  "facadeImplementationGaps": [
+    "Rebel_Surveillance_Effects_stats_fields_undefined",
+    "Skill_Amplification_support_values_incomplete",
+    "two_turn_Down_Point_and_Blessing_expiry_incomplete"
+  ]
+}

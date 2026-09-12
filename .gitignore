@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output (regenerate with: npm run build)
+dist/
+
+# Full session transcripts: very large and contain the whole chat verbatim.
+# Kept locally, not published. The distilled handoff is CHAT-CONTEXT-EXPORT-*.md.
+outputs/chat-transcript-*.jsonl
+
+# OS and editor cruft
+.DS_Store
+Thumbs.db
+*.swp

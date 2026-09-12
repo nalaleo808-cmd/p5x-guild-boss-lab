@@ -1,0 +1,1118 @@
+{
+  "mode": "replay",
+  "battleSeed": 808,
+  "fastScore": 27032152152,
+  "fullScore": 27032152152,
+  "parity": true,
+  "optimized": {
+    "score": 27032152152,
+    "totalDamage": 1841536443,
+    "scoreBreakdown": {
+      "baseRawDamage": 827135,
+      "weakenedRawDamage": 1840709308,
+      "baseDamagePoints": 827135,
+      "weakenedDamagePoints": 6756960903,
+      "bossAttackPoints": 250000,
+      "difficultyBonus": 4
+    },
+    "followUpHits": 35,
+    "followUpDamage": 50652042,
+    "candidate": {
+      "actions": {
+        "marian-beachflower|7|concert1": "Summer Garden",
+        "puppet-wavecatcher|8|concert1": "Jellyfish Splash",
+        "wonder|5|1": "Gun",
+        "marian-beachflower|2|concert2": "Gun",
+        "wonder|7|concert1": "Revolution",
+        "puppet-wavecatcher|4|concert2": "Guard",
+        "wonder|1|0": "Attack",
+        "marian-beachflower|1|0": "Attack",
+        "wonder|2|0": "Attack",
+        "marian-beachflower|3|0": "Gentle Sea Breeze",
+        "puppet-wavecatcher|7|0": "Aerial Tide",
+        "puppet-wavecatcher|8|0": "Aerial Tide"
+      },
+      "jcMaskPair": [
+        "mischief",
+        "service"
+      ],
+      "jcOpeningMask": "service",
+      "jcHighlightMask": "mischief",
+      "trueDesirePlan": [
+        5,
+        7
+      ],
+      "breakTurn": 7,
+      "highlightTurns": {
+        "wonder": 1,
+        "lufel-recent-marian-beachflower": 2,
+        "lufel-recent-puppet-wavecatcher": 5,
+        "lufel-recent-j-c": 6
+      },
+      "navigatorPlan": {
+        "3": "Feel the Beat",
+        "4": "Feel the Beat",
+        "5": "Feel the Beat",
+        "6": "Clear Sound",
+        "7": "Showstopper",
+        "8": "Feel the Beat"
+      },
+      "highlightBeforeNavigator": false,
+      "highlightTargetId": "lufel-recent-marian-beachflower",
+      "medicinePlan": {
+        "1": {
+          "name": "Attack Tablet",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "2": {
+          "name": "Attack Tablet",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "3": {
+          "name": "Attack Tablet",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "5": {
+          "name": "Defender Tonic",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "6": {
+          "name": "Fighter Salve",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "7": {
+          "name": "Fighter Salve",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        },
+        "8": {
+          "name": "Attack Tablet",
+          "targetId": "lufel-recent-puppet-wavecatcher"
+        }
+      },
+      "allyTargetId": "lufel-recent-puppet-wavecatcher"
+    },
+    "rotation": [
+      {
+        "attackTurn": 1,
+        "actionNumber": 2,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 1445240,
+        "totalDamage": 361310,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 1,
+        "actionNumber": 3,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 2977388,
+        "totalDamage": 744347,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 1,
+        "actionNumber": 4,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 1,
+        "actionNumber": 5,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Service & Admonition",
+        "targetIds": [
+          "slaughter_drive",
+          "party",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4",
+          "lufel-recent-j-c"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 2,
+        "actionNumber": 6,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 2,
+        "actionNumber": 7,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Summer Garden",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 2,
+        "actionNumber": 8,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 2,
+        "actionNumber": 9,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Mischief & Innocence",
+        "targetIds": [
+          "slaughter_drive",
+          "party",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4",
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 3,
+        "actionNumber": 9,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Feel the Beat",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 3,
+        "actionNumber": 10,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Maziodyne",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 3,
+        "actionNumber": 11,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Gentle Sea Breeze",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 3,
+        "actionNumber": 12,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 3,
+        "actionNumber": 13,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Service & Admonition",
+        "targetIds": [
+          "slaughter_drive",
+          "party",
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 4,
+        "actionNumber": 13,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Feel the Beat",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 4,
+        "actionNumber": 14,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Guard",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 4,
+        "actionNumber": 15,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Guard",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 4,
+        "actionNumber": 16,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 4,
+        "actionNumber": 17,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Mischief & Innocence",
+        "targetIds": [
+          "slaughter_drive",
+          "party",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4",
+          "lufel-recent-marian-beachflower"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 17,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Feel the Beat",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 18,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "PUPPET·Wavecatcher Highlight",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 19,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Revolution",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 19,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Medicine · Defender Tonic",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 20,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Summer Garden",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 21,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 21,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "True Desire On",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 5,
+        "actionNumber": 22,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Service & Admonition",
+        "targetIds": [
+          "slaughter_drive",
+          "party",
+          "wonder"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 22,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Clear Sound",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 23,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "J&C Highlight: mischief",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 24,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Guard",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 24,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Medicine · Fighter Salve",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 25,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Wonder Highlight",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 26,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Gentle Sea Breeze",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 27,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Guard",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 6,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive",
+          "lufel-recent-marian-beachflower"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": null,
+        "actor": null,
+        "action": "Break HP Lock",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Showstopper",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "concert-start",
+        "concertRound": null,
+        "score": 3308540,
+        "totalDamage": 827135,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Wonder Highlight",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 54881888,
+        "totalDamage": 4339496,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "MARIAN·Beachflower Highlight",
+        "targetIds": [],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 54881888,
+        "totalDamage": 4339496,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "PUPPET·Wavecatcher Highlight",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 2190334216,
+        "totalDamage": 149772740,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "J&C Highlight: mischief",
+        "targetIds": [],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 2190334216,
+        "totalDamage": 149772740,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "One-Fathom Fang",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 2416344168,
+        "totalDamage": 165164964,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Medicine · Fighter Salve",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 2416344168,
+        "totalDamage": 165164964,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Beach Basket",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 2459007964,
+        "totalDamage": 168070547,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 3089310372,
+        "totalDamage": 210996780,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Mask of Mischief & Innocence",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4",
+          "party"
+        ],
+        "actionContext": "concert-1",
+        "concertRound": 1,
+        "score": 3585889900,
+        "totalDamage": 244815925,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Revolution",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 3585889900,
+        "totalDamage": 244815925,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Medicine · Fighter Salve",
+        "targetIds": [
+          "lufel-recent-puppet-wavecatcher"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 3585889900,
+        "totalDamage": 244815925,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Summer Garden",
+        "targetIds": [
+          "party"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 3585889900,
+        "totalDamage": 244815925,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Jellyfish Splash",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 4755119236,
+        "totalDamage": 324445338,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "PUPPET·Wavecatcher Highlight",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 12310766088,
+        "totalDamage": 839016522,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 28,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "concert-2",
+        "concertRound": 2,
+        "score": 25778116940,
+        "totalDamage": 1756199499,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 29,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "J&C Highlight: mischief",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 25778116940,
+        "totalDamage": 1756199499,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 30,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "One-Fathom Fang",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 25798490312,
+        "totalDamage": 1757587011,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 31,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 25801418312,
+        "totalDamage": 1757786420,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 32,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Aerial Tide",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26884762692,
+        "totalDamage": 1831566708,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 32,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "True Desire On",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26884762692,
+        "totalDamage": 1831566708,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 7,
+        "actionNumber": 33,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26888913424,
+        "totalDamage": 1831849390,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 33,
+        "actorId": "navigator-miku-benchmark",
+        "actor": "MIKU",
+        "action": "Navigator · Feel the Beat",
+        "targetIds": [],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26888913424,
+        "totalDamage": 1831849390,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 34,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "One-Fathom Fang",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26909460484,
+        "totalDamage": 1833248731,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 35,
+        "actorId": "wonder",
+        "actor": "Wonder",
+        "action": "Wonder Highlight",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26919086676,
+        "totalDamage": 1833904315,
+        "freeAction": true
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 36,
+        "actorId": "lufel-recent-marian-beachflower",
+        "actor": "MARIAN·Beachflower",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 26921432700,
+        "totalDamage": 1834064089,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 37,
+        "actorId": "lufel-recent-puppet-wavecatcher",
+        "actor": "PUPPET·Wavecatcher",
+        "action": "Aerial Tide",
+        "targetIds": [
+          "slaughter_drive",
+          "crimson_turret_1",
+          "crimson_turret_2",
+          "crimson_turret_3",
+          "crimson_turret_4"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 27027689400,
+        "totalDamage": 1841300615,
+        "freeAction": false
+      },
+      {
+        "attackTurn": 8,
+        "actionNumber": 38,
+        "actorId": "lufel-recent-j-c",
+        "actor": "J&C",
+        "action": "Attack",
+        "targetIds": [
+          "slaughter_drive"
+        ],
+        "actionContext": "normal",
+        "concertRound": null,
+        "score": 27032152152,
+        "totalDamage": 1841536443,
+        "freeAction": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "character": "Berry",
+  "skill": "My Beloved Prince",
+  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "checkpoint": "T2 ordinary S3",
+  "observedBossShieldBefore": 3,
+  "observedBossShieldAfter": 2,
+  "userAuthorizedCorrection": "Okay fix it and proceed",
+  "implementation": {
+    "profile": "live",
+    "mainCastMayReduceDown": true,
+    "tenLovesickBonusMayReduceDown": false,
+    "bonusDamageUnchanged": true,
+    "distinctDoubleBerryCastRetainsOwnMainHitAllowance": true
+  },
+  "scope": "This correction applies to Berry S3's own bonus hit. It does not establish a universal shield rule for all multi-hit skills."
+}

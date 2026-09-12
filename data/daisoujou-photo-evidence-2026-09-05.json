@@ -1,0 +1,31 @@
+{
+  "id": "user_photo_daisoujou_2026-09-05",
+  "sourceImage": "local screenshot attachment (path removed for publication)",
+  "sourceType": "user_supplied_game_screenshot",
+  "enemy": "Daisoujou",
+  "mode": "Multidimensional Dreamscape",
+  "level": 82,
+  "speed": 80,
+  "statGrades": {
+    "attack": "A",
+    "defense": "B",
+    "hp": "B"
+  },
+  "weakness": "curse",
+  "strongAgainst": [
+    "physical",
+    "gun",
+    "bless"
+  ],
+  "description": "Damage dealt to Daisoujou is not added to your score. When Daisoujou is defeated, Hachiman's damage taken increases. Stacks up to 4 times.",
+  "damageTakenStackCap": 4,
+  "damageTakenPerStack": 0.1,
+  "damageTakenPerStackEvidence": {
+    "sourceType": "direct_user_correction",
+    "statement": "Each stack from killing a minion increases Hachiman damage taken by 10% per stack",
+    "status": "confirmed"
+  },
+  "damageTakenStackDuration": null,
+  "supersedes": "Earlier note incorrectly transcribed this as four stacks per defeated Daisoujou. Earlier simulator idols had Fire/Ice weaknesses and Curse resistance.",
+  "implementation": "Live Hachiman applies the pictured affinities and one defeat contribution per Daisoujou up to four total. The later user correction establishes 10% increased damage taken per stack, totaling 40% at four stacks. Apply immediately before subsequent attacks. Stack expiry remains unspecified and is not modeled. No grade-to-stat conversion was inferred from this photo."
+}

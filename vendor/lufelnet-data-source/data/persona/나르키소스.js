@@ -1,0 +1,161 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["나르키소스"] = {
+  "id": "243",
+  "key": "나르키소스",
+  "name": "나르키소스",
+  "name_en": "Narcissus",
+  "name_jp": "ナルキッソス",
+  "grade": "5",
+  "star": "5",
+  "position": "굴복",
+  "element": "질풍",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "B",
+  "tier_desc": "페르소나 노른과 동일한 구성이지만, 대미지 보너스 버프보다는 방어력 감소의 가치가 더 높기 때문에 자주 채용되지 않으며 노른조차 상위 호환인 비슈누가 존재한다. 방어력 감소가 넘치면서 풍습을 부여하거나 또는 바람 속성 공격이 필요할 때 채용될 수 있다.",
+  "tier_desc_en": "Its kit is identical to Norn's, but defense reduction is generally more valuable than a damage bonus buff, so it is rarely chosen, and even Norn is outclassed by Vishnu. It can still be used when you already have enough defense reduction and need Windswept or Wind-element damage.",
+  "tier_desc_jp": "ノルンと同じ構成だが、ダメージボーナスバフより防御力減少の価値が高いため、採用頻度は低い。さらにノルン自体も上位互換のヴィシュヌが存在する。それでも防御力減少が十分に足りていて、風襲付与や疾風属性ダメージが必要な時には採用できる。",
+  "tier_desc_cn": "虽然构成与诺伦相同，但相比伤害加成增益，防御力降低的价值更高，因此并不常被采用，而且就连诺伦本身也有上位替代毗湿奴。只有在防御力降低已经溢出、同时还需要附加风袭，或需要风属性攻击时才会考虑使用。",
+  "comment": "",
+  "comment_en": "",
+  "comment_jp": "",
+    "comment_cn": "",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "질풍 강화",
+      "priority": 0
+    },
+    {
+      "name": "마도의 재능",
+      "priority": 0
+    },
+    {
+      "name": "공격 강화",
+      "priority": 0
+    },
+    {
+      "name": "어드바이스",
+      "priority": 0
+    },
+    {
+      "name": "정교한 타격",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 3,
+  "passive_skill": [
+    {
+      "name": "잃어버린 꽃향기",
+      "name_en": "Bewildering Fragrance",
+      "name_jp": "花香の惑い",
+      "desc": "효과 명중이 24.9% 증가한다. 풍습 효과 부여 후 2턴 동안 메인 목표 적이 받는 대미지가 17.6% 증가한다. 또한 2턴 동안자신의 효과 명중이 14% 증가한다.",
+      "desc_en": "Increase ailment accuracy by 24.9%. After inflicting Windswept, increase main target's damage taken by 17.6% and increase user's ailment accuracy by 14% for 2 turns.",
+      "desc_jp": "状態異常命中が２４.９%上昇する。風襲状態にした時、２ターンの間、選択した対象の被ダメージを１７.６%上昇する。さらに２ターンの間、自身の状態異常命中が１４%上昇する。",
+      "name_cn": "花香的迷失",
+      "desc_cn": "效果命中提升24.9%。造成风袭效果后，使主目标敌人受到的伤害提升17.6%，效果持续2回合。并提升自身效果命中14%。效果持续2回合。"
+    },
+    {
+      "name": "잃어버린 꽃향기Ⅰ",
+      "name_en": "Bewildering Fragrance I",
+      "name_jp": "花香の惑いⅠ",
+      "desc": "효과 명중이 24.9% 증가한다. 풍습 효과 부여 후 2턴 동안 메인 목표 적이 받는 대미지가 20% 증가한다. 또한 2턴 동안 자신의 효과 명중이 16% 증가한다.",
+      "desc_en": "Increase ailment accuracy by 24.9%. After inflicting Windswept, increase main target's damage taken by 20% and increase user's ailment accuracy by 16% for 2 turns.",
+      "desc_jp": "状態異常命中が２４.９%上昇する。風襲状態にした時、２ターンの間、選択した対象の被ダメージを２０%上昇する。さらに２ターンの間、自身の状態異常命中が１６%上昇する。",
+      "name_cn": "花香的迷失Ⅰ",
+      "desc_cn": "效果命中提升24.9%。造成风袭效果后，使主目标敌人受到的伤害提升20%，效果持续2回合。并提升自身效果命中16%。效果持续2回合。"
+    },
+    {
+      "name": "잃어버린 꽃향기Ⅱ",
+      "name_en": "Bewildering Fragrance II",
+      "name_jp": "花香の惑いⅡ",
+      "desc": "효과 명중이 24.9% 증가한다. 풍습 효과 부여 후 2턴 동안 메인 목표 적이 받는 대미지가 22.4% 증가한다. 또한 2턴 동안 자신의 효과 명중이 18% 증가한다.",
+      "desc_en": "Increase ailment accuracy by 24.9%. After inflicting Windswept, increase main target's damage taken by 22.4% and increase user's ailment accuracy by 18% for 2 turns.",
+      "desc_jp": "状態異常命中が２４.９%上昇する。風襲状態にした時、２ターンの間、選択した対象の被ダメージを２２.４%上昇する。さらに２ターンの間、自身の状態異常命中が１８%上昇する。",
+      "name_cn": "花香的迷失Ⅱ",
+      "desc_cn": "效果命中提升24.9%。造成风袭效果后，使主目标敌人受到的伤害提升22.4%，效果持续2回合。并提升自身效果命中18%。效果持续2回合。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "매복 사냥",
+    "name_en": "Spike",
+    "name_jp": "スパイク",
+    "desc": "1명의 적에게 공격력 155.1%/162.9%/170.6%의 질풍 속성 대미지를 주고, 2턴 동안 100.0%/105.0%/110.0%의 기본 확률로 적을 풍습 상태에 빠뜨린다.",
+    "desc_en": "Deal Wind damage to 1 foe equal to 155.1%/162.9%/170.6% of Attack. 100.0%/105.0%/110.0% chance to inflict Windswept on the target for 2 turns.",
+    "desc_jp": "敵単体に攻撃力155.1%/162.9%/170.6%の疾風属性ダメージを与える。100.0%/105.0%/110.0%の確率で、２ターンの間、敵を風襲状態にする。",
+    "priority": 1,
+    "icon": "질풍",
+    "icon_gl": "",
+    "name_cn": "俯猎",
+    "desc_cn": "对1名敌人造成155.1%/162.9%/170.6%攻击力的疾风属性伤害，有100.0%/105.0%/110.0%基础概率使敌人陷入风袭状态，效果持续2回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 적에게 공격력 90.0%/96.3%/102.6%의 질풍 속성 대미지를 주며, 적이 받는 대미지가 19.6%/21.0%/22.3% 증가한다. 효과는 2턴 동안 지속된다.",
+    "desc_en": "Deal Wind damage to all foes equal to 90.0%/96.3%/102.6% of Attack. Increase damage taken by 19.6%/21.0%/22.3% for 2 turns.",
+    "desc_jp": "敵全体に攻撃力90.0%/96.3%/102.6%の疾風属性ダメージを与える。さらに２ターンの間、被ダメージが19.6%/21.0%/22.3%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "对所有敌人造成90.0%/96.3%/102.6%攻击力的疾风属性伤害，并使其受到的伤害提升19.6%/21.0%/22.3%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "갈다인",
+      "name_en": "Garudyne",
+      "name_jp": "ガルダイン",
+      "desc": "1명의 적에게 공격력 121.7/127.8/133.9%의 질풍 속성 대미지를 주고, 67.6/71.0/74.4%의 기본 확률로 적을 2턴 동안 풍습 상태에 빠뜨린다.",
+      "desc_en": "Deal Wind damage to 1 foe equal to 121.7/127.8/133.9% of Attack. 67.6/71.0/74.4% chance to inflict Windswept for 2 turns.",
+      "desc_jp": "敵単体に攻撃力121.7/127.8/133.9%の疾風属性ダメージを与える。67.6/71.0/74.4%の確率で敵を２ターンの間、風襲状態にする。",
+      "cost": "SP 21",
+      "level": "6/7/8",
+      "learn_level": "6",
+      "name_cn": "加尔达因",
+      "desc_cn": "对1名敌人造成121.7/127.8/133.9%攻击力的疾风属性伤害，有67.6/71.0/74.4%基础概率使敌人陷入风袭状态，效果持续2回合。"
+    },
+    {
+      "name": "현기증",
+      "name_en": "Dazzler",
+      "name_jp": "目眩し",
+      "desc": "32.6/34.2/35.9%의 기본 확률로 2턴 동안 적 1명을 현기증 상태에 빠뜨린다.",
+      "desc_en": "32.6/34.2/35.9% chance to inflict Dizzy on 1 foe for 2 turns.",
+      "desc_jp": "32.6/34.2/35.9%の確率で敵単体を２ターンの間、目眩状態にする。",
+      "cost": "SP 22",
+      "level": "6/7/8",
+      "learn_level": "12",
+      "name_cn": "晕眩",
+      "desc_cn": "有32.6/34.2/35.9%基础概率使1名敌人陷入晕眩，效果持续2回合。"
+    },
+    {
+      "name": "현기증률 UPⅢ",
+      "name_en": "Dizzy Boost III",
+      "name_jp": "目眩率ＵＰⅢ",
+      "desc": "현기증 효과 부여 시 효과 명중이 16.3% 증가한다.",
+      "desc_en": "Increase Dizzy accuracy by 16.3%.",
+      "desc_jp": "目眩の命中率が１６.３%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "18",
+      "name_cn": "晕眩率UPⅢ",
+      "desc_cn": "造成晕眩效果时，效果命中提升16.3%。"
+    },
+    {
+      "name": "질풍률 UPⅢ",
+      "name_en": "Windsweep Boost III",
+      "name_jp": "風襲率ＵＰⅢ",
+      "desc": "풍습 효과 부여 시 효과 명중이 16.3% 증가한다.",
+      "desc_en": "Increase Windswept accuracy by 16.3%.",
+      "desc_jp": "風襲の命中率が１６.３%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "25",
+      "name_cn": "疾风率UPⅢ",
+      "desc_cn": "造成风袭效果时，效果命中提升16.3%。"
+    }
+  ],
+  "name_cn": "那耳喀索斯"
+};

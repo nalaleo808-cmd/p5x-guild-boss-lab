@@ -1,0 +1,21 @@
+{
+  "id": "base_double_weak_cast_bonus",
+  "status": "Opt-in hypothesis pending user clarification; not the default rule",
+  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "proposal": {
+    "normalBase": 17,
+    "concertBase": 34,
+    "bonusPerWeakCast": 4,
+    "automaticAndDoubleBerry": "Only the weakness bonus, with no extra base charge",
+    "berryKillReset": "Retains the separately user-confirmed full charge for each kill-reset cast",
+    "multipleHitsOrTargets": "Do not multiply the bonus within one cast"
+  },
+  "checkpointFit": [
+    { "action": "T5 J&C S2 plus enhanced automatic S3", "recordedGain": 38, "calculation": "34 base + 4 for the automatic S3's Curse hit" },
+    { "action": "T5 Berry ordinary S3", "recordedGain": 38, "calculation": "34 base + 4 for one weak cast, including its bonus damage hit" },
+    { "action": "T6 Berry Alt S3", "recordedGain": 42, "calculation": "34 base + 4 for the initial cast + 4 for the repeated cast" },
+    { "action": "T7 Berry Alt S1", "recordedGain": 25, "calculation": "17 base + 4 for the initial cast + 4 for the repeated cast" }
+  ],
+  "conflict": "The earlier user statement that Concert doubles gauge charge had been interpreted as doubling both base and weakness bonus. This candidate doubles only base charge.",
+  "pendingEvidence": "Clarify the Concert weakness rule and whether each automatic or repeated weak cast adds 4 independently."
+}

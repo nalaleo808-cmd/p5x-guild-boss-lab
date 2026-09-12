@@ -1,0 +1,13 @@
+{
+  "timing": "User confirmed characters restore SP at the start of their turns, 2026-09-05.",
+  "baseRecovery": 10,
+  "baseRecoverySource": "https://lufel.net/character.html?lang=en&name=%EB%A6%AC%EC%BD%94%C2%B7%EB%A7%A4%ED%99%94&v=4.4.0",
+  "sourceType": "Lufel Tempest Riko guide, not a directly captured game tooltip",
+  "implementation": "Live profile: recover up to 10 SP at beginActorTurn, capped at ordinary max SP without reducing existing overcap. Normal and Concert owner-turn entries use the same hook. Free commands and repeated hits do not enter this hook. Resuming a saved turn after Concert does not create another turn-start recovery.",
+  "limitations": [
+    "The guide documents upward rounding for SP Recovery modifiers. Modifier application remains pending because current simulator values mix a 100 fallback with equipped 0 and 5 percent values.",
+    "This implements natural base recovery only; it does not claim exact SP parity with the recording.",
+    "The separate 35 SP party restoration on Showstopper activation remains in place.",
+    "The user-requested 180 maximum SP for Marian and Berry remains in place."
+  ]
+}

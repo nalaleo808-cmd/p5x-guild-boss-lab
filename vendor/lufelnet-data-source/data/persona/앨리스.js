@@ -1,0 +1,163 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["앨리스"] = {
+  "id": "137",
+  "key": "앨리스",
+  "name": "앨리스",
+  "name_en": "Alice",
+  "name_jp": "アリス",
+  "grade": "8",
+  "star": "5",
+  "position": "굴복",
+  "element": "주원",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "A",
+  "tier_desc": "필드에 존재하는 것만으로 적이 받는 주원 대미지를 증가시킬 수 있다. 고유 스킬의 즉사 효과는 이따금씩 적에게 즉사 효과 무시가 없는 경우 활용된다.",
+  "tier_desc_en": "Just by being on the field, it can increase the Curse damage enemies take. The instant-kill effect on its unique skill is occasionally useful when enemies do not ignore instant death.",
+  "tier_desc_jp": "フィールドにいるだけで、敵が受ける呪怨ダメージを増加させられる。固有スキルの即死効果は、敵が即死無効を持たない場面で時々役立つ。",
+  "tier_desc_cn": "只要在场，就能提升敌人所受的诅咒伤害。固有技能的即死效果，则会在敌人没有即死免疫时偶尔派上用场。",
+  "comment": "기본 명중 80% + 명중 강화 IV 16.2% + 우중충한 하늘 16.9% + 본능 34.9% + 마이팰리스 2.3% = 150.3% 로 '죽어 줄래?' 상한 10%를 채울 수 있다. (우중충한 하늘 적용 여부 미확인)",
+  "comment_en": "Base accuracy 80% + Accuracy Enhancement IV 16.2% + Gloomy Sky 16.9% + Talent 34.9% + Thieves Den 2.3% = 150.3%, which can reach the 'Die For Me!' upper limit of 10%. (Gloomy Sky application unconfirmed)",
+  "comment_jp": "基本命中率80%+異常命中ブースタIV 16.2% + 浮かない空 16.9% + 再生の呪い 34.9% + マイパレス効果 2.3% = 150.3%で、『死んでくれる？』の最大効果10%を満たすことができる（浮かない空の適用可否は未確認）",
+  "comment_cn": "基础效果命中80% + 命中强化 IV 16.2% + 天公不作美 16.9% + 本能 34.9% + 我的宫殿 2.3% = 150.3%，可以吃满『可以为我而死吗』额外10%的上限。（天公不作美是否生效尚未确认）",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "타루카쟈",
+      "priority": 3
+    },
+    {
+      "name": "명중 강화",
+      "priority": 3
+    },
+    {
+      "name": "우중충한 하늘",
+      "priority": 3
+    }
+  ],
+  "passive_priority": 2,
+  "passive_skill": [
+    {
+      "name": "환생의 주원",
+      "name_en": "Undying Curse",
+      "name_jp": "再生の呪い",
+      "desc": "효과 명중이 34.9% 증가한다. 모든 적이 받는 주원 속성 대미지가 12% 증가한다. 모든 동료가 주원 속성의 페르소나 스킬을 1개 시전할 때마다 앨리스의 효과 명중, 공격력이 9.1% 증가한다. 효과는 2턴 동안 지속되며 3회 중첩 가능하다.",
+      "desc_en": "Increase ailment accuracy by 34.9%. Increase all foes' Curse damage taken by 12%. Each time an ally uses a Curse skill, increase Alice's ailment accuracy and Attack by 9.1% for 2 turns. Stacks up to 3 times.",
+      "desc_jp": "状態異常命中が３４.９%上昇する。敵全体の呪怨属性の被ダメージを１２%上昇する。味方全体が呪怨属性のスキルを１回使うごとに、２ターンの間、アリスの状態異常命中、攻撃力が９.１%上昇する。この効果は最大３つまで累積できる。",
+      "name_cn": "重生的诅咒",
+      "desc_cn": "效果命中提升34.9%。使所有敌人受到的诅咒属性伤害提升12%。所有同伴每释放1个诅咒属性的人格面具技能，则使爱丽丝的效果命中、攻击力提升9.1%，效果持续2回合，上限3层。"
+    },
+    {
+      "name": "환생의 주원Ⅰ",
+      "name_en": "Undying Curse I",
+      "name_jp": "再生の呪いⅠ",
+      "desc": "효과 명중이 34.9% 증가한다. 모든 적이 받는 주원 속성 대미지가 14% 증가한다. 모든 동료가 주원 속성의 페르소나 스킬을 1개 시전할 때마다 앨리스의 효과 명중, 공격력이 10.3% 증가한다. 효과는 2턴 동안 지속되며 3회 중첩 가능하다.",
+      "desc_en": "Increase ailment accuracy by 34.9%. Increase all foes' Curse damage taken by 14%. Each time an ally uses a Curse skill, Alice's ailment accuracy and Attack increase by 10.3%. Stacks up to 3 times. Lasts for 2 turns.",
+      "desc_jp": "状態異常命中が３４.９%上昇する。敵全体の呪怨属性の被ダメージを１４%上昇する。味方全体が呪怨属性のスキルを１回使うごとに、２ターンの間、アリスの状態異常命中、攻撃力が１０.３%上昇する。この効果は最大３つまで累積できる。",
+      "name_cn": "重生的诅咒Ⅰ",
+      "desc_cn": "效果命中提升34.9%。使所有敌人受到的诅咒属性伤害提升14%。所有同伴每释放1个诅咒属性的人格面具技能，则使爱丽丝的效果命中、攻击力提升10.3%，效果持续2回合，上限3层。"
+    },
+    {
+      "name": "환생의 주원Ⅱ",
+      "name_en": "Undying Curse II",
+      "name_jp": "再生の呪いⅡ",
+      "desc": "효과 명중이 34.9% 증가한다. 모든 적이 받는 주원 속성 대미지가 16% 증가한다. 모든 동료가 주원 속성의 페르소나 스킬을 1개 시전할 때마다 앨리스의 효과 명중, 공격력이 11.5% 증가한다. 효과는 2턴 동안 지속되며 3회 중첩 가능하다.",
+      "desc_en": "Increase ailment accuracy by 34.9%. Increase all foes' Curse damage taken by 16%. Each time an ally uses a Curse skill, Alice's ailment accuracy and Attack increase by 11.5%. Stacks up to 3 times. Lasts for 2 turns.",
+      "desc_jp": "状態異常命中が３４.９%上昇する。敵全体の呪怨属性の被ダメージを１６%上昇する。味方全体が呪怨属性のスキルを１回使うごとに、２ターンの間、アリスの状態異常命中、攻撃力が１１.５%上昇する。この効果は最大３つまで累積できる。",
+      "name_cn": "重生的诅咒Ⅱ",
+      "desc_cn": "效果命中提升34.9%。使所有敌人受到的诅咒属性伤害提升16%。所有同伴每释放1个诅咒属性的人格面具技能，则使爱丽丝的效果命中、攻击力提升11.5%，效果持续2回合，上限3层。"
+    },
+    {
+      "name": "환생의 주원Ⅲ",
+      "name_en": "Undying Curse III",
+      "name_jp": "再生の呪いⅢ",
+      "desc": "효과 명중이 34.9% 증가한다. 모든 적이 받는 주원 속성 대미지가 18% 증가한다. 모든 동료가 주원 속성의 페르소나 스킬을 1개 시전할 때마다 앨리스의 효과 명중, 공격력이 12.6% 증가한다. 효과는 2턴 동안 지속되며 3회 중첩 가능하다.",
+      "desc_en": "Increase ailment accuracy by 34.9%. Increase all foes' Curse damage taken by 18%. Each time an ally uses a Curse skill, Alice's ailment accuracy and Attack increase by 12.6%. Stacks up to 3 times. Lasts for 2 turns.",
+      "desc_jp": "状態異常命中が３４.９%上昇する。敵全体の呪怨属性の被ダメージを１８%上昇する。味方全体が呪怨属性のスキルを１回使うごとに、２ターンの間、アリスの状態異常命中、攻撃力が１２.６%上昇する。この効果は最大３つまで累積できる。",
+      "name_cn": "重生的诅咒Ⅲ",
+      "desc_cn": "效果命中提升34.9%。使所有敌人受到的诅咒属性伤害提升18%。所有同伴每释放1个诅咒属性的人格面具技能，则使爱丽丝的效果命中、攻击力提升12.6%，效果持续2回合，上限3层。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "죽어 줄래?",
+    "name_en": "Die For Me!",
+    "name_jp": "死んでくれる？",
+    "desc": "2턴 동안 모든 적이 받는 주원 속성 대미지가 17.5%/18.4%/19.2% 증가하고, 효과 명중 30%마다 추가로 2.0%/2.1%/2.2% 증가한다. 상한은 10%이다. 적의 생명이 50% 미만일 시 높은 확률로 즉사 효과가 추가된다.",
+    "desc_en": "Increase all foes' Curse damage taken by 17.5%/18.4%/19.2%. Increase by 2.0%/2.1%/2.2% more for every 30% of user's ailment accuracy (up to 10%) for 2 turns. If foe's HP is below 50%, chance to insta-kill.",
+    "desc_jp": "２ターンの間、敵全体の呪怨属性の被ダメージを17.5%/18.4%/19.2%上昇し、状態異常命中３０%ごとに追加で2.0%/2.1%/2.2%上昇する（最大１０%）。敵のＨＰが５０%未満の場合、高確率で即死させる。",
+    "priority": 2,
+    "icon": "주원광역",
+    "icon_gl": "",
+    "name_cn": "可以为我而死吗",
+    "desc_cn": "使所有敌人受到的诅咒属性伤害提升17.5%/18.4%/19.2%+每有30%效果命中额外提升2.0%/2.1%/2.2%，上限10%，效果持续2回合。敌人生命值低于50%时，高概率附加即死效果。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 적에게 공격력 90.0%/96.3%/102.6%의 주원 속성 대미지를 주며, 적이 받는 대미지가 19.6%/21.0%/22.3% 증가한다. 효과는 2턴 동안 지속된다.",
+    "desc_en": "Deal Curse damage to all foes equal to 90.0%/96.3%/102.6% of Attack. Increase damage taken by 19.6%/21.0%/22.3% for 2 turns.",
+    "desc_jp": "敵全体に攻撃力90.0%/96.3%/102.6%の呪怨属性ダメージを与える。さらに２ターンの間、被ダメージが19.6%/21.0%/22.3%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "对所有敌人造成90.0%/96.3%/102.6%攻击力的诅咒属性伤害，并使其受到的伤害提升19.6%/21.0%/22.3%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "무드 성공률 UPⅣ",
+      "name_en": "Call of the Abyss IV",
+      "name_jp": "深淵の呼び声Ⅳ",
+      "desc": "즉사 스킬 성공률이 6.8% 증가한다.",
+      "desc_en": "Increase the success rate of insta-kill skills by 6.8%.",
+      "desc_jp": "即死スキルの成功率が６.８%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "10",
+      "name_cn": "姆多成功率UPⅣ",
+      "desc_cn": "即死技能成功率上升6.8%。"
+    },
+    {
+      "name": "주원 간파Ⅳ",
+      "name_en": "Curse Reduction IV",
+      "name_jp": "呪怨レデュースⅣ",
+      "desc": "받는 주원 속성 대미지가 10.8% 감소한다.",
+      "desc_en": "Decrease Curse damage taken by 10.8%.",
+      "desc_jp": "呪怨属性の被ダメージを１０.８%低下させる。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "20",
+      "name_cn": "诅咒识破Ⅳ",
+      "desc_cn": "受到的诅咒属性伤害降低10.8%。"
+    },
+    {
+      "name": "민첩의 마음가짐Ⅳ",
+      "name_en": "Agility Master IV",
+      "name_jp": "敏捷の心得Ⅳ",
+      "desc": "속도가 15포인트 증가하고, 방어력이 12% 감소한다.",
+      "desc_en": "Increase Speed by 15. Decrease Defense by 12%.",
+      "desc_jp": "速さが１５上昇し、防御力が１２%低下する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "30",
+      "name_cn": "敏捷的心得Ⅳ",
+      "desc_cn": "速度提升15点，防御力降低12%。"
+    },
+    {
+      "name": "연옥의 날개",
+      "name_en": "Maeigaon",
+      "name_jp": "マハエイガオン",
+      "desc": "모든 적에게 공격력 71.0/75.6/80.2%의 주원 속성 대미지를 주고, 적이 주원 효과 1개를 획득한다.",
+      "desc_en": "Deal Curse damage to all foes equal to 66.5/70.7/74.9% of Attack. Chance to inflict 1 Curse stack on foes.",
+      "desc_jp": "敵全体に攻撃力66.5/70.7/74.9%の呪怨属性ダメージを与える。一定の確率で敵に１つの呪印を付与する。",
+      "cost": "SP 22",
+      "level": "6/7/8",
+      "learn_level": "40",
+      "name_cn": "炼狱之翼",
+      "desc_cn": "对所有敌人造成71.0/75.6/80.2%攻击力的诅咒属性伤害，使敌人获得1个诅咒效果。"
+    }
+  ],
+  "name_cn": "爱丽丝"
+};

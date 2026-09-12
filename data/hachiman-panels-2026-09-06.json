@@ -1,0 +1,73 @@
+{
+  "source": "User screenshots and statements, 2026-09-06",
+  "stageEffects": {
+    "source": "Hachiman battle intel Special Effect tooltips, Diff. Bonus 8 visible",
+    "continuousDamage": "Allies' continuous damage is increased by 30%.",
+    "curseDamage": "Party's Curse damage is increased by 20%.",
+    "criticalConversion": "When allies deal damage with skills or Resonances, standard critical damage calculations are not carried out (regardless of whether or not a critical hit occurs), but deal increased final damage from skills and Resonances. This increase is equal to critical hit rate x (critical damage - 100%). (Max critical hit rate in this calculation is 100%).",
+    "fourthEffect": "A fourth (red) Special Effect tab was visible but not opened; presumed to be the Guardian/Medic composition effect read on 2026-09-05.",
+    "modelNote": "The conversion is described as increased final damage. The engine multiplies it with the other final-damage effects (+20% composition, Summertime Refresh, Concert +10%); whether final-damage increases add or multiply is unverified."
+  },
+  "inBattlePanelsAfterT1": {
+    "note": "Character Details opened in battle after T1. Values include the navigator share and Revelation set effects; Damage Mult. visibly includes active party buffs and is not used as an equipped input.",
+    "justineAndCaroline": {
+      "attack": 7035,
+      "defense": 2803,
+      "hp": 12682,
+      "sp": 100,
+      "speed": 113.4,
+      "critRate": 48.6,
+      "critMult": 310.3,
+      "spRecovery": 5,
+      "technicalPrecision": 0,
+      "pierceRate": 18.1,
+      "downPoints": 0,
+      "ailmentAccuracy": 7.5,
+      "ailmentResistance": 0,
+      "damageMult": 222,
+      "damageDown": 0,
+      "elementalMult": {
+        "physical": 5,
+        "gun": 5,
+        "fire": 6,
+        "ice": 4.8,
+        "electric": 5.8,
+        "wind": 5.8,
+        "psychic": 10,
+        "nuclear": 4.8,
+        "bless": 9.8,
+        "curse": 29.8
+      }
+    },
+    "beachflowerMinami": {
+      "attack": 4866,
+      "defense": 2220,
+      "hp": 19595,
+      "sp": 100,
+      "speed": 110.4,
+      "critRate": 11.9,
+      "critMult": 318.9,
+      "spRecovery": 5,
+      "technicalPrecision": 0,
+      "pierceRate": 20.5,
+      "downPoints": 0,
+      "ailmentAccuracy": 16.6,
+      "ailmentResistance": 0,
+      "damageMult": 190.9,
+      "damageDown": 8,
+      "weaknessMult": 0,
+      "weakAttackDown": 0
+    }
+  },
+  "confirmations": {
+    "vorpalButterflyHighHpClause": "The +200% skill damage condition is active on the infinite-HP Hachiman.",
+    "idolDamageScoring": "Damage dealt to the Daisoujou idols does not contribute to the score.",
+    "t1BerryHitOnHachiman": 431626,
+    "t1BerryHitScoreWeight": 0.5
+  },
+  "jcAwareness2CallousKindness": {
+    "source": "J&C Awareness page, user screenshot 2026-09-06",
+    "text": "When a Facade is gained, gain the following buff based on the type of Facade: Facade of Mischief & Innocence: Increase party's Attack by 30% for 2 turns. Facade of Service & Admonition: Decrease party's damage taken by 20% for 2 turns. Facade of Absurdity & Nonsense: Increase critical damage of the Assassin or Sweeper ally with the highest Attack by 20% for 2 turns. Facade of Luck & Loss: Increase Justine & Caroline's skill damage by 10% for 2 turns.",
+    "engineNote": "Matches applyJcFacadeAwareness: the Attack buff comes only from the Mischief Facade (S1), so a T1 S1 / T2 Gun opener leaves Berry's T3 S3 without it."
+  }
+}

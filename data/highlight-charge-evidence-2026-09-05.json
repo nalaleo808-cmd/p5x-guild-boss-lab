@@ -1,0 +1,34 @@
+{
+  "id": "user_confirmed_highlight_2026-09-05",
+  "sourceType": "direct_user_correction",
+  "normalThiefAction": { "gain": 17, "unit": "percentage_points", "status": "confirmed" },
+  "weaknessThiefAction": { "gain": 21, "bonusOverNormal": 4, "unit": "percentage_points", "status": "confirmed" },
+  "virtualConcert": {
+    "highlightGainMultiplier": 2,
+    "normalGain": 34,
+    "weaknessGain": 42,
+    "unit": "percentage_points",
+    "status": "confirmed",
+    "basis": "doubles_the_confirmed_normal_or_weakness_action_gain"
+  },
+  "virtualConcertEffects": {
+    "highlightAndTheurgyGaugeFilling": "doubled",
+    "highlightFinalDamageAmplification": 10,
+    "theurgyFinalDamageAmplification": 10,
+    "resetsAllAllyHighlightCooldownsOnActivation": true,
+    "unit": "percentage_points",
+    "status": "confirmed"
+  },
+  "theurgyActivations": { "implemented": false, "status": "incomplete" },
+  "berryS1KillReset": {
+    "eligibility": "confirmed_by_user",
+    "trigger": "Vorpal Butterfly recasts after defeating its target",
+    "basis": "each_cast",
+    "normalGain": 17,
+    "weaknessGain": 21,
+    "rateBasis": "applies_previously_confirmed_cast_rates; capped_T1_endpoint_does_not_independently_measure_each_recast",
+    "concertMultiplier": 2
+  },
+  "additionalRepeatOrFollowUpGain": { "gain": null, "basis": null, "eligibility": null, "status": "unresolved_except_berry_s1_kill_resets" },
+  "note": "21% is the total for a weakness cast, not 17% plus another 21%. During Virtual Concert the corresponding totals are 34% and 42%. The user identifies Berry's kill-triggered S1 recasts as the missing T1 charge source. This does not establish eligibility for Double Berry, other automatic follow-ups, or a separate charge per damage packet or target."
+}

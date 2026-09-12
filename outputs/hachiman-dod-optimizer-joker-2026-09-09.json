@@ -1,0 +1,709 @@
+{
+  "generatedAt": "2026-09-10T09:09:16.732Z",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "berryPanel": "joker",
+  "elapsedMs": 109154,
+  "baseline": {
+    "score": 10094701918,
+    "points": 1261712740,
+    "checkpoints": {
+      "T18": 14259656,
+      "B1": 124579346,
+      "B2": 1125018872,
+      "B3": 1194365988,
+      "B4": 1261712740
+    }
+  },
+  "best": {
+    "score": 10257085686,
+    "points": 1282010711,
+    "delta": 162383768,
+    "deltaPercent": 1.608603892606797,
+    "changes": "mikuSet=hope_ruin, wonderB3=rakunda, wonderB4=theoria",
+    "decisions": {
+      "jcSet": "reconcilation",
+      "mikuSet": "hope_ruin",
+      "concertAt": "B1",
+      "wonderT16": "venomous",
+      "wonderT17": "rakunda",
+      "wonderT18": "tarukaja",
+      "wonderB1": "theoria",
+      "wonderB2": "matarukaja",
+      "wonderB3": "rakunda",
+      "wonderB4": "theoria",
+      "marianT16": "s2",
+      "marianT17": "s1",
+      "marianT18": "s3",
+      "marianB1": "s2",
+      "marianB3": "s3",
+      "marianB4": "s2",
+      "medicineT17": "dot_up",
+      "medicineT18": "attack_tablet",
+      "medicineB1": "fighter_salve",
+      "medicineB2": "dot_up",
+      "medicineB3": "none",
+      "medicineB4": "fighter_salve",
+      "berryB1": "s3",
+      "berryB2": "alt_s3",
+      "berryB3": "s3",
+      "berryB4": "s3"
+    },
+    "checkpoints": {
+      "T18": 14368927,
+      "B1": 125841570,
+      "B2": 1136307110,
+      "B3": 1207447827,
+      "B4": 1282010711
+    }
+  },
+  "noiseMargin": 25236755,
+  "sensitivity": [
+    {
+      "change": "mikuSet=hope_ruin",
+      "legal": true,
+      "score": 10194799898,
+      "delta": 100097980,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB4=rakunda",
+      "legal": true,
+      "score": 10147061226,
+      "delta": 52359308,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB3=rakunda",
+      "legal": true,
+      "score": 10111679230,
+      "delta": 16977312,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB4=tarukaja",
+      "legal": true,
+      "score": 10109282798,
+      "delta": 14580880,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB2=rakunda",
+      "legal": true,
+      "score": 10102899248,
+      "delta": 8197330,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB4=attack_tablet",
+      "legal": true,
+      "score": 10101820476,
+      "delta": 7118558,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "marianB4=s1",
+      "legal": true,
+      "score": 10099776610,
+      "delta": 5074692,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB2=venomous",
+      "legal": true,
+      "score": 10088347262,
+      "delta": -6354656,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB4=theoria",
+      "legal": true,
+      "score": 10080364796,
+      "delta": -14337122,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB4=matarukaja",
+      "legal": true,
+      "score": 10080364796,
+      "delta": -14337122,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB4=dot_up",
+      "legal": true,
+      "score": 10053391422,
+      "delta": -41310496,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB4=highlight_up",
+      "legal": true,
+      "score": 10053391422,
+      "delta": -41310496,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB3=tarukaja",
+      "legal": true,
+      "score": 10042382682,
+      "delta": -52319236,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB2=tarukaja",
+      "legal": true,
+      "score": 10018274774,
+      "delta": -76427144,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT16=matarukaja",
+      "legal": true,
+      "score": 10006763468,
+      "delta": -87938450,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT16=rakunda",
+      "legal": true,
+      "score": 10004459994,
+      "delta": -90241924,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT16=tarukaja",
+      "legal": true,
+      "score": 10004459994,
+      "delta": -90241924,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT16=theoria",
+      "legal": true,
+      "score": 10004459994,
+      "delta": -90241924,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB3=venomous",
+      "legal": true,
+      "score": 9999411622,
+      "delta": -95290296,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "marianT16=s1",
+      "legal": true,
+      "score": 9997619978,
+      "delta": -97081940,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB3=matarukaja",
+      "legal": true,
+      "score": 9986227572,
+      "delta": -108474346,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB4=none",
+      "legal": true,
+      "score": 9969669170,
+      "delta": -125032748,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB2=theoria",
+      "legal": true,
+      "score": 9966341480,
+      "delta": -128360438,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "jcSet=harmony_victory",
+      "legal": true,
+      "score": 9932724252,
+      "delta": -161977666,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT17=highlight_up",
+      "legal": true,
+      "score": 9805473712,
+      "delta": -289228206,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT17=none",
+      "legal": true,
+      "score": 9798304486,
+      "delta": -296397432,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT18=venomous",
+      "legal": true,
+      "score": 9772396782,
+      "delta": -322305136,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT18=matarukaja",
+      "legal": true,
+      "score": 9740511814,
+      "delta": -354190104,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB2=attack_tablet",
+      "legal": true,
+      "score": 9740208682,
+      "delta": -354493236,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT17=fighter_salve",
+      "legal": true,
+      "score": 9732009714,
+      "delta": -362692204,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT17=attack_tablet",
+      "legal": true,
+      "score": 9723052616,
+      "delta": -371649302,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT18=rakunda",
+      "legal": true,
+      "score": 9720046576,
+      "delta": -374655342,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT18=theoria",
+      "legal": true,
+      "score": 9680848954,
+      "delta": -413852964,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB2=highlight_up",
+      "legal": true,
+      "score": 9646415134,
+      "delta": -448286784,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB2=none",
+      "legal": true,
+      "score": 9646415134,
+      "delta": -448286784,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB2=fighter_salve",
+      "legal": true,
+      "score": 9614265828,
+      "delta": -480436090,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB1=attack_tablet",
+      "legal": true,
+      "score": 9549537186,
+      "delta": -545164732,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB1=highlight_up",
+      "legal": true,
+      "score": 9507457010,
+      "delta": -587244908,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "marianB1=s1",
+      "legal": true,
+      "score": 9436215372,
+      "delta": -658486546,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB1=venomous",
+      "legal": true,
+      "score": 9432009478,
+      "delta": -662692440,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB1=dot_up",
+      "legal": true,
+      "score": 9425283630,
+      "delta": -669418288,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT18=highlight_up",
+      "legal": true,
+      "score": 9410550618,
+      "delta": -684151300,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "marianT17=s2",
+      "legal": true,
+      "score": 9402510454,
+      "delta": -692191464,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB1=matarukaja",
+      "legal": true,
+      "score": 9387645178,
+      "delta": -707056740,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB1=rakunda",
+      "legal": true,
+      "score": 9380795004,
+      "delta": -713906914,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderB1=tarukaja",
+      "legal": true,
+      "score": 9335694696,
+      "delta": -759007222,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT18=fighter_salve",
+      "legal": true,
+      "score": 9329523412,
+      "delta": -765178506,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT18=none",
+      "legal": true,
+      "score": 9303175806,
+      "delta": -791526112,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineT18=dot_up",
+      "legal": true,
+      "score": 9289520360,
+      "delta": -805181558,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT17=venomous",
+      "legal": true,
+      "score": 9179896644,
+      "delta": -914805274,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT17=matarukaja",
+      "legal": true,
+      "score": 9156750496,
+      "delta": -937951422,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT17=theoria",
+      "legal": true,
+      "score": 9086748380,
+      "delta": -1007953538,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "wonderT17=tarukaja",
+      "legal": true,
+      "score": 9075762052,
+      "delta": -1018939866,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "medicineB1=none",
+      "legal": true,
+      "score": 8972700368,
+      "delta": -1122001550,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "berryB2=s3",
+      "legal": true,
+      "score": 8532513778,
+      "delta": -1562188140,
+      "failedAt": null,
+      "reason": null
+    },
+    {
+      "change": "concertAt=B2",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B1 Marian Highlight on Berry",
+      "reason": "B1 Marian Highlight on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "concertAt=B3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B1 Marian Highlight on Berry",
+      "reason": "B1 Marian Highlight on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianT16=s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "T16 Marian S3 on Berry",
+      "reason": "T16 Marian S3 on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianT17=s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "T17 Marian S3 on Berry",
+      "reason": "T17 Marian S3 on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianT18=s2",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B1 Marian fighter_salve on Berry",
+      "reason": "B1 Marian fighter_salve on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianT18=s1",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B1 Marian fighter_salve on Berry",
+      "reason": "B1 Marian fighter_salve on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianB1=s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B1 Marian S3 on Berry",
+      "reason": "B1 Marian S3 on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianB3=s2",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B4 Marian fighter_salve on Berry",
+      "reason": "B4 Marian fighter_salve on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianB3=s1",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B4 Marian fighter_salve on Berry",
+      "reason": "B4 Marian fighter_salve on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "marianB4=s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B4 Marian S3 on Berry",
+      "reason": "B4 Marian S3 on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "medicineB3=dot_up",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B3 Marian dot_up on Berry",
+      "reason": "B3 Marian dot_up on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "medicineB3=attack_tablet",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B3 Marian attack_tablet on Berry",
+      "reason": "B3 Marian attack_tablet on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "medicineB3=fighter_salve",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B3 Marian fighter_salve on Berry",
+      "reason": "B3 Marian fighter_salve on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "medicineB3=highlight_up",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B3 Marian highlight_up on Berry",
+      "reason": "B3 Marian highlight_up on Berry is not legal at this checkpoint."
+    },
+    {
+      "change": "berryB1=alt_s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B2 Berry Alt S3 boss",
+      "reason": "B2 Berry Alt S3 boss is not legal at this checkpoint."
+    },
+    {
+      "change": "berryB3=alt_s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B3 Berry Alt S3 boss",
+      "reason": "B3 Berry Alt S3 boss is not legal at this checkpoint."
+    },
+    {
+      "change": "berryB4=alt_s3",
+      "legal": false,
+      "score": null,
+      "delta": null,
+      "failedAt": "B4 Berry Alt S3 boss",
+      "reason": "B4 Berry Alt S3 boss is not legal at this checkpoint."
+    }
+  ],
+  "candidatesEvaluated": 481,
+  "legalCandidates": 387,
+  "top": [
+    {
+      "score": 10264578602,
+      "changes": "mikuSet=hope_ruin, wonderB3=rakunda, wonderB4=theoria, medicineB4=attack_tablet"
+    },
+    {
+      "score": 10263723326,
+      "changes": "mikuSet=hope_ruin, wonderB2=venomous, wonderB4=rakunda, medicineB4=attack_tablet"
+    },
+    {
+      "score": 10263016210,
+      "changes": "mikuSet=hope_ruin, wonderB2=venomous, wonderB3=rakunda, wonderB4=theoria"
+    },
+    {
+      "score": 10262730818,
+      "changes": "mikuSet=hope_ruin, wonderB3=rakunda, wonderB4=theoria, marianB4=s1"
+    },
+    {
+      "score": 10260892194,
+      "changes": "mikuSet=hope_ruin, wonderB4=rakunda, marianB4=s1, medicineB4=attack_tablet"
+    },
+    {
+      "score": 10259816684,
+      "changes": "mikuSet=hope_ruin, wonderB2=venomous, wonderB4=rakunda, marianB4=s1"
+    },
+    {
+      "score": 10257085686,
+      "changes": "mikuSet=hope_ruin, wonderB3=rakunda, wonderB4=theoria"
+    },
+    {
+      "score": 10255061144,
+      "changes": "mikuSet=hope_ruin, wonderB4=rakunda, medicineB4=attack_tablet"
+    },
+    {
+      "score": 10254138946,
+      "changes": "mikuSet=hope_ruin, wonderB2=venomous, wonderB4=rakunda"
+    },
+    {
+      "score": 10253213360,
+      "changes": "mikuSet=hope_ruin, wonderB4=rakunda, marianB4=s1"
+    },
+    {
+      "score": 10247568228,
+      "changes": "mikuSet=hope_ruin, wonderB4=rakunda"
+    },
+    {
+      "score": 10227723322,
+      "changes": "mikuSet=hope_ruin, wonderB3=rakunda, wonderB4=tarukaja"
+    }
+  ],
+  "limitations": [
+    "T1-T15 and the J&C break-round actions are fixed as Sleepy played them; only the listed decisions vary.",
+    "The DOD model reproduces Sleepy's run at 1.07x overall with the Concert rounds 1.11x over and the post-Concert rounds 0.7-0.9x under; differences under about 3% are within that error.",
+    "Victory set4, Power set4 and Ruin set4 are not modeled; Labor is modeled as a +8% Attack buff in the buff pool.",
+    "Scores are means over 12 seed(s)."
+  ]
+}

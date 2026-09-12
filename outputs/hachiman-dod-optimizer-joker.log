@@ -1,0 +1,91 @@
+Berry panel: joker. Baseline (Sleepy's route, Joker's sets): 10,738,716,986 mean over 12 seed(s) (min 10,363,758,152, max 10,996,805,936)
+Best found: 10,804,487,876 (0.61%) via wonderB3=rakunda, wonderB4=theoria
+Checkpoints best vs baseline (points): T18 15,155,568 / 15,155,568 | B1 131,834,273 / 131,834,273 | B2 1,197,498,077 / 1,197,498,077 | B3 1,272,024,850 / 1,270,811,857 | B4 1,350,435,985 / 1,342,214,623
+
+Single-change sensitivity (delta vs baseline):
+  wonderB4=rakunda               +55,742,034
+  wonderB3=rakunda               +16,909,826
+  wonderB4=tarukaja              +15,970,162
+  medicineB4=attack_tablet       +8,130,804
+  wonderB2=rakunda               +6,206,592
+  marianB4=s1                    +5,308,802
+  wonderB2=venomous              -8,573,798
+  wonderB4=theoria               -15,263,386
+  wonderB4=matarukaja            -15,263,386
+  medicineB4=dot_up              -44,176,102
+  medicineB4=highlight_up        -44,176,102
+  wonderB3=tarukaja              -55,610,000
+  wonderB2=tarukaja              -82,249,682
+  wonderT16=matarukaja           -93,156,650
+  wonderT16=rakunda              -95,644,566
+  wonderT16=tarukaja             -95,644,566
+  wonderT16=theoria              -95,644,566
+  wonderB3=venomous              -102,333,000
+  marianT16=s1                   -103,031,404
+  wonderB3=matarukaja            -116,261,588
+  medicineB4=none                -133,271,564
+  wonderB2=theoria               -138,865,136
+  jcSet=harmony_victory          -172,091,156
+  medicineT17=highlight_up       -308,313,906
+  medicineT17=none               -316,057,132
+  wonderT18=venomous             -350,167,232
+  medicineB2=attack_tablet       -378,633,334
+  wonderT18=matarukaja           -383,392,332
+  medicineT17=fighter_salve      -387,756,222
+  medicineT17=attack_tablet      -397,334,664
+  wonderT18=rakunda              -406,214,764
+  wonderT18=theoria              -448,866,810
+  medicineB2=highlight_up        -479,937,176
+  medicineB2=none                -479,937,176
+  medicineB2=fighter_salve       -514,226,096
+  mikuSet=hope_ruin              -543,917,088
+  medicineB1=attack_tablet       -582,496,206
+  medicineB1=highlight_up        -627,945,846
+  marianB1=s1                    -702,229,960
+  wonderB1=venomous              -713,492,518
+  medicineB1=dot_up              -716,699,062
+  marianT17=s2                   -738,255,000
+  medicineT18=highlight_up       -738,933,116
+  wonderB1=matarukaja            -759,553,656
+  wonderB1=rakunda               -768,328,450
+  wonderB1=tarukaja              -815,480,308
+  medicineT18=fighter_salve      -826,539,954
+  medicineT18=none               -854,599,456
+  medicineT18=dot_up             -869,164,760
+  wonderT17=venomous             -973,906,320
+  wonderT17=matarukaja           -998,021,302
+  wonderT17=theoria              -1,073,094,882
+  wonderT17=tarukaja             -1,084,900,836
+  medicineB1=none                -1,198,980,854
+  berryB2=s3                     -1,667,267,712
+  concertAt=B2                   illegal at B1 Marian Highlight on Berry: B1 Marian Highlight on Berry is not legal at this checkpoint.
+  concertAt=B3                   illegal at B1 Marian Highlight on Berry: B1 Marian Highlight on Berry is not legal at this checkpoint.
+  marianT16=s3                   illegal at T16 Marian S3 on Berry: T16 Marian S3 on Berry is not legal at this checkpoint.
+  marianT17=s3                   illegal at T17 Marian S3 on Berry: T17 Marian S3 on Berry is not legal at this checkpoint.
+  marianT18=s2                   illegal at B1 Marian fighter_salve on Berry: B1 Marian fighter_salve on Berry is not legal at this checkpoint.
+  marianT18=s1                   illegal at B1 Marian fighter_salve on Berry: B1 Marian fighter_salve on Berry is not legal at this checkpoint.
+  marianB1=s3                    illegal at B1 Marian S3 on Berry: B1 Marian S3 on Berry is not legal at this checkpoint.
+  marianB3=s2                    illegal at B4 Marian fighter_salve on Berry: B4 Marian fighter_salve on Berry is not legal at this checkpoint.
+  marianB3=s1                    illegal at B4 Marian fighter_salve on Berry: B4 Marian fighter_salve on Berry is not legal at this checkpoint.
+  marianB4=s3                    illegal at B4 Marian S3 on Berry: B4 Marian S3 on Berry is not legal at this checkpoint.
+  medicineB3=dot_up              illegal at B3 Marian dot_up on Berry: B3 Marian dot_up on Berry is not legal at this checkpoint.
+  medicineB3=attack_tablet       illegal at B3 Marian attack_tablet on Berry: B3 Marian attack_tablet on Berry is not legal at this checkpoint.
+  medicineB3=fighter_salve       illegal at B3 Marian fighter_salve on Berry: B3 Marian fighter_salve on Berry is not legal at this checkpoint.
+  medicineB3=highlight_up        illegal at B3 Marian highlight_up on Berry: B3 Marian highlight_up on Berry is not legal at this checkpoint.
+  berryB1=alt_s3                 illegal at B2 Berry Alt S3 boss: B2 Berry Alt S3 boss is not legal at this checkpoint.
+  berryB3=alt_s3                 illegal at B3 Berry Alt S3 boss: B3 Berry Alt S3 boss is not legal at this checkpoint.
+  berryB4=alt_s3                 illegal at B4 Berry Alt S3 boss: B4 Berry Alt S3 boss is not legal at this checkpoint.
+
+Evaluated 478 candidates, 384 legal, 113266 ms. Top:
+  10,812,403,042  wonderB3=rakunda, wonderB4=theoria, medicineB4=attack_tablet
+  10,811,495,954  wonderB2=venomous, wonderB4=rakunda, medicineB4=attack_tablet
+  10,810,735,934  wonderB2=venomous, wonderB3=rakunda, wonderB4=theoria
+  10,810,362,920  wonderB3=rakunda, wonderB4=theoria, marianB4=s1
+  10,808,445,638  wonderB4=rakunda, marianB4=s1, medicineB4=attack_tablet
+  10,807,276,492  wonderB2=venomous, wonderB4=rakunda, marianB4=s1
+  10,804,487,876  wonderB3=rakunda, wonderB4=theoria
+  10,802,374,186  wonderB4=rakunda, medicineB4=attack_tablet
+  10,801,371,472  wonderB2=venomous, wonderB4=rakunda
+  10,800,334,064  wonderB4=rakunda, marianB4=s1
+  10,794,459,020  wonderB4=rakunda
+  10,773,470,822  wonderB3=rakunda, wonderB4=tarukaja

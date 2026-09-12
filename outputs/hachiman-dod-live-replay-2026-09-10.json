@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-09-12T21:14:10.742Z",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "decisions": {
+    "wonderB2": "tarukaja",
+    "medicineB2": "highlight_up",
+    "medicineB4": "none"
+  },
+  "liveRounds": {
+    "T18 (break-opening action)": 4054,
+    "B1": 103517104,
+    "B2": 807939856,
+    "B3": 60756096,
+    "B4": 44501512
+  },
+  "simRounds": {
+    "T18 (break-opening action)": 4054,
+    "B1": 108070079.25,
+    "B2": 909604577.25,
+    "B3": 56900238.75,
+    "B4": 45464122
+  },
+  "liveActions": {
+    "B1 Twins S1 F/I boss (A6 nuke)": 8498016,
+    "B1 Berry S3 boss": 95019088,
+    "B2 Twins S2 P/N boss": 1641216,
+    "B2 Marian S1 Beach Basket": 735808,
+    "B2 Berry Highlight boss": 98034720,
+    "B2 Berry free Highlight boss": 98416816,
+    "B2 Berry Alt S3 boss": 609111296,
+    "B3 Twins S1 F/I boss": 2309312,
+    "B3 Berry S3 boss": 58446784,
+    "B4 Twins S2 P/N boss": 984640,
+    "B4 Berry S3 boss": 41794248
+  },
+  "simActions": {
+    "T1 Berry S1 on first add": 335036.9166666667,
+    "T18 Berry S3 boss (break)": 4054.0000000000005,
+    "B1 Twins S1 F/I boss (A6 nuke)": 13984897.5,
+    "B1 Berry S3 boss": 94085181.75,
+    "B2 Twins S2 P/N boss": 4434503.25,
+    "B2 Berry Highlight boss": 102738030.5,
+    "B2 Berry free Highlight boss": 112114408.75,
+    "B2 Berry Alt S3 boss": 690317634.75,
+    "B3 Twins S1 F/I boss": 4474397.75,
+    "B3 Berry S3 boss": 52425841,
+    "B4 Twins P/N Highlight": 3656826.5,
+    "B4 Twins S2 P/N boss": 2494170,
+    "B4 Berry S3 boss": 39313125.5
+  },
+  "points": 1120444516.25,
+  "livePoints": 1017120067
+}

@@ -1,0 +1,208 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["디오니소스"] = {
+  "id": "254",
+  "key": "디오니소스",
+  "name": "디오니소스",
+  "name_en": "Dionysus",
+  "name_jp": "ディオニュソス",
+  "grade": "7",
+  "star": "4",
+  "position": "우월",
+  "element": "염동",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": true,
+  "tier": "S",
+  "tier_desc": "출전율 1위로 실질적인 주인공의 메인 페르소나다.\n동료를 목표로 스킬을 사용할 경우 크리티컬 효과를 2턴간 30%라는 엄청난 버프를 부여한다. 어떠한 형태의 스킬이어도 아군을 대상으로만 하면 발동되기 때문에 새로운 버프류 스킬이 나왔다면 1순위는 디오니소스가 된다.",
+  "tier_desc_en": "It has the highest fielding rate and is effectively the protagonist's main Persona.\nWhen you use a skill targeting an ally, it grants a huge 30% critical damage buff for 2 turns. It triggers as long as the skill targets an ally, regardless of skill type, so whenever a new support skill appears, Dionysus is usually the first choice.",
+  "tier_desc_jp": "出場率1位で、実質的に主人公のメインペルソナと言える。\n味方を対象にスキルを使うと、2ターンの間クリティカルダメージ30%という非常に強力なバフを付与する。スキルの種類を問わず、味方対象でさえあれば発動するため、新しい支援系スキルが出るたびに最優先候補になる。",
+  "tier_desc_cn": "出场率第1，实际上已经是主角的主力人格面具。\n以同伴为目标释放技能时，可提供持续2回合、高达30%的暴击效果增益。无论是什么类型的技能，只要目标是我方就能触发，因此只要有新的辅助类技能出现，首选往往就是狄俄尼索斯。",
+  "comment": "메디아라한을 통한 치료에도 본능 크리티컬 효과 30% 증가가 적용된다.\n본능을 통해 크리티컬 확률을 확보하고 해명 괴도를 통해 추가로 받으므로 다른 페르소나와 달리 리벨리온 스킬의 최대치 효율을 위한 별도 어드바이스 패시브가 필요하지 않다.",
+  "comment_en": "The talent's 30% critical damage increase also applies to healing through Mediarahan.\nBecause it secures Crit Rate through its talent and gains more from the Elucidator, it does not need a separate Apt Pupil passive to fully capitalize on Rebellion, unlike other Personas.",
+  "comment_jp": "メディアラハンによる回復にも、本能のクリティカルダメージ30%増加が適用される。\n本能でクリティカル率を確保し、さらに解明怪盗から追加で受け取れるため、他のペルソナと違って、リベリオンの最大効率のために別途アドバイス系パッシブを用意する必要がない。",
+  "comment_cn": "通过梅迪亚拉翰进行治疗时，也会适用本能提供的30%暴击效果提升。\n由于可通过本能确保暴击率，并从解明怪盗处额外获得暴击率，因此和其他人格面具不同，不需要额外携带建言类被动来吃满反叛的最大收益。",
+  "added": "",
+  "cost": {
+    "blue": 0,
+    "purple": true,
+    "rainbow": 0,
+    "coin": 4250
+  },
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "무한 알고리즘",
+      "priority": 3
+    },
+    {
+      "name": "리벨리온",
+      "priority": 3
+    },
+    {
+      "name": "타루카쟈",
+      "priority": 3
+    },
+    {
+      "name": "역동적인 힘",
+      "priority": 3
+    },
+    {
+      "name": "세계수의 진화",
+      "priority": 3
+    },
+    {
+      "name": "라쿠카쟈",
+      "priority": 1
+    },
+    {
+      "name": "마하타루카 오토",
+      "priority": 1
+    },
+    {
+      "name": "치료 촉진",
+      "priority": 1
+    },
+    {
+      "name": "메디아라한",
+      "priority": 1
+    },
+    {
+      "name": "치료 강화",
+      "priority": 1
+    },
+    {
+      "name": "민첩의 마음가짐",
+      "priority": 0
+    },
+    {
+      "name": "대미지 면역",
+      "priority": 0
+    },
+    {
+      "name": "방어 강화",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 3,
+  "passive_skill": [
+    {
+      "name": "술취한 카니발",
+      "name_en": "Feast of the Frenzied",
+      "name_jp": "狂乱の酒宴",
+      "desc": "크리티컬 확률이 14.8% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 스킬의 메인 목표의 크리티컬 효과가 22% 증가한다.",
+      "desc_en": "Increase critical rate by 14.8%. When using a skill on an ally, increase main target's critical damage by 22% for 2 turns.",
+      "desc_jp": "クリティカル率が１４.８%上昇する。味方にスキルを使用した時、２ターンの間、選択した対象のクリティカルダメージが２２%上昇する。",
+      "name_cn": "酒醉的狂欢",
+      "desc_cn": "暴击率提升14.8%。以同伴为目标释放人格面具技能后，使技能主目标的暴击效果提升22%，效果持续2回合。"
+    },
+    {
+      "name": "술취한 카니발Ⅰ",
+      "name_en": "Feast of the Frenzied I",
+      "name_jp": "狂乱の酒宴Ⅰ",
+      "desc": "크리티컬 확률이 14.8% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 스킬의 메인 목표의 크리티컬 효과가 24.7% 증가한다.",
+      "desc_en": "Increase critical rate by 14.8%. When using a skill on an ally, increase main target's critical damage by 24.7% for 2 turns.",
+      "desc_jp": "クリティカル率が１４.８%上昇する。味方にスキルを使用した時、２ターンの間、選択した対象のクリティカルダメージが２４.７%上昇する。",
+      "name_cn": "酒醉的狂欢Ⅰ",
+      "desc_cn": "暴击率提升14.8%。以同伴为目标释放人格面具技能后，使技能主目标的暴击效果提升24.7%，效果持续2回合。"
+    },
+    {
+      "name": "술취한 카니발Ⅱ",
+      "name_en": "Feast of the Frenzied II",
+      "name_jp": "狂乱の酒宴Ⅱ",
+      "desc": "크리티컬 확률이 14.8% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 스킬의 메인 목표의 크리티컬 효과가 27.6% 증가한다.",
+      "desc_en": "Increase critical rate by 14.8%. When using a skill on an ally, increase main target's critical damage by 27.6% for 2 turns.",
+      "desc_jp": "クリティカル率が１４.８%上昇する。味方にスキルを使用した時、２ターンの間、選択した対象のクリティカルダメージが２７.６%上昇する。",
+      "name_cn": "酒醉的狂欢Ⅱ",
+      "desc_cn": "暴击率提升14.8%。以同伴为目标释放人格面具技能后，使技能主目标的暴击效果提升27.6%，效果持续2回合。"
+    },
+    {
+      "name": "술취한 카니발Ⅲ",
+      "name_en": "Feast of the Frenzied III",
+      "name_jp": "狂乱の酒宴Ⅲ",
+      "desc": "크리티컬 확률이 14.8% 증가한다. 동료를 목표로 페르소나 스킬 시전 시, 2턴 동안 스킬의 메인 목표의 크리티컬 효과가 30% 증가한다.",
+      "desc_en": "Increase critical rate by 14.8%. When using a skill on an ally, increase main target's critical damage by 30% for 2 turns.",
+      "desc_jp": "クリティカル率が１４.８%上昇する。味方にスキルを使用した時、２ターンの間、選択した対象のクリティカルダメージが３０%上昇する。",
+      "name_cn": "酒醉的狂欢Ⅲ",
+      "desc_cn": "暴击率提升14.8%。以同伴为目标释放人格面具技能后，使技能主目标的暴击效果提升30%，效果持续2回合。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "레볼루션",
+    "name_en": "Revolution",
+    "name_jp": "レボリューション",
+    "desc": "모든 동료의 크리티컬 확률이 6.5%/6.8%/7.2% 증가하고, 자신의 크리티컬 확률 10%마다 추가로1.1%/1.2%/1.2%가 증가한다. 상한은 4.4%/4.6%/4.8%이며, 효과는 3턴 동안 지속된다.",
+    "desc_en": "Increase party's critical rate by 6.5%/6.8%/7.2%. For every 10% of the user's critical rate, increase party's critical rate by 1.1%/1.2%/1.2% more, up to 4.4%/4.6%/4.8%. Lasts for 3 turns.",
+    "desc_jp": "３ターンの間、味方全体のクリティカル率が6.5%/6.8%/7.2%上昇する。自身のクリティカル率が１０%ごとに、味方のクリティカル率がさらに1.1%/1.2%/1.2%上昇する（最大4.4%/4.6%/4.8%まで）。",
+    "priority": 2,
+    "icon": "버프광역",
+    "icon_gl": "",
+    "name_cn": "革命",
+    "desc_cn": "使所有同伴的暴击率提升6.5%/6.8%/7.2%，自身每10%暴击率额外提升1.1%/1.2%/1.2%，上限4.4%/4.6%/4.8%。效果持续3回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 동료의 주는 대미지가 29.5%/31.6%/33.6% 증가하며 2턴 동안 지속된다.",
+    "desc_en": "Increase party's damage by 29.5%/31.6%/33.6% for 2 turns.",
+    "desc_jp": "２ターンの間、味方全体の与ダメージが29.5%/31.6%/33.6%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "使所有同伴造成的伤害提升29.5%/31.6%/33.6%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "염동 강화Ⅳ",
+      "name_en": "Psy Boost IV",
+      "name_jp": "念動ブースタⅣ",
+      "desc": "염동 속성 대미지가 10.8% 증가한다.",
+      "desc_en": "Increase Psychokinesis damage by 10.8%.",
+      "desc_jp": "念動属性の与ダメージが１０.８%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "9",
+      "name_cn": "念动强化Ⅳ",
+      "desc_cn": "念动属性伤害提升10.8%。"
+    },
+    {
+      "name": "사이코키네시스",
+      "name_en": "Psycho Force",
+      "name_jp": "サイコキネシス",
+      "desc": "1명의 적에게 공격력 138.9/145.9/152.9%의 염동 속성 대미지를 주고, 정신 이상 상태의 적에게 TECHNICAL을 준다. 스킬 대미지는 50% 증가한다.",
+      "desc_en": "Deal Psy damage to 1 foe equal to 138.9/145.9/152.9% of Attack. Deal a Technical and increase damage by 50% for foes with a spiritual ailment.",
+      "desc_jp": "敵単体に攻撃力138.9/145.9/152.9%の念動属性ダメージを与える。行動異常の敵に対してテクニカルが発生しダメージが５０%上昇する。",
+      "cost": "SP 22",
+      "level": "6/7/8",
+      "learn_level": "18",
+      "name_cn": "念动波",
+      "desc_cn": "对1名敌人造成138.9/145.9/152.9%攻击力的念动属性伤害，对处于精神异常状态的敌人造成TECHNICAL，技能伤害提升50%。"
+    },
+    {
+      "name": "전격 간파Ⅳ",
+      "name_en": "Electric Reduction IV",
+      "name_jp": "電撃レデュースⅣ",
+      "desc": "받는 전격 속성 대미지가 10.8% 감소한다.",
+      "desc_en": "Decrease Electric damage taken by 10.8%.",
+      "desc_jp": "電撃属性の被ダメージを１０.８%低下させる。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "27",
+      "name_cn": "电击识破Ⅳ",
+      "desc_cn": "受到的电击属性伤害降低10.8%。"
+    },
+    {
+      "name": "명중 강화Ⅳ",
+      "name_en": "Accuracy Boost IV",
+      "name_jp": "異常命中ブースタⅣ",
+      "desc": "효과 명중이 16.2% 증가한다.",
+      "desc_en": "Increase ailment accuracy by 16.2%.",
+      "desc_jp": "状態異常命中が１６.２%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "36",
+      "name_cn": "命中强化Ⅳ",
+      "desc_cn": "效果命中提升16.2%。"
+    }
+  ],
+  "name_cn": "狄俄尼索斯"
+};

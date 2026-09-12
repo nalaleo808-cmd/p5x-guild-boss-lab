@@ -1,0 +1,176 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["광목천"] = {
+  "id": "242",
+  "key": "광목천",
+  "name": "광목천",
+  "name_en": "Koumokuten",
+  "name_jp": "コウモクテン",
+  "grade": "5",
+  "star": "4",
+  "position": "우월",
+  "element": "물리",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": true,
+  "tier": "S",
+  "tier_desc": "아무런 스킬을 사용하지 않고도 본능 효과 하나로 3턴 간 공격력과 크리티컬 확률을 높이는 버프를 부여한다. 페르소나를 전환 하더라도 버프가 지속되기 때문에 초기 대미지가 중요한 콘텐츠에 자주 채용된다.",
+  "tier_desc_en": "Even without using any skills, its talent alone grants a 3-turn buff that increases Attack and Crit Rate. Because the buff persists even after switching Personas, it is often used in content where early damage matters.",
+  "tier_desc_jp": "スキルを使わなくても、本能効果だけで3ターンの間、攻撃力とクリティカル率を高めるバフを付与できる。ペルソナを切り替えてもバフが持続するため、初動火力が重要なコンテンツでよく採用される。",
+  "tier_desc_cn": "无需使用任何技能，仅靠本能效果就能提供持续3回合的攻击力与暴击率增益。即使切换人格面具后该增益依然会保留，因此常用于看重开局伤害的内容。",
+  "comment": "전투 시작 시 가장 맨 앞에 배치해야 한다. ",
+  "comment_en": "Must be placed in the front row at the start of battle.",
+  "comment_jp": "戦闘開始時、1体目のペルソナにしておくべきである。",
+  "comment_cn": "战斗开始时必须放在最前排。",
+  "added": "",
+  "cost": {
+    "blue": 0,
+    "purple": 0,
+    "rainbow": 0
+  },
+  "combination": [
+    "레드 라이더",
+    "기리메칼라"
+  ],
+  "recommendSkill": [
+    {
+      "name": "라쿤다",
+      "priority": 3
+    },
+    {
+      "name": "마하타루카 오토",
+      "priority": 3
+    },
+    {
+      "name": "민첩의 마음가짐",
+      "priority": 3
+    },
+    {
+      "name": "리벨리온",
+      "priority": 1
+    },
+    {
+      "name": "어드바이스",
+      "priority": 1
+    },
+    {
+      "name": "타루카쟈",
+      "priority": 1
+    },
+    {
+      "name": "치료 촉진",
+      "priority": 1
+    }
+  ],
+  "passive_priority": 3,
+  "passive_skill": [
+    {
+      "name": "천왕의 주시",
+      "name_en": "Heavenly King's Eyes",
+      "name_jp": "天王の眼力",
+      "desc": "효과 명중이 21.2% 증가한다. 전투 시작 시 공격력이 가장 높은 괴도 공격력이 10% 증가하며 크리티컬 확률이 4% 증가한다. 효과는 3턴 동안 지속되며 반항/지배 직업을 우선 선택한다.",
+      "desc_en": "Increase ailment accuracy by 21.2%. At the start of battle, increase the Attack of the ally with the highest Attack by 10% and their critical rate by 4% for 3 turns (prioritize Assassins and Sweepers).",
+      "desc_jp": "状態異常命中が２１.２%上昇する。戦闘開始時、３ターンの間、攻撃力が最も高い味方（反抗または支配ロールを優先）の攻撃力が１０%上昇し、クリティカル率が４%上昇する。",
+      "name_cn": "天王的注视",
+      "desc_cn": "效果命中提升21.2%。战斗开始时，使攻击力最高的怪盗攻击力提升10%，暴击率提升4%，效果持续3回合，优先选择反抗/支配职业。"
+    },
+    {
+      "name": "천왕의 주시Ⅰ",
+      "name_en": "Heavenly King's Eyes I",
+      "name_jp": "天王の眼力Ⅰ",
+      "desc": "효과 명중이 21.2% 증가한다. 전투 시작 시 공격력이 가장 높은 괴도 공격력이 12% 증가하며 크리티컬 확률이 5% 증가한다. 효과는 3턴 동안 지속되며 반항/지배 직업을 우선 선택한다.",
+      "desc_en": "Increase ailment accuracy by 21.2%. At the start of battle, increase the Attack of the ally with the highest Attack by 12% and their critical rate by 5% for 3 turns (prioritize Assassins and Sweepers).",
+      "desc_jp": "状態異常命中が２１.２%上昇する。戦闘開始時、３ターンの間、攻撃力が最も高い味方（反抗または支配ロールを優先）の攻撃力が１２%上昇し、クリティカル率が５%上昇する。",
+      "name_cn": "天王的注视Ⅰ",
+      "desc_cn": "效果命中提升21.2%。战斗开始时，使攻击力最高的怪盗攻击力提升12%，暴击率提升5%，效果持续3回合，优先选择反抗/支配职业。"
+    },
+    {
+      "name": "천왕의 주시Ⅱ",
+      "name_en": "Heavenly King's Eyes II",
+      "name_jp": "天王の眼力Ⅱ",
+      "desc": "효과 명중이 21.2% 증가한다. 전투 시작 시 공격력이 가장 높은 괴도 공격력이 14% 증가하며 크리티컬 확률이 6% 증가한다. 효과는 3턴 동안 지속되며 반항/지배 직업을 우선 선택한다.",
+      "desc_en": "Increase ailment accuracy by 21.2%. At the start of battle, increase the Attack of the ally with the highest Attack by 14% and their critical rate by 6% for 3 turns (prioritize Assassins and Sweepers).",
+      "desc_jp": "状態異常命中が２１.２%上昇する。戦闘開始時、３ターンの間、攻撃力が最も高い味方（反抗または支配ロールを優先）の攻撃力が１４%上昇し、クリティカル率が６%上昇する。",
+      "name_cn": "天王的注视Ⅱ",
+      "desc_cn": "效果命中提升21.2%。战斗开始时，使攻击力最高的怪盗攻击力提升14%，暴击率提升6%，效果持续3回合，优先选择反抗/支配职业。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "레볼루션",
+    "name_en": "Revolution",
+    "name_jp": "レボリューション",
+    "desc": "모든 동료의 크리티컬 확률이 6.5%/6.8%/7.2% 증가하고, 자신의 크리티컬 확률 10%마다 추가로1.1%/1.2%/1.2%가 증가한다. 상한은 4.4%/4.6%/4.8%이며, 효과는 3턴 동안 지속된다.",
+    "desc_en": "Increase party's critical rate by 6.5%/6.8%/7.2%. For every 10% of the user's critical rate, increase party's critical rate by 1.1%/1.2%/1.2% more, up to 4.4%/4.6%/4.8%. Lasts for 3 turns.",
+    "desc_jp": "３ターンの間、味方全体のクリティカル率が6.5%/6.8%/7.2%上昇する。自身のクリティカル率が１０%ごとに、味方のクリティカル率がさらに1.1%/1.2%/1.2%上昇する（最大4.4%/4.6%/4.8%まで）。",
+    "priority": 2,
+    "icon": "버프광역",
+    "icon_gl": "",
+    "name_cn": "革命",
+    "desc_cn": "使所有同伴的暴击率提升6.5%/6.8%/7.2%，自身每10%暴击率额外提升1.1%/1.2%/1.2%，上限4.4%/4.6%/4.8%。效果持续3回合。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 동료의 주는 대미지가 29.5%/31.6%/33.6% 증가하며 2턴 동안 지속된다.",
+    "desc_en": "Increase party's damage by 29.5%/31.6%/33.6% for 2 turns.",
+    "desc_jp": "２ターンの間、味方全体の与ダメージが29.5%/31.6%/33.6%上昇する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "使所有同伴造成的伤害提升29.5%/31.6%/33.6%，效果持续2回合。"
+  },
+  "innate_skill": [
+    {
+      "name": "마하타루카 오토Ⅲ",
+      "name_en": "Auto-Mataru III",
+      "name_jp": "マハタルカオートⅢ",
+      "desc": "전투 시작 시 전원의 공격력이 7.9% 증가하며, 이 효과는 2턴 동안 또는 페르소나를 전환할 때까지 지속된다.",
+      "desc_en": "At the start of battle, increase party's Attack by 7.9% for 2 turns or until user changes Personas.",
+      "desc_jp": "戦闘開始時、２ターンもしくはペルソナを切り替えるまでの間、味方全体の攻撃力が７.９%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "6",
+      "name_cn": "自动玛哈塔尔卡Ⅲ",
+      "desc_cn": "战斗开始时全员攻击力提升7.9%，持续2回合或持续至切换面具。"
+    },
+    {
+      "name": "치료 촉진Ⅲ",
+      "name_en": "Regenerate III",
+      "name_jp": "治療促進Ⅲ",
+      "desc": "턴 시작 시 최대 생명 3.5%를 회복한다.",
+      "desc_en": "Restores 3.5% of max HP at the start of each turn.",
+      "desc_jp": "毎ターン開始時に最大ＨＰの３.５%を回復する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "12",
+      "name_cn": "治疗促进Ⅲ",
+      "desc_cn": "每回合开始时，回复3.5%最大生命值。"
+    },
+    {
+      "name": "굳건한 산Ⅲ",
+      "name_en": "Ironclad Resolve III",
+      "name_jp": "堅守の覚悟Ⅲ",
+      "desc": "속도가 12포인트 감소하고, 생명이 29% 증가한다.",
+      "desc_en": "Decrease Speed by 12. Increase HP by 29%.",
+      "desc_jp": "速さが１２低下し、ＨＰが２９%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "18",
+      "name_cn": "不动如山Ⅲ",
+      "desc_cn": "速度降低12点，生命值提升29%。"
+    },
+    {
+      "name": "코칭Ⅲ",
+      "name_en": "Sharp Student III",
+      "name_jp": "コーチングⅢ",
+      "desc": "받는 크리티컬 확률이 6.5% 감소한다.",
+      "desc_en": "Decrease critical hit taken rate by 6.5%.",
+      "desc_jp": "被クリティカル率が６.５%低下する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "25",
+      "name_cn": "教练Ⅲ",
+      "desc_cn": "受到的暴击率降低6.5%。"
+    }
+  ],
+  "name_cn": "广目天王"
+};

@@ -1,0 +1,19 @@
+{
+  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "sourceType": "recorded_live_game_checkpoints",
+  "mode": "Multidimensional Dreamscape",
+  "showstopper": {
+    "checkpoint": "T5 after J&C Fire and Ice Highlight, then Showstopper activation",
+    "sharedHighlightBefore": 0,
+    "sharedHighlightAfter": 0,
+    "rule": "preserve_shared_gauge_on_activation; reset_Highlight_cooldowns_separately"
+  },
+  "enhancedTwinsS3": {
+    "checkpoint": "T5 True Desire Alt, S2 Electric/Wind, enhanced automatic S3",
+    "bossShieldBefore": 0,
+    "bossDownedAfter": true,
+    "rule": "enhanced_elemental_followup_can_trigger_Down_on_weakness",
+    "individualHitValues": "not_captured"
+  },
+  "implementationScope": "live_profile_only; archival_personal_gauge_and_ordinary_Two_Masks_behavior_preserved"
+}

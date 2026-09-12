@@ -1,0 +1,151 @@
+window.personaFiles = window.personaFiles || {};
+window.personaFiles["이시스"] = {
+  "id": "119",
+  "key": "이시스",
+  "name": "이시스",
+  "name_en": "Isis",
+  "name_jp": "イシス",
+  "grade": "3",
+  "star": "3",
+  "position": "구원",
+  "element": "전격",
+  "event": false,
+  "wild_emblem_rainbow": false,
+  "best_persona": false,
+  "tier": "B",
+  "tier_desc": "동료를 치료하고, 2턴 동안 추가로 치료 효과를 준다. 별도의 힐이기 때문에 일종의 오버힐로서 적용될 수 있으며 치료 횟수나 오버힐 횟수에 영향을 받는 캐릭터에게 유효하다.",
+  "tier_desc_en": "It heals an ally and also provides additional healing for 2 turns. Because that follow-up heal is separate, it can function like a kind of overheal and is effective for characters that care about the number of heals or overheal triggers.",
+  "tier_desc_jp": "味方を回復し、さらに2ターンの間追加回復を付与する。追撃の回復は別扱いなので、一種のオーバーヒールとして機能でき、回復回数やオーバーヒール回数を参照するキャラに有効だ。",
+  "tier_desc_cn": "能治疗同伴，并在之后 2 回合额外提供治疗效果。由于这是独立的治疗，因此可以像一种过量治疗来运作，对会受治疗次数或过量治疗次数影响的角色尤其有效。",
+  "comment": "공격 강화는 치료 수치에 적용된다. (영향력이 높지 않아 우선순위는 낮다)",
+  "comment_en": "Attack enhancement applies to healing values. (Low priority due to limited impact)",
+  "comment_jp": "アタックブースタは治療数値に適用される。（影響力が高くないため優先順位は低い）",
+    "comment_cn": "攻击强化会作用于治疗数值。（影响不大，优先级较低）",
+  "added": "",
+  "cost": null,
+  "combination": null,
+  "recommendSkill": [
+    {
+      "name": "치료 강화",
+      "priority": 3
+    },
+    {
+      "name": "공격 강화",
+      "priority": 1
+    },
+    {
+      "name": "방어 강화",
+      "priority": 0
+    },
+    {
+      "name": "대미지 면역",
+      "priority": 0
+    },
+    {
+      "name": "치료 촉진",
+      "priority": 0
+    }
+  ],
+  "passive_priority": 2,
+  "passive_skill": [
+    {
+      "name": "풍요의 앙크",
+      "name_en": "Ankh of Abundance",
+      "name_jp": "豊穣のアンク",
+      "desc": "생명이 8.7% 증가한다. 치료 효과 부여 시 목표는 다음 턴에서 2턴 동안 공격력 4.3%의 생명을 회복한다.",
+      "desc_en": "Increase HP by 8.7%. After healing, restore target's HP by 4.3% of Attack for 2 turns.",
+      "desc_jp": "ＨＰが８.７%上昇する。回復した時、２ターンの間、対象のＨＰを攻撃力４.３%で回復する。",
+      "name_cn": "丰饶的安卡",
+      "desc_cn": "生命值提升8.7%。造成治疗效果后，使目标接下来每回合回复4.3%攻击力的生命值，效果持续2回合。"
+    },
+    {
+      "name": "풍요의 앙크Ⅰ",
+      "name_en": "Ankh of Abundance I",
+      "name_jp": "豊穣のアンクⅠ",
+      "desc": "생명이 8.7% 증가한다. 치료 효과 부여 시 목표는 다음 턴에서 2턴 동안 공격력 5%의 생명을 회복한다.",
+      "desc_en": "Increase HP by 8.7%. After healing, restore target's HP by 5% of Attack for 2 turns.",
+      "desc_jp": "ＨＰが８.７%上昇する。回復した時、２ターンの間、対象のＨＰを攻撃力５%で回復する。",
+      "name_cn": "丰饶的安卡Ⅰ",
+      "desc_cn": "生命值提升8.7%。造成治疗效果后，使目标接下来每回合回复5%攻击力的生命值，效果持续2回合。"
+    }
+  ],
+  "uniqueSkill": {
+    "name": "디아라마",
+    "name_en": "Diarama",
+    "name_jp": "ディアラマ",
+    "desc": "동료 1명이 공격력 35.6/37.4/39.2%+1077/1333/1608의 생명을 회복한다.",
+    "desc_en": "Restore 1 ally's HP by 35.6/37.4/39.2% of Attack + 1077/1333/1608.",
+    "desc_jp": "味方単体のＨＰを攻撃力の35.6/37.4/39.2%＋1077/1333/1608回復する。",
+    "priority": 1,
+    "icon": "치료",
+    "icon_gl": "",
+    "name_cn": "迪亚拉玛",
+    "desc_cn": "使1名同伴恢复35.6/37.4/39.2%攻击力+1077/1333/1608的生命值。"
+  },
+  "highlight": {
+    "name": "HIGHLIGHT",
+    "name_en": "Highlight",
+    "name_jp": "ハイライト",
+    "desc": "모든 동료가 공격력 48.6%/52.0%/55.4%+1471/1854/2275의 생명을 회복한다.",
+    "desc_en": "Restore HP to party equal to 48.6%/52.0%/55.4% Attack + 1471/1854/2275.",
+    "desc_jp": "味方全体のＨＰを攻撃力48.6%/52.0%/55.4%＋1471/1854/2275回復する。",
+    "priority": 1,
+    "name_cn": "HIGHLIGHT",
+    "desc_cn": "使所有同伴恢复48.6%/52.0%/55.4%攻击力+1471/1854/2275的生命值。"
+  },
+  "innate_skill": [
+    {
+      "name": "치료 강화Ⅱ",
+      "name_en": "Healing Boost II",
+      "name_jp": "治療ブースタⅡ",
+      "desc": "주는 치료 효과가 6% 증가한다.",
+      "desc_en": "Increase healing by 6%.",
+      "desc_jp": "回復量が６%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "5",
+      "name_cn": "治疗强化Ⅱ",
+      "desc_cn": "造成治疗效果提升6%。"
+    },
+    {
+      "name": "방어 강화Ⅱ",
+      "name_en": "Protect Boost II",
+      "name_jp": "プロテクブースタⅡ",
+      "desc": "방어력이 12.5% 증가한다.",
+      "desc_en": "Increase Defense by 12.5%.",
+      "desc_jp": "防御力が１２.５%上昇する。",
+      "cost": "",
+      "level": "6/7/8",
+      "learn_level": "10",
+      "name_cn": "防御强化Ⅱ",
+      "desc_cn": "防御力提升12.5%。"
+    },
+    {
+      "name": "메디아",
+      "name_en": "Media",
+      "name_jp": "メディア",
+      "desc": "모든 동료가 공격력 16.6/17.4/18.3%+502/621/749의 생명을 회복한다.",
+      "desc_en": "Restore party's HP by 16.6/17.4/18.3% of Attack + 502/621/749.",
+      "desc_jp": "味方全体のＨＰを攻撃力の16.6/17.4/18.3%＋502/621/749回復する。",
+      "cost": "SP 23",
+      "level": "6/7/8",
+      "learn_level": "15",
+      "name_cn": "梅迪亚",
+      "desc_cn": "使所有同伴恢复16.6/17.4/18.3%攻击力+502/621/749的生命值。"
+    },
+    {
+      "name": "지온가",
+      "name_en": "Zionga",
+      "name_jp": "ジオンガ",
+      "desc": "1명의 적에게 공격력 114.0/119.7/125.4%의 전격 속성 대미지를 주고, 63.3/66.5/69.6%의 기본 확률로 적을 2턴 동안 감전 상태에 빠뜨린다.",
+      "desc_en": "Deal Electric damage to 1 foe equal to 114.0/119.7/125.4% of Attack. 63.3/66.5/69.6% chance to inflict Shock for 2 turns.",
+      "desc_jp": "敵単体に攻撃力114.0/119.7/125.4%の電撃属性ダメージを与える。63.3/66.5/69.6%の確率で敵を２ターンの間、感電状態にする。",
+      "cost": "SP 20",
+      "level": "6/7/8",
+      "learn_level": "20",
+      "name_cn": "吉欧加",
+      "desc_cn": "对1名敌人造成114.0/119.7/125.4%攻击力的电击属性伤害，有63.3/66.5/69.6%基础概率使敌人陷入触电状态，效果持续2回合。"
+    }
+  ],
+  "name_cn": "伊西斯"
+};

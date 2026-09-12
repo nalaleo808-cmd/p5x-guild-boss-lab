@@ -1,0 +1,179 @@
+{
+  "snapshotId": "ichigo-live-t3-action-19-before-s3-2026-09-05",
+  "observedAt": "2026-09-05",
+  "source": {
+    "captureMethod": "Direct GUI magnifying-glass stat view, scrolled to the bottom",
+    "scope": "Buffed and borrowed BERRY battle state only",
+    "boundary": "T3, Action 19, after Marian Highlight, DOT-Up, and Beach Basket S1; before BERRY S3",
+    "basePresetUpdated": false
+  },
+  "battleState": {
+    "score": 6676123,
+    "sharedHighlightPercent": 17,
+    "mikuSupportCooldown": 1,
+    "bossShieldPoints": 2,
+    "idolsRemaining": 0,
+    "chainsOfLove": 3
+  },
+  "displayedTotals": {
+    "attack": 11444,
+    "defense": 1984,
+    "maxHp": 11334,
+    "maxSp": 100,
+    "currentHp": 11334,
+    "currentSp": 80,
+    "speed": 98.8,
+    "criticalRatePercent": 106.3,
+    "criticalMultiplierPercent": 500.8,
+    "spRecoveryPercent": 5,
+    "technicalPrecision": 0,
+    "pierceRatePercent": 27.6,
+    "downPoints": 0,
+    "ailmentAccuracyPercent": 8.1,
+    "ailmentResistancePercent": 0,
+    "damageMultiplierPercent": 409.6,
+    "damageDownPercent": 0,
+    "weaknessMultiplierPercent": 0,
+    "weakAttackDownPercent": 0,
+    "resistancePiercePercent": 0,
+    "strongAttackDownPercent": 0,
+    "hpRecoveryPercent": 2.7,
+    "hpRecoveryTakenPercent": 0,
+    "medicineEffectPercent": 0,
+    "medicineEffectReceivedPercent": 0,
+    "shieldPercent": 0,
+    "shieldReceivedPercent": 0
+  },
+  "elementMultiplierBonusPercent": {
+    "physical": 5,
+    "gun": 10,
+    "fire": 6,
+    "ice": 4.8,
+    "electric": 5.8,
+    "wind": 5.8,
+    "psychic": 5,
+    "nuclear": 4.8,
+    "bless": 9.8,
+    "curse": 29.8,
+    "almighty": 6
+  },
+  "weaponRows": {
+    "meleeMultiplierPercent": 80,
+    "gun": {
+      "multiplierPercent": 36.2,
+      "rounds": 3,
+      "accuracyPercent": 86,
+      "criticalRatePercent": 18.6,
+      "note": "This is the separate Gun-row critical rate, not the 106.3% total critical rate."
+    }
+  },
+  "observedStatuses": [
+    {
+      "name": "DOT-Up",
+      "effects": ["Continuous damage +17.4%"],
+      "durationTurns": 3,
+      "note": "The direct Beachflower Minami base text remains 10%; the extra applied 7.4% is unresolved."
+    },
+    {
+      "name": "Feel the Beat",
+      "effects": ["Attack +35.1%", "Critical Damage +25.3%", "Pierce +12.6%"],
+      "durations": { "attack": 3, "criticalDamage": 3, "pierce": 2 }
+    },
+    {
+      "name": "Summertime Refresh",
+      "effects": ["Final damage +15%"],
+      "durationTurns": 1
+    },
+    {
+      "name": "Special Effect",
+      "effects": ["Curse damage +20%", "Continuous damage +30%"],
+      "durationTurns": null,
+      "note": "Displayed as permanent."
+    },
+    {
+      "name": "Lovesick",
+      "effects": ["Can critical hit"],
+      "durationTurns": 2
+    },
+    {
+      "name": "Callous Kindness",
+      "effects": ["Attack +30%", "Damage taken -20%"],
+      "durations": { "attack": 1, "damageTaken": 2 }
+    },
+    {
+      "name": "Mask of Mischief",
+      "effects": ["Attack +54.5%"],
+      "durationTurns": 2
+    },
+    {
+      "name": "Mask of Service",
+      "effects": ["Damage taken -25%"],
+      "durationTurns": 3
+    },
+    {
+      "name": "Two Masks as One",
+      "effects": ["Damage +71.1%"],
+      "durationTurns": 2
+    },
+    {
+      "name": "Summer Garden",
+      "effects": ["Damage +45.4%"],
+      "durationTurns": 2
+    },
+    {
+      "name": "Gentle Sea Breeze",
+      "effects": ["Critical Rate +18.2%", "Critical Damage +48.8%", "Critical Damage +24.4%"],
+      "durationTurns": 1
+    },
+    {
+      "name": "Marian Highlight",
+      "effects": ["Damage +28.4%", "Critical Damage +24.4%"],
+      "durationTurns": 3
+    },
+    {
+      "name": "A World of Our Own",
+      "effects": ["Repeats S1 once on the selected target after S1", "Repeats S2 once after S2"],
+      "durationTurns": null,
+      "note": "Permanent status. Its lower entry was not read, so no additional effect or magnitude is asserted."
+    }
+  ],
+  "subsequentObservedEndpoint": {
+    "afterOrdinaryBerryS3AndBossAction": {
+      "action": 20,
+      "score": 17822612,
+      "note": "Individual S3 hits and their values were missed. No hit sequence or damage breakdown is inferred."
+    },
+    "settledStartOfAttackTurn4": {
+      "nextActor": "J&C",
+      "action": 21,
+      "score": 20455968,
+      "bossShieldPoints": 1,
+      "idolsRemaining": 0,
+      "attackTurnsLeft": 2,
+      "survivalBonusMultiplier": 2,
+      "sharedHighlightPercent": 38,
+      "mikuReadySong": "Heaven",
+      "hp": {
+        "wonder": 11048,
+        "marian": 18202,
+        "jc": 10126,
+        "berry": 8334
+      },
+      "jcSp": 82
+    },
+    "sharedHighlightGap": {
+      "beforeBerryS3Percent": 17,
+      "knownRawCountedActionGainPercent": 17,
+      "rawExpectedPercent": 34,
+      "settledPercent": 38,
+      "unverifiedDifferencePercent": 4,
+      "note": "The extra four points are consistent with a round interval, but their source is unverified and this does not establish an S3-specific gauge rule."
+    }
+  },
+  "limitations": [
+    "This is not a base-stat, equipment, Revelation, weapon, or preset record.",
+    "The source and magnitude of borrowed or stacked effects are not fully identified.",
+    "Compact HUD Speed displays 98; the magnifying-glass total was 98.8.",
+    "No score prediction or combat formula is implied by this snapshot."
+  ]
+}
