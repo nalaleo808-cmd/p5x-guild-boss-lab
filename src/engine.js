@@ -1681,7 +1681,7 @@ export class BattleEngine {
     // Skill-conditional bonuses worded "increase skill damage by N%" (Vorpal
     // Butterfly's +200% above 70% HP) add into this bucket on the Hachiman path.
     // Established from the fully itemized T1 Berry hit (431,626) and her T2-start
-    // status list on 2026-09-06; see HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+    // status list on 2026-09-06; see docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
     for (const [id, value] of additionalBonuses) add(id, value);
     const damageBonusMultiplier = Math.max(0, 1 + bonuses.reduce((sum, entry) => sum + entry.value, 0));
     let affinityMultiplier = target.weakness === element ? 1.25 : 1;

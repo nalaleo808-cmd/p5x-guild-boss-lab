@@ -1,7 +1,7 @@
 {
   "character": "Berry",
   "skill": "My Beloved Prince",
-  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "source": "docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md",
   "checkpoint": "T2 ordinary S3",
   "observedBossShieldBefore": 3,
   "observedBossShieldAfter": 2,

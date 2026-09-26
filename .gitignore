@@ -5,7 +5,7 @@ node_modules/
 dist/
 
 # Full session transcripts: very large and contain the whole chat verbatim.
-# Kept locally, not published. The distilled handoff is CHAT-CONTEXT-EXPORT-*.md.
+# Kept locally, not published. The distilled handoff is docs/CHAT-CONTEXT-EXPORT-*.md.
 outputs/chat-transcript-*.jsonl
 
 # OS and editor cruft

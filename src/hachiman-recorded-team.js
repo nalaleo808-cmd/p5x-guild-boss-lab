@@ -21,14 +21,14 @@ export function required(value, message) {
   return value;
 }
 
-// Direct in-game observations from HACHIMAN-ROTATION-CHECK-2026-09-05.md and
+// Direct in-game observations from docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md and
 // data/ichigo-live-t3-snapshot-2026-09-05.json. Maximum HP values are the
 // full-heal totals after the T3 Two Masks as One (Berry reached her separately
 // confirmed 11,334 maximum, so every member was capped at maximum). Lower
 // bounds are derived from buff values that sit exactly at their sourced caps.
 // None of these values were chosen to move the simulated score.
 export const OBSERVED_STAT_EVIDENCE = Object.freeze({
-  source: 'HACHIMAN-ROTATION-CHECK-2026-09-05.md T2/T3 checkpoints and the T3 BERRY stat snapshot',
+  source: 'docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md T2/T3 checkpoints and the T3 BERRY stat snapshot',
   rule: 'Observed totals and sourced-cap lower bounds only; no value was fitted to the recorded score.',
   'j-c': {
     maxHp: { value: 11682, kind: 'observed', evidence: 'T3 full-heal HP after Two Masks as One' },
@@ -414,7 +414,7 @@ export class HachimanRecordedEngine extends BattleEngine {
   // Auto-Mataru IV lasts only while Dionysus is the active Persona (tooltip
   // "until user changes Personas", confirmed by Joker on 2026-09-06). The T2-start
   // capture that still showed Matarukaja IV after the T1 switch is recorded as
-  // an unexplained exception in HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+  // an unexplained exception in docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
   selectPersona(personaId) {
     const leavingDionysus = this.activePersona?.name === 'Dionysus';
     const result = super.selectPersona(personaId);

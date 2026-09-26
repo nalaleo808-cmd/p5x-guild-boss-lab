@@ -14,7 +14,7 @@ npm start
 
 Open `http://127.0.0.1:4173/`.
 
-Windows users can also run `run-local.bat`. macOS/Linux users can run `./run-local.sh`.
+Windows users can also run `launch-p5x.bat`. macOS/Linux users can run `./run-local.sh`.
 
 ## Validate the project
 

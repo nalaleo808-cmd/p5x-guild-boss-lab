@@ -330,7 +330,7 @@ function main() {
       boss: 'Hachiman',
       mode: 'Multidimensional Dreamscape',
       encounterObservation: {
-        source: 'HACHIMAN-ROTATION-CHECK-2026-09-05.md: Direct T8 Battle Intel reading',
+        source: 'docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md: Direct T8 Battle Intel reading',
         compositionEffectActive: true,
         foeFinalDamageTakenMultiplier: 1.2,
         foeFinalDamageDealtMultiplier: 0.4,
@@ -398,7 +398,7 @@ function main() {
       'Dionysus trait effects are not modeled by the engine.',
       'Vasuki passive Stare, Serpent Bite, and Venomous Spiral continuous damage are not modeled by this checkpoint path.',
       'Universal Theoria has a sourced 33% party Attack and selected-ally 22% damage implementation; later checkpoint use remains unvalidated.',
-      'Lovesick uses the sourced level-70+ 18% Attack per stack and four-turn duration, with application snapshots and S3 refresh. Highlight-trigger Pierce, first all-DOT critical behavior, capped-stack replacement, transfer snapshots and roll granularity remain provisional; see LOVESICK-FORMULA-EVIDENCE-2026-09-06.md.',
+      'Lovesick uses the sourced level-70+ 18% Attack per stack and four-turn duration, with application snapshots and S3 refresh. Highlight-trigger Pierce, first all-DOT critical behavior, capped-stack replacement, transfer snapshots and roll granularity remain provisional; see docs/LOVESICK-FORMULA-EVIDENCE-2026-09-06.md.',
       'Berry starts with 180 maximum SP by user request on 2026-09-05; her original screenshot preset records 100 SP.',
       'Natural owner-turn SP recovery applies the guide-sourced base 10, including Concert turns. SP Recovery percentage modifiers remain unapplied pending normalization of their stored conventions.',
       'J&C, Wonder, Marian and Berry maximum HP use the directly observed T3 full-heal totals. J&C Attack, Damage Mult. and critical multiplier and Marian critical multiplier are sourced-cap lower bounds, not equipped totals; see configuration.observedStatEvidence. Wonder Attack and critical stats and the borrowed Berry Attack, critical and Pierce totals remain unsupplied. Marian starts with 180 maximum SP by user request on 2026-09-05.',

@@ -146,7 +146,7 @@ Berry uses the saved equipped totals, including 4,927 Attack, 54.2% Critical Rat
 
 - Command: `node scripts/compare-hachiman-opening.mjs T3 --compact`.
 - Fresh machine-readable result: `outputs/hachiman-comparison-2026-09-05-current.json`. Exit 2 denotes the recorded legality block, not a runner crash.
-- Full suite: 170 tests, 162 passed, 8 failed. Output: `outputs/validation-2026-09-05-current.txt`. Failures must be triaged; this is not a clean validation pass.
+- Full suite: 170 tests, 162 passed, 8 failed. Output: `outputs/validation/validation-2026-09-05-current.txt`. Failures must be triaged; this is not a clean validation pass.
 - The suite's recorded Nexus benchmark assertion passed at 3,642,530,108. No recalibration was performed.
 - Actual live checkpoint source: `HACHIMAN-ROTATION-CHECK-2026-09-05.md`, observed game checkpoints. Historical simulator numbers in that file are superseded by this fresh report.
 - Actual completed game score remains 6,101,612,096. The supplied 6,663,043,136 rotation score is a guide, not a current simulator result.

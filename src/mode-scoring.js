@@ -10,7 +10,7 @@ export const DREAMSCAPE_RESULT_FORMULA_EVIDENCE = Object.freeze({
   status: 'verified_observed_result_composition',
   expression: '(foeDefensePoints + turnsSurvivedBonus) * difficultyBonus',
   scope: 'One Hachiman NIGHTMaRe Multidimensional Dreamscape result screen',
-  source: 'LIVE-BATTLE-CHECK-2026-09-04.md',
+  source: 'docs/LIVE-BATTLE-CHECK-2026-09-04.md',
   limitation: 'This does not define how Foe Defense Points or Turns Survived Bonus accumulate.'
 });
 

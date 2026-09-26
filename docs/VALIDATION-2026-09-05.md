@@ -38,4 +38,4 @@ Dreamscape point accumulation, survival-bonus derivation, and the actual ending 
 
 Five imported kits have substantial tested state machines; the other 15 still need individual implementation and verification. Generic DoT, ONE MORE, All-Out Attack, Technical, Theurgy, and Assist systems remain incomplete. Unsupported Theurgy and Assist actions are disabled. See `PROJECT-COMPLETION-STATUS-2026-09-05.md` for the character-by-character audit.
 
-The orchestration workspace contains the previous main-project files in `p5x-backup-2026-09-05` and the guarded synchronization manifest `p5x-update-manifest-2026-09-05.json`. Test output and benchmark metrics are saved alongside this report as `verification-tests-2026-09-05.txt` and `verification-benchmark-2026-09-05.json`.
+The orchestration workspace contains the previous main-project files in `p5x-backup-2026-09-05` and the guarded synchronization manifest `p5x-update-manifest-2026-09-05.json`. Test output and benchmark metrics are saved in `outputs/validation/` as `verification-tests-2026-09-05.txt` and `verification-benchmark-2026-09-05.json`.

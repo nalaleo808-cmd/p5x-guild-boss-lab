@@ -228,7 +228,7 @@ function clearHachimanRecordedPreset() {
 // Loads the recorded Multidimensional Dreamscape Hachiman party exactly as the
 // checkpoint comparison runs it: observed maximum HP totals, sourced-cap lower
 // bounds, the Labor and Reconcilation set effects, and the reference-only
-// Persona skills bridged from their tooltips. See HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+// Persona skills bridged from their tooltips. See docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
 function loadHachimanRecordedPreset() {
   stopAuto();
   const { config, dionysus, vasuki, janosik } = createHachimanRecordedConfig(HACHIMAN_RECORDED_SEED);

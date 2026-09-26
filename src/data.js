@@ -134,7 +134,7 @@ export const multidimensionalDreamscapeEvidence = Object.freeze({
   }),
   source: Object.freeze({
     kind: 'direct_live_observation_log',
-    reference: 'LIVE-BATTLE-CHECK-2026-09-04.md',
+    reference: 'docs/LIVE-BATTLE-CHECK-2026-09-04.md',
     observedOn: '2026-09-04'
   })
 });

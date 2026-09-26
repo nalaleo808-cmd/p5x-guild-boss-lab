@@ -1,7 +1,7 @@
 {
   "mode": "multidimensional_dreamscape",
   "boss": "hachiman",
-  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "source": "docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md",
   "observed": {
     "t7Navigator": "MIKU's ready Spring Storm Feel the Beat executes after both Concert rounds",
     "t7Marian": "Gentle Sea Breeze is ready and executes for 25 SP",

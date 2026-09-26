@@ -1,7 +1,7 @@
 {
   "id": "base_double_weak_cast_bonus",
   "status": "Opt-in hypothesis pending user clarification; not the default rule",
-  "source": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+  "source": "docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md",
   "proposal": {
     "normalBase": 17,
     "concertBase": 34,
