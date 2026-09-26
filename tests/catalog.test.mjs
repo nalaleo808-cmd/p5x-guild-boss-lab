@@ -253,7 +253,7 @@ test('Gentle Sea Breeze grants two medicines and stays unavailable for two follo
   assert.equal(engine.getAvailableActions().find(action => action.skillId === breeze.id).enabled, true);
 });
 
-test('Paddle Out enters Surf and Catch a Wave follows an ally turn for free', () => {
+test('Paddle Out enters Surf with two Catch a Waves, and Catch a Wave follows an ally turn for free', () => {
   const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
   const paddleOut = wavecatcher.skills.find(skill => skill.name === 'Paddle Out');
   const engine = new BattleEngine({
@@ -268,10 +268,17 @@ test('Paddle Out enters Surf and Catch a Wave follows an ally turn for free', ()
   const paddleResult = engine.step({ type: 'skill', skillId: paddleOut.id, targetId: 'boss' });
 
   assert.equal(paddleResult.reward, 0);
-  assert.equal(engine.state.totalDamage, damageBefore);
+  // Entering Surf ends her turn and fires two Catch a Waves (30 SP, then 60 SP at 1 Offshore).
+  assert.ok(engine.state.totalDamage > damageBefore);
   assert.equal(wavecatcherState.surfActive, true);
-  assert.equal(wavecatcherState.sp, startingSp - 60);
+  assert.equal(wavecatcherState.sp, startingSp - 60 - 30 - 60);
+  assert.equal(wavecatcherState.offshoreStacks, 2);
   assert.equal(engine.state.actionNumber, 2);
+  assert.notEqual(engine.actor.id, wavecatcher.id);
+
+  // Top up SP so the next Catch a Wave (90 SP at 2 Offshore) can follow an ally turn.
+  wavecatcherState.sp = startingSp;
+  const damageBeforeAllyTurn = engine.state.totalDamage;
 
   for (const enemy of engine.enemies) enemy.weakness = 'ice';
   const downPoints = engine.enemies.map(enemy => [enemy.id, enemy.downPoints]);
@@ -279,8 +286,8 @@ test('Paddle Out enters Surf and Catch a Wave follows an ally turn for free', ()
 
   assert.equal(engine.state.actionNumber, 3);
   assert.equal(wavecatcherState.sp, startingSp - 90);
-  assert.equal(wavecatcherState.offshoreStacks, 1);
-  assert.ok(engine.state.totalDamage > damageBefore);
+  assert.equal(wavecatcherState.offshoreStacks, 3);
+  assert.ok(engine.state.totalDamage > damageBeforeAllyTurn);
   assert.ok(allyResult.events.some(event => event.type === 'follow_up' && event.sourceType === 'resonance_follow_up'));
   assert.ok(allyResult.events.some(event => event.type === 'damage' && event.sourceType === 'resonance_follow_up'));
   for (const [id, points] of downPoints) assert.equal(engine.findEnemy(id)?.downPoints, points);

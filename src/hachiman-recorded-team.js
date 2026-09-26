@@ -125,6 +125,32 @@ export const PERSONA_SKILL_ADAPTERS = Object.freeze({
     debuff: { id: 'def_down', name: 'DEF DOWN', value: 0.427, duration: 3 },
     sourceConfidence: 'runner-adapted-source-tooltip'
   },
+  // Source: "Remove Electric/Fire resistance from 1 target for 2 turns." The SP
+  // cost is missing from the source data (catalog costType "missing"), so the
+  // catalog's 0 is kept until an in-game cost is confirmed.
+  // Sahimochi-no-kami's unique skill; same values as the existing One-Fathom Fang
+  // UI adapter (22 SP, ICE DAMAGE TAKEN +8.8% for 2 turns; power 1.1 set in app.js).
+  'Chilling Depth': {
+    cost: 22,
+    debuff: { id: 'ice_vuln', name: 'ICE DAMAGE TAKEN', value: 0.088, duration: 2 },
+    sourceConfidence: 'existing-recorded-ui-adapter'
+  },
+  // Surt's unique skill, as executable in the newer Lufel catalog: all foes' Defense
+  // -29.8% for 3 turns. Its SP cost is missing from the source data there too (0).
+  Marakunda: {
+    debuff: { id: 'def_down', name: 'DEF DOWN', stat: 'defenseDown', value: 0.298, duration: 3 },
+    sourceConfidence: 'source-described-newer-catalog'
+  },
+  'Elec Break': {
+    debuff: { id: 'electric_break', name: 'ELEC BREAK', resistanceBreak: 'electric', duration: 2 },
+    sourceConfidence: 'source-tooltip-sp-cost-missing',
+    omitted: 'SP cost is missing from the source data; 0 SP is used until confirmed.'
+  },
+  'Fire Break': {
+    debuff: { id: 'fire_break', name: 'FIRE BREAK', resistanceBreak: 'fire', duration: 2 },
+    sourceConfidence: 'source-tooltip-sp-cost-missing',
+    omitted: 'SP cost is missing from the source data; 0 SP is used until confirmed.'
+  },
   Tarukaja: {
     cost: 22,
     buff: { id: 'attack_up', name: 'ATK UP', stat: 'attack', value: 0.171, duration: 3 },

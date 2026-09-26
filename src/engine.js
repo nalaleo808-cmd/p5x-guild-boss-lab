@@ -363,6 +363,9 @@ export class BattleEngine {
         ...(party.some(unit => unit.slug === 'akihiko') ? ['Akihiko Theurgy and Assist timing remain unavailable. The A1 Grit critical-rate duration and stacking rule are not stated, so that critical-rate bonus is omitted.'] : []),
         ...(party.some(unit => unit.slug === 'yukari') ? ['Yukari can fill and reserve Theurgy gauge, but Theurgy activation and reserve return remain unavailable. Reserve expiry uses the shared party-round clock.'] : []),
         ...(party.some(unit => unit.slug === 'makoto') ? ['Makoto Theurgy and Assist timing remain unavailable. Full Moon has no substitute generator while Theurgy is disabled. The A1 Melody extra-hit coefficient and A6 fatal-state ending boundary are not assumed.'] : []),
+        ...(this.personaDefinitions.some(persona => (this.config.personaIds || []).includes(persona.id)
+          && persona.skills?.some(skill => skill.sourceConfidence === 'source-tooltip-sp-cost-missing'))
+          ? ['Elec Break / Fire Break SP cost is missing from the source data; 0 SP is used until an in-game cost is confirmed.'] : []),
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
         ...(party.some(unit => unit.slug && !['berry', 'j-c', 'marian-beachflower', 'puppet-wavecatcher', 'rin-firecracker', 'matoi', 'akihiko', 'yukari', 'makoto', 'kotone-shiomi'].includes(unit.slug)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
@@ -1704,7 +1707,7 @@ export class BattleEngine {
     const damageBonusMultiplier = Math.max(0, 1 + bonuses.reduce((sum, entry) => sum + entry.value, 0));
     let affinityMultiplier = target.weakness === element ? 1.25 : 1;
     if (target.weakness === element) affinityMultiplier *= 1 + unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    if (target.resistance === element || target.resistances?.includes(element)) affinityMultiplier *= 0.7;
+    if (this.resistsElement(target, element)) affinityMultiplier *= 0.7;
     const sourceStat = { resonance_follow_up: 'resonanceDamage', highlight: 'highlightDamage', dot: 'dotDamage', one_more: 'oneMoreDamage', all_out_attack: 'oneMoreDamage' }[sourceType];
     let sourceMultiplier = 1;
     if (sourceStat) {
@@ -1743,7 +1746,7 @@ export class BattleEngine {
       const weaknessDamage = unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
       multiplier *= 1 + weaknessDamage;
     }
-    if (target.resistance === element || (this.usesLiveMechanics() && target.resistances?.includes(element))) multiplier *= 0.7;
+    if ((target.resistance === element || (this.usesLiveMechanics() && target.resistances?.includes(element))) && !this.hasResistanceBreak(target, element)) multiplier *= 0.7;
     if (this.isHachimanLive() && element === 'curse') multiplier *= 1.2;
     if (this.usesLiveMechanics()) multiplier *= this.dreamscapeDamageTakenMultiplier(target);
     if (target.downed) multiplier *= 1 + Number(target.downedDamageTaken ?? 0.1);
@@ -2192,6 +2195,15 @@ export class BattleEngine {
     const bonus = actor?.revelationWeakElementAttack;
     if (!this.usesLiveMechanics() || !bonus || !target || !(target.weakness === bonus.element || target.weaknesses?.includes(bonus.element))) return 0;
     return Number(bonus.value || 0);
+  }
+
+  // Elec Break / Fire Break style debuffs remove one element's resistance while active.
+  hasResistanceBreak(target, element) {
+    return (target?.debuffs || []).some(effect => effect.resistanceBreak === element && (effect.duration == null || effect.duration > 0));
+  }
+
+  resistsElement(target, element) {
+    return (target?.resistance === element || target?.resistances?.includes(element) === true) && !this.hasResistanceBreak(target, element);
   }
 
   hasNativityStrifeRevelation(unit) {
@@ -3631,6 +3643,10 @@ export class BattleEngine {
       } else {
         actor.surfActive = true;
         this.emit('stance', `${actor.codename} entered Surf state.`, { actorId: actor.id, stance: 'surf', active: true, sourceType, tone: 'buff' });
+        // Observed live: entering Surf ends her turn and triggers two Catch a Waves.
+        if (this.usesLiveMechanics() && this.config.wavecatcherFollowUps && sourceType === 'character_skill') {
+          for (let wave = 0; wave < 2; wave++) this.resolveCatchAWave(actor, 'on entering Surf');
+        }
       }
     }
     if (skill.name === 'Jellyfish Splash') {
@@ -3656,25 +3672,31 @@ export class BattleEngine {
     if (!this.config.wavecatcherFollowUps) return;
     for (const unit of this.state.party) {
       if (unit.id === completedActorId || unit.hp <= 0 || !unit.surfActive) continue;
-      const cost = 30 * (unit.offshoreStacks + 1);
-      if (unit.sp < cost) continue;
-      const power = 0.584 * (1 + unit.offshoreStacks * 0.05);
-      this.emit('follow_up', `${unit.codename} activated Catch a Wave after an ally turn.`, {
-        actorId: unit.id, skillId: 'catch_a_wave', sourceType: 'resonance_follow_up', tone: 'navigator'
-      });
-      const primaryRng = this.state.rng;
-      this.state.rng = this.state.followUpRng;
-      this.resolveSkill(unit, {
-        id: 'catch_a_wave', slot: 'FU', name: 'Catch a Wave', element: 'ice', cost, power,
-        target: 'all_enemies', note: 'Automatic Resonance follow up. Does not consume an Action or reduce Down points.'
-      }, this.state.boss.id, 'resonance_follow_up', { canReduceDown: false, grantsHighlight: false });
-      this.state.followUpRng = this.state.rng;
-      this.state.rng = primaryRng;
-      unit.offshoreStacks = clamp(unit.offshoreStacks + 1, 0, 4);
-      this.emit('resource', `${unit.codename} gained Offshore ${unit.offshoreStacks}.`, {
-        actorId: unit.id, resource: 'offshoreStacks', amount: unit.offshoreStacks, sourceType: 'resonance_follow_up', tone: 'buff'
-      });
+      this.resolveCatchAWave(unit, 'after an ally turn');
     }
+  }
+
+  // One automatic Catch a Wave, if the unit has enough SP. Returns whether it fired.
+  resolveCatchAWave(unit, reason = 'after an ally turn') {
+    const cost = 30 * (unit.offshoreStacks + 1);
+    if (unit.sp < cost) return false;
+    const power = 0.584 * (1 + unit.offshoreStacks * 0.05);
+    this.emit('follow_up', `${unit.codename} activated Catch a Wave ${reason}.`, {
+      actorId: unit.id, skillId: 'catch_a_wave', sourceType: 'resonance_follow_up', tone: 'navigator'
+    });
+    const primaryRng = this.state.rng;
+    this.state.rng = this.state.followUpRng;
+    this.resolveSkill(unit, {
+      id: 'catch_a_wave', slot: 'FU', name: 'Catch a Wave', element: 'ice', cost, power,
+      target: 'all_enemies', note: 'Automatic Resonance follow up. Does not consume an Action or reduce Down points.'
+    }, this.state.boss.id, 'resonance_follow_up', { canReduceDown: false, grantsHighlight: false });
+    this.state.followUpRng = this.state.rng;
+    this.state.rng = primaryRng;
+    unit.offshoreStacks = clamp(unit.offshoreStacks + 1, 0, 4);
+    this.emit('resource', `${unit.codename} gained Offshore ${unit.offshoreStacks}.`, {
+      actorId: unit.id, resource: 'offshoreStacks', amount: unit.offshoreStacks, sourceType: 'resonance_follow_up', tone: 'buff'
+    });
+    return true;
   }
 
   stepMedicine(medicineId, targetId) {
@@ -3856,7 +3878,11 @@ export class BattleEngine {
     if (legal.type === 'berry_alt' && legal.skill.slot === 'HL') return this.stepBerryFreeHighlight(legal, action.targetId);
     const wasConcertAction = this.isVirtualConcertActive();
     const actor = this.actor;
-    const rinStanceAction = legal.type === 'rin_stance';
+    // Leaving Surf with Paddle Out does not use the action (source: other skills
+    // can be used that turn, but Surf cannot be re-entered).
+    const surfExitAction = this.usesLiveMechanics() && legal.type === 'skill'
+      && legal.skill?.name === 'Paddle Out' && this.isWavecatcher(actor) && actor.surfActive === true;
+    const rinStanceAction = legal.type === 'rin_stance' || surfExitAction;
     const highlightActionContext = this.usesLiveMechanics() && !rinStanceAction
       ? this.createSharedHighlightActionContext({ actor, actionType: legal.type, skill: legal.skill, concertAtActionStart: wasConcertAction })
       : null;

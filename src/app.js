@@ -1,3 +1,5 @@
+import { applyCurrentSkillNames, withPersonaRecommendations } from './persona-recommendations.js';
+import { withPersonaAdditions } from './persona-additions.js';
 import { withRevelationMainOverlay, withRevelationSetOverlay } from './revelation-overlay.js';
 import { renderKotonePreview } from './kotone-preview.js';
 import { kotoneShiomi, KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
@@ -87,7 +89,7 @@ function bindLimitationsToggle() {
     if (hint) hint.textContent = `These mechanics are not represented in this run. ${panel.open ? 'Hide' : 'Show'}`;
   }));
 }
-const importedPersonas = lufelCatalog.personas.filter(persona => persona.skills.some(skill => skill.kind === 'unique' && (skill.combat.executable || PERSONA_SKILL_ADAPTERS[skill.name])));
+const importedPersonaBase = withPersonaAdditions(lufelCatalog.personas).filter(persona => persona.skills.some(skill => skill.kind === 'unique' && (skill.combat.executable || PERSONA_SKILL_ADAPTERS[skill.name])));
 const revelationMains = withRevelationMainOverlay(lufelCatalog.revelationMains);
 const revelationSets = withRevelationSetOverlay(lufelCatalog.revelationSets);
 const recordedMaziodyne = {
@@ -99,6 +101,8 @@ const recordedMaziodyne = {
 const hasExecutableMaziodyne = (lufelCatalog.personaSkills || []).some(skill => skill.name === 'Maziodyne' && skill.combat?.executable);
 const personaLoadoutCatalog = buildPersonaLoadoutCatalog(lufelCatalog, hasExecutableMaziodyne ? [] : [recordedMaziodyne]);
 const transferablePersonaSkills = personaLoadoutCatalog.transferableSkills;
+applyCurrentSkillNames([...new Set([...transferablePersonaSkills, ...personaLoadoutCatalog.skillById.values()])]);
+const importedPersonas = withPersonaRecommendations(importedPersonaBase, transferablePersonaSkills);
 const skillById = personaLoadoutCatalog.skillById;
 transferablePersonaSkills.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -554,7 +558,7 @@ function header(active = ui.screen) {
       <span class="brand-copy"><b>GUILD BOSS</b><small>SIMULATOR LAB</small></span>
     </button>
     <nav aria-label="Primary">${navItems.map(([id, label]) => `<button data-nav="${id}" class="${active === id ? 'active' : ''}" ${id === 'battle' && !ui.engine ? 'disabled' : ''}>${label}</button>`).join('')}</nav>
-    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.0</b></div>
+    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.1</b></div>
   </header>${startErrorBanner()}`;
 }
 

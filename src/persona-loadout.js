@@ -58,7 +58,8 @@ export function defaultPersonaSkillIds(persona, transferableSkills, slotCount = 
       || byName.get(recommendation.name);
     if (skill) candidates.push(skill.id);
   }
-  for (const innate of (persona?.skills || []).filter(skill => skill.kind === 'innate')) {
+  // Personas with a curated recommendation list default to exactly that list.
+  for (const innate of persona?.recommendationsOnly ? [] : (persona?.skills || []).filter(skill => skill.kind === 'innate')) {
     const skill = bySourceName.get(innate.sourceName) || byName.get(innate.name);
     if (skill) candidates.push(skill.id);
   }

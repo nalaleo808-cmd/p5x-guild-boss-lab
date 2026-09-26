@@ -10,6 +10,10 @@ Reports are kept as written on their dates. Newer reports supersede older ones o
 - [OPEN-ON-NEW-COMPUTER.md](OPEN-ON-NEW-COMPUTER.md): portable setup notes.
 - [GAME_DATA_CONTRACT.md](GAME_DATA_CONTRACT.md): data contract for game API imports.
 
+## Personas
+
+- [PERSONA-RECOMMENDATIONS-LV8.md](PERSONA-RECOMMENDATIONS-LV8.md): Lufel S and A tier Personas with recommended skills at Skill LV 8 (2026-09-26). Listed Personas default to exactly these skills; see src/persona-recommendations.js.
+
 ## Kotone Shiomi (experimental)
 
 - [KOTONE-SOURCE-AUDIT.md](KOTONE-SOURCE-AUDIT.md): Lufel v5.1.0 source audit; the values the simulator uses (ordinary Global, skill Mindscape LV5 by default).
