@@ -1,3 +1,8 @@
+import { renderKotonePreview } from './kotone-preview.js';
+import { kotoneShiomi, KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
+import { withLocalCharacters } from './characters/registry.js';
+import { normalizeKotoneLoadout, normalizeKotoneDraft } from './characters/kotone-shiomi-mechanics.js';
+import { kotoneBuildEditor, bindKotoneBuild, kotoneStatusMarkup, kotoneSkillSummary } from './characters/kotone-shiomi-ui.js';
 import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
 import { bosses, elementMeta, navigator, nightmareModes, recordedNightmareBenchmark, roster } from './data.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
@@ -58,6 +63,7 @@ function medicineEffectiveText(action) {
 }
 
 function coverageFor(unit) {
+  if (unit?.id === KOTONE_SHIOMI_ID) return { kind: 'partial', label: 'PLAYABLE · EXPERIMENTAL', detail: 'Ordinary Global tooltip snapshot. Live scripts, A3/A5 upgraded values and four-star upgrades remain unverified.' };
   if (!unit?.id?.startsWith('lufel-recent-')) return null;
   return substantialKitSlugs.has(unit.slug)
     ? { kind: 'partial', label: 'CORE MECHANICS PARTIAL', detail: 'This character has a substantial tested state machine, but the full source kit is not implemented.' }
@@ -146,7 +152,7 @@ const navigatorCandidates = [
   navigator,
   ...['ANGE', 'MIKU'].map(codename => importedCharacters.find(unit => unit.codename === codename)).filter(Boolean).map(importedNavigatorDefinition)
 ];
-const selectableCharacters = [...roster, ...importedCharacters.filter(unit => !navigatorCharacterIds.has(unit.id))];
+const selectableCharacters = withLocalCharacters([...roster, ...importedCharacters.filter(unit => !navigatorCharacterIds.has(unit.id))]);
 
 function loadNavigatorId() {
   const saved = localStorage.getItem('p5x-navigator-v1');
@@ -192,6 +198,7 @@ function defaultPersonaSlot(name) {
 }
 
 function defaultLoadoutFor(characterId) {
+  if (characterId === KOTONE_SHIOMI_ID) return { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } };
   if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: [defaultPersonaSlot('Alice'), defaultPersonaSlot('Yoshitsune'), defaultPersonaSlot('Trumpeter')] });
   if (characterId === 'joker') return { revelationMain: 'Nativity', revelationSet: 'Power' };
   if (characterId === 'rin') return { revelationMain: 'Resolve', revelationSet: 'Virtue' };
@@ -414,6 +421,7 @@ function personaDefinitionsFromLoadout() {
     const selected = battleSkillsWithAdapters(source, slot.skillIds);
     return {
       id: source.id, name: source.name, arcana: source.position || `Grade ${source.grade}`, element: source.element,
+      role: source.role || (source.position === '우월' ? 'Strategist' : source.position),
       trait: source.passive[0]?.name || source.description || 'Imported Persona', source: 'Lufelnet',
       skills: selected.map((skill, index) => ({
         id: skill.id, slot: `S${index + 1}`,
@@ -456,6 +464,7 @@ function buildEngineConfig() {
       const loadout = ensureLoadout(unit.id);
       if (unit.id === 'wonder') return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
+      if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), revelationCombat: structuredClone(set?.combat || {}) }];
       return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []) }];
     }))
   };
@@ -507,8 +516,9 @@ function resistanceMarkup(entity, includeNames = true) {
 }
 
 function portrait(unit, size = '') {
+  const artwork = unit.id === KOTONE_SHIOMI_ID ? unit.avatar || unit.artwork : unit.artwork;
   return `<div class="portrait ${size} ${unit.artwork ? 'has-artwork' : ''}" style="--accent:${unit.accent || '#e61d2f'}" aria-label="${escapeHtml(unit.codename || unit.name)} portrait">
-    <span>${escapeHtml(unit.portrait || unit.name[0])}</span><i></i>${unit.artwork ? `<img src="${escapeHtml(unit.artwork)}" alt="">` : ''}
+    <span>${escapeHtml(unit.portrait || unit.name[0])}</span><i></i>${artwork ? `<img src="${escapeHtml(artwork)}" alt="">` : ''}
   </div>`;
 }
 
@@ -524,7 +534,7 @@ function bossVisual(boss, placement = 'dossier') {
 
 function header(active = ui.screen) {
   const navItems = [
-    ['setup', 'Team'], ['builds', 'Builds'], ['battle', 'Battle'], ['lab', 'Optimizer'], ['data', 'Data']
+    ['setup', 'Team'], ['builds', 'Builds'], ['battle', 'Battle'], ['lab', 'Optimizer'], ['data', 'Data'], ['kotone', 'Kotone']
   ];
   return `<header class="site-header">
     <button class="brand" data-nav="setup" aria-label="P5X Guild Boss Lab home">
@@ -616,7 +626,7 @@ function renderSetup() {
               <div class="preview-card-copy">
                 <span>${escapeHtml(unit.role)}</span>
                 <h3>${escapeHtml(unit.codename)}</h3>
-                <p>${iconFor(unit.element)} ${elementMeta[unit.element]?.label || 'ALMIGHTY'} · A6</p>
+                <p>${iconFor(unit.element)} ${elementMeta[unit.element]?.label || 'ALMIGHTY'} · A${unit.id === KOTONE_SHIOMI_ID ? ensureLoadout(unit.id).awareness || 0 : 6}</p>
               </div>
               ${unit.id === 'wonder' ? `<button class="persona-count" data-persona-info>${selectedPersonaRecords().length} PERSONAS ↗</button>` : ''}
               <button class="build-shortcut" data-edit-build="${unit.id}">EDIT BUILD</button>
@@ -755,9 +765,14 @@ function personaModal() {
 
 function startBattle() {
   stopAuto();
-  ui.engine = ui.hachimanRecordedPreset
-    ? new HachimanRecordedEngine(createHachimanRecordedConfig(ui.seed).config)
-    : new BattleEngine(buildEngineConfig());
+  try {
+    ui.engine = ui.hachimanRecordedPreset
+      ? new HachimanRecordedEngine(createHachimanRecordedConfig(ui.seed).config)
+      : new BattleEngine(buildEngineConfig());
+  } catch (error) {
+    window.alert(`Cannot start battle: ${error.message}`);
+    return;
+  }
   ui.hachimanRouteOutcome = null;
   ui.screen = 'battle';
   ui.commandTab = 'moves';
@@ -951,6 +966,7 @@ function renderPartyField(state) {
         ${unit.blessingStacks ? `<div class="mechanic-chip"><b>BLESSING ${unit.blessingStacks}</b><em>DAMAGE +${Math.min(36, unit.blessingStacks * 6)}%</em></div>` : ''}
         ${unit.slug === 'j-c' ? `<div class="mechanic-chip jc"><b>S1 ${jcMaskShort[unit.selectedMasks?.[0]] || '?'} | S2 ${jcMaskShort[unit.selectedMasks?.[1]] || '?'}</b><em>DESIRE ${unit.desireLevel} | FACADES ${unit.facades.length} | ALT ${unit.trueDesirePrimed ? 'STORED' : unit.trueDesireStacks > 0 ? 'READY' : 'USED'}</em></div>${jcHighlightCooldownMarkup(unit)}` : ''}
         ${berryMechanicMarkup(unit)}
+        ${kotoneStatusMarkup(unit, state.party)}
         <div class="unit-detail-controls">${characterStatsControl(unit, `party-${unit.id}`, unit.codename)}<div class="unit-statuses">${statusControl(unit, `party-${unit.id}`, unit.codename, true)}</div></div>
       </div>
     </article>`).join('')}
@@ -1025,7 +1041,7 @@ function logMarkup(state, replay = false) {
 }
 
 function moveButton(action, recommendation) {
-  const skill = action.skill;
+  const skill = action.skill || { element: 'support', slot: action.type === 'kotone_cold' ? 'COLD' : 'FREE', note: action.type === 'kotone_link' ? 'Choose a different living ally. Reselection resets Lunar Bond.' : action.type === 'kotone_assist' ? 'One normal action and two extra actions, followed by the linked ultimate and two Cold turns.' : 'Skip this normal turn. No skill cost or Highlight charge.' };
   const recommended = recommendation?.skillId === action.skillId && recommendation?.type === action.type;
   const meta = elementMeta[skill.element] || elementMeta.almighty;
   const cooldownRemaining = Math.max(0, Number(action.cooldownRemaining) || 0);
@@ -1051,7 +1067,7 @@ function commandPanel(state) {
   const actions = state.availableActions;
   const recommendation = ui.aiAssist ? ui.engine.recommend() : null;
   if (ui.pendingAction) return targetPanel(state, ui.pendingAction);
-  const moves = actions.filter(action => ['skill', 'attack', 'gun'].includes(action.type));
+  const moves = actions.filter(action => ['skill', 'attack', 'gun', 'kotone_link', 'kotone_assist', 'kotone_cold'].includes(action.type));
   const items = actions.filter(action => action.type === 'item');
   return `<section class="command-panel" aria-label="Battle controls">
     <div class="prompt-row">
@@ -1087,7 +1103,7 @@ function personaSwitches(actions, state) {
 
 function guardAction(actions, actor, recommendation) {
   const action = actions.find(item => item.type === 'guard');
-  return `<button class="guard-card ${recommendation?.type === 'guard' ? 'recommended' : ''}" data-action-type="guard" data-skill="guard">
+  return `<button class="guard-card ${recommendation?.type === 'guard' ? 'recommended' : ''}" data-action-type="guard" data-skill="guard" ${!action ? 'disabled' : ''}>
     <span class="shield-mark">⬟</span><div><small>DEFENSIVE ACTION</small><b>Guard</b><p>Take 55% less damage from the next boss attack, recover 12 SP, and gain 8 Highlight.</p></div><em>FREE →</em>
   </button>`;
 }
@@ -1098,10 +1114,10 @@ function targetPanel(state, action) {
     && action.type === 'skill'
     && (action.skill?.slot === 'S3' || action.name === 'Gentle Sea Breeze');
   const targets = action.target === 'ally'
-    ? state.party.filter(unit => unit.hp > 0 && (!excludesMarian || unit.id !== actor.id))
+    ? state.party.filter(unit => unit.hp > 0 && (!excludesMarian || unit.id !== actor.id) && (action.type !== 'kotone_link' || unit.id !== actor.id && unit.id !== actor.kotone?.linkedId))
     : action.target === 'boss' ? state.enemies : [];
   return `<section class="command-panel target-panel">
-    <div class="prompt-row"><div class="prompt-actor">${portrait(actor)}<div><small>SELECT TARGET</small><h2>${escapeHtml(action.name)} → <em>choose one</em></h2></div></div><button data-cancel-target>← BACK</button></div>
+    <div class="prompt-row"><div class="prompt-actor">${portrait(actor)}<div><small>${action.skill?.kotoneSkill === 'S3' ? 'SELECT ORIGINAL BUFF CASTER · LINKED ALLY RECEIVES COPIES' : 'SELECT TARGET'}</small><h2>${escapeHtml(action.name)} → <em>choose one</em></h2></div></div><button data-cancel-target>← BACK</button></div>
     <div class="target-grid">${targets.map(target => `<button data-target="${target.id || 'boss'}">
       ${state.enemies.some(enemy => enemy.id === target.id) ? `<div class="mini-boss">${target.id === state.boss.id ? 'Ω' : '♟'}</div>` : portrait(target)}
       <span><small>${state.enemies.some(enemy => enemy.id === target.id) ? `ENEMY · DOWN ${target.downPoints}/${target.downMax}` : 'ALLY'}</small><b>${escapeHtml(target.codename || target.name)}</b><em>${state.weakened && state.boss.modeId === 'devourer' && state.enemies.some(enemy => enemy.id === target.id) ? '∞ WEAKENED · 3X POINTS' : target.finiteHp ? `${format(target.hp)}/${format(target.maxHp)} HP` : target.scoreAttack ? '∞ SCORE TARGET' : `${Math.ceil(pct(target.hp, target.maxHp))}% HP`}</em></span>
@@ -1652,6 +1668,7 @@ function wonderWeaponEditor(loadout) {
 }
 
 function characterSkillEditor(unit, loadout) {
+  if (unit.id === KOTONE_SHIOMI_ID) return kotoneSkillSummary();
   loadout.skillLevels = Object.fromEntries(unit.skills.map(skill => [skill.id, 13]));
   return `<section class="build-section character-skills">
     <div class="build-section-title"><div><span>CHARACTER KIT</span><h3>A6 skill coefficients</h3></div><em>Awareness 6 · Level 13</em></div>
@@ -1729,8 +1746,9 @@ function renderBuilds() {
     <section class="build-workspace">
       <aside class="character-rail" aria-label="Choose character">${team.map(member => `<button data-build-character="${member.id}" class="${member.id === unit.id ? 'active' : ''}">${portrait(member)}<span><small>${escapeHtml(member.role)}</small><b>${escapeHtml(member.codename)}</b><em>${member.id === 'wonder' ? 'PERSONA SKILLS' : escapeHtml(ensureLoadout(member.id).revelationMain || 'No build')}</em></span></button>`).join('')}</aside>
       <div class="build-editor">
-        <header class="build-editor-head">${portrait(unit, 'large')}<div><span>${escapeHtml(unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element)}</span><h2>${escapeHtml(unit.codename)}</h2><p>${unit.id === 'wonder' ? 'Equip three Personas and choose their battle-ready skills.' : 'Tune this character’s Revelation set and review the locked A6 Level 13 kit.'}</p></div><button data-reset-build>RESET BUILD</button></header>
+        <header class="build-editor-head">${portrait(unit, 'large')}<div><span>${escapeHtml(unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element)}</span><h2>${escapeHtml(unit.codename)}</h2><p>${unit.id === 'wonder' ? 'Equip three Personas and choose their battle-ready skills.' : unit.id === KOTONE_SHIOMI_ID ? 'Configure awareness, weapons and the experimental ordinary Global profile.' : 'Tune this character’s Revelation set and review the locked A6 Level 13 kit.'}</p></div><button data-reset-build>RESET BUILD</button></header>
         ${coverageNotice(unit)}
+        ${unit.id === KOTONE_SHIOMI_ID ? kotoneBuildEditor(loadout) : ''}
         ${baseStatsEditor(unit, loadout)}
         ${unit.id === 'wonder' ? `${wonderWeaponEditor(loadout)}${personaLoadoutEditor(loadout)}` : `<section class="build-section revelation-builder">
           <div class="build-section-title"><div><span>REVELATION LOADOUT</span><h3>Main & four-piece set</h3></div><em>${lufelCatalog.counts.revelationMains} mains · ${lufelCatalog.counts.revelationSets} sub-sets</em></div>
@@ -1746,6 +1764,7 @@ function renderBuilds() {
     <section class="build-footer"><div><span class="live-dot"></span><p><b>AUTO-SAVED LOCALLY</b><small>Builds are included in new deterministic encounters.</small></p></div><button data-build-to-team>← TEAM PREVIEW</button><button class="primary" data-build-to-battle>ENTER BATTLE →</button></section>
   </main>`;
   bindCommon();
+  if (unit.id === KOTONE_SHIOMI_ID) bindKotoneBuild(root, loadout, () => { ui.engine = null; saveLoadouts(); render(); });
   document.querySelectorAll('[data-build-character]').forEach(button => button.addEventListener('click', () => { ui.buildCharacterId = button.dataset.buildCharacter; render(); }));
   document.querySelector('[data-revelation-main]')?.addEventListener('change', event => {
     loadout.revelationMain = event.target.value;
@@ -1930,6 +1949,11 @@ function render() {
   else if (ui.screen === 'replay') renderReplay();
   else if (ui.screen === 'lab') renderLab();
   else if (ui.screen === 'data') renderData();
+  else if (ui.screen === 'kotone') renderKotonePreview(root, header('kotone'), bindCommon, () => {
+    if (!ui.teamIds.includes(KOTONE_SHIOMI_ID)) ui.teamIds[1] = KOTONE_SHIOMI_ID;
+    ensureLoadout(KOTONE_SHIOMI_ID); saveTeamIds(); saveLoadouts();
+    ui.buildCharacterId = KOTONE_SHIOMI_ID; ui.screen = 'builds'; render();
+  });
 }
 
 render();

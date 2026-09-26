@@ -1,0 +1,53 @@
+
+> p5x-showdown-guild-boss-sim@2.0.0 example:kotone-foundation
+> node scripts/kotone-foundation-example.mjs
+
+{
+  "scope": "SYNTHETIC ENGINEERING FIXTURES ONLY. These are not Kotone skills or published weapon arrays.",
+  "values": "Fixture copy multiplier 1.7; source buff = fixture Attack / 5000; weapon component/passive values below are arbitrary test inputs.",
+  "cases": [
+    {
+      "name": "baseline",
+      "sourceAttack": 500,
+      "copiedAttackRatio": 0,
+      "damage": 56793,
+      "normalActionNumber": 1
+    },
+    {
+      "name": "copy-only",
+      "sourceAttack": 500,
+      "copiedAttackRatio": 0.17,
+      "damage": 66448,
+      "normalActionNumber": 1
+    },
+    {
+      "name": "synthetic-equipment-A",
+      "sourceAttack": 568.1700000000001,
+      "copiedAttackRatio": 0.1931778,
+      "damage": 67764,
+      "normalActionNumber": 1
+    },
+    {
+      "name": "synthetic-equipment-B",
+      "sourceAttack": 628.32,
+      "copiedAttackRatio": 0.21362879999999998,
+      "damage": 68926,
+      "normalActionNumber": 1
+    }
+  ],
+  "A6UseCountOnly": [
+    {
+      "ok": true,
+      "remaining": 1
+    },
+    {
+      "ok": true,
+      "remaining": 0
+    },
+    {
+      "ok": false,
+      "reason": "battle use limit reached"
+    }
+  ],
+  "missing": "Full Kotone source-dependent kit, awareness eligibility, Arcana Link, bonds, Fortune, Cold, weapons and automatic activations remain pending."
+}

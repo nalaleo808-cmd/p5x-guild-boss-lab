@@ -1,0 +1,156 @@
+{
+  "base": "uploaded v2.0.0-beta release",
+  "files": [
+    {
+      "path": "data/berry-s3-shield-evidence-2026-09-05.json",
+      "originalSHA256": "490e9b3e333ef46db2f59c0640ac914d9b852e609359306d6daf4470fdf1c2cd",
+      "updatedSHA256": "490e9b3e333ef46db2f59c0640ac914d9b852e609359306d6daf4470fdf1c2cd",
+      "unchanged": true
+    },
+    {
+      "path": "data/berry-talent-text-2026-09-06.json",
+      "originalSHA256": "52605bc8a1d87f694fa8cc38da7ad059cfc38245c01dfefa696637cfa60fbfd8",
+      "updatedSHA256": "52605bc8a1d87f694fa8cc38da7ad059cfc38245c01dfefa696637cfa60fbfd8",
+      "unchanged": true
+    },
+    {
+      "path": "data/daisoujou-photo-evidence-2026-09-05.json",
+      "originalSHA256": "9a6a0b1a912658e768115f23dcc44509d6e9812e66143b06aa27ef66b80ff092",
+      "updatedSHA256": "9a6a0b1a912658e768115f23dcc44509d6e9812e66143b06aa27ef66b80ff092",
+      "unchanged": true
+    },
+    {
+      "path": "data/game-api-template.json",
+      "originalSHA256": "425139680eaeea2531290130ee1f054802d9a4a1945ce9a890699cdd0a80ed83",
+      "updatedSHA256": "425139680eaeea2531290130ee1f054802d9a4a1945ce9a890699cdd0a80ed83",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-damage-formula-research-2026-09-05.json",
+      "originalSHA256": "d994bd4ec2d39d6ff07e733f4076e7c6386bc77b4106add428112b0d7f5c31c3",
+      "updatedSHA256": "d994bd4ec2d39d6ff07e733f4076e7c6386bc77b4106add428112b0d7f5c31c3",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-dod-live-run-2026-09-10.json",
+      "originalSHA256": "ca90c04c718b1d31cda7420e3cbf0ae358179a7dfa96764ec2440f6e8c332162",
+      "updatedSHA256": "ca90c04c718b1d31cda7420e3cbf0ae358179a7dfa96764ec2440f6e8c332162",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-highlight-candidate-2026-09-05.json",
+      "originalSHA256": "ff986fb4d4f30a3041fa20bb4f2ff9d7cc3301b43206172f8750101154fa951a",
+      "updatedSHA256": "ff986fb4d4f30a3041fa20bb4f2ff9d7cc3301b43206172f8750101154fa951a",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-loadout-evidence-2026-09-05.json",
+      "originalSHA256": "8f1a68acaa941a03643192650d40de1c83055ca03217e0f9bf575156a940809b",
+      "updatedSHA256": "8f1a68acaa941a03643192650d40de1c83055ca03217e0f9bf575156a940809b",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-panels-2026-09-06.json",
+      "originalSHA256": "5a949c6b6bc8e2d8d667d60036dd1b3e334bc1891a7b74159042a188cb9b05bc",
+      "updatedSHA256": "5a949c6b6bc8e2d8d667d60036dd1b3e334bc1891a7b74159042a188cb9b05bc",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-t2-start-status-2026-09-06.json",
+      "originalSHA256": "c8a3f2b3a50fbde8d992fd6f9902e30e4e0eabe78a23e4e49d007082c24cada6",
+      "updatedSHA256": "c8a3f2b3a50fbde8d992fd6f9902e30e4e0eabe78a23e4e49d007082c24cada6",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-t5-continuation-evidence-2026-09-05.json",
+      "originalSHA256": "399a9aa4221cf865be13154667e253c6ee1984b1e745f21e13f26be3fd81b15d",
+      "updatedSHA256": "399a9aa4221cf865be13154667e253c6ee1984b1e745f21e13f26be3fd81b15d",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-t6-status-2026-09-06.json",
+      "originalSHA256": "1fb7d8f24d769a5540917686d812049138a8096bccb69217ca50c6f2785f67c4",
+      "updatedSHA256": "1fb7d8f24d769a5540917686d812049138a8096bccb69217ca50c6f2785f67c4",
+      "unchanged": true
+    },
+    {
+      "path": "data/hachiman-t7-resource-evidence-2026-09-05.json",
+      "originalSHA256": "9076e9d55b46fb4e281e227cdea6023108e96ada22fa4c81b7e60f24b2825e41",
+      "updatedSHA256": "9076e9d55b46fb4e281e227cdea6023108e96ada22fa4c81b7e60f24b2825e41",
+      "unchanged": true
+    },
+    {
+      "path": "data/highlight-charge-evidence-2026-09-05.json",
+      "originalSHA256": "cdd74d03a5e97bba8919baaab7ba4cab312dd5d601219ca1eb97ec56c3ce8de9",
+      "updatedSHA256": "cdd74d03a5e97bba8919baaab7ba4cab312dd5d601219ca1eb97ec56c3ce8de9",
+      "unchanged": true
+    },
+    {
+      "path": "data/ichigo-live-t3-snapshot-2026-09-05.json",
+      "originalSHA256": "77c09a0acb4037123b75055d2a08f13e80f37c2944f3886dfa307326105fd1c0",
+      "updatedSHA256": "77c09a0acb4037123b75055d2a08f13e80f37c2944f3886dfa307326105fd1c0",
+      "unchanged": true
+    },
+    {
+      "path": "data/jc-a6-user-evidence-2026-09-05.json",
+      "originalSHA256": "3e1c9d364fe57a124c498ab703a0cf59908f72d4995d283afd21ca0a072acc37",
+      "updatedSHA256": "3e1c9d364fe57a124c498ab703a0cf59908f72d4995d283afd21ca0a072acc37",
+      "unchanged": true
+    },
+    {
+      "path": "data/lufel-catalog.json",
+      "originalSHA256": "ce29f68577ac9241b9dc9fa179413ceb043bfbba4dd547accdef47df731dcde6",
+      "updatedSHA256": "ce29f68577ac9241b9dc9fa179413ceb043bfbba4dd547accdef47df731dcde6",
+      "unchanged": true
+    },
+    {
+      "path": "data/lufel-live-persona-skills.json",
+      "originalSHA256": "106e0d326f6c871841d616288734475eaa68e6e74a187a5eff014561ea3a134b",
+      "updatedSHA256": "106e0d326f6c871841d616288734475eaa68e6e74a187a5eff014561ea3a134b",
+      "unchanged": true
+    },
+    {
+      "path": "data/lufel-live-recent.json",
+      "originalSHA256": "b7ec3bb22acec4d0592bbe15ad1ddbdbf330cdc5d1d76781657f7cd7bb248e5e",
+      "updatedSHA256": "b7ec3bb22acec4d0592bbe15ad1ddbdbf330cdc5d1d76781657f7cd7bb248e5e",
+      "unchanged": true
+    },
+    {
+      "path": "data/optimizer-slaughter-2026-09-04-archive-replay.json",
+      "originalSHA256": "22665cd2a6c601cb6d00e2a2821016654b5ac73ec0e73927a34921a530446080",
+      "updatedSHA256": "22665cd2a6c601cb6d00e2a2821016654b5ac73ec0e73927a34921a530446080",
+      "unchanged": true
+    },
+    {
+      "path": "data/optimizer-slaughter-2026-09-04-archive.json",
+      "originalSHA256": "210b2d5f4749d4f8c22d8be0bc9a2c6db5e337e16be2a655534ab0ec3f550f86",
+      "updatedSHA256": "210b2d5f4749d4f8c22d8be0bc9a2c6db5e337e16be2a655534ab0ec3f550f86",
+      "unchanged": true
+    },
+    {
+      "path": "data/optimizer-slaughter-2026-09-05-replay.json",
+      "originalSHA256": "e75de607f7e9521b8fcdf24a39cbf0238755c278c7ae5e2ba0665c754371711f",
+      "updatedSHA256": "e75de607f7e9521b8fcdf24a39cbf0238755c278c7ae5e2ba0665c754371711f",
+      "unchanged": true
+    },
+    {
+      "path": "data/optimizer-slaughter-latest.json",
+      "originalSHA256": "5058e3caeffb08e38a07537637cfc1812a21b53f8a342d2877edabcb0c521488",
+      "updatedSHA256": "5058e3caeffb08e38a07537637cfc1812a21b53f8a342d2877edabcb0c521488",
+      "unchanged": true
+    },
+    {
+      "path": "data/turn-start-sp-recovery-evidence-2026-09-05.json",
+      "originalSHA256": "ff0ff110a59aa52eb4e7849d74158b74fe8a8cd0fbae9c05369c2af5b3174e26",
+      "updatedSHA256": "ff0ff110a59aa52eb4e7849d74158b74fe8a8cd0fbae9c05369c2af5b3174e26",
+      "unchanged": true
+    },
+    {
+      "path": "src/generated/lufel-catalog.js",
+      "originalSHA256": "7cc633dff6ae4d19403d851c73e55710871a7865af598e2a071f28d174a1a1cd",
+      "updatedSHA256": "7cc633dff6ae4d19403d851c73e55710871a7865af598e2a071f28d174a1a1cd",
+      "unchanged": true
+    }
+  ],
+  "allUnchanged": true
+}

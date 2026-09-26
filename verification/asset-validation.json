@@ -1,0 +1,47 @@
+{
+  "method": "Pillow pixel inspection of final WebP bytes",
+  "assets": [
+    {
+      "path": "assets/characters/kotone-shiomi.webp",
+      "sha256": "7df2829e4b844a08e003b0afc033ebbfd88fa886d866204134afe411280451fb",
+      "mode": "RGBA",
+      "size": [
+        724,
+        724
+      ],
+      "alphaBounds": [
+        42,
+        25,
+        682,
+        699
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "safeContentBoxPassed": true,
+      "hasGenuineTransparency": true
+    },
+    {
+      "path": "assets/characters/kotone-shiomi-avatar.webp",
+      "sha256": "7df2829e4b844a08e003b0afc033ebbfd88fa886d866204134afe411280451fb",
+      "mode": "RGBA",
+      "size": [
+        724,
+        724
+      ],
+      "alphaBounds": [
+        42,
+        25,
+        682,
+        699
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "safeContentBoxPassed": true,
+      "hasGenuineTransparency": true
+    }
+  ]
+}

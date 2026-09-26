@@ -1,0 +1,5 @@
+
+> p5x-showdown-guild-boss-sim@2.0.0 verify:characters
+> node scripts/verify-character-integrations.mjs
+
+Verified 1 local character integration; generated catalog unchanged.

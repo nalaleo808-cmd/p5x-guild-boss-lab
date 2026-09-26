@@ -1,0 +1,55 @@
+{
+  "scope": "Offline rendering of the actual Kotone draft modules and application CSS only. Not a full-app HTTP browser verification.",
+  "httpVerification": "Blocked by Chromium administrator policy (ERR_BLOCKED_BY_ADMINISTRATOR), including localhost and intercepted fixture origin. No policy was modified.",
+  "storage": "In-memory storage interface fixture; native browser persistence not verified. Node tests verify serialized draft round trips.",
+  "checks": [
+    "1365x1000 desktop: real draft modules render, all three asset sizes load, source gate visible",
+    "A6, both named weapons, +0\u2026+6 and base/equipped controls update the draft and survive re-render",
+    "390x844 mobile: source gate, image and controls fit without content horizontal overflow",
+    "No-weapon selection disables and resets enhancement; unavailable battle button remains disabled"
+  ],
+  "pageErrors": [],
+  "desktopImageSizes": [
+    {
+      "natural": [
+        724,
+        724
+      ],
+      "display": [
+        527,
+        527
+      ],
+      "loaded": true
+    },
+    {
+      "natural": [
+        724,
+        724
+      ],
+      "display": [
+        56,
+        56
+      ],
+      "loaded": true
+    },
+    {
+      "natural": [
+        724,
+        724
+      ],
+      "display": [
+        118,
+        118
+      ],
+      "loaded": true
+    }
+  ],
+  "mobileLayout": {
+    "left": 0,
+    "right": 390,
+    "innerWidth": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390
+  },
+  "offlineHarnessPassed": true
+}

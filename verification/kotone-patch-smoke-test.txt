@@ -1,0 +1,950 @@
+
+> p5x-showdown-guild-boss-sim@2.0.0 test
+> node scripts/test.mjs
+
+TAP version 13
+# Subtest: Local identity art paths resolve to manifest assets
+ok 1 - Local identity art paths resolve to manifest assets
+  ---
+  duration_ms: 1.145149
+  type: 'test'
+  ...
+# Subtest: Asset bytes match inspected RGBA normalization: assets/characters/kotone-shiomi.webp
+ok 2 - Asset bytes match inspected RGBA normalization: assets/characters/kotone-shiomi.webp
+  ---
+  duration_ms: 9.837125
+  type: 'test'
+  ...
+# Subtest: Asset bytes match inspected RGBA normalization: assets/characters/kotone-shiomi-avatar.webp
+ok 3 - Asset bytes match inspected RGBA normalization: assets/characters/kotone-shiomi-avatar.webp
+  ---
+  duration_ms: 3.850181
+  type: 'test'
+  ...
+# Subtest: Runtime A0: initial link, resources and actual Go for Broke gate
+ok 4 - Runtime A0: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 79.414243
+  type: 'test'
+  ...
+# Subtest: Runtime A1: initial link, resources and actual Go for Broke gate
+ok 5 - Runtime A1: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 52.143557
+  type: 'test'
+  ...
+# Subtest: Runtime A2: initial link, resources and actual Go for Broke gate
+ok 6 - Runtime A2: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 51.657619
+  type: 'test'
+  ...
+# Subtest: Runtime A3: initial link, resources and actual Go for Broke gate
+ok 7 - Runtime A3: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 45.297743
+  type: 'test'
+  ...
+# Subtest: Runtime A4: initial link, resources and actual Go for Broke gate
+ok 8 - Runtime A4: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 50.766039
+  type: 'test'
+  ...
+# Subtest: Runtime A5: initial link, resources and actual Go for Broke gate
+ok 9 - Runtime A5: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 61.981699
+  type: 'test'
+  ...
+# Subtest: Runtime A6: initial link, resources and actual Go for Broke gate
+ok 10 - Runtime A6: initial link, resources and actual Go for Broke gate
+  ---
+  duration_ms: 51.873999
+  type: 'test'
+  ...
+# Subtest: A3/A5 snapshot limitation is explicit and their numeric upgrades are not claimed
+ok 11 - A3/A5 snapshot limitation is explicit and their numeric upgrades are not claimed
+  ---
+  duration_ms: 2.218785
+  type: 'test'
+  ...
+# Subtest: Initial Arcana Link selects strongest eligible Sweeper/Assassin, not strongest support
+ok 12 - Initial Arcana Link selects strongest eligible Sweeper/Assassin, not strongest support
+  ---
+  duration_ms: 1.684095
+  type: 'test'
+  ...
+# Subtest: Reselection resets Lunar Bond, moves permanent A1 Bond, costs no turn and still allows GFB
+ok 13 - Reselection resets Lunar Bond, moves permanent A1 Bond, costs no turn and still allows GFB
+  ---
+  duration_ms: 5.102804
+  type: 'test'
+  ...
+# Subtest: A6 two complete Go for Broke cycles, a blocked third use, and normal action accounting
+ok 14 - A6 two complete Go for Broke cycles, a blocked third use, and normal action accounting
+  ---
+  duration_ms: 150.635052
+  type: 'test'
+  ...
+# Subtest: Cold suppresses skills and paid Highlight; GFB automatic ultimates spend no gauge or SP
+ok 15 - Cold suppresses skills and paid Highlight; GFB automatic ultimates spend no gauge or SP
+  ---
+  duration_ms: 17.887856
+  type: 'test'
+  ...
+# Subtest: Automatic activation IDs are idempotent
+ok 16 - Automatic activation IDs are idempotent
+  ---
+  duration_ms: 1.610692
+  type: 'test'
+  ...
+# Subtest: S1 spends 20 SP, caps separate critical and Powerful Bond stacks, activates A1 at three Bonds
+ok 17 - S1 spends 20 SP, caps separate critical and Powerful Bond stacks, activates A1 at three Bonds
+  ---
+  duration_ms: 1.787171
+  type: 'test'
+  ...
+# Subtest: S1 applied off-link grants no Powerful or Lunar Bond
+ok 18 - S1 applied off-link grants no Powerful or Lunar Bond
+  ---
+  duration_ms: 0.953957
+  type: 'test'
+  ...
+# Subtest: Attack-based support scales to 4684 cap and clamps above it
+ok 19 - Attack-based support scales to 4684 cap and clamps above it
+  ---
+  duration_ms: 2.692587
+  type: 'test'
+  ...
+# Subtest: Lunar Bond skill triggers are once per cast, never per hit, and cap at ten
+ok 20 - Lunar Bond skill triggers are once per cast, never per hit, and cap at ten
+  ---
+  duration_ms: 3.071934
+  type: 'test'
+  ...
+# Subtest: S2 resolves three Fire packets; single-enemy bonus and Fortune additive coefficient policy
+ok 21 - S2 resolves three Fire packets; single-enemy bonus and Fortune additive coefficient policy
+  ---
+  duration_ms: 3.008111
+  type: 'test'
+  ...
+# Subtest: S2 three-Powerful-Bond debuff is applied after damage and not copied as an ally buff
+ok 22 - S2 three-Powerful-Bond debuff is applied after damage and not copied as an ally buff
+  ---
+  duration_ms: 1.974281
+  type: 'test'
+  ...
+# Subtest: A4 adds party damage to automatic Highlight; A2 extends Fortune buffs
+ok 23 - A4 adds party damage to automatic Highlight; A2 extends Fortune buffs
+  ---
+  duration_ms: 9.937718
+  type: 'test'
+  ...
+# Subtest: S3 A0 caster matrix selected=kotone-shiomi
+ok 24 - S3 A0 caster matrix selected=kotone-shiomi
+  ---
+  duration_ms: 1.928314
+  type: 'test'
+  ...
+# Subtest: S3 A0 caster matrix selected=wonder
+ok 25 - S3 A0 caster matrix selected=wonder
+  ---
+  duration_ms: 1.9753
+  type: 'test'
+  ...
+# Subtest: S3 A0 caster matrix selected=test-dps
+ok 26 - S3 A0 caster matrix selected=test-dps
+  ---
+  duration_ms: 1.325708
+  type: 'test'
+  ...
+# Subtest: S3 A0 caster matrix selected=test-support
+ok 27 - S3 A0 caster matrix selected=test-support
+  ---
+  duration_ms: 1.35347
+  type: 'test'
+  ...
+# Subtest: S3 A2 caster matrix selected=kotone-shiomi
+ok 28 - S3 A2 caster matrix selected=kotone-shiomi
+  ---
+  duration_ms: 2.06605
+  type: 'test'
+  ...
+# Subtest: S3 A2 caster matrix selected=wonder
+ok 29 - S3 A2 caster matrix selected=wonder
+  ---
+  duration_ms: 1.528256
+  type: 'test'
+  ...
+# Subtest: S3 A2 caster matrix selected=test-dps
+ok 30 - S3 A2 caster matrix selected=test-dps
+  ---
+  duration_ms: 1.461819
+  type: 'test'
+  ...
+# Subtest: S3 A2 caster matrix selected=test-support
+ok 31 - S3 A2 caster matrix selected=test-support
+  ---
+  duration_ms: 1.561845
+  type: 'test'
+  ...
+# Subtest: S3 A5 caster matrix selected=kotone-shiomi
+ok 32 - S3 A5 caster matrix selected=kotone-shiomi
+  ---
+  duration_ms: 1.300516
+  type: 'test'
+  ...
+# Subtest: S3 A5 caster matrix selected=wonder
+ok 33 - S3 A5 caster matrix selected=wonder
+  ---
+  duration_ms: 1.856402
+  type: 'test'
+  ...
+# Subtest: S3 A5 caster matrix selected=test-dps
+ok 34 - S3 A5 caster matrix selected=test-dps
+  ---
+  duration_ms: 1.57271
+  type: 'test'
+  ...
+# Subtest: S3 A5 caster matrix selected=test-support
+ok 35 - S3 A5 caster matrix selected=test-support
+  ---
+  duration_ms: 2.718702
+  type: 'test'
+  ...
+# Subtest: S3 A6 caster matrix selected=kotone-shiomi
+ok 36 - S3 A6 caster matrix selected=kotone-shiomi
+  ---
+  duration_ms: 1.749304
+  type: 'test'
+  ...
+# Subtest: S3 A6 caster matrix selected=wonder
+ok 37 - S3 A6 caster matrix selected=wonder
+  ---
+  duration_ms: 1.929163
+  type: 'test'
+  ...
+# Subtest: S3 A6 caster matrix selected=test-dps
+ok 38 - S3 A6 caster matrix selected=test-dps
+  ---
+  duration_ms: 1.528714
+  type: 'test'
+  ...
+# Subtest: S3 A6 caster matrix selected=test-support
+ok 39 - S3 A6 caster matrix selected=test-support
+  ---
+  duration_ms: 1.498644
+  type: 'test'
+  ...
+# Subtest: A6 with Wonder already linked never adds Wonder as an additional copy source
+ok 40 - A6 with Wonder already linked never adds Wonder as an additional copy source
+  ---
+  duration_ms: 2.600118
+  type: 'test'
+  ...
+# Subtest: S3 reads buffs on linked RECIPIENT, not buffs received by selected SOURCE
+ok 41 - S3 reads buffs on linked RECIPIENT, not buffs received by selected SOURCE
+  ---
+  duration_ms: 1.29732
+  type: 'test'
+  ...
+# Subtest: Original and copied effect coexist; duplicate same batch is rejected, later cast refreshes rather than stacks
+ok 42 - Original and copied effect coexist; duplicate same batch is rejected, later cast refreshes rather than stacks
+  ---
+  duration_ms: 1.304315
+  type: 'test'
+  ...
+# Subtest: No recursive copy; unknown origin, permanent, negative, special and enemy effects are rejected
+ok 43 - No recursive copy; unknown origin, permanent, negative, special and enemy effects are rejected
+  ---
+  duration_ms: 1.760108
+  type: 'test'
+  ...
+# Subtest: A2 explicit ratio, Fortune duration, Skill Amplification applied exactly once to additional copy
+ok 44 - A2 explicit ratio, Fortune duration, Skill Amplification applied exactly once to additional copy
+  ---
+  duration_ms: 3.83203
+  type: 'test'
+  ...
+# Subtest: Copy expiry advances only on recipient normal ends, not Kotone extra actions or interrupts
+ok 45 - Copy expiry advances only on recipient normal ends, not Kotone extra actions or interrupts
+  ---
+  duration_ms: 1.550593
+  type: 'test'
+  ...
+# Subtest: Temporary Powerful Bonds expire; the A1 permanent Bond remains and weapon crit updates
+ok 46 - Temporary Powerful Bonds expire; the A1 permanent Bond remains and weapon crit updates
+  ---
+  duration_ms: 1.67625
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +0: component/stat, Lunar threshold, stack-based crit in runtime
+ok 47 - Vetri Vel Muruga +0: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.51097
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +1: component/stat, Lunar threshold, stack-based crit in runtime
+ok 48 - Vetri Vel Muruga +1: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.296262
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +2: component/stat, Lunar threshold, stack-based crit in runtime
+ok 49 - Vetri Vel Muruga +2: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.240677
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +3: component/stat, Lunar threshold, stack-based crit in runtime
+ok 50 - Vetri Vel Muruga +3: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.176378
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +4: component/stat, Lunar threshold, stack-based crit in runtime
+ok 51 - Vetri Vel Muruga +4: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.756972
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +5: component/stat, Lunar threshold, stack-based crit in runtime
+ok 52 - Vetri Vel Muruga +5: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 2.182065
+  type: 'test'
+  ...
+# Subtest: Vetri Vel Muruga +6: component/stat, Lunar threshold, stack-based crit in runtime
+ok 53 - Vetri Vel Muruga +6: component/stat, Lunar threshold, stack-based crit in runtime
+  ---
+  duration_ms: 1.571153
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +0: static and stacking Attack, one trigger per buff cast, three-stack cap and expiry
+ok 54 - Ame-no-Nuboko +0: static and stacking Attack, one trigger per buff cast, three-stack cap and expiry
+  ---
+  duration_ms: 2.080383
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +1: unavailable array blocked, never guessed or silently downgraded
+ok 55 - Ame-no-Nuboko +1: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.557079
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +2: unavailable array blocked, never guessed or silently downgraded
+ok 56 - Ame-no-Nuboko +2: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.32163
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +3: unavailable array blocked, never guessed or silently downgraded
+ok 57 - Ame-no-Nuboko +3: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.540642
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +4: unavailable array blocked, never guessed or silently downgraded
+ok 58 - Ame-no-Nuboko +4: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.396269
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +5: unavailable array blocked, never guessed or silently downgraded
+ok 59 - Ame-no-Nuboko +5: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.342028
+  type: 'test'
+  ...
+# Subtest: Ame-no-Nuboko +6: unavailable array blocked, never guessed or silently downgraded
+ok 60 - Ame-no-Nuboko +6: unavailable array blocked, never guessed or silently downgraded
+  ---
+  duration_ms: 0.407743
+  type: 'test'
+  ...
+# Subtest: Equipped totals never re-add weapon components or static Attack; reset weapon changes support scaling
+ok 61 - Equipped totals never re-add weapon components or static Attack; reset weapon changes support scaling
+  ---
+  duration_ms: 4.740522
+  type: 'test'
+  ...
+# Subtest: Normal saved loadout and separate draft survive JSON/storage round trips
+ok 62 - Normal saved loadout and separate draft survive JSON/storage round trips
+  ---
+  duration_ms: 3.007014
+  type: 'test'
+  ...
+# Subtest: Local catalog regeneration overlay retains one Shiomi and never replaces Montagne
+ok 63 - Local catalog regeneration overlay retains one Shiomi and never replaces Montagne
+  ---
+  duration_ms: 0.164229
+  type: 'test'
+  ...
+# Subtest: Real A6 run none: deterministic full/fast parity including two Fortune activations and copy state
+ok 64 - Real A6 run none: deterministic full/fast parity including two Fortune activations and copy state
+  ---
+  duration_ms: 167.149599
+  type: 'test'
+  ...
+# Subtest: Real A6 run ame-no-nuboko: deterministic full/fast parity including two Fortune activations and copy state
+ok 65 - Real A6 run ame-no-nuboko: deterministic full/fast parity including two Fortune activations and copy state
+  ---
+  duration_ms: 155.270137
+  type: 'test'
+  ...
+# Subtest: Real A6 run vetri-vel-muruga: deterministic full/fast parity including two Fortune activations and copy state
+ok 66 - Real A6 run vetri-vel-muruga: deterministic full/fast parity including two Fortune activations and copy state
+  ---
+  duration_ms: 166.169365
+  type: 'test'
+  ...
+# Subtest: Forced makoto Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+ok 67 - Forced makoto Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+  ---
+  duration_ms: 3.085342
+  type: 'test'
+  ...
+# Subtest: Forced yukari Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+ok 68 - Forced yukari Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+  ---
+  duration_ms: 3.280142
+  type: 'test'
+  ...
+# Subtest: Forced akihiko Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+ok 69 - Forced akihiko Theurgy adapter: executes actual damage, preserves gauge/SP/normal turns and applies kit resource
+  ---
+  duration_ms: 2.005385
+  type: 'test'
+  ...
+# Subtest: Existing beta joker automatic Highlight fallback is not silently blocked
+ok 70 - Existing beta joker automatic Highlight fallback is not silently blocked
+  ---
+  duration_ms: 1.749047
+  type: 'test'
+  ...
+# Subtest: Existing beta mona automatic Highlight fallback is not silently blocked
+ok 71 - Existing beta mona automatic Highlight fallback is not silently blocked
+  ---
+  duration_ms: 2.16287
+  type: 'test'
+  ...
+# Subtest: Existing beta wonder automatic Highlight fallback is not silently blocked
+ok 72 - Existing beta wonder automatic Highlight fallback is not silently blocked
+  ---
+  duration_ms: 1.896226
+  type: 'test'
+  ...
+# Subtest: Non-weapon inputs plus weapon and Revelation modifiers applied once; equipped totals bypass both
+ok 73 - Non-weapon inputs plus weapon and Revelation modifiers applied once; equipped totals bypass both
+  ---
+  duration_ms: 3.050583
+  type: 'test'
+  ...
+# Subtest: Invalid numeric stats, awareness and enhancement are rejected by combat normalization
+ok 74 - Invalid numeric stats, awareness and enhancement are rejected by combat normalization
+  ---
+  duration_ms: 1.127037
+  type: 'test'
+  ...
+# Subtest: Copy provenance follows actual source skill context on a linked unit, excluding navigator/unknown passive origin
+ok 75 - Copy provenance follows actual source skill context on a linked unit, excluding navigator/unknown passive origin
+  ---
+  duration_ms: 1.279718
+  type: 'test'
+  ...
+# Subtest: Paid Highlight interrupt does not consume Kotone normal-turn opening or Go for Broke availability
+ok 76 - Paid Highlight interrupt does not consume Kotone normal-turn opening or Go for Broke availability
+  ---
+  duration_ms: 4.559589
+  type: 'test'
+  ...
+# Subtest: Public simulate/recommend policy completes with Kotone and full/fast runs agree
+ok 77 - Public simulate/recommend policy completes with Kotone and full/fast runs agree
+  ---
+  duration_ms: 3663.730474
+  type: 'test'
+  ...
+# Subtest: Kotone Concert extra turns do not advance her normal counter, skill cooldown, SP recovery, or Cold
+ok 78 - Kotone Concert extra turns do not advance her normal counter, skill cooldown, SP recovery, or Cold
+  ---
+  duration_ms: 2.888663
+  type: 'test'
+  ...
+# Subtest: Owned Strategist aura counts the selected main Wonder Persona, including imported Korean role metadata
+ok 79 - Owned Strategist aura counts the selected main Wonder Persona, including imported Korean role metadata
+  ---
+  duration_ms: 2.601917
+  type: 'test'
+  ...
+# Subtest: Pre-battle equipment accounting updates the exposed stat basis without double adding components
+ok 80 - Pre-battle equipment accounting updates the exposed stat basis without double adding components
+  ---
+  duration_ms: 0.97039
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 slaughter_drive seed 17
+ok 81 - Unchanged release route: live-2026-09-04 slaughter_drive seed 17
+  ---
+  duration_ms: 113.734305
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 slaughter_drive seed 808
+ok 82 - Unchanged release route: live-2026-09-04 slaughter_drive seed 808
+  ---
+  duration_ms: 79.18047
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 slaughter_drive seed 2026
+ok 83 - Unchanged release route: live-2026-09-04 slaughter_drive seed 2026
+  ---
+  duration_ms: 72.805561
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 vishnu seed 17
+ok 84 - Unchanged release route: live-2026-09-04 vishnu seed 17
+  ---
+  duration_ms: 63.555185
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 vishnu seed 808
+ok 85 - Unchanged release route: live-2026-09-04 vishnu seed 808
+  ---
+  duration_ms: 45.020437
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 vishnu seed 2026
+ok 86 - Unchanged release route: live-2026-09-04 vishnu seed 2026
+  ---
+  duration_ms: 42.093517
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 hachiman seed 17
+ok 87 - Unchanged release route: live-2026-09-04 hachiman seed 17
+  ---
+  duration_ms: 43.393213
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 hachiman seed 808
+ok 88 - Unchanged release route: live-2026-09-04 hachiman seed 808
+  ---
+  duration_ms: 43.820766
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: live-2026-09-04 hachiman seed 2026
+ok 89 - Unchanged release route: live-2026-09-04 hachiman seed 2026
+  ---
+  duration_ms: 44.581823
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 slaughter_drive seed 17
+ok 90 - Unchanged release route: recorded-2026-08-29 slaughter_drive seed 17
+  ---
+  duration_ms: 29.947986
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 slaughter_drive seed 808
+ok 91 - Unchanged release route: recorded-2026-08-29 slaughter_drive seed 808
+  ---
+  duration_ms: 24.454111
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 slaughter_drive seed 2026
+ok 92 - Unchanged release route: recorded-2026-08-29 slaughter_drive seed 2026
+  ---
+  duration_ms: 24.070047
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 vishnu seed 17
+ok 93 - Unchanged release route: recorded-2026-08-29 vishnu seed 17
+  ---
+  duration_ms: 30.31659
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 vishnu seed 808
+ok 94 - Unchanged release route: recorded-2026-08-29 vishnu seed 808
+  ---
+  duration_ms: 28.826982
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 vishnu seed 2026
+ok 95 - Unchanged release route: recorded-2026-08-29 vishnu seed 2026
+  ---
+  duration_ms: 28.436862
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 hachiman seed 17
+ok 96 - Unchanged release route: recorded-2026-08-29 hachiman seed 17
+  ---
+  duration_ms: 28.581949
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 hachiman seed 808
+ok 97 - Unchanged release route: recorded-2026-08-29 hachiman seed 808
+  ---
+  duration_ms: 29.492113
+  type: 'test'
+  ...
+# Subtest: Unchanged release route: recorded-2026-08-29 hachiman seed 2026
+ok 98 - Unchanged release route: recorded-2026-08-29 hachiman seed 2026
+  ---
+  duration_ms: 29.053454
+  type: 'test'
+  ...
+# Subtest: Generated source catalog is unchanged
+ok 99 - Generated source catalog is unchanged
+  ---
+  duration_ms: 16.171822
+  type: 'test'
+  ...
+# Subtest: Identity is Shiomi, not Montagne; experimental ordinary profile is playable
+ok 100 - Identity is Shiomi, not Montagne; experimental ordinary profile is playable
+  ---
+  duration_ms: 34.731209
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A0 (not complete skill)
+ok 101 - User-specified Go for Broke use-count gate A0 (not complete skill)
+  ---
+  duration_ms: 0.406724
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A1 (not complete skill)
+ok 102 - User-specified Go for Broke use-count gate A1 (not complete skill)
+  ---
+  duration_ms: 0.209094
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A2 (not complete skill)
+ok 103 - User-specified Go for Broke use-count gate A2 (not complete skill)
+  ---
+  duration_ms: 0.279533
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A3 (not complete skill)
+ok 104 - User-specified Go for Broke use-count gate A3 (not complete skill)
+  ---
+  duration_ms: 0.247195
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A4 (not complete skill)
+ok 105 - User-specified Go for Broke use-count gate A4 (not complete skill)
+  ---
+  duration_ms: 0.128767
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A5 (not complete skill)
+ok 106 - User-specified Go for Broke use-count gate A5 (not complete skill)
+  ---
+  duration_ms: 0.204486
+  type: 'test'
+  ...
+# Subtest: User-specified Go for Broke use-count gate A6 (not complete skill)
+ok 107 - User-specified Go for Broke use-count gate A6 (not complete skill)
+  ---
+  duration_ms: 0.129474
+  type: 'test'
+  ...
+# Subtest: Direct runtime buff provenance follows its original caster, not active Wonder or recipient
+ok 108 - Direct runtime buff provenance follows its original caster, not active Wonder or recipient
+  ---
+  duration_ms: 6.106947
+  type: 'test'
+  ...
+# Subtest: Unknown legacy-passive ownership is excluded rather than guessed
+ok 109 - Unknown legacy-passive ownership is excluded rather than guessed
+  ---
+  duration_ms: 5.452172
+  type: 'test'
+  ...
+# Subtest: Nested casts restore outer caster; exception cleanup restores the source context
+ok 110 - Nested casts restore outer caster; exception cleanup restores the source context
+  ---
+  duration_ms: 2.563309
+  type: 'test'
+  ...
+# Subtest: Identical skill ids cast by different allies coexist; same caster refreshes
+ok 111 - Identical skill ids cast by different allies coexist; same caster refreshes
+  ---
+  duration_ms: 2.58207
+  type: 'test'
+  ...
+# Subtest: Explicit source list treats Wonder as additional SOURCE, never implicit recipient (synthetic policy)
+ok 112 - Explicit source list treats Wonder as additional SOURCE, never implicit recipient (synthetic policy)
+  ---
+  duration_ms: 8.779491
+  type: 'test'
+  ...
+# Subtest: Unlisted original caster is rejected even if buff recipient is an eligible source
+ok 113 - Unlisted original caster is rejected even if buff recipient is an eligible source
+  ---
+  duration_ms: 2.01522
+  type: 'test'
+  ...
+# Subtest: Copy policy has no guessed defaults for multiplier, duration, clock, amplification or weapon trigger
+ok 114 - Copy policy has no guessed defaults for multiplier, duration, clock, amplification or weapon trigger
+  ---
+  duration_ms: 2.548738
+  type: 'test'
+  ...
+# Subtest: Copy excludes enemy debuff
+ok 115 - Copy excludes enemy debuff
+  ---
+  duration_ms: 2.2611
+  type: 'test'
+  ...
+# Subtest: Copy excludes negative debuff
+ok 116 - Copy excludes negative debuff
+  ---
+  duration_ms: 1.665367
+  type: 'test'
+  ...
+# Subtest: Copy excludes unknown special effect
+ok 117 - Copy excludes unknown special effect
+  ---
+  duration_ms: 1.478591
+  type: 'test'
+  ...
+# Subtest: Copy excludes control effect
+ok 118 - Copy excludes control effect
+  ---
+  duration_ms: 1.409808
+  type: 'test'
+  ...
+# Subtest: Copy excludes unknown stat
+ok 119 - Copy excludes unknown stat
+  ---
+  duration_ms: 1.676332
+  type: 'test'
+  ...
+# Subtest: Copy excludes permanent buff
+ok 120 - Copy excludes permanent buff
+  ---
+  duration_ms: 1.565242
+  type: 'test'
+  ...
+# Subtest: Copy excludes expired buff
+ok 121 - Copy excludes expired buff
+  ---
+  duration_ms: 2.015058
+  type: 'test'
+  ...
+# Subtest: Copy excludes explicit exclusion
+ok 122 - Copy excludes explicit exclusion
+  ---
+  duration_ms: 1.28207
+  type: 'test'
+  ...
+# Subtest: Copy duplicate and recursive guards work in live runtime, with original AoE suppression
+ok 123 - Copy duplicate and recursive guards work in live runtime, with original AoE suppression
+  ---
+  duration_ms: 3.870796
+  type: 'test'
+  ...
+# Subtest: Separate activation refreshes, not stacks; source-specific effects stay separate
+ok 124 - Separate activation refreshes, not stacks; source-specific effects stay separate
+  ---
+  duration_ms: 4.129169
+  type: 'test'
+  ...
+# Subtest: Resolved source amplification and explicit copy amplification apply once, not twice (synthetic)
+ok 125 - Resolved source amplification and explicit copy amplification apply once, not twice (synthetic)
+  ---
+  duration_ms: 4.519516
+  type: 'test'
+  ...
+# Subtest: Explicit copied-grant ownership is carried separately from original caster
+ok 126 - Explicit copied-grant ownership is carried separately from original caster
+  ---
+  duration_ms: 2.316259
+  type: 'test'
+  ...
+# Subtest: Copied effect expires only on selected owner normal turn ends; extra/interrupt/round clocks hold
+ok 127 - Copied effect expires only on selected owner normal turn ends; extra/interrupt/round clocks hold
+  ---
+  duration_ms: 2.283854
+  type: 'test'
+  ...
+# Subtest: Caster-based copied duration follows its explicit owner
+ok 128 - Caster-based copied duration follows its explicit owner
+  ---
+  duration_ms: 1.852995
+  type: 'test'
+  ...
+# Subtest: Normal engine action completion advances the copied clock without a separate manual tick
+ok 129 - Normal engine action completion advances the copied clock without a separate manual tick
+  ---
+  duration_ms: 11.446966
+  type: 'test'
+  ...
+# Subtest: Executable extra_skill fixture resolves without consuming normal turn, gauge or cooldown
+ok 130 - Executable extra_skill fixture resolves without consuming normal turn, gauge or cooldown
+  ---
+  duration_ms: 7.62269
+  type: 'test'
+  ...
+# Subtest: Executable automatic_highlight fixture resolves without consuming normal turn, gauge or cooldown
+ok 131 - Executable automatic_highlight fixture resolves without consuming normal turn, gauge or cooldown
+  ---
+  duration_ms: 2.833798
+  type: 'test'
+  ...
+# Subtest: Executable automatic_theurgy fixture resolves without consuming normal turn, gauge or cooldown
+ok 132 - Executable automatic_theurgy fixture resolves without consuming normal turn, gauge or cooldown
+  ---
+  duration_ms: 2.900053
+  type: 'test'
+  ...
+# Subtest: Unimplemented Theurgy fails visibly; it is not downgraded to generic Assist/Highlight
+ok 133 - Unimplemented Theurgy fails visibly; it is not downgraded to generic Assist/Highlight
+  ---
+  duration_ms: 1.759737
+  type: 'test'
+  ...
+# Subtest: Insufficient SP does not drop a queued skill or consume turn; defeated owner cancels with a log
+ok 134 - Insufficient SP does not drop a queued skill or consume turn; defeated owner cancels with a log
+  ---
+  duration_ms: 2.648381
+  type: 'test'
+  ...
+# Subtest: Recorded replay profile rejects foundation-only support operations
+ok 135 - Recorded replay profile rejects foundation-only support operations
+  ---
+  duration_ms: 2.023999
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +0: base/equipped and actual Attack scaling
+ok 136 - SYNTHETIC synthetic-alpha stat table +0: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 2.117551
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +1: base/equipped and actual Attack scaling
+ok 137 - SYNTHETIC synthetic-alpha stat table +1: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.631429
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +2: base/equipped and actual Attack scaling
+ok 138 - SYNTHETIC synthetic-alpha stat table +2: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.207486
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +3: base/equipped and actual Attack scaling
+ok 139 - SYNTHETIC synthetic-alpha stat table +3: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.153442
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +4: base/equipped and actual Attack scaling
+ok 140 - SYNTHETIC synthetic-alpha stat table +4: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.579133
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +5: base/equipped and actual Attack scaling
+ok 141 - SYNTHETIC synthetic-alpha stat table +5: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.214911
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-alpha stat table +6: base/equipped and actual Attack scaling
+ok 142 - SYNTHETIC synthetic-alpha stat table +6: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.411711
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +0: base/equipped and actual Attack scaling
+ok 143 - SYNTHETIC synthetic-beta stat table +0: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 2.094872
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +1: base/equipped and actual Attack scaling
+ok 144 - SYNTHETIC synthetic-beta stat table +1: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.32405
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +2: base/equipped and actual Attack scaling
+ok 145 - SYNTHETIC synthetic-beta stat table +2: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.459629
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +3: base/equipped and actual Attack scaling
+ok 146 - SYNTHETIC synthetic-beta stat table +3: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.142202
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +4: base/equipped and actual Attack scaling
+ok 147 - SYNTHETIC synthetic-beta stat table +4: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.214565
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +5: base/equipped and actual Attack scaling
+ok 148 - SYNTHETIC synthetic-beta stat table +5: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.277113
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC synthetic-beta stat table +6: base/equipped and actual Attack scaling
+ok 149 - SYNTHETIC synthetic-beta stat table +6: base/equipped and actual Attack scaling
+  ---
+  duration_ms: 1.245431
+  type: 'test'
+  ...
+# Subtest: Equipment recomputes from base; switches do not accumulate previous component/passive
+ok 150 - Equipment recomputes from base; switches do not accumulate previous component/passive
+  ---
+  duration_ms: 1.447608
+  type: 'test'
+  ...
+# Subtest: Enhancement input rejects missing, mixed, unknown or extra array coefficients
+ok 151 - Enhancement input rejects missing, mixed, unknown or extra array coefficients
+  ---
+  duration_ms: 0.299767
+  type: 'test'
+  ...
+# Subtest: Synthetic buff-grant stacks enforce owner, one per cast, cap, expiry and explicit copy policy
+ok 152 - Synthetic buff-grant stacks enforce owner, one per cast, cap, expiry and explicit copy policy
+  ---
+  duration_ms: 0.539665
+  type: 'test'
+  ...
+# Subtest: Draft save/reload preserves every awareness, weapon and enhancement and excludes Mindscape
+ok 153 - Draft save/reload preserves every awareness, weapon and enhancement and excludes Mindscape
+  ---
+  duration_ms: 3.176272
+  type: 'test'
+  ...
+# Subtest: Fast/full runtime parity for explicit fixture copies and extra actions
+ok 154 - Fast/full runtime parity for explicit fixture copies and extra actions
+  ---
+  duration_ms: 8.890481
+  type: 'test'
+  ...
+# Subtest: Engine cannot copy an enemy-held or fabricated effect even with forged ally-looking provenance
+ok 155 - Engine cannot copy an enemy-held or fabricated effect even with forged ally-looking provenance
+  ---
+  duration_ms: 1.846099
+  type: 'test'
+  ...
+# Subtest: Support action API refuses actions after the encounter ends
+ok 156 - Support action API refuses actions after the encounter ends
+  ---
+  duration_ms: 1.510017
+  type: 'test'
+  ...
+1..156
+# tests 156
+# suites 0
+# pass 156
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5022.720683

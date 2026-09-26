@@ -1,0 +1,351 @@
+{
+  "profile": "global-ordinary-tooltip-2026-09-26",
+  "seed": 17,
+  "trainingFixture": "tests/helpers/kotone.js",
+  "note": "EXPERIMENTAL fixed tooltip coefficients and explicit provisional A2=0.375; not calibrated game damage. Synthetic external 20% buffs are test inputs, not new character mechanics.",
+  "results": [
+    {
+      "awareness": 5,
+      "weaponId": "none",
+      "enhancement": 0,
+      "permanentAttack": 2500,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.07500000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 18716215,
+      "totalDamage": 18716215,
+      "secondUse": false,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 5,
+        "limit": 1,
+        "used": 1,
+        "activationIds": [
+          "gfb-1"
+        ]
+      },
+      "extraActions": 2,
+      "normalTurnsCompleted": 3
+    },
+    {
+      "awareness": 6,
+      "weaponId": "none",
+      "enhancement": 0,
+      "permanentAttack": 2500,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.07500000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.07500000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 18759254,
+      "totalDamage": 34728937,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "ame-no-nuboko",
+      "enhancement": 0,
+      "permanentAttack": 3438.4000000000005,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.07500000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.07500000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 31171635,
+      "totalDamage": 57529211,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 0,
+      "permanentAttack": 4176.900000000001,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08250000000000002,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08250000000000002,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 37657577,
+      "totalDamage": 69259539,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 1,
+      "permanentAttack": 4176.900000000001,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08475,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08475,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 39161955,
+      "totalDamage": 71969956,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 2,
+      "permanentAttack": 4466.070000000001,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08475,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08475,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 42386594,
+      "totalDamage": 77827925,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 3,
+      "permanentAttack": 4466.070000000001,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08700000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08700000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 44065697,
+      "totalDamage": 80848227,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 4,
+      "permanentAttack": 4755.24,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08700000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08700000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 47342192,
+      "totalDamage": 86798500,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 5,
+      "permanentAttack": 4755.24,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08925000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08925000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 49198066,
+      "totalDamage": 90131783,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    },
+    {
+      "awareness": 6,
+      "weaponId": "vetri-vel-muruga",
+      "enhancement": 6,
+      "permanentAttack": 5044.41,
+      "copied": [
+        {
+          "caster": "test-support",
+          "recipient": "test-dps",
+          "value": 0.08925000000000001,
+          "duration": 3
+        },
+        {
+          "caster": "wonder",
+          "recipient": "test-dps",
+          "value": 0.08925000000000001,
+          "duration": 3
+        }
+      ],
+      "firstFortuneDamage": 52072613,
+      "totalDamage": 95355164,
+      "secondUse": true,
+      "thirdAllowed": false,
+      "budget": {
+        "awareness": 6,
+        "limit": 2,
+        "used": 2,
+        "activationIds": [
+          "gfb-1",
+          "gfb-2"
+        ]
+      },
+      "extraActions": 4,
+      "normalTurnsCompleted": 6
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "character": "Kotone Shiomi",
+  "characterId": "kotone-shiomi",
+  "canvas": {
+    "width": 724,
+    "height": 724,
+    "format": "transparent RGBA",
+    "contentBoxMax": 674,
+    "safeMargin": 25
+  },
+  "generatedArtworkOrigin": "Previously generated in this conversation; no new generation claimed.",
+  "identityReferenceStatus": "Earlier generation used Persona 3 Portable reference art. Live Lufel artwork could not be retrieved during this task.",
+  "styleReferencesInspected": [
+    "prior-upload/dist/assets/characters/makoto.webp",
+    "prior-upload/dist/assets/characters/yukari.webp",
+    "prior-upload/dist/assets/characters/chibi-style-manifest.json"
+  ],
+  "normalization": "Crop transparent outer padding, proportional Lanczos downscale, center inside 674x674. No character part cropped. Both render roles use the full-body composition.",
+  "generatedSourceSHA256": "d63ea71dfad9c160da2481b9aa716e2b9400059247c397831251f53598d8e153",
+  "assets": [
+    {
+      "asset": "assets/characters/kotone-shiomi.webp",
+      "size": [
+        724,
+        724
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        42,
+        25,
+        682,
+        699
+      ],
+      "sha256": "7df2829e4b844a08e003b0afc033ebbfd88fa886d866204134afe411280451fb"
+    },
+    {
+      "asset": "assets/characters/kotone-shiomi-avatar.webp",
+      "size": [
+        724,
+        724
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        42,
+        25,
+        682,
+        699
+      ],
+      "sha256": "7df2829e4b844a08e003b0afc033ebbfd88fa886d866204134afe411280451fb"
+    }
+  ],
+  "licenseNote": "Unofficial generated fan artwork; Persona character rights belong to their respective owners."
+}

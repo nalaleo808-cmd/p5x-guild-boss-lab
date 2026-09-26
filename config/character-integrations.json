@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "baseRelease": "v2.0.0-beta",
+  "strategy": "Apply editable local character overlay after generated catalog imports. Do not modify sources or generated reference catalogs.",
+  "characters": [{
+    "id": "kotone-shiomi", "sourceSlug": "kotone",
+    "dataModule": "src/characters/kotone-shiomi-data.js",
+    "mechanicsModule": "src/characters/kotone-shiomi-mechanics.js",
+    "registryModule": "src/characters/registry.js",
+    "ruleset": "global-ordinary",
+    "profileId": "global-ordinary-tooltip-2026-09-26",
+    "status": "experimental-snapshot-not-live-script-verified"
+  }]
+}

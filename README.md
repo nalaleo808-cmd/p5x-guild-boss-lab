@@ -34,6 +34,12 @@ The static production copy is written to `dist/`.
 
 `npm run build:exe` builds `dist-exe/P5X-Guild-Boss-Lab.exe`, a single file that embeds the app (the same files as `dist/`) into a copy of the running Node binary using Node's single executable application support (`scripts/build-exe.mjs`, entry point `scripts/sea-main.cjs`). It needs Node 20.12 or newer and fetches the `postject` build tool through npx on first run. Set `PORT` to change the port and `P5X_NO_BROWSER=1` to skip opening the browser.
 
+## Kotone Shiomi (playable, experimental)
+
+Open the **Kotone** tab and click **Use Kotone in party slot 2 & open Builds**, or select her in Team. Set awareness, weapon, enhancement and stat basis in Builds, then enter your actual stats (the defaults are illustrative). In battle, pick **Select / reselect Arcana Link** at her normal-turn opening, then **Go for Broke**.
+
+She uses an ordinary Global tooltip snapshot: no Mindscape Core, A3/A5 skill-level increases are not applied, Ame-no-Nuboko +1 to +6 are disabled, and the A2 copy ratio is an editable 37.5% hypothesis. Recorded archive profiles reject her. Details: [docs/KOTONE-IMPLEMENTATION.md](docs/KOTONE-IMPLEMENTATION.md). Extra commands: `npm run verify:characters` and `npm run example:kotone`.
+
 ## Persona and Revelation data
 
 The app ships with a normalized snapshot generated from the public English [Lufelnet character](https://lufel.net/en/character/) and [Persona](https://lufel.net/en/persona/) pages. The included catalog contains the 20 newest characters visible with **Show Spoilers** off, 57 featured Personas, 458 transferable Persona skills, 337 native/unique Persona skill records, 18 main Revelations, and 32 Revelation sub-sets.

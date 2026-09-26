@@ -1,3 +1,9 @@
+import { resolveForcedTheurgy } from './combat/forced-theurgy.js';
+import { equippedAttack } from './combat/weapon-stats.js';
+import { createSupportRuntime, effectProvenance, prepareSupportCopy, commitSupportCopy, advanceSupportClocks } from './combat/support-effects.js';
+import { enqueueSupportAction, completeSupportAction } from './combat/support-actions.js';
+import { KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
+import { withLocalCharacters, createCharacterMechanics } from './characters/registry.js';
 import { bosses, navigator, personas, roster, multidimensionalDreamscapeEvidence } from './data.js';
 import { getHachimanDreamscapeTurnScoreMultiplier, getObservedDreamscapeMultiplier } from './mode-scoring.js';
 import {
@@ -52,9 +58,10 @@ const observedDreamscapeItems = Object.freeze(['attack_tablet', 'fighter_salve',
 
 export class BattleEngine {
   constructor(config = {}) {
+    if ((config.teamIds || []).includes(KOTONE_SHIOMI_ID) && config.mechanicsProfile === RECORDED_MECHANICS_PROFILE) throw new Error('Kotone is available in the live ordinary Global profile, not archived recorded replays');
     if (config.mechanicsProfile && ![CURRENT_MECHANICS_PROFILE, RECORDED_MECHANICS_PROFILE].includes(config.mechanicsProfile)) throw new Error('Unknown mechanics profile');
     this.personaDefinitions = [...personas, ...(config.personaDefinitions || [])];
-    this.characterDefinitions = [...roster, ...(config.characterDefinitions || [])];
+    this.characterDefinitions = withLocalCharacters([...roster, ...(config.characterDefinitions || [])]);
     this.bossDefinitions = [...(config.bossDefinitions || []), ...bosses];
     this.bossDefinition = config.bossDefinition ? clone(config.bossDefinition) : null;
     this.navigatorDefinition = clone(config.navigatorDefinition || navigator);
@@ -66,6 +73,7 @@ export class BattleEngine {
       teamIds: config.teamIds || roster.map(member => member.id),
       personaIds: config.personaIds || personas.map(persona => persona.id),
       loadouts: config.loadouts || {},
+      ...(typeof config.kotoneOwned === 'boolean' ? { kotoneOwned: config.kotoneOwned } : {}),
       // The UI persists these on Wonder's loadout. Top-level fields keep the
       // engine usable by direct callers and replay fixtures.
       weaponId: config.weaponId || null,
@@ -117,6 +125,8 @@ export class BattleEngine {
   }
 
   reset() {
+    this.kotoneMechanics = null;
+    this.supportCastContext = null;
     const bossData = clone(this.bossDefinition || byId(this.bossDefinitions, this.config.bossId) || bosses[0]);
     const modeId = this.config.modeId || bossData.defaultMode || 'nexus';
     const dreamscapePreview = this.usesLiveMechanics() && modeId === 'multidimensional';
@@ -204,6 +214,7 @@ export class BattleEngine {
       if (hasStat('critRate')) unit.crit = displayedPercent('critRate');
       if (hasStat('critMult')) unit.critMult = displayedPercent('critMult');
       const revelation = unit.id === 'wonder' ? {} : (loadout.revelationCombat || {});
+      if (unit.id === KOTONE_SHIOMI_ID) unit.kotoneInputStats = { attack: unit.attack, maxHp: unit.maxHp, defense: unit.defense || 0 };
       const attackPercent = equippedStats && hasStat('attack') ? 0 : Number(revelation.attackPercent || 0);
       const hpPercent = equippedStats && hasStat('maxHp') ? 0 : Number(revelation.hpPercent || 0);
       const critRateBonus = equippedStats && hasStat('critRate') ? 0 : Number(revelation.critRate || 0);
@@ -340,6 +351,7 @@ export class BattleEngine {
       eligibleAttackTurn: 1, lastActedAttackTurn: 0
     }));
     this.state = {
+      ...(this.usesLiveMechanics() ? { supportRuntime: createSupportRuntime() } : {}),
       mechanicsProfile: this.config.mechanicsProfile,
       mechanicsLimitations: this.usesLiveMechanics() ? [
         'Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.',
@@ -352,7 +364,7 @@ export class BattleEngine {
         ...(party.some(unit => unit.slug === 'makoto') ? ['Makoto Theurgy and Assist timing remain unavailable. Full Moon has no substitute generator while Theurgy is disabled. The A1 Melody extra-hit coefficient and A6 fatal-state ending boundary are not assumed.'] : []),
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
-        ...(party.some(unit => unit.slug && !['berry', 'j-c', 'marian-beachflower', 'puppet-wavecatcher', 'rin-firecracker', 'matoi', 'akihiko', 'yukari', 'makoto'].includes(unit.slug)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
+        ...(party.some(unit => unit.slug && !['berry', 'j-c', 'marian-beachflower', 'puppet-wavecatcher', 'rin-firecracker', 'matoi', 'akihiko', 'yukari', 'makoto', 'kotone-shiomi'].includes(unit.slug)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID) ? ["Cursed Ties applies its 33% Attack condition to holder Wonder only. Whether 'an ally' includes Wonder, ailment-accuracy interaction with the stated 70% chance, and Evil Eye reapplication behavior remain unverified."] : [])
       ] : ['Archived mechanics reproduce the recorded 2026-08-29 replay and do not include confirmed live corrections.'],
@@ -436,6 +448,9 @@ export class BattleEngine {
     };
     if (this.usesEnemyTimeline()) this.initializeEnemyTimeline();
     this.initializeCharacterPassives();
+    this.kotoneMechanics = createCharacterMechanics(KOTONE_SHIOMI_ID, this);
+    this.kotoneMechanics.initialize();
+    if (this.config.kotoneOwned === true) this.kotoneMechanics.refreshAuras();
     this.emit('battle_start', `${this.state.boss.name} enters the score-attack field.`, { tone: 'system' });
     if (this.state.boss.encounter?.soulLink) {
       this.emit('mechanic', 'Soul Link is active. Slaughter Drive and all four Scarlet Turrets share one HP percentage.', { tone: 'phase' });
@@ -1212,6 +1227,7 @@ export class BattleEngine {
   }
 
   getAvailableActions() {
+    if (this.state.phase === 'battle' && this.supportActionDescriptor()) return [this.supportActionDescriptor()];
     if (this.state.phase !== 'battle' || !this.actor || this.actor.hp <= 0) return [];
     const sharedActions = this.getSharedCombatActions();
     if (sharedActions.length) return sharedActions;
@@ -1259,7 +1275,7 @@ export class BattleEngine {
       skill: { id: 'akihiko_flash_blow', slot: 'ALT', name: 'Flash Blow', element: 'physical',
         cost: 0, power: 0.559, target: 'all_enemies', note: 'Spend 6 Mettle. Free Resonance action.' }
     });
-    return [...actions, ...this.getBerryAltActions(), ...this.getItemActions()];
+    return this.kotoneMechanics?.decorateActions([...actions, ...this.getBerryAltActions(), ...this.getItemActions()]) || actions;
   }
 
   getBerryAltActions() {
@@ -1549,7 +1565,7 @@ export class BattleEngine {
   getHighlightActions() {
     if (this.state.phase !== 'battle' || this.state.sharedCombat.pendingTurnCompletion) return [];
     const sharedReady = this.usesLiveMechanics() && Number(this.state.sharedCombat.highlight || 0) >= 100;
-    return this.state.party.filter(unit => unit.hp > 0 && (this.usesLiveMechanics() ? sharedReady : unit.highlight >= 100)).flatMap(unit => {
+    return this.state.party.filter(unit => unit.hp > 0 && !unit.kotone?.cold && (this.usesLiveMechanics() ? sharedReady : unit.highlight >= 100)).flatMap(unit => {
       if (this.isJc(unit)) {
         return unit.selectedMasks.map(mask => {
           const skill = this.jcHighlightSkill(mask);
@@ -1778,6 +1794,7 @@ export class BattleEngine {
   }
 
   calculateDamage(actor, skill, target, sourceType = null) {
+    if (this.kotoneMechanics?.state) this.kotoneMechanics.refreshAuras();
     if (sourceType === 'dot' && skill.lovesickSnapshots) return this.calculateLovesickSnapshotDamage(actor, skill, target);
     const technical = this.technicalOutcome(actor, skill, target, sourceType);
     const phase = target.id === this.state.boss.id ? this.state.boss.phases[this.state.boss.phaseIndex] : null;
@@ -1792,7 +1809,7 @@ export class BattleEngine {
     const gritPierce = this.isAkihiko(actor) ? actor.gritStacks * 0.04 : 0;
     const moonPierce = this.isMakoto(actor) ? actor.moonPhaseStacks * 0.12 : 0;
     const pierce = skill.lovesickSnapshotCapture ? 0 : Number(actor.pierceRate || 0)
-      + actor.buffs.filter(effect => effect.stat === 'pierce').reduce((value, effect) => sourcedHachiman ? value + (effect.value || 0) : Math.max(value, effect.value || 0), 0)
+      + actor.buffs.filter(effect => effect.stat === 'pierce').reduce((value, effect) => (sourcedHachiman || this.kotoneMechanics?.active) ? value + (effect.value || 0) : Math.max(value, effect.value || 0), 0)
       + gritPierce + moonPierce + Number(skill.temporaryPierce || 0);
     const totalDefense = phase?.defense ?? target.defense ?? this.state.boss.defense;
     // Hachiman's actual total/base Defense remains unknown. Existing encounter
@@ -1803,7 +1820,7 @@ export class BattleEngine {
       : (phase?.defense || target.defense || this.state.boss.defense) * (1 - clamp(defDown, 0, 0.7)) * (1 - clamp(pierce, 0, 0.7));
     const variance = skill.lovesickSnapshotCapture ? 1 : sourcedHachiman ? 0.95 + this.random() * 0.1 : 0.96 + this.random() * 0.08;
     const criticalBuff = actor.buffs.filter(effect => effect.stat === 'critRate').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    const rawCritRate = actor.crit + criticalBuff + (skill.critBonus || 0);
+    const rawCritRate = skill.forcedTheurgy && skill.guaranteedCritical ? 1 : actor.crit + criticalBuff + (skill.critBonus || 0);
     const critRoll = skill.lovesickSnapshotCapture ? 1 : this.random();
     const critical = skill.canCrit !== false && !(technical?.activated && technical.canCrit === false) && (skill.guaranteedCritical === true
       || critRoll < clamp(rawCritRate, 0, 0.95));
@@ -1834,7 +1851,9 @@ export class BattleEngine {
       : scalingValue * power * (1 + skillAmplification) * 760 / (260 + (skill.ignoreDefense ? 0 : defense));
     const statusFactors = sourcedHachiman ? this.hachimanDamageFactors(actor, skill.element, target, sourceType, skill.actionDamageBonus, hachimanAdditionalBonuses) : null;
     const multiplier = statusFactors?.multiplier ?? this.statusMultiplier(actor, skill.element, target, sourceType) * (1 + Number(skill.actionDamageBonus || 0));
-    const criticalMultiplier = (actor.critMult || 1.5) + critDamageBuff;
+    const criticalMultiplier = skill.criticalMultiplierMin != null
+      ? clamp((actor.critMult || 1.5) + critDamageBuff, skill.criticalMultiplierMin, skill.criticalMultiplierMax)
+      : (actor.critMult || 1.5) + critDamageBuff;
     const dreamscapeSkillCritBonus = this.usesDreamscapeSkillCritBonus(actor, sourceType)
       ? clamp(rawCritRate, 0, 1) * Math.max(0, criticalMultiplier - 1)
       : null;
@@ -1862,7 +1881,7 @@ export class BattleEngine {
 
   applyStatus(list, status, sourceType = 'skill') {
     const sourced = { ...clone(status), sourceType };
-    const statusKey = effect => effect.sourceSkillId ? `${effect.sourceSkillId}:${effect.id}` : effect.id;
+    const statusKey = effect => `${this.usesLiveMechanics() && effect.provenance?.originalCasterId ? `${effect.provenance.originalCasterId}:` : ''}${effect.sourceSkillId ? `${effect.sourceSkillId}:` : ''}${effect.id}`;
     const existing = list.find(effect => statusKey(effect) === statusKey(sourced));
     if (existing) Object.assign(existing, sourced);
     else list.push(sourced);
@@ -1908,20 +1927,125 @@ export class BattleEngine {
     return (caster?.buffs || []).filter(effect => effect.stat === 'skillAmplification').reduce((sum, effect) => sum + Number(effect.value || 0), 0);
   }
 
-  amplifiedSkillStatus(status, sourceType) {
-    if (!this.isHachimanLive() || !status || status.amplifiedBySkillAmplification) return status;
+  amplifiedSkillStatus(status, sourceType, explicitCaster = null) {
+    if ((!this.isHachimanLive() && explicitCaster?.id !== KOTONE_SHIOMI_ID) || !status || status.amplifiedBySkillAmplification) return status;
     const amplifiable = ['character_skill', 'persona_skill', 'highlight', 'medicine', 'navigator', 'skill'].includes(sourceType);
     const percentStat = ['attack', 'damage', 'critDamage', 'critRate', 'pierce', 'defense', 'dotDamage', 'weaknessDamage', 'highlightDamage', 'finalDamage'].includes(status.stat);
     if (!amplifiable || !percentStat || !Number.isFinite(Number(status.value))) return status;
     const amplification = sourceType === 'navigator'
       ? Math.max(0, ...this.state.party.map(unit => this.skillAmplificationFor(unit)))
-      : this.skillAmplificationFor(this.actor);
+      : this.skillAmplificationFor(explicitCaster || this.actor);
     if (!(amplification > 0)) return status;
     return { ...status, baseValue: status.value, value: Number(status.value) * (1 + amplification), amplifiedBySkillAmplification: amplification };
   }
 
-  applyUnitBuff(unit, status, sourceType = 'skill') {
-    return this.applyStatus(unit.buffs, this.surfAdjustedStatus(unit, this.amplifiedSkillStatus(status, sourceType)), sourceType);
+  applyUnitBuff(unit, status, sourceType = 'skill', origin = null) {
+    // Only instrument normal skill/Highlight scope; never infer passive ownership.
+    if (!origin && this.kotoneMechanics?.active && ['character_skill', 'persona_skill', 'highlight'].includes(sourceType)) origin = this.supportCastContext;
+    const caster = origin?.casterId ? byId(this.state.party, origin.casterId) : null;
+    const resolved = this.surfAdjustedStatus(unit, this.amplifiedSkillStatus(status, sourceType, caster));
+    if (!this.usesLiveMechanics()) return this.applyStatus(unit.buffs, resolved, sourceType);
+    // Do not infer the caster from the recipient or the actor whose turn it is.
+    // Uninstrumented legacy passives remain explicitly unknown, and non-copyable.
+    const owned = effectProvenance(this.state.supportRuntime, resolved, {
+      casterId: origin?.casterId || null, skillId: origin?.skillId || null,
+      castId: origin?.castId || null, recipientId: unit.id, kind: 'buff', sourceType
+    });
+    return this.applyStatus(unit.buffs, owned, sourceType);
+  }
+
+  setSupportEquipmentStats(actorId, specification) {
+    if (!this.usesLiveMechanics()) throw new Error('Support equipment is not enabled in recorded replays');
+    const actor = byId(this.state.party, actorId);
+    if (!actor) throw new Error('Unknown equipment owner');
+    // Caller supplies an explicit accounting model. This is NOT a Kotone weapon profile.
+    const stats = equippedAttack(specification);
+    actor.attack = stats.attack;
+    actor.mechanicAttack = stats.attack;
+    actor.supportEquipmentAccounting = { ...clone(specification), ...stats };
+    this.emit('equipment_stats', `${actor.codename} Attack and support scaling updated.`, { actorId, attack: stats.attack, statsMode: specification.mode, sourceType: 'support_equipment', tone: 'system' });
+    return stats;
+  }
+
+  copySupportEffects(effects, policy) {
+    if (!this.usesLiveMechanics()) throw new Error('Support copies are not enabled in recorded replays');
+    const recipient = byId(this.state.party, policy?.recipientId);
+    if (!recipient || recipient.hp <= 0) throw new Error('Copy recipient must be a living ally');
+    if (!byId(this.state.party, policy.copyingActorId) ||
+        !policy.sourceCasterIds?.every(id => this.state.party.some(unit => unit.id === id))) throw new Error('Copy source/copying actor must be allies');
+    const results = effects.map(effect => {
+      const liveOriginal = this.state.party.flatMap(unit => unit.buffs)
+        .find(buff => buff.provenance?.instanceId && buff.provenance.instanceId === effect?.provenance?.instanceId);
+      if (!liveOriginal) return { applied: false, reason: 'effect is not a current ally buff' };
+      const prepared = prepareSupportCopy(liveOriginal, policy);
+      const result = prepared.eligible ? commitSupportCopy(this.state.supportRuntime, recipient, prepared) : { applied: false, reason: prepared.reason };
+      if (result.applied) this.emit('support_copy', `${result.effect.name} applied to ${recipient.codename}.`, {
+        actorId: policy.copyingActorId, targetId: recipient.id, originalCasterId: result.effect.provenance.originalCasterId,
+        status: clone(result.effect), sourceType: 'support_copy', tone: 'buff'
+      });
+      return result;
+    });
+    return results;
+  }
+
+  advanceSupportTiming(actorId, kind) {
+    if (!this.usesLiveMechanics()) return;
+    const expired = advanceSupportClocks(this.state.supportRuntime, this.state.party, { actorId, kind });
+    for (const item of expired) this.emit('status_expired', `${item.effect.name} expired.`, {
+      actorId, targetId: item.recipientId, status: item.effect, sourceType: 'support_clock', tone: 'system'
+    });
+  }
+
+  queueSupportAction(action) {
+    if (!this.usesLiveMechanics()) throw new Error('Support scheduling is not enabled in recorded replays');
+    if (this.state.phase !== 'battle') throw new Error('Encounter is over');
+    const owner = byId(this.state.party, action?.actorId);
+    const skill = owner && [...this.skillsFor(owner), ...(owner.highlightSkill ? [owner.highlightSkill] : [])].find(skill => skill.id === action.skillId);
+    // A missing Theurgy is a hard error, never an invented generic Highlight.
+    if (!owner || owner.hp <= 0 || !skill || skill.supportExecutable !== true) throw new Error('Support action requires a living owner and an explicitly implemented executable skill');
+    if (action.kind === 'automatic_theurgy' && skill.supportActionKind !== 'theurgy') throw new Error('A Theurgy action requires an implemented Theurgy skill');
+    if (action.kind === 'automatic_highlight' && skill.slot !== 'HL') throw new Error('A Highlight action requires an implemented Highlight skill');
+    const added = enqueueSupportAction(this.state.supportRuntime, action);
+    if (added) this.emit('support_queued', `${owner.codename}: ${skill.name} queued as ${action.kind}.`, { actorId: owner.id, sourceType: 'support_queue', tone: 'phase' });
+    return added;
+  }
+
+  supportActionDescriptor() {
+    const queued = this.state.supportRuntime?.actions[0];
+    if (!queued) return null;
+    const owner = byId(this.state.party, queued.actorId);
+    const skill = owner && [...this.skillsFor(owner), ...(owner.highlightSkill ? [owner.highlightSkill] : [])].find(skill => skill.id === queued.skillId);
+    return { type: 'support_extra', skillId: `support/${queued.idempotencyKey}`, actorId: queued.actorId,
+      name: `${owner?.codename || queued.actorId} · ${skill?.name || queued.skillId}`, enabled: true,
+      target: skill?.target || 'boss', skill, queued: clone(queued) };
+  }
+
+  resolveNextSupportAction() {
+    if (this.state.phase !== 'battle') throw new Error('Encounter is over');
+    const descriptor = this.supportActionDescriptor();
+    if (!descriptor) throw new Error('No scheduled support action');
+    const queued = descriptor.queued;
+    const owner = byId(this.state.party, queued.actorId);
+    this.state.lastEvents = [];
+    if (!owner || owner.hp <= 0) {
+      completeSupportAction(this.state.supportRuntime, queued);
+      this.emit('support_cancelled', 'Scheduled action cancelled: its owner is defeated.', { actorId: queued.actorId, tone: 'system' });
+      this.recordFrame('Cancelled extra action');
+      return { reward: 0, done: false, consumedAction: false, events: clone(this.state.log.slice(-1)) };
+    }
+    if (!queued.ignoreCost && owner.sp < Number(descriptor.skill.cost || 0)) throw new Error('Scheduled skill has insufficient SP');
+    const sourceType = queued.kind === 'automatic_highlight' ? 'highlight' : queued.kind === 'automatic_theurgy' ? 'theurgy' : owner.id === 'wonder' ? 'persona_skill' : 'character_skill';
+    const reward = this.resolveSkill(owner, descriptor.skill, queued.targetId, sourceType, { ignoreCost: queued.ignoreCost, grantsHighlight: false });
+    completeSupportAction(this.state.supportRuntime, queued);
+    this.advanceSupportTiming(owner.id, queued.kind === 'extra_skill' ? 'extra_action' : 'interrupt');
+    // No normal action budget, cooldown, gauge consumption or owner-turn recovery.
+    this.emit('support_resolved', `${descriptor.name} resolved without advancing the normal turn.`, { actorId: owner.id, sourceType, kind: queued.kind, tone: 'phase' });
+    this.updateBossPhase();
+    if (this.allEnemiesDefeated()) this.finish('victory');
+    const events = clone(this.state.lastEvents);
+    this.recordFrame(descriptor.name);
+    return { nextState: this.config.fastMode ? null : this.getObservation(), reward,
+      done: this.state.phase !== 'battle', consumedAction: false, events };
   }
 
   isSpiritualOrControlStatus(status) {
@@ -2740,8 +2864,10 @@ export class BattleEngine {
   beginActorTurn() {
     const actor = this.actor;
     if (!actor) return;
-    actor.characterTurnsStarted += 1;
-    if (this.usesLiveMechanics() && actor.hp > 0) {
+    const kotoneExtraTurn = actor.id === KOTONE_SHIOMI_ID && this.isVirtualConcertActive();
+    if (!kotoneExtraTurn) actor.characterTurnsStarted += 1;
+    this.kotoneMechanics?.turnStart(actor);
+    if (this.usesLiveMechanics() && actor.hp > 0 && !kotoneExtraTurn) {
       // Natural recovery belongs to the owner's turn, including Concert turns.
       // Base 10 is guide-sourced; existing spRecovery values mix percentage
       // conventions, so their modifiers are not applied to this baseline yet.
@@ -2753,7 +2879,7 @@ export class BattleEngine {
         recoveryModifiersApplied: false, concertActive: this.isVirtualConcertActive(), tone: 'heal'
       });
     }
-    if (actor.characterTurnsStarted > 1) {
+    if (actor.characterTurnsStarted > 1 && !kotoneExtraTurn) {
       for (const skillId of Object.keys(actor.skillCooldowns || {})) {
         actor.skillCooldowns[skillId] = Math.max(0, actor.skillCooldowns[skillId] - 1);
       }
@@ -3014,6 +3140,21 @@ export class BattleEngine {
   }
 
   resolveSkill(actor, skill, targetId, sourceType = actor.id === 'wonder' ? 'persona_skill' : 'character_skill', options = {}) {
+    if (!this.usesLiveMechanics()) return this.resolveSkillBody(actor, skill, targetId, sourceType, options);
+    const parent = this.supportCastContext;
+    this.supportCastContext = { casterId: actor.id, skillId: skill.id, castId: `cast-${++this.state.supportRuntime.castSequence}` };
+    try {
+      const result = actor.id === KOTONE_SHIOMI_ID && skill.kotoneSkill
+        ? this.kotoneMechanics.resolve(actor, skill, targetId, sourceType, options)
+        : skill.forcedTheurgy ? resolveForcedTheurgy(this, actor, skill, targetId, options)
+          : this.resolveSkillBody(actor, skill, targetId, sourceType, options);
+      this.kotoneMechanics?.afterSkill(actor, skill, targetId, sourceType);
+      return result;
+    }
+    finally { this.supportCastContext = parent; }
+  }
+
+  resolveSkillBody(actor, skill, targetId, sourceType, options = {}) {
     if (this.isBerry(actor) && !options.skipBerryMechanics && ['character_skill', 'highlight', 'berry_repeat'].includes(sourceType)) skill = this.berrySkill(skill);
     const highlightActionContext = options.highlightActionContext || null;
     const highlightCast = this.recordSharedHighlightCast(highlightActionContext, {
@@ -3218,7 +3359,7 @@ export class BattleEngine {
         const cappedHp = Math.min(actor.mechanicMaxHp || actor.maxHp, 13632);
         buff.value = 0.091 + (this.usesLiveMechanics() ? cappedHp / 1200 : Math.floor(cappedHp / 1200)) * 0.032;
       }
-      for (const unit of recipients) this.applyUnitBuff(unit, buff, sourceType);
+      for (const unit of recipients) this.applyUnitBuff(unit, buff, sourceType, this.supportCastContext);
       const recipientLabel = buffTarget === 'party' ? 'the party' : recipients[0].codename;
       this.emit('buff', `${buff.name} applied to ${recipientLabel}.`, { targetId: buffTarget === 'party' ? 'party' : recipients[0].id, status: { ...clone(buff), sourceType }, sourceType, tone: 'buff' });
     }
@@ -3226,7 +3367,7 @@ export class BattleEngine {
       const target = byId(this.state.party, targetId);
       if (target?.hp > 0) {
         const buff = this.liveSkillBuffStatus(skill, this.resolveStatus(skill.selectedAllyBuff, actor));
-        this.applyUnitBuff(target, buff, sourceType);
+        this.applyUnitBuff(target, buff, sourceType, this.supportCastContext);
         this.emit('buff', `${buff.name} applied to ${target.codename}.`, {
           targetId: target.id, status: { ...clone(buff), sourceType }, sourceType, tone: 'buff'
         });
@@ -3582,6 +3723,11 @@ export class BattleEngine {
 
   completeCountedAction({ actionType = null, wasConcertAction = false, rinStanceAction = false, grantsSharedHighlight = false, highlightSource = 'character_action', highlightActionContext = null } = {}) {
     if (grantsSharedHighlight) this.resolveCountedActionHighlight(highlightActionContext, highlightSource);
+    if (this.kotoneMechanics?.deferCompletion()) {
+      this.updateBossPhase();
+      if (this.allEnemiesDefeated()) this.finish('victory');
+      return { done: this.state.phase !== 'battle', consumedAction: false, extraActionPending: true };
+    }
     this.recordTrueDesireWonderAction(actionType, wasConcertAction);
     this.updateBossPhase();
     if (!wasConcertAction && !rinStanceAction) this.state.actionNumber += 1;
@@ -3661,6 +3807,8 @@ export class BattleEngine {
     this.state.lastEvents = [];
     const legal = this.getAvailableActions().find(candidate => candidate.skillId === action.skillId && candidate.type === action.type);
     if (!legal || !legal.enabled) throw new Error('Unavailable action');
+    if (legal.type.startsWith('kotone_')) return this.kotoneMechanics.stepControl(legal, action.targetId);
+    if (legal.type === 'support_extra') return this.resolveNextSupportAction();
     if (legal.type === 'akihiko_flash') return this.stepAkihikoFlash(legal);
     if (['one_more', 'all_out_attack', 'skip_extra_actions'].includes(legal.type)) return this.stepSharedCombat(legal, action.targetId);
     if (legal.type === 'switch') return this.selectPersona(legal.personaId);
@@ -3838,6 +3986,10 @@ export class BattleEngine {
     }
     if (this.state.turnActionsUsed < this.state.turnActionsTotal) return;
     const completedActorId = this.actor.id;
+    if (!this.isVirtualConcertActive()) {
+      this.advanceSupportTiming(completedActorId, 'normal_turn_end');
+      this.kotoneMechanics?.normalTurnEnd(completedActorId);
+    }
     this.resolveAllyTurnFollowUps(completedActorId);
     for (const unit of this.state.party.filter(unit => this.isBerry(unit) && unit.powerOfLove > 0)) {
       unit.powerOfLove -= 1;
@@ -4088,7 +4240,7 @@ export class BattleEngine {
   }
 
   tickStatusList(list, { sharedDotTicks = true } = {}) {
-    return list.map(effect => effect.duration == null || (effect.sharedDot && !sharedDotTicks) ? effect : ({ ...effect, duration: effect.duration - 1 })).filter(effect => effect.duration == null || effect.duration > 0);
+    return list.map(effect => effect.supportClock || effect.duration == null || (effect.sharedDot && !sharedDotTicks) ? effect : ({ ...effect, duration: effect.duration - 1 })).filter(effect => effect.duration == null || effect.duration > 0);
   }
 
   tickEnemyStatuses(enemy, { sharedDotTicks = true } = {}) {
@@ -4195,6 +4347,8 @@ export class BattleEngine {
     // source-backed item policy exists, Auto and recommendations must neither
     // score them as skills nor spend their limited inventory.
     const candidates = this.getAvailableActions().filter(action => action.enabled && !['switch', 'item'].includes(action.type));
+    const kotoneRecommendation = this.kotoneMechanics?.recommend(candidates);
+    if (kotoneRecommendation) return kotoneRecommendation;
     if (this.state.boss.id === 'slaughter_drive' && actor.id === 'wonder') {
       const preferredName = ({ 1: 'Guard', 2: 'Guard', 3: 'Maziodyne', 4: 'Guard', 5: 'Revolution', 6: 'Guard', 7: 'One-Fathom Fang', 8: 'One-Fathom Fang' })[this.state.attackTurn];
       const preferred = candidates.find(action => action.name === preferredName);

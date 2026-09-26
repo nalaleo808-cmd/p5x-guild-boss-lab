@@ -10,6 +10,14 @@ Reports are kept as written on their dates. Newer reports supersede older ones o
 - [OPEN-ON-NEW-COMPUTER.md](OPEN-ON-NEW-COMPUTER.md): portable setup notes.
 - [GAME_DATA_CONTRACT.md](GAME_DATA_CONTRACT.md): data contract for game API imports.
 
+## Kotone Shiomi (experimental)
+
+- [KOTONE-IMPLEMENTATION.md](KOTONE-IMPLEMENTATION.md): current report on the playable experimental kit, sources and limitations.
+- [READ-FIRST-KOTONE.md](READ-FIRST-KOTONE.md): how to use her in the app, plus the original patch install notes.
+- [kotone-source-audit.json](kotone-source-audit.json): source audit.
+- [KOTONE-CHECKPOINT.md](KOTONE-CHECKPOINT.md): historical, earlier partial checkpoint.
+- Test, build and browser-harness evidence from the patch author is in `verification/`.
+
 ## Hachiman (Multidimensional Dreamscape and DOD)
 
 In date order:
