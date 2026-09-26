@@ -440,7 +440,11 @@ export class KotoneShiomiMechanics {
     else { this.state.extraActions++; this.engine.advanceSupportTiming(KOTONE_SHIOMI_ID, 'extra_action'); }
     this.state.fortuneActionsLeft--;
     this.event('fortune_action', `Fortune actions left: ${this.state.fortuneActionsLeft}.`, { actionsLeft: this.state.fortuneActionsLeft, actionKind: before === 3 ? 'normal' : 'extra' });
-    if (this.state.fortuneActionsLeft > 0) return true;
+    if (this.state.fortuneActionsLeft > 0) {
+      // The next Fortune action is an extra action.
+      this.engine.notifyExtraActionStart?.(this.unit, 'Fortune extra action');
+      return true;
+    }
     this.automaticUltimate(this.linked, `${this.state.activeFortuneId}-linked`);
     this.state.fortune = false; this.state.cold = 2;
     this.event('cold', 'Fortune ended. Cold: Kotone skips her next two normal turns.', { cold: 2, tone: 'phase' });

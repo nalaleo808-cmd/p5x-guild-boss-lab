@@ -1191,3 +1191,25 @@ code, pre { font-family: Consolas, monospace; }
 .kotone-combat-build details p { margin:10px 0; line-height:1.5; }
 .kotone-play:not(:disabled) { cursor:pointer; opacity:1; }
 @media (max-width:600px) { .kotone-combat-build .kotone-fields {grid-template-columns:minmax(0,1fr);} }
+
+/* Team Preview drag-to-reorder */
+.preview-grid .preview-card{cursor:grab}
+.preview-grid .preview-card [data-drag-handle]{cursor:grab;touch-action:none}
+.preview-grid .preview-card.dragging{cursor:grabbing;z-index:20;opacity:.9;box-shadow:0 18px 40px #000a;transition:none;pointer-events:auto}
+.preview-grid .preview-card.drop-target{outline:3px dashed #ff8a9a;outline-offset:3px}
+
+/* Collapsible simulation limitations */
+details.mechanics-limitations { display: block; }
+details.mechanics-limitations > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; cursor: pointer; list-style: none; }
+details.mechanics-limitations > summary::-webkit-details-marker { display: none; }
+details.mechanics-limitations > summary::before { content: '▸'; color: #edb07d; font-size: 9px; }
+details.mechanics-limitations[open] > summary::before { content: '▾'; }
+details.mechanics-limitations > summary:focus-visible { outline: 2px solid #f9d68d; outline-offset: 2px; }
+details.mechanics-limitations[open] > ul { margin-top: 8px; }
+
+/* Battle start failures are shown on the page, not as a blocked browser dialog. */
+.start-error{display:flex;align-items:center;gap:12px;margin:12px 16px 0;padding:12px 14px;border:1px solid #ff6b7d;border-radius:8px;background:#2a0f16;color:#ffe3e7}
+.start-error>div{flex:1;min-width:0}.start-error b{display:block;font-size:11px;letter-spacing:.12em;color:#ff8a9a}.start-error p{margin:4px 0 0;font-size:13px;line-height:1.5}
+.start-error button{flex:none;padding:8px 12px;border:1px solid #ff8a9a;border-radius:6px;background:#3a1620;color:#fff;font-weight:700;font-size:11px}
+.start-error [data-dismiss-start-error]{padding:6px 10px;font-size:16px}
+@media(max-width:650px){.start-error{flex-wrap:wrap}.start-error>div{flex-basis:100%}}

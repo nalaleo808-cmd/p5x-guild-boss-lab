@@ -243,6 +243,7 @@ export class BattleEngine {
         highlightStart: Number.isFinite(Number(revelation.highlightStart)) ? Number(revelation.highlightStart) : 0, actionLimit: unit.actionLimit || 1,
         statsMode: equippedStats ? 'equipped' : null,
         damageBonus, elementBonus: revelation.elementBonus || null,
+        ...(revelation.weakElementAttack ? { revelationWeakElementAttack: revelation.weakElementAttack } : {}),
         revelationName: unit.id === 'wonder' ? null : (loadout.revelationName || null),
         revelationMain: unit.id === 'wonder' ? null : (loadout.revelationMain || null),
         revelationSet: unit.id === 'wonder' ? null : (loadout.revelationSet || null),
@@ -451,6 +452,7 @@ export class BattleEngine {
     this.kotoneMechanics = createCharacterMechanics(KOTONE_SHIOMI_ID, this);
     this.kotoneMechanics.initialize();
     if (this.config.kotoneOwned === true) this.kotoneMechanics.refreshAuras();
+    for (const unit of this.state.party) this.triggerNativityStrife(unit, 'battle start');
     this.emit('battle_start', `${this.state.boss.name} enters the score-attack field.`, { tone: 'system' });
     if (this.state.boss.encounter?.soulLink) {
       this.emit('mechanic', 'Soul Link is active. Slaughter Drive and all four Scarlet Turrets share one HP percentage.', { tone: 'phase' });
@@ -1826,7 +1828,8 @@ export class BattleEngine {
       || critRoll < clamp(rawCritRate, 0, 0.95));
     const cursedTiesAttackBonus = skill.lovesickSnapshotCapture ? 0 : this.cursedTiesAttackBonus(actor, target);
     const attackBuff = actor.buffs.filter(effect => effect.stat === 'attack').reduce((sum, effect) => sum + (effect.value || 0), 0)
-      + this.potentMedicineAttackBonus(actor) + Number(skill.temporaryAttackBonus || 0) + cursedTiesAttackBonus;
+      + this.potentMedicineAttackBonus(actor) + Number(skill.temporaryAttackBonus || 0) + cursedTiesAttackBonus
+      + this.revelationWeakElementAttackBonus(actor, target);
     const flatAttack = actor.buffs.filter(effect => effect.stat === 'flatAttack').reduce((sum, effect) => sum + (effect.value || 0), 0);
     const critDamageBuff = actor.buffs.filter(effect => effect.stat === 'critDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
     const skillAmplification = skill.lovesickSnapshotCapture ? 0 : actor.buffs.filter(effect => effect.stat === 'skillAmplification').reduce((sum, effect) => sum + (effect.value || 0), 0);
@@ -2182,6 +2185,43 @@ export class BattleEngine {
     return this.usesLiveMechanics()
       && unit?.revelationMain === 'Trust'
       && unit?.revelationSet === 'Prosperity';
+  }
+
+  // Strife 4-set: a further Attack bonus against an enemy weak to the set's element.
+  revelationWeakElementAttackBonus(actor, target) {
+    const bonus = actor?.revelationWeakElementAttack;
+    if (!this.usesLiveMechanics() || !bonus || !target || !(target.weakness === bonus.element || target.weaknesses?.includes(bonus.element))) return 0;
+    return Number(bonus.value || 0);
+  }
+
+  hasNativityStrifeRevelation(unit) {
+    return this.usesLiveMechanics()
+      && unit?.revelationMain === 'Nativity'
+      && unit?.revelationSet === 'Strife';
+  }
+
+  // Nativity + Strife: at battle start or at the start of the wearer's extra action,
+  // party critical damage +10%, permanent, up to 2 stacks. Stacks are tracked per
+  // wearer; the source does not say whether two wearers share one cap.
+  triggerNativityStrife(unit, reason) {
+    if (!this.hasNativityStrifeRevelation(unit) || unit.hp <= 0) return;
+    const stacks = Number(unit.nativityStrifeStacks || 0);
+    if (stacks >= 2) return;
+    unit.nativityStrifeStacks = stacks + 1;
+    const buff = {
+      id: `revelation_nativity_strife_crit_${unit.id}`, name: 'NATIVITY + STRIFE',
+      stat: 'critDamage', value: 0.1 * unit.nativityStrifeStacks, duration: null,
+      stacks: unit.nativityStrifeStacks, maxStacks: 2, evidence: 'lufelnet_revelations_nativity_strife'
+    };
+    for (const ally of this.state.party.filter(member => member.hp > 0)) this.applyUnitBuff(ally, buff, 'revelation');
+    this.emit('buff', `Nativity + Strife (${unit.codename}, ${reason}): party critical damage +${10 * unit.nativityStrifeStacks}% (${unit.nativityStrifeStacks}/2).`, {
+      actorId: unit.id, targetId: 'party', status: { ...clone(buff), sourceType: 'revelation' },
+      sourceType: 'revelation', tone: 'buff'
+    });
+  }
+
+  notifyExtraActionStart(actor, reason = 'extra action') {
+    this.triggerNativityStrife(actor, reason);
   }
 
   triggerTrustProsperity(actor, skill, sourceType = 'character_skill') {

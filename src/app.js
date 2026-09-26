@@ -1,3 +1,4 @@
+import { withRevelationMainOverlay, withRevelationSetOverlay } from './revelation-overlay.js';
 import { renderKotonePreview } from './kotone-preview.js';
 import { kotoneShiomi, KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
 import { withLocalCharacters } from './characters/registry.js';
@@ -70,14 +71,25 @@ function coverageFor(unit) {
     : { kind: 'generic', label: 'GENERIC DIRECT EFFECTS ONLY', detail: 'Direct coefficients and simple effects run. The source kit is not fully implemented.' };
 }
 
+// Collapsed by default during battle, open on results. The battle screen re-renders
+// after every action, so the open state is remembered per location.
+const limitationsOpen = { battle: false, results: true };
 function limitationsMarkup(source, location = 'battle') {
   const limitations = Array.isArray(source?.mechanicsLimitations) ? source.mechanicsLimitations.filter(Boolean) : [];
   if (!limitations.length) return '';
-  return `<section class="mechanics-limitations ${location}" aria-label="Simulation limitations"><div><b>SIMULATION LIMITATIONS</b><small>These mechanics are not represented in this run.</small></div><ul>${limitations.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></section>`;
+  const open = limitationsOpen[location] ?? false;
+  return `<details class="mechanics-limitations ${location}" data-limitations="${location}" ${open ? 'open' : ''}><summary><b>SIMULATION LIMITATIONS · ${limitations.length}</b><small>These mechanics are not represented in this run. ${open ? 'Hide' : 'Show'}</small></summary><ul>${limitations.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul></details>`;
+}
+function bindLimitationsToggle() {
+  document.querySelectorAll('[data-limitations]').forEach(panel => panel.addEventListener('toggle', () => {
+    limitationsOpen[panel.dataset.limitations] = panel.open;
+    const hint = panel.querySelector('summary small');
+    if (hint) hint.textContent = `These mechanics are not represented in this run. ${panel.open ? 'Hide' : 'Show'}`;
+  }));
 }
 const importedPersonas = lufelCatalog.personas.filter(persona => persona.skills.some(skill => skill.kind === 'unique' && (skill.combat.executable || PERSONA_SKILL_ADAPTERS[skill.name])));
-const revelationMains = lufelCatalog.revelationMains;
-const revelationSets = lufelCatalog.revelationSets;
+const revelationMains = withRevelationMainOverlay(lufelCatalog.revelationMains);
+const revelationSets = withRevelationSetOverlay(lufelCatalog.revelationSets);
 const recordedMaziodyne = {
   id: 'recorded-maziodyne', name: 'Maziodyne', sourceName: 'Maziodyne', kind: 'recorded',
   description: 'Deal Electric damage to all foes equal to 66.9% of Attack.',
@@ -543,7 +555,7 @@ function header(active = ui.screen) {
     </button>
     <nav aria-label="Primary">${navItems.map(([id, label]) => `<button data-nav="${id}" class="${active === id ? 'active' : ''}" ${id === 'battle' && !ui.engine ? 'disabled' : ''}>${label}</button>`).join('')}</nav>
     <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.0</b></div>
-  </header>`;
+  </header>${startErrorBanner()}`;
 }
 
 function teamPickerModal() {
@@ -615,7 +627,7 @@ function renderSetup() {
           <div class="section-kicker"><span>01</span> ACTIVE PARTY</div>
           <div class="preview-grid">
             ${team.map((unit, index) => `<article class="preview-card" style="--delay:${index * 60}ms;--accent:${unit.accent || '#e61d2f'}">
-              <div class="order-number">${String(index + 1).padStart(2, '0')}</div>
+              <div class="order-number" data-drag-handle title="Drag to change turn order">${String(index + 1).padStart(2, '0')}</div>
               ${characterModel(unit, 'preview-model')}
               <div class="order-controls" aria-label="Adjust ${escapeHtml(unit.codename)} turn order">
                 <button data-order-move="${index}:-1" aria-label="Move ${escapeHtml(unit.codename)} earlier" ${index === 0 ? 'disabled' : ''}>←</button>
@@ -742,6 +754,7 @@ function renderSetup() {
     ui.teamPickerSlot = null;
     saveLoadouts(); saveTeamIds(); render();
   }));
+  bindTeamOrderDrag();
   document.querySelectorAll('[data-order-move]').forEach(button => button.addEventListener('click', () => {
     const [index, delta] = button.dataset.orderMove.split(':').map(Number);
     const next = index + delta;
@@ -749,6 +762,56 @@ function renderSetup() {
     saveTeamIds(); render();
   }));
   document.querySelectorAll('[data-edit-build]').forEach(button => button.addEventListener('click', () => { ui.buildCharacterId = button.dataset.editBuild; ui.screen = 'builds'; render(); }));
+}
+
+// Drag a Team Preview card onto another slot to move it there. Mouse drags start
+// anywhere on the card; touch drags start on the numbered badge so swiping a card
+// still scrolls the page. The arrow buttons remain for keyboard use.
+function bindTeamOrderDrag() {
+  const cards = [...document.querySelectorAll('.preview-grid .preview-card')];
+  let drag = null;
+  const cardAt = (x, y) => document.elementFromPoint(x, y)?.closest('.preview-grid .preview-card');
+  const clearTargets = () => cards.forEach(card => card.classList.remove('drop-target'));
+  const finish = commit => {
+    if (!drag) return;
+    const { card, from, pointerId } = drag;
+    const target = commit && drag.moved ? drag.target : null;
+    drag = null; // cleared first: releasing capture fires lostpointercapture synchronously
+    card.releasePointerCapture?.(pointerId);
+    card.classList.remove('dragging'); card.style.transform = '';
+    clearTargets();
+    if (target == null || target === from) return;
+    const [moved] = ui.teamIds.splice(from, 1);
+    ui.teamIds.splice(target, 0, moved);
+    saveTeamIds(); render();
+  };
+  cards.forEach((card, index) => {
+    card.addEventListener('pointerdown', event => {
+      if (event.button !== 0 || event.target.closest('button, select, input, a, label')) return;
+      if (event.pointerType !== 'mouse' && !event.target.closest('[data-drag-handle]')) return;
+      drag = { card, from: index, target: index, pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: false };
+      card.setPointerCapture?.(event.pointerId);
+    });
+    card.addEventListener('pointermove', event => {
+      if (!drag || drag.card !== card || event.pointerId !== drag.pointerId) return;
+      const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 8) return;
+      drag.moved = true;
+      event.preventDefault();
+      card.classList.add('dragging');
+      card.style.transform = `translate(${dx}px, ${dy}px)`;
+      card.style.pointerEvents = 'none';
+      const over = cardAt(event.clientX, event.clientY);
+      card.style.pointerEvents = '';
+      clearTargets();
+      const overIndex = over ? cards.indexOf(over) : -1;
+      drag.target = overIndex >= 0 ? overIndex : drag.target;
+      if (overIndex >= 0 && overIndex !== drag.from) over.classList.add('drop-target');
+    });
+    card.addEventListener('pointerup', event => { if (drag?.pointerId === event.pointerId) finish(true); });
+    card.addEventListener('pointercancel', () => finish(false));
+    card.addEventListener('lostpointercapture', () => finish(true));
+  });
 }
 
 function personaModal() {
@@ -763,6 +826,18 @@ function personaModal() {
   </dialog>`;
 }
 
+// Which party member's build blocked the battle, when it can be identified.
+function startErrorCharacter() {
+  if (!ui.teamIds.includes(KOTONE_SHIOMI_ID)) return null;
+  try { normalizeKotoneLoadout(ensureLoadout(KOTONE_SHIOMI_ID)); return null; } catch { return KOTONE_SHIOMI_ID; }
+}
+
+function startErrorBanner() {
+  if (!ui.startError) return '';
+  const unit = ui.startError.characterId && buildableCharacters.find(item => item.id === ui.startError.characterId);
+  return `<div class="start-error" role="alert"><div><b>BATTLE NOT STARTED</b><p>${escapeHtml(ui.startError.message)}</p></div>${unit ? `<button data-start-error-fix="${escapeHtml(unit.id)}">FIX ${escapeHtml(unit.codename.toUpperCase())} BUILD →</button>` : ''}<button data-dismiss-start-error aria-label="Dismiss">×</button></div>`;
+}
+
 function startBattle() {
   stopAuto();
   try {
@@ -770,9 +845,13 @@ function startBattle() {
       ? new HachimanRecordedEngine(createHachimanRecordedConfig(ui.seed).config)
       : new BattleEngine(buildEngineConfig());
   } catch (error) {
-    window.alert(`Cannot start battle: ${error.message}`);
+    // Never leave an older battle on screen when the new one cannot start.
+    ui.engine = null;
+    ui.startError = { message: error.message, characterId: startErrorCharacter() };
+    render();
     return;
   }
+  ui.startError = null;
   ui.hachimanRouteOutcome = null;
   ui.screen = 'battle';
   ui.commandTab = 'moves';
@@ -1609,6 +1688,7 @@ function combatSummary(combat = {}) {
   if (combat.hpPercent) rows.push(`HP +${Math.round(combat.hpPercent * 100)}%`);
   if (combat.critRate) rows.push(`Crit +${(combat.critRate * 100).toFixed(1)}%`);
   if (combat.elementBonus) rows.push(`${combat.elementBonus.element.toUpperCase()} +${Math.round(combat.elementBonus.value * 100)}%`);
+  if (combat.weakElementAttack) rows.push(`ATK +${Math.round(combat.weakElementAttack.value * 100)}% vs ${combat.weakElementAttack.element.toUpperCase()}-weak`);
   if (combat.highlightStart) rows.push(`Start Highlight +${combat.highlightStart}%`);
   return rows.length ? rows : ['Reference only'];
 }
@@ -1755,7 +1835,7 @@ function renderBuilds() {
           <div class="revelation-controls">
             <label>MAIN REVELATION<select data-revelation-main>${optionList(revelationMains, main.name)}</select></label><span class="set-link">＋</span>
             <label>SUB-SET<select data-revelation-set>${optionList(compatibleSets.length ? compatibleSets : revelationSets, set.name)}</select></label>
-            <div class="active-formula"><small>ACTIVE STRUCTURED EFFECTS</small>${combatSummary(set.combat).map(text => `<b>${escapeHtml(text)}</b>`).join('')}${main.name === 'Trust' && set.name === 'Prosperity' ? '<b>Ally skill: party damage +8% for 2 rounds (live profile)</b>' : ''}</div>
+            <div class="active-formula"><small>ACTIVE STRUCTURED EFFECTS</small>${combatSummary(set.combat).map(text => `<b>${escapeHtml(text)}</b>`).join('')}${main.name === 'Trust' && set.name === 'Prosperity' ? '<b>Ally skill: party damage +8% for 2 rounds (live profile)</b>' : ''}${main.name === 'Nativity' && set.name === 'Strife' ? '<b>Battle start / extra action: party crit damage +10%, permanent, max 2 stacks (live profile)</b>' : ''}</div>
           </div>
           <div class="revelation-effects"><article><span>2-PIECE</span><p>${escapeHtml(set.set2)}</p></article><article><span>4-PIECE</span><p>${escapeHtml(set.set4)}</p></article><em>${Object.keys(set.combat).length ? 'SUPPORTED VALUES APPLY IN BATTLE' : 'REFERENCE ONLY — NOT APPLIED TO FORMULAS'}</em></div>
         </section>${unit.slug === 'j-c' ? jcMaskEditor(loadout) : ''}${characterSkillEditor(unit, loadout)}`}
@@ -1930,6 +2010,15 @@ function renderData() {
 }
 
 function bindCommon() {
+  bindLimitationsToggle();
+  document.querySelector('[data-dismiss-start-error]')?.addEventListener('click', () => { ui.startError = null; render(); });
+  document.querySelector('[data-start-error-fix]')?.addEventListener('click', event => {
+    ui.buildCharacterId = event.currentTarget.dataset.startErrorFix;
+    ui.startError = null;
+    ui.screen = 'builds';
+    render();
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  });
   document.querySelectorAll('[data-nav]').forEach(button => button.addEventListener('click', () => {
     const next = button.dataset.nav;
     if (next === 'battle' && !ui.engine) return;
