@@ -1,8 +1,9 @@
 # Dependencies
 node_modules/
 
-# Build output (regenerate with: npm run build)
+# Build output (regenerate with: npm run build / npm run build:exe)
 dist/
+dist-exe/
 
 # Full session transcripts: very large and contain the whole chat verbatim.
 # Kept locally, not published. The distilled handoff is docs/CHAT-CONTEXT-EXPORT-*.md.

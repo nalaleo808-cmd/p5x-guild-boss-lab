@@ -4,7 +4,9 @@ A dependency-free, browser-based Persona 5: The Phantom X guild boss simulator b
 
 ## Run
 
-Requires Node.js 18 or newer.
+No install needed on Windows: download `P5X-Guild-Boss-Lab.exe` from the latest GitHub release and double-click it. It starts the simulator and opens your browser; close its window to stop it. Windows SmartScreen may warn because the exe is unsigned: choose "More info", then "Run anyway".
+
+From source, Node.js 18 or newer is required:
 
 - Windows: double-click `launch-p5x.bat` (starts the server and opens the browser)
 - macOS/Linux: run `./run-local.sh`
@@ -29,6 +31,8 @@ npm run build
 ```
 
 The static production copy is written to `dist/`.
+
+`npm run build:exe` builds `dist-exe/P5X-Guild-Boss-Lab.exe`, a single file that embeds the app (the same files as `dist/`) into a copy of the running Node binary using Node's single executable application support (`scripts/build-exe.mjs`, entry point `scripts/sea-main.cjs`). It needs Node 20.12 or newer and fetches the `postject` build tool through npx on first run. Set `PORT` to change the port and `P5X_NO_BROWSER=1` to skip opening the browser.
 
 ## Persona and Revelation data
 
