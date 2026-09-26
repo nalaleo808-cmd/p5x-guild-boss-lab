@@ -18,8 +18,8 @@ function run({awareness=6,weaponId='none',enhancement=0}={}) {
 }
 const cases=[{awareness:5},{awareness:6},{awareness:6,weaponId:'ame-no-nuboko'},...Array.from({length:7},(_,enhancement)=>({awareness:6,weaponId:'vetri-vel-muruga',enhancement}))];
 const results=cases.map(run);
-const report={profile:'global-ordinary-tooltip-2026-09-26',seed:17,trainingFixture:'tests/helpers/kotone.js',
- note:'EXPERIMENTAL fixed tooltip coefficients and explicit provisional A2=0.375; not calibrated game damage. Synthetic external 20% buffs are test inputs, not new character mechanics.',results};
+const report={profile:'global-ordinary-lufel-5.1.0-2026-09-26',seed:17,trainingFixture:'tests/helpers/kotone.js',
+ note:'Lufel v5.1.0 ordinary Global coefficients with default skill Mindscape 5 and A2 copy 0.375; not calibrated game damage. Synthetic external 20% buffs are test inputs, not new character mechanics.',results};
 console.table(results.map(({awareness,weaponId,enhancement,permanentAttack,copied,firstFortuneDamage,totalDamage,secondUse,thirdAllowed})=>({awareness,weaponId,enhancement,permanentAttack,copies:copied.length,firstFortuneDamage,totalDamage,secondUse,thirdAllowed})));
 await mkdir(new URL('../verification/',import.meta.url),{recursive:true});
 await writeFile(new URL('../verification/kotone-battle-example.json',import.meta.url),JSON.stringify(report,null,2)+'\n');

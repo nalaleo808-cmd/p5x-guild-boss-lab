@@ -8,7 +8,7 @@
     "mechanicsModule": "src/characters/kotone-shiomi-mechanics.js",
     "registryModule": "src/characters/registry.js",
     "ruleset": "global-ordinary",
-    "profileId": "global-ordinary-tooltip-2026-09-26",
+    "profileId": "global-ordinary-lufel-5.1.0-2026-09-26",
     "status": "experimental-snapshot-not-live-script-verified"
   }]
 }

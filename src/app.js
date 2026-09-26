@@ -63,7 +63,7 @@ function medicineEffectiveText(action) {
 }
 
 function coverageFor(unit) {
-  if (unit?.id === KOTONE_SHIOMI_ID) return { kind: 'partial', label: 'PLAYABLE · EXPERIMENTAL', detail: 'Ordinary Global tooltip snapshot. Live scripts, A3/A5 upgraded values and four-star upgrades remain unverified.' };
+  if (unit?.id === KOTONE_SHIOMI_ID) return { kind: 'partial', label: 'PLAYABLE · EXPERIMENTAL', detail: 'Lufel v5.1.0 ordinary Global values with A3/A5 skill levels and skill Mindscape. Fortune, copy and Cold timing are engine policies, not source-verified.' };
   if (!unit?.id?.startsWith('lufel-recent-')) return null;
   return substantialKitSlugs.has(unit.slug)
     ? { kind: 'partial', label: 'CORE MECHANICS PARTIAL', detail: 'This character has a substantial tested state machine, but the full source kit is not implemented.' }

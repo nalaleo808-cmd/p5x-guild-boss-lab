@@ -38,7 +38,7 @@ The static production copy is written to `dist/`.
 
 Open the **Kotone** tab and click **Use Kotone in party slot 2 & open Builds**, or select her in Team. Set awareness, weapon, enhancement and stat basis in Builds, then enter your actual stats (the defaults are illustrative). In battle, pick **Select / reselect Arcana Link** at her normal-turn opening, then **Go for Broke**.
 
-She uses an ordinary Global tooltip snapshot: no Mindscape Core, A3/A5 skill-level increases are not applied, Ame-no-Nuboko +1 to +6 are disabled, and the A2 copy ratio is an editable 37.5% hypothesis. Recorded archive profiles reject her. Details: [docs/KOTONE-IMPLEMENTATION.md](docs/KOTONE-IMPLEMENTATION.md). Extra commands: `npm run verify:characters` and `npm run example:kotone`.
+Her values come from Lufel's published v5.1.0 data for ordinary Global (no Sync Mindscape, no Mindscape Core). Skill Mindscape defaults to LV5, the maximum, and can be set to None in Builds. A3 raises Skill 1 and A5 raises Skills 2 and 3 to their LV13 values; the Highlight stays LV10. Both weapons support +0 to +6, and the A2 copy ratio is the sourced 30% x 1.25 = 37.5%. Lufel publishes tooltip data rather than combat scripts, so Fortune, copy and Cold timing are engine policies. Recorded archive profiles reject her. Details: [docs/KOTONE-SOURCE-AUDIT.md](docs/KOTONE-SOURCE-AUDIT.md) and [docs/KOTONE-IMPLEMENTATION.md](docs/KOTONE-IMPLEMENTATION.md). Extra commands: `npm run verify:characters` and `npm run example:kotone`.
 
 ## Persona and Revelation data
 

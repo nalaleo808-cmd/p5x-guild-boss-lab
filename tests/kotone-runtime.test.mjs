@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { engine,get,act,advanceToKotone,cast,originalBuff,copies,finishFortune,finishCold,near,K,unit } from './helpers/kotone.js';
-import { kotoneShiomi,kotoneAwareness,kotoneWeapons,kotoneWeaponProfile,kotoneCoefficients as C } from '../src/characters/kotone-shiomi-data.js';
+import { kotoneShiomi,kotoneAwareness,kotoneWeapons,kotoneWeaponProfile,kotoneCoefficients as C,kotoneCoefficientsFor,kotoneSkillTables as T } from '../src/characters/kotone-shiomi-data.js';
 import { normalizeKotoneLoadout, normalizeKotoneDraft, eligibleKotoneCopySources, saveKotoneDraft,loadKotoneDraft } from '../src/characters/kotone-shiomi-mechanics.js';
 import { withLocalCharacters } from '../src/characters/registry.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
@@ -15,8 +15,22 @@ for(let awareness=0;awareness<=6;awareness++)test(`Runtime A${awareness}: initia
  finishFortune(e);assert.equal(m.state.cold,2);assert.equal(m.state.goForBroke.used,1);assert.equal(m.state.extraActions,2);
  finishCold(e);assert.equal(e.getAvailableActions().find(a=>a.type==='kotone_assist').enabled,awareness===6);
 });
-test('A3/A5 snapshot limitation is explicit and their numeric upgrades are not claimed',()=>{
- for(const index of [3,5])assert.equal(kotoneAwareness[index].implemented,false);
+test('A3 raises Skill 1 and A5 raises Skills 2 and 3 to LV13; Highlight stays LV10; Mindscape picks the +M5 column',()=>{
+ for(const tier of kotoneAwareness)assert.equal(tier.implemented,true);
+ const col=(awareness,mindscape,slot)=>{const c=kotoneCoefficientsFor({awareness,mindscape});return {c,levels:c.skillLevels};};
+ for(const mindscape of [0,5])for(let awareness=0;awareness<=6;awareness++){
+  const {c,levels}=col(awareness,mindscape);const m5=mindscape===5?1:0;
+  const s1=(awareness>=3?2:0)+m5,s23=(awareness>=5?2:0)+m5;
+  assert.equal(levels.S1,awareness>=3?13:10);assert.equal(levels.S2,awareness>=5?13:10);assert.equal(levels.HL,10);
+  assert.equal(c.s1Crit,T.s1Crit[s1]);assert.equal(c.powerfulAttack,T.powerfulAttack[s1]);assert.equal(c.powerfulFinal,T.powerfulFinal[s1]);
+  assert.equal(c.s2Hit,T.s2Hit[s23]);assert.equal(c.s2FortuneAddedPower,T.s2FortuneAddedPower[s23]);assert.equal(c.s3Attack,T.s3Attack[s23]);
+  assert.equal(c.highlightCrit,T.highlightCrit[m5]);assert.equal(c.highlightAttack,T.highlightAttack[m5]);
+  assert.equal(c.attackCaps.S1,T.attackCap[s1]);assert.equal(c.attackCaps.S2,T.attackCap[s23]);assert.equal(c.attackCaps.HL,T.attackCap[m5]);
+ }
+ assert.equal(kotoneCoefficientsFor({awareness:6,mindscape:5}).s1Crit,.227);assert.equal(kotoneCoefficientsFor({awareness:0,mindscape:0}).s2Hit,.539);
+ assert.throws(()=>kotoneCoefficientsFor({mindscape:3}),/0 or 5/);assert.throws(()=>engine({mindscape:3}),/0 or 5/);
+ assert.equal(get(engine()).kotone.build.mindscape,5);
+ near(get(engine({awareness:5})).kotone.coefficients.s3Attack,.341);near(get(engine({awareness:5,mindscape:0})).kotone.coefficients.s3Attack,.311);
  assert.match(kotoneShiomi.status,/experimental/);assert.equal(kotoneShiomi.mindscapeCore,false);
  for(const ruleset of ['sync-mindscape','cn'])assert.throws(()=>engine({ruleset}),/ordinary Global/);
  assert.throws(()=>engine({mindscapeCore:true}),/ordinary Global/);
@@ -73,10 +87,10 @@ test('S1 spends 20 SP, caps separate critical and Powerful Bond stacks, activate
 test('S1 applied off-link grants no Powerful or Lunar Bond',()=>{
  const e=engine();cast(e,'S1','wonder');assert.equal(e.kotoneMechanics.countPowerful('wonder'),0);assert.equal(e.kotoneMechanics.state.lunarBond,0);
 });
-test('Attack-based support scales to 4684 cap and clamps above it',()=>{
- for(const attack of [2342,4684,9368]){
+test('Attack-based support scales to its skill-level cap (5164 at A0 with Mindscape 5) and clamps above it',()=>{
+ for(const attack of [2582,5164,10328]){
   const e=engine({baseStats:{attack,maxHp:100000,maxSp:1000}});cast(e,'S1');
-  near(e.kotoneMechanics.linked.buffs.find(b=>b.id==='kotone-s1-crit-0').value,C.s1Crit*Math.min(1,attack/4684));
+  near(e.kotoneMechanics.linked.buffs.find(b=>b.id==='kotone-s1-crit-0').value,C.s1Crit*Math.min(1,attack/C.attackCaps.S1));
  }
 });
 test('Lunar Bond skill triggers are once per cast, never per hit, and cap at ten',()=>{
@@ -163,14 +177,14 @@ test('Temporary Powerful Bonds expire; the A1 permanent Bond remains and weapon 
 for(let enhancement=0;enhancement<=6;enhancement++)test(`Vetri Vel Muruga +${enhancement}: component/stat, Lunar threshold, stack-based crit in runtime`,()=>{
  const staticA=[.30,.30,.39,.39,.48,.48,.57],amp=[.10,.13,.13,.16,.16,.19,.19],crit=[.06,.078,.078,.096,.096,.114,.114];
  const e=engine({weaponId:'vetri-vel-muruga',enhancement}),m=e.kotoneMechanics;
- near(get(e).attack,(2500+713)*(1+staticA[enhancement]));assert.equal(get(e).maxHp,102259);assert.equal(get(e).defense,718);
+ near(get(e).attack,(2500+713.51)*(1+staticA[enhancement]));assert.equal(get(e).maxHp,102259);near(get(e).defense,718.4);
  near(e.skillAmplificationFor(get(e)),0);m.state.lunarBond=5;m.refreshAuras();near(e.skillAmplificationFor(get(e)),amp[enhancement]);
  cast(e,'S1');near(m.linked.buffs.find(b=>b.id==='kotone-weapon-pb-crit').value,crit[enhancement]);
  cast(e,'S1');cast(e,'S1');near(m.linked.buffs.find(b=>b.id==='kotone-weapon-pb-crit').value,3*crit[enhancement]);
  const pb=m.linked.buffs.find(b=>b.id==='kotone-pb-atk');near(pb.value,C.powerfulAttack*(1+amp[enhancement]));
 });
 test('Ame-no-Nuboko +0: static and stacking Attack, one trigger per buff cast, three-stack cap and expiry',()=>{
- const e=engine({weaponId:'ame-no-nuboko'}),m=e.kotoneMechanics;near(get(e).attack,3070*1.12);assert.equal(get(e).maxHp,101807);
+ const e=engine({weaponId:'ame-no-nuboko'}),m=e.kotoneMechanics;near(get(e).attack,(2500+570.52)*1.12);assert.equal(get(e).maxHp,101808);
  assert.equal(m.state.weaponStacks.length,0);originalBuff(e);assert.equal(m.state.weaponStacks.length,0);
  cast(e,'S1');assert.equal(m.state.weaponStacks.length,1);near(get(e).buffs.find(b=>b.id==='kotone-weapon-grant-atk').value,.073);
  cast(e,'S3','wonder');assert.equal(m.state.weaponStacks.length,2);assert.equal(copies(e).length,1);
@@ -178,16 +192,18 @@ test('Ame-no-Nuboko +0: static and stacking Attack, one trigger per buff cast, t
  cast(e,'S2',e.state.boss.id);assert.equal(m.state.weaponStacks.length,3);
  get(e).characterTurnsStarted++;for(let i=0;i<3;i++)m.normalTurnEnd(K);assert.equal(m.state.weaponStacks.length,0);
 });
-for(let enhancement=1;enhancement<=6;enhancement++)test(`Ame-no-Nuboko +${enhancement}: unavailable array blocked, never guessed or silently downgraded`,()=>{
- assert.throws(()=>kotoneWeaponProfile('ame-no-nuboko',enhancement),/not been verified/);
- assert.throws(()=>engine({weaponId:'ame-no-nuboko',enhancement}),/not been verified/);
+for(let enhancement=0;enhancement<=6;enhancement++)test(`Ame-no-Nuboko +${enhancement}: sourced static and per-stack Attack`,()=>{
+ const staticA=[.12,.12,.16,.16,.20,.20,.24],grant=[.073,.096,.096,.119,.119,.142,.142];
+ const profile=kotoneWeaponProfile('ame-no-nuboko',enhancement);near(profile.staticAttack,staticA[enhancement]);near(profile.grantAttack,grant[enhancement]);
+ const e=engine({weaponId:'ame-no-nuboko',enhancement});near(get(e).attack,(2500+570.52)*(1+staticA[enhancement]));
+ cast(e,'S1');near(get(e).buffs.find(b=>b.id==='kotone-weapon-grant-atk').value,grant[enhancement]);
 });
 test('Equipped totals never re-add weapon components or static Attack; reset weapon changes support scaling',()=>{
  const e=engine({weaponId:'vetri-vel-muruga',enhancement:6,statsMode:'equipped',baseStats:{attack:4000,maxHp:6000,maxSp:1000,defense:500}});
  near(get(e).attack,4000);assert.equal(get(e).maxHp,6000);assert.equal(get(e).defense,500);
  assert.throws(()=>normalizeKotoneLoadout({...get(e).kotone.build,enhancement:5}),/fresh equipped totals/);
  const a=engine(),m=a.kotoneMechanics;const before=m.scale();m.configureEquipment({weaponId:'ame-no-nuboko',awareness:0});assert.ok(m.scale()>before);
- near(get(a).attack,(2500+570)*1.12);m.configureEquipment({weaponId:'none'});near(get(a).attack,2500);
+ near(get(a).attack,(2500+570.52)*1.12);m.configureEquipment({weaponId:'none'});near(get(a).attack,2500);
  act(a,'S1');assert.throws(()=>m.configureEquipment({weaponId:'none'}),/locked/);
 });
 test('Normal saved loadout and separate draft survive JSON/storage round trips',()=>{
@@ -225,7 +241,7 @@ for(const id of ['joker','mona','wonder'])test(`Existing beta ${id} automatic Hi
 });
 test('Non-weapon inputs plus weapon and Revelation modifiers applied once; equipped totals bypass both',()=>{
  const revelationCombat={attackPercent:.2,hpPercent:.1};
- const e=engine({weaponId:'vetri-vel-muruga',revelationCombat});near(get(e).attack,(2500+713)*1.3*1.2);assert.equal(get(e).maxHp,Math.round(102259*1.1));
+ const e=engine({weaponId:'vetri-vel-muruga',revelationCombat});near(get(e).attack,(2500+713.51)*1.3*1.2);assert.equal(get(e).maxHp,Math.round((100000+2259.46)*1.1));
  const a=engine({weaponId:'vetri-vel-muruga',revelationCombat,statsMode:'equipped'});near(get(a).attack,2500);assert.equal(get(a).maxHp,100000);
 });
 test('Invalid numeric stats, awareness and enhancement are rejected by combat normalization',()=>{
@@ -270,5 +286,5 @@ test('Owned Strategist aura counts the selected main Wonder Persona, including i
 test('Pre-battle equipment accounting updates the exposed stat basis without double adding components',()=>{
  const e=engine(),m=e.kotoneMechanics;
  m.configureEquipment({weaponId:'vetri-vel-muruga',statsMode:'equipped',baseStats:{attack:4500,maxHp:6000,defense:400}});
- assert.equal(get(e).statsMode,'equipped');near(get(e).attack,4500);near(m.scale(),4500/4684);
+ assert.equal(get(e).statsMode,'equipped');near(get(e).attack,4500);near(m.scale(),4500/C.attackCaps.S1);
 });

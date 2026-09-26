@@ -12,9 +12,10 @@ Reports are kept as written on their dates. Newer reports supersede older ones o
 
 ## Kotone Shiomi (experimental)
 
-- [KOTONE-IMPLEMENTATION.md](KOTONE-IMPLEMENTATION.md): current report on the playable experimental kit, sources and limitations.
+- [KOTONE-SOURCE-AUDIT.md](KOTONE-SOURCE-AUDIT.md): Lufel v5.1.0 source audit; the values the simulator uses (ordinary Global, skill Mindscape LV5 by default).
+- [KOTONE-IMPLEMENTATION.md](KOTONE-IMPLEMENTATION.md): patch author's implementation report; its A3/A5, weapon +1 to +6 and A2 limitations are superseded by the source audit.
 - [READ-FIRST-KOTONE.md](READ-FIRST-KOTONE.md): how to use her in the app, plus the original patch install notes.
-- [kotone-source-audit.json](kotone-source-audit.json): source audit.
+- [kotone-source-audit.json](kotone-source-audit.json): patch author's earlier source audit, superseded by KOTONE-SOURCE-AUDIT.md.
 - [KOTONE-CHECKPOINT.md](KOTONE-CHECKPOINT.md): historical, earlier partial checkpoint.
 - Test, build and browser-harness evidence from the patch author is in `verification/`.
 

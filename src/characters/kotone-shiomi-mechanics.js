@@ -1,5 +1,5 @@
 import { KOTONE_SHIOMI_ID, KOTONE_PROFILE_ID, kotoneWeapons, kotoneWeaponProfile,
-  kotoneCoefficients as C, requireKotoneCombatData } from './kotone-shiomi-data.js';
+  kotoneCoefficientsFor, KOTONE_MINDSCAPE_LEVELS, KOTONE_DEFAULT_MINDSCAPE, requireKotoneCombatData } from './kotone-shiomi-data.js';
 import { forcedTheurgySkill } from '../combat/forced-theurgy.js';
 import { equippedAttack } from '../combat/weapon-stats.js';
 
@@ -15,15 +15,17 @@ export function normalizeKotoneDraft(value = {}) {
     profileId: KOTONE_PROFILE_ID, awareness: level(value.awareness), weaponId,
     enhancement: weaponId === 'none' ? 0 : level(value.enhancement),
     statsMode: value.statsMode === 'equipped' ? 'equipped' : 'base',
+    mindscape: KOTONE_MINDSCAPE_LEVELS.includes(value.mindscape) ? value.mindscape : KOTONE_DEFAULT_MINDSCAPE,
     a2CopyRatio: copyRatio(value.a2CopyRatio),
-    // Copy ratio is a declared hypothesis, not a verified coefficient.
-    copyRatioPolicy: value.copyRatioPolicy || (value.a2CopyRatio == null ? 'provisional-30-percent-times-1.25' : 'explicit-build-input') };
+    // Lufel v5.1.0: 30% base copy x 1.25 at A2. Kept editable for comparison.
+    copyRatioPolicy: value.copyRatioPolicy || (value.a2CopyRatio == null ? 'lufel-5.1.0-30-percent-times-1.25' : 'explicit-build-input') };
 }
 export function normalizeKotoneLoadout(value = {}) {
   if (value.ruleset && value.ruleset !== 'global-ordinary' || value.mindscapeCore === true) {
     throw new Error('Only ordinary Global Kotone is supported; no Sync Mindscape or Mindscape Core');
   }
   for (const key of ['awareness', 'enhancement']) if (value[key] != null && (!Number.isInteger(value[key]) || value[key] < 0 || value[key] > 6)) throw new RangeError(`${key} must be an integer 0–6`);
+  if (value.mindscape != null && !KOTONE_MINDSCAPE_LEVELS.includes(value.mindscape)) throw new RangeError('Skill Mindscape must be 0 or 5');
   if (value.weaponId != null && !kotoneWeapons.some(w => w.id === value.weaponId)) throw new Error('Unknown Kotone weapon');
   for (const key of ['attack','maxHp','maxSp','defense']) if (value.baseStats?.[key] != null && (!Number.isFinite(Number(value.baseStats[key])) || Number(value.baseStats[key]) < (key === 'maxHp' ? 1 : 0))) throw new RangeError(`Invalid ${key} input`);
   const normalized = { ...clone(value), ...normalizeKotoneDraft(value) };
@@ -72,6 +74,7 @@ export class KotoneShiomiMechanics {
   constructor(engine) { this.engine = engine; }
   get unit() { return this.engine.state.party.find(unit => unit.id === KOTONE_SHIOMI_ID); }
   get state() { return this.unit?.kotone; }
+  get C() { return this.state?.coefficients || kotoneCoefficientsFor({ awareness: this.unit?.awareness || 0 }); }
   get linked() { return this.engine.state.party.find(unit => unit.id === this.state?.linkedId); }
   get active() { return Boolean(this.unit?.hp > 0 && this.state); }
   event(type, message, data = {}) {
@@ -89,7 +92,8 @@ export class KotoneShiomiMechanics {
       goForBroke: createGoForBrokeBudget(actor.awareness), weaponStacks: [],
       grantCastIds: [], ultimateActivationIds: [], sequence: 0,
       normalTurnsCompleted: 0, normalActions: 0, extraActions: 0,
-      unresolved: ['live-scripts', 'A3-A5-level-coefficients', 'A2-copy-interpretation', 'stack-clock-policy']
+      coefficients: kotoneCoefficientsFor({ awareness: loadout.awareness, mindscape: loadout.mindscape }),
+      unresolved: ['event-timing', 'copy-eligibility', 's2-fortune-damage-term', 'skill-amplification-formula']
     };
     this.configureEquipment(loadout, { initial: true });
     const eligible = this.engine.state.party.filter(unit => unit.id !== actor.id && unit.hp > 0 && ['Sweeper', 'Assassin'].includes(unit.role));
@@ -98,9 +102,10 @@ export class KotoneShiomiMechanics {
     this.refreshAuras();
     this.engine.state.mechanicsLimitations = this.engine.state.mechanicsLimitations.filter(note => !note.startsWith('Kotone Shiomi:'));
     this.engine.state.mechanicsLimitations.push('With Kotone, forced Ardhanari/Cyclone Arrow/Lightning Spike are executable using the uploaded beta tooltip. Natural Theurgy gauges and manual Theurgy remain outside this adapter.');
-    this.engine.state.mechanicsLimitations.push('Kotone: experimental ordinary tooltip snapshot; A3/A5 skill-level increases are not applied. A2 copy ratio is a build hypothesis; four-star +1–+6 are unavailable.');
-    this.event('kotone_profile', 'Kotone is using an EXPERIMENTAL ordinary Global tooltip profile. A3/A5 coefficients are held fixed; A2 copy ratio is a declared build input.', {
-      profileId: KOTONE_PROFILE_ID, copyRatio: this.copyMultiplier(), tone: 'system'
+    this.engine.state.mechanicsLimitations.push('Kotone: Lufel v5.1.0 ordinary Global values. Fortune, copy and Cold timing are engine policies because the source is tooltip data, not combat scripts.');
+    const levels = this.C.skillLevels;
+    this.event('kotone_profile', `Kotone: ordinary Global, skill Mindscape ${loadout.mindscape}, S1 LV${levels.S1}, S2/S3 LV${levels.S2}, Highlight LV${levels.HL}.`, {
+      profileId: KOTONE_PROFILE_ID, copyRatio: this.copyMultiplier(), mindscape: loadout.mindscape, skillLevels: levels, tone: 'system'
     });
   }
   configureEquipment(value, { initial = false } = {}) {
@@ -111,6 +116,7 @@ export class KotoneShiomiMechanics {
     }
     const build = normalizeKotoneLoadout(initial ? value : { ...this.state.build, ...value });
     if (!initial && build.awareness !== actor.awareness) throw new Error('Reset the battle to change awareness');
+    if (!initial && build.mindscape !== this.state.build.mindscape) throw new Error('Reset the battle to change skill Mindscape');
     const weapon = kotoneWeaponProfile(build.weaponId, build.enhancement);
     const base = this.state.baseInputs || clone(actor.kotoneInputStats || { attack: actor.attack, maxHp: actor.maxHp, defense: actor.defense || 0 });
     if (!initial && build.baseStats) {
@@ -146,9 +152,10 @@ export class KotoneShiomiMechanics {
     return unit.attack * (1 + (unit.buffs || []).filter(b => b.stat === 'attack').reduce((n, b) => n + b.value, 0))
       + (unit.buffs || []).filter(b => b.stat === 'flatAttack').reduce((n, b) => n + b.value, 0);
   }
-  scale() { return clamp(this.currentAttack() / C.attackCap, 0, 1); }
+  // Each skill scales to the Attack cap published for its own skill level.
+  scale(slot = 'S1') { return clamp(this.currentAttack() / this.C.attackCaps[slot], 0, 1); }
   duration(base, fortuneBonus = 0) { return base + (this.state.fortune ? fortuneBonus + (this.unit.awareness >= 2 ? 1 : 0) : 0); }
-  copyMultiplier() { return this.unit.awareness >= 2 ? this.state.build.a2CopyRatio : C.s3Copy; }
+  copyMultiplier() { return this.unit.awareness >= 2 ? this.state.build.a2CopyRatio : this.C.s3Copy; }
   countPowerful(unitId = this.state.linkedId) { return (this.state.powerfulBonds[unitId] || []).length; }
   nextId(label) { return `${label}-${++this.state.sequence}`; }
   selectLink(targetId, { initial = false } = {}) {
@@ -187,7 +194,7 @@ export class KotoneShiomiMechanics {
     }
     stacks.push({ id: this.nextId('powerful'), permanent, remaining: permanent ? null : this.duration(3, 2),
       amplification, skipOwnerEnd: this.engine.actor?.id === target.id ? target.characterTurnsStarted : null });
-    this.grant(target, 'kotone-passive-pierce', 'Powerful Bond passive pierce', 'pierce', C.passivePierce, 2,
+    this.grant(target, 'kotone-passive-pierce', 'Powerful Bond passive pierce', 'pierce', this.C.passivePierce, 2,
       { sourceType: 'passive', amplification: false, copyEligible: false });
     this.refreshAuras();
     this.event('powerful_bond', `${target.codename}: Powerful Bond ${stacks.length}/3${permanent ? ' (one permanent while linked)' : ''}.`, { targetId: target.id, stacks: stacks.length, permanent });
@@ -205,20 +212,20 @@ export class KotoneShiomiMechanics {
     if (owned) {
       const wonderMain = e.personaDefinitions.find(persona => persona.id === e.config.personaIds[0]);
       const strategists = e.state.party.filter(unit => unit.hp > 0 && (unit.id === 'wonder' ? (wonderMain?.role === 'Strategist' || wonderMain?.position === '우월') : unit.role === 'Strategist')).length;
-      for (const unit of e.state.party) this.aura(unit, 'kotone-account-final', 'Kotone owned: Strategist final damage', 'finalDamage', strategists * C.strategistFinal);
+      for (const unit of e.state.party) this.aura(unit, 'kotone-account-final', 'Kotone owned: Strategist final damage', 'finalDamage', strategists * this.C.strategistFinal);
     }
     if (!this.active) return;
     const linked = this.linked;
     if (linked?.hp > 0) {
-      if (this.state.lunarBond >= 1) this.aura(linked, 'kotone-lunar-atk', 'Lunar Bond Attack', 'attack', C.lunarAttack);
-      if (this.state.lunarBond >= 5) this.aura(linked, 'kotone-lunar-pierce', 'Lunar Bond pierce', 'pierce', C.lunarPierce);
-      if (this.state.lunarBond >= 10) this.aura(linked, 'kotone-lunar-crit', 'Lunar Bond critical damage', 'critDamage', C.lunarCrit);
+      if (this.state.lunarBond >= 1) this.aura(linked, 'kotone-lunar-atk', 'Lunar Bond Attack', 'attack', this.C.lunarAttack);
+      if (this.state.lunarBond >= 5) this.aura(linked, 'kotone-lunar-pierce', 'Lunar Bond pierce', 'pierce', this.C.lunarPierce);
+      if (this.state.lunarBond >= 10) this.aura(linked, 'kotone-lunar-crit', 'Lunar Bond critical damage', 'critDamage', this.C.lunarCrit);
     }
     for (const target of e.state.party) {
       const stacks = this.state.powerfulBonds[target.id] || [];
-      if (stacks.length >= 1) this.aura(target, 'kotone-pb-atk', 'Powerful Bond Attack', 'attack', C.powerfulAttack * (1 + stacks[0].amplification));
-      if (stacks.length >= 2) this.aura(target, 'kotone-pb-pierce', 'Powerful Bond pierce', 'pierce', C.powerfulPierce * (1 + stacks[1].amplification));
-      if (stacks.length >= 3) this.aura(target, 'kotone-pb-final', 'Powerful Bond final damage', 'finalDamage', C.powerfulFinal * (1 + stacks[2].amplification));
+      if (stacks.length >= 1) this.aura(target, 'kotone-pb-atk', 'Powerful Bond Attack', 'attack', this.C.powerfulAttack * (1 + stacks[0].amplification));
+      if (stacks.length >= 2) this.aura(target, 'kotone-pb-pierce', 'Powerful Bond pierce', 'pierce', this.C.powerfulPierce * (1 + stacks[1].amplification));
+      if (stacks.length >= 3) this.aura(target, 'kotone-pb-final', 'Powerful Bond final damage', 'finalDamage', this.C.powerfulFinal * (1 + stacks[2].amplification));
       this.aura(target, 'kotone-weapon-pb-crit', 'Vetri Vel Muruga: Powerful Bond critical damage', 'critDamage', stacks.length * this.state.weapon.powerfulCrit);
     }
     if (linked?.hp > 0 && this.state.lunarBond >= 5) this.aura(this.unit, 'kotone-weapon-amp', 'Vetri Vel Muruga: Kotone Skill Amplification', 'skillAmplification', this.state.weapon.skillAmplification);
@@ -237,7 +244,7 @@ export class KotoneShiomiMechanics {
   onBuffGrant(selectedTarget, castId) {
     if (this.state.grantCastIds.includes(castId)) return;
     this.state.grantCastIds.push(castId);
-    if (selectedTarget?.hp > 0) this.grant(selectedTarget, 'kotone-passive-atk', 'Leading the team', 'attack', C.passiveAttack, 3, { sourceType: 'passive', amplification: false, copyEligible: false });
+    if (selectedTarget?.hp > 0) this.grant(selectedTarget, 'kotone-passive-atk', 'Leading the team', 'attack', this.C.passiveAttack, 3, { sourceType: 'passive', amplification: false, copyEligible: false });
     if (this.state.weapon.grantAttack) {
       if (this.state.weaponStacks.length >= 3) this.state.weaponStacks.shift();
       this.state.weaponStacks.push({ castId, remaining: 3, skipOwnerEnd: this.unit.characterTurnsStarted });
@@ -273,38 +280,38 @@ export class KotoneShiomiMechanics {
     if (!options.ignoreCost) actor.sp -= skill.cost;
     if (sourceType !== 'highlight') { this.state.linkWindow = false; this.state.actionWindow = false; }
     const castId = e.supportCastContext.castId;
-    const scale = this.scale();
+    const scale = this.scale(skill.kotoneSkill);
     let damage = 0;
     this.event('move', `${actor.codename} used ${skill.name}.`, { skillId: skill.id, sourceType, targetId, fortune: this.state.fortune });
     if (skill.kotoneSkill === 'S1') {
       const existing = target.buffs.filter(buff => /^kotone-s1-crit-\d$/.test(buff.id));
       const available = [0,1,2].find(index => !existing.some(buff => buff.id === `kotone-s1-crit-${index}`));
       const id = available == null ? [...existing].sort((a,b) => a.duration - b.duration)[0].id : `kotone-s1-crit-${available}`;
-      this.grant(target, id, "Lyre's Melody", 'critDamage', C.s1Crit * scale, this.duration(3, 2));
+      this.grant(target, id, "Lyre's Melody", 'critDamage', this.C.s1Crit * scale, this.duration(3, 2));
       if (target.id === this.state.linkedId) this.addPowerful(target);
-      if (actor.awareness >= 1 && this.countPowerful(target.id) >= 3) this.grant(target, 'kotone-a1-crit', 'A1: three Powerful Bonds', 'critDamage', C.a1Crit, this.duration(5), { sourceType: 'awareness', amplification: false, copyEligible: false });
+      if (actor.awareness >= 1 && this.countPowerful(target.id) >= 3) this.grant(target, 'kotone-a1-crit', 'A1: three Powerful Bonds', 'critDamage', this.C.a1Crit, this.duration(5), { sourceType: 'awareness', amplification: false, copyEligible: false });
       this.onBuffGrant(target, castId);
     } else if (skill.kotoneSkill === 'S2') {
       damage = this.resolveFire(skill, options);
       if (this.countPowerful() >= 3) {
         for (const enemy of e.enemies.filter(enemy => enemy.hp > 0 && enemy.alive !== false)) {
           const status = { id: 'kotone-s2-damage-taken', name: "Burning Moon's Cry: damage taken", damageTaken: true,
-            value: C.s2DamageTaken * scale * (1 + e.skillAmplificationFor(actor)), duration: this.duration(1, 2) };
+            value: this.C.s2DamageTaken * scale * (1 + e.skillAmplificationFor(actor)), duration: this.duration(1, 2) };
           e.applyEnemyStatus(enemy, 'debuffs', status, 'character_skill', actor.id);
           this.event('debuff', `${enemy.name}: damage taken +${(status.value * 100).toFixed(2)}%.`, { targetId: enemy.id, status });
         }
       }
     } else if (skill.kotoneSkill === 'S3') {
-      for (const ally of e.state.party.filter(unit => unit.hp > 0)) this.grant(ally, 'kotone-s3-atk', 'Lunar Phaseshift Attack', 'attack', C.s3Attack * scale, this.duration(1, 1));
+      for (const ally of e.state.party.filter(unit => unit.hp > 0)) this.grant(ally, 'kotone-s3-atk', 'Lunar Phaseshift Attack', 'attack', this.C.s3Attack * scale, this.duration(1, 1));
       this.copyBuffs(target.id, castId);
       this.onBuffGrant(target, castId);
       actor.skillCooldowns[skill.id] = 2;
     } else if (skill.kotoneSkill === 'HL') {
       for (const ally of e.state.party.filter(unit => unit.hp > 0)) {
-        this.grant(ally, 'kotone-hl-crit', 'Kotone Highlight critical damage', 'critDamage', C.highlightCrit, this.duration(2, 2), { sourceType: 'highlight' });
-        if (actor.awareness >= 4) this.grant(ally, 'kotone-a4-damage', 'A4 Highlight damage', 'damage', C.a4Damage, this.duration(2, 2), { sourceType: 'highlight' });
+        this.grant(ally, 'kotone-hl-crit', 'Kotone Highlight critical damage', 'critDamage', this.C.highlightCrit, this.duration(2, 2), { sourceType: 'highlight' });
+        if (actor.awareness >= 4) this.grant(ally, 'kotone-a4-damage', 'A4 Highlight damage', 'damage', this.C.a4Damage, this.duration(2, 2), { sourceType: 'highlight' });
       }
-      if (this.linked?.hp > 0) this.grant(this.linked, 'kotone-hl-atk', 'Kotone Highlight linked Attack', 'attack', C.highlightAttack, this.duration(2, 2), { sourceType: 'highlight' });
+      if (this.linked?.hp > 0) this.grant(this.linked, 'kotone-hl-atk', 'Kotone Highlight linked Attack', 'attack', this.C.highlightAttack, this.duration(2, 2), { sourceType: 'highlight' });
       this.onBuffGrant(this.linked || actor, castId);
     } else throw new Error(`Unknown Kotone skill ${skill.kotoneSkill}`);
     // Record non-damaging casts once, not once per buff or copied effect.
@@ -317,14 +324,14 @@ export class KotoneShiomiMechanics {
   resolveFire(skill, options) {
     const e = this.engine, actor = this.unit;
     const enemies = e.enemies.filter(enemy => enemy.hp > 0 && enemy.alive !== false);
-    const perHit = (C.s2Hit + (this.state.fortune ? C.s2FortuneAddedPower : 0)) * (1 + Math.max(0, 5 - enemies.length) * C.s2MissingEnemyBonus);
+    const perHit = (this.C.s2Hit + (this.state.fortune ? this.C.s2FortuneAddedPower : 0)) * (1 + Math.max(0, 5 - enemies.length) * this.C.s2MissingEnemyBonus);
     const hitSkill = { ...skill, power: perHit };
     const context = options.highlightActionContext || null;
     const cast = e.recordSharedHighlightCast(context, { actor, skill, sourceType: 'character_skill' });
     let damage = 0;
     for (const enemy of enemies) {
       let last = null;
-      for (let hit = 0; hit < C.s2Hits && enemy.hp > 0 && enemy.alive !== false; hit++) {
+      for (let hit = 0; hit < this.C.s2Hits && enemy.hp > 0 && enemy.alive !== false; hit++) {
         const result = e.calculateDamage(actor, hitSkill, enemy, 'character_skill'); last = result;
         const before = enemy.hp, actual = e.applyEnemyDamage(enemy, result.amount);
         actor.damageDone += actual; e.state.totalDamage += actual; damage += actual;
@@ -337,7 +344,7 @@ export class KotoneShiomiMechanics {
       if (last && !enemy.downed && enemy.alive !== false) {
         if (this.state.fortune) {
           const before = enemy.downPoints;
-          enemy.downPoints = Math.max(0, before - C.s2FortuneDown);
+          enemy.downPoints = Math.max(0, before - this.C.s2FortuneDown);
           this.event('down_damage', `${enemy.name}: Fortune removes ${Math.min(before, 2)} Down points, ignoring affinity.`, { targetId: enemy.id, downPoints: enemy.downPoints });
           if (enemy.downPoints === 0) {
             enemy.downed = true; e.queueDownActions(actor, enemy, 'character_skill');
