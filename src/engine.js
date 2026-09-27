@@ -177,14 +177,15 @@ export class BattleEngine {
     }
     // User-confirmed turn limits (2026-09-27), live profile only. Devourer of
     // Dreams allows 110 Attack Turns before the break, then its 2-turn
-    // Weakened window. Nexus of Dreams allows 6, plus 2 with Miku navigating.
+    // Weakened window. Nexus of Dreams allows 6. Miku's Showstopper adds two
+    // Concert rounds (extra actions for every character), not Attack Turns.
     // Supersedes the 120-turn Hachiman DOD rule of 2026-09-09.
     if (this.usesLiveMechanics() && modeId === 'devourer') {
       bossData.turnLimit = 110;
       bossData.previewAttackTurns = 110;
       if (bossData.dodRules) bossData.dodRules.turnLimit = 110;
     } else if (this.usesLiveMechanics() && modeId === 'nexus') {
-      bossData.turnLimit = 6 + (this.navigatorDefinition?.codename === 'MIKU' ? 2 : 0);
+      bossData.turnLimit = 6;
     }
     if (liveHachimanDreamscape && this.config.hachimanBaseDefense) {
       // Explicit base Defense override for what-if comparisons; the boss
