@@ -9,7 +9,7 @@ import { kotoneBuildEditor, bindKotoneBuild, kotoneStatusMarkup, kotoneSkillSumm
 import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
 import { bosses, elementMeta, navigator, nightmareModes, recordedNightmareBenchmark, roster } from './data.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
-import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset } from './default-presets.js';
+import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresets, wonderStatsPreset } from './default-presets.js';
 import { getWonderWeaponProfile } from './wonder-weapons.js';
 import {
   HachimanRecordedEngine, HACHIMAN_RECORDED_SEED, NAVIGATOR_SHARED_STATS, OBSERVED_STAT_EVIDENCE, PERSONA_SKILL_ADAPTERS,
@@ -214,8 +214,8 @@ function defaultPersonaSlot(name) {
 }
 
 function defaultLoadoutFor(characterId) {
-  if (characterId === KOTONE_SHIOMI_ID) return { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } };
-  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: [defaultPersonaSlot('Alice'), defaultPersonaSlot('Yoshitsune'), defaultPersonaSlot('Trumpeter')] });
+  if (characterId === KOTONE_SHIOMI_ID) return applyRecordedDefaultStats(characterId, { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } });
+  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: wonderStatsPreset.personaNames.map(defaultPersonaSlot), personaPresetId: wonderStatsPreset.id });
   if (characterId === 'joker') return { revelationMain: 'Nativity', revelationSet: 'Power' };
   if (characterId === 'rin') return { revelationMain: 'Resolve', revelationSet: 'Virtue' };
   if (characterId === 'mona') return { revelationMain: 'Faith', revelationSet: 'Peace' };
@@ -231,7 +231,8 @@ function defaultLoadouts() {
     wonder: defaultLoadoutFor('wonder'), joker: defaultLoadoutFor('joker'),
     rin: defaultLoadoutFor('rin'), mona: defaultLoadoutFor('mona'),
     [ichigoStatsPreset.characterId]: defaultLoadoutFor(ichigoStatsPreset.characterId),
-    [marianRevelationPreset.characterId]: defaultLoadoutFor(marianRevelationPreset.characterId)
+    [marianRevelationPreset.characterId]: defaultLoadoutFor(marianRevelationPreset.characterId),
+    ...Object.fromEntries(liveStatsPresets.map(preset => [preset.characterId, defaultLoadoutFor(preset.characterId)]))
   };
 }
 
@@ -364,6 +365,11 @@ function loadLoadouts() {
     const merged = { ...saved };
     for (const [id, value] of Object.entries(defaults)) merged[id] = { ...value, ...applyRecordedDefaultStats(id, saved[id] || {}) };
     if (!Array.isArray(merged.wonder.personas) || merged.wonder.personas.length !== 3) merged.wonder.personas = defaults.wonder.personas;
+    // Apply the live Persona trio once; later deliberate changes survive.
+    if (saved.wonder?.personaPresetId !== wonderStatsPreset.id) {
+      merged.wonder.personas = defaults.wonder.personas;
+      merged.wonder.personaPresetId = wonderStatsPreset.id;
+    }
     merged.wonder.personas = merged.wonder.personas.map((slot, index) => {
       const personaId = importedPersonas.some(persona => persona.id === slot?.personaId) ? slot.personaId : defaults.wonder.personas[index].personaId;
       const persona = importedPersonas.find(item => item.id === personaId);
@@ -376,7 +382,9 @@ function loadLoadouts() {
       || saved[berrySpPreset.characterId]?.spPresetId !== berrySpPreset.id
       || saved[marianRevelationPreset.characterId]?.revelationPresetId !== marianRevelationPreset.id
       || saved[marianSpPreset.characterId]?.spPresetId !== marianSpPreset.id
-      || saved.wonder?.weaponPresetId !== wonderWeaponPreset.id) {
+      || saved.wonder?.weaponPresetId !== wonderWeaponPreset.id
+      || liveStatsPresets.some(preset => saved[preset.characterId]?.statsPresetId !== preset.id)
+      || saved.wonder?.personaPresetId !== wonderStatsPreset.id) {
       localStorage.setItem('p5x-loadouts-v3', JSON.stringify(merged));
     }
     return merged;
@@ -481,7 +489,7 @@ function buildEngineConfig() {
       if (unit.id === 'wonder') return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
       if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), revelationCombat: structuredClone(set?.combat || {}) }];
-      return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []) }];
+      return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), weaponId: loadout.weaponId, weaponLevel: loadout.weaponLevel }];
     }))
   };
 }
@@ -1805,7 +1813,7 @@ function baseStatsEditor(unit, loadout) {
     ['damageReduction', 'DAMAGE DOWN %', 0, 100, .1]
   ];
   return `<section class="build-section base-stat-builder">
-    <div class="build-section-title"><div><span>${loadout.statsMode === 'equipped' ? 'EQUIPPED STATS' : 'BASE STAT INPUT'}</span><h3>Exact character stats</h3></div><em>${loadout.statsPresetId === ichigoStatsPreset.id ? 'Default: your Ichigo screenshots' : 'Hard values · used at battle start'}</em></div>
+    <div class="build-section-title"><div><span>${loadout.statsMode === 'equipped' ? 'EQUIPPED STATS' : 'BASE STAT INPUT'}</span><h3>Exact character stats</h3></div><em>${loadout.statsPresetId === ichigoStatsPreset.id ? 'Default: your Ichigo screenshots' : liveStatsPresets.some(preset => preset.id === loadout.statsPresetId) ? 'Default: your live screenshots, 2026-09-27' : 'Hard values · used at battle start'}</em></div>
     <div class="base-stat-grid">${fields.map(([key, label, min, max, step]) => `<label>${label}<input type="number" min="${min}" max="${max}" step="${step}" value="${loadout.baseStats[key]}" data-base-stat="${key}"></label>`).join('')}</div>
     <p class="formula-note">${loadout.statsMode === 'equipped' ? 'These are your equipped character-detail totals, including equipment bonuses. Revelation bonuses already included in these values are not added again. Battle buffs still apply.' : 'These values replace the imported defaults. Revelation percentages are applied afterward to derive the final battle stats.'} Ailment accuracy and resistance are saved for reference; their chance formulas are not yet modeled.</p>
   </section>`;

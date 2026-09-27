@@ -25,6 +25,20 @@ const jcMaskByName = Object.freeze({
 const jcSecondaryElement = Object.freeze({ mischief: 'ice', service: 'wind', absurdity: 'nuclear', luck: 'curse' });
 const defaultJcMasks = Object.freeze(['mischief', 'absurdity']);
 const jcPairKey = masks => [...masks].sort().join('+');
+// Mermaid Dreamer [Deep Blue Tuberide], in-game Forge Details at level 80 /
+// weapon level 6 (2026-09-27). Its +69% crit damage is in equipped totals.
+const wavecatcherWeaponLevels = Object.freeze({
+  'mermaid-dreamer': Object.freeze({
+    6: Object.freeze({ resonanceCritRate: 0.314, spendDamage: 0.128, spendStackCap: 5 })
+  })
+});
+// Warden's Judgement [One-Winged Butterfly], in-game Set tooltip at weapon
+// level 6 (2026-09-27). Other levels are not recorded.
+const jcWeaponLevels = Object.freeze({
+  'wardens-judgement': Object.freeze({
+    6: Object.freeze({ twoMasksDesire: 19, facadeCritDamage: 0.25, facadeDamage: 0.25, facadeDuration: 2, facadeStackCap: 2 })
+  })
+});
 const mikuSongs = Object.freeze(['Heaven', 'Spring Storm', 'Play-With-Fire']);
 const mikuTrackBySong = Object.freeze({ Heaven: 'Break', 'Spring Storm': 'Critical', 'Play-With-Fire': 'Expert' });
 // Direct live tooltip/readback costs from the 2026-09-05 Hachiman run. The
@@ -260,6 +274,10 @@ export class BattleEngine {
         highlightCooldowns: {}, highlightCooldownGrace: {},
         skillCooldowns: Object.fromEntries((unit.skills || []).map(skill => [skill.id, 0])),
         surfActive: unit.slug === 'puppet-wavecatcher' && awareness >= 6, offshoreStacks: 0, surfReentryLocked: false,
+        wavecatcherWeapon: unit.slug === 'puppet-wavecatcher' && this.usesLiveMechanics() && wavecatcherWeaponLevels[loadout.weaponId]?.[loadout.weaponLevel]
+          ? { id: loadout.weaponId, level: loadout.weaponLevel, ...wavecatcherWeaponLevels[loadout.weaponId][loadout.weaponLevel] }
+          : null,
+        tuberideStacks: 0,
         spCapMultiplier: unit.skills?.some(skill => skill.name === 'Jellyfish Splash') ? 2 : 1,
         healingBonus: 0, shieldBonus: 0, nextMedicineEffectBonus: 0
       };
@@ -288,6 +306,9 @@ export class BattleEngine {
           selectedMasks,
           facades: awareness >= 1 ? [...selectedMasks] : [],
           desireLevel: 25 + attackDesire + damageDesire + critDesire + (awareness >= 6 ? 20 : 0),
+          jcWeapon: this.usesLiveMechanics() && jcWeaponLevels[loadout.weaponId]?.[loadout.weaponLevel]
+            ? { id: loadout.weaponId, level: loadout.weaponLevel, ...jcWeaponLevels[loadout.weaponId][loadout.weaponLevel] }
+            : null,
           trueDesireStacks: awareness >= 6 ? 1 : 0,
           trueDesirePrimed: false,
           jcTurnsStarted: 0,
@@ -618,13 +639,27 @@ export class BattleEngine {
     return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
   }
 
+  // Mode Special Effects that raise damage dealt, from boss modeEffects.
+  stageDamageBonuses(unit, element) {
+    if (!this.usesLiveMechanics()) return [];
+    const effects = this.state.boss.modeEffects?.[this.state.boss.modeId];
+    if (!effects) return [];
+    const bonuses = [];
+    if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
+    if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
+    return bonuses;
+  }
+
   isDreamscapeScoreEligibleTarget(target) {
     return !this.isHachimanLive()
       || (target?.species !== 'daisoujou' && target?.id !== 'daisoujou');
   }
 
+  // Skill/Resonance crit conversion: final damage x (1 + min(crit, 100%) x
+  // (crit damage - 100%)) with no crit roll. User-confirmed for every boss in
+  // the live profile (2026-09-27); recorded replays keep ordinary crit rolls.
   usesDreamscapeSkillCritBonus(actor, sourceType) {
-    return this.isHachimanLive()
+    return this.usesLiveMechanics()
       && (['character_skill', 'persona_skill', 'berry_repeat', 'resonance_follow_up'].includes(sourceType)
         || (sourceType === 'awareness_follow_up' && this.isJc(actor)));
   }
@@ -1692,6 +1727,7 @@ export class BattleEngine {
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) add(buff.id, buff.value);
     if (element === 'curse') add('dreamscape_curse_bonus', 0.2);
     add('action_damage_bonus', actionDamageBonus);
+    for (const [id, value] of this.stageDamageBonuses(unit, element)) add(id, value);
     if (target.downed) add('downed_damage_taken', target.downedDamageTaken ?? 0.1);
     const elementalExposure = target.debuffs.find(effect => effect.id === `${element}_vuln`);
     if (elementalExposure) add(elementalExposure.id, elementalExposure.value);
@@ -1741,6 +1777,7 @@ export class BattleEngine {
     if (this.isWavecatcher(unit) && unit.surfActive) multiplier *= 1.3;
     if (unit.elementBonus?.element === element) multiplier *= 1 + unit.elementBonus.value;
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) multiplier *= 1 + (buff.value || 0);
+    multiplier *= 1 + this.stageDamageBonuses(unit, element).reduce((sum, [, value]) => sum + value, 0);
     if (target.weakness === element) multiplier *= 1.25;
     if (target.weakness === element) {
       const weaknessDamage = unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
@@ -1825,7 +1862,8 @@ export class BattleEngine {
       : (phase?.defense || target.defense || this.state.boss.defense) * (1 - clamp(defDown, 0, 0.7)) * (1 - clamp(pierce, 0, 0.7));
     const variance = skill.lovesickSnapshotCapture ? 1 : sourcedHachiman ? 0.95 + this.random() * 0.1 : 0.96 + this.random() * 0.08;
     const criticalBuff = actor.buffs.filter(effect => effect.stat === 'critRate').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    const rawCritRate = skill.forcedTheurgy && skill.guaranteedCritical ? 1 : actor.crit + criticalBuff + (skill.critBonus || 0);
+    const resonanceCritRate = sourceType === 'resonance_follow_up' ? Number(actor.wavecatcherWeapon?.resonanceCritRate || 0) : 0;
+    const rawCritRate = skill.forcedTheurgy && skill.guaranteedCritical ? 1 : actor.crit + criticalBuff + (skill.critBonus || 0) + resonanceCritRate;
     const critRoll = skill.lovesickSnapshotCapture ? 1 : this.random();
     const critical = skill.canCrit !== false && !(technical?.activated && technical.canCrit === false) && (skill.guaranteedCritical === true
       || critRoll < clamp(rawCritRate, 0, 0.95));
@@ -2779,6 +2817,9 @@ export class BattleEngine {
     if (actor.awareness >= 2) {
       for (const facade of actor.facades) this.applyJcFacadeAwareness(actor, facade);
     }
+    // Live Miyu (2026-09-27) showed One-Winged Butterfly at 2 stacks at battle
+    // start, so the two starting Facades each count as gained.
+    for (const _facade of actor.facades) this.applyJcWeaponFacadeBuff(actor);
   }
 
   applyJcFacadeAwareness(actor, facade) {
@@ -2797,7 +2838,36 @@ export class BattleEngine {
     if (!facade || actor.facades.includes(facade)) return;
     actor.facades.push(facade);
     this.applyJcFacadeAwareness(actor, facade);
+    this.applyJcWeaponFacadeBuff(actor);
     this.emit('resource', `${actor.codename} gained Facade of ${facade}.`, { actorId: actor.id, resource: 'facade', facade, tone: 'buff' });
+  }
+
+  // Mermaid Dreamer: spending SP on a skill or Resonance adds a permanent
+  // Wavecatcher damage stack, up to 5, before that action's damage.
+  gainTuberideStack(actor) {
+    const weapon = actor.wavecatcherWeapon;
+    if (!weapon || actor.tuberideStacks >= weapon.spendStackCap) return;
+    actor.tuberideStacks += 1;
+    this.applyUnitBuff(actor, { id: 'wavecatcher_tuberide_damage', name: `DEEP BLUE TUBERIDE ${actor.tuberideStacks}/${weapon.spendStackCap}`, stat: 'damage', value: weapon.spendDamage * actor.tuberideStacks, duration: 999 }, 'weapon');
+  }
+
+  jcDesireLevel(actor, twoMasks = false) {
+    return actor.desireLevel + (twoMasks && actor.jcWeapon ? actor.jcWeapon.twoMasksDesire : 0);
+  }
+
+  // Warden's Judgement: each Facade gained gives the party crit damage and
+  // damage for 2 turns, up to 2 stacks with separate clocks. At cap the
+  // earliest-expiring stack is refreshed. Battle-start Facades also trigger.
+  applyJcWeaponFacadeBuff(actor) {
+    const weapon = actor.jcWeapon;
+    if (!weapon) return;
+    const slots = Array.from({ length: weapon.facadeStackCap }, (_, index) => index + 1);
+    for (const unit of this.state.party.filter(member => member.hp > 0)) {
+      const durationOf = slot => unit.buffs.find(effect => effect.id === `jc_warden_crit_${slot}`)?.duration;
+      const slot = slots.find(n => durationOf(n) == null) ?? slots.reduce((best, n) => durationOf(n) < durationOf(best) ? n : best);
+      this.applyUnitBuff(unit, { id: `jc_warden_crit_${slot}`, name: 'WARDEN CRIT DMG', stat: 'critDamage', value: weapon.facadeCritDamage, duration: weapon.facadeDuration }, 'weapon');
+      this.applyUnitBuff(unit, { id: `jc_warden_damage_${slot}`, name: 'WARDEN DMG', stat: 'damage', value: weapon.facadeDamage, duration: weapon.facadeDuration }, 'weapon');
+    }
   }
 
   applyJcMaskEffect(actor, mask) {
@@ -2832,7 +2902,7 @@ export class BattleEngine {
     const pairs = enhanced
       ? ['mischief+service', 'absurdity+mischief', 'luck+mischief', 'absurdity+service', 'luck+service', 'absurdity+luck']
       : [jcPairKey(facadePair)];
-    const desireRatio = actor.desireLevel / 100;
+    const desireRatio = this.jcDesireLevel(actor, true) / 100;
     for (const pair of pairs) {
       if (pair === 'mischief+service') {
         let healed = 0;
@@ -3262,8 +3332,9 @@ export class BattleEngine {
       }
     }
     if (jcMask) damageSkill.power = (skill.power || 0.867) * (1 + actor.desireLevel / 100);
-    if (isTwoMasks) damageSkill.power = (skill.power || 1.477) * (1 + actor.desireLevel / 100);
+    if (isTwoMasks) damageSkill.power = (skill.power || 1.477) * (1 + this.jcDesireLevel(actor, true) / 100);
     if (!options.ignoreCost) actor.sp = clamp(actor.sp - (skill.cost || 0), 0, this.spCap(actor));
+    if (!options.ignoreCost && (skill.cost || 0) > 0 && ['character_skill', 'resonance_follow_up'].includes(sourceType)) this.gainTuberideStack(actor);
     if (skill.hpCost) actor.hp = Math.max(1, actor.hp - Math.round(actor.maxHp * skill.hpCost / 100));
     this.emit('move', `${actor.codename} used ${skill.name}.`, { actorId: actor.id, skillId: skill.id, sourceType, tone: 'move' });
     const twoMasksHitsAll = isTwoMasks && (trueDesireEnhanced || jcPairKey(facadePair) === 'luck+mischief');
@@ -3348,7 +3419,7 @@ export class BattleEngine {
       if (jcHighlightMask === 'luck') extraHitSkills.push({ ...clone(damageSkill), element: 'curse' });
       if (trueDesireEnhanced) {
         for (const element of ['fire', 'ice', 'electric', 'wind', 'psychic', 'nuclear', 'bless', 'curse']) {
-          extraHitSkills.push({ ...clone(damageSkill), id: `${damageSkill.id}-true-desire-${element}`, name: `True Desire ${element}`, element, power: 0.4 * (1 + actor.desireLevel / 100), trueDesireMainTarget: true });
+          extraHitSkills.push({ ...clone(damageSkill), id: `${damageSkill.id}-true-desire-${element}`, name: `True Desire ${element}`, element, power: 0.4 * (1 + this.jcDesireLevel(actor, true) / 100), trueDesireMainTarget: true });
         }
       }
       for (const target of enemyTargets) {

@@ -308,8 +308,8 @@ test('Devourer and Multidimensional do not enter Weakened before their trigger',
 });
 
 test('same seed and policy produce the same complete result', () => {
-  const first = simulate({ seed: 808, bossId: 'shadow_ruin' });
-  const second = simulate({ seed: 808, bossId: 'shadow_ruin' });
+  const first = simulate({ seed: 808, bossId: 'vishnu' });
+  const second = simulate({ seed: 808, bossId: 'vishnu' });
   assert.deepEqual(first.result, second.result);
   assert.equal(first.totalDamage, second.totalDamage);
 });
@@ -835,7 +835,7 @@ test('unavailable SP action is rejected by the legal-action boundary', () => {
 });
 
 test('battle terminates at the configured Attack Turn limit and preserves replay frames', () => {
-  const result = simulate({ seed: 912, bossId: 'shadow_ruin' }, engine => engine.getAvailableActions().find(item => item.type === 'guard'));
+  const result = simulate({ seed: 912, bossId: 'vishnu' }, engine => engine.getAvailableActions().find(item => item.type === 'guard'));
   assert.equal(result.phase, 'results');
   assert.equal(result.result.outcome, 'timeout');
   assert.ok(result.history.length > 20);
