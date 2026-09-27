@@ -1,0 +1,222 @@
+{
+  "slug": "joker",
+  "name": "Ren Amamiya",
+  "coverage": "source-backed-partial",
+  "limitations": [
+    "Partial mechanics, not a full-kit simulation. Source snapshot is community-maintained Lufelnet, not a live battle validation.",
+    "Source tier 0 is the default; explicit loadouts[id].characterResearch.sourceTier takes precedence, followed by loadouts[id].sourceTier and unit.sourceTier. No automatic awareness tier inference.",
+    "Stats default to sourced A0 level 80; equipment and potential bonuses are not silently included.",
+    "At three Will, Joker receives an extra action after his normal action. It spends three Will on completion and preserves timed effects. Extra-action shared Highlight and cooldown semantics still need live confirmation.",
+    "A2 extra-action cost and SP-dependent Attack, A6 pursuit, Curse ailment, weapons and skill-level awareness upgrades are not applied.",
+    "Curse ailment, weapons and skill-level awareness upgrades are evidence only."
+  ],
+  "sources": [
+    {
+      "url": "https://github.com/absolroot/lufelnet/blob/025fa21a111545d54a22044910935af3d8355a9d/data/characters/%EB%A0%8C/skill.js",
+      "file": "skill.js",
+      "commit": "025fa21a111545d54a22044910935af3d8355a9d"
+    },
+    {
+      "url": "https://github.com/absolroot/lufelnet/blob/025fa21a111545d54a22044910935af3d8355a9d/data/characters/%EB%A0%8C/ritual.js",
+      "file": "ritual.js",
+      "commit": "025fa21a111545d54a22044910935af3d8355a9d"
+    },
+    {
+      "url": "https://github.com/absolroot/lufelnet/blob/025fa21a111545d54a22044910935af3d8355a9d/data/characters/%EB%A0%8C/base_stats.js",
+      "file": "base_stats.js",
+      "commit": "025fa21a111545d54a22044910935af3d8355a9d"
+    },
+    {
+      "url": "https://github.com/absolroot/lufelnet/blob/025fa21a111545d54a22044910935af3d8355a9d/data/characters/%EB%A0%8C/weapon.js",
+      "file": "weapon.js",
+      "commit": "025fa21a111545d54a22044910935af3d8355a9d"
+    }
+  ],
+  "implemented": [
+    "Sourced S1/S2/S3/Highlight coefficients, costs and targets",
+    "Will of Rebellion skill gains, five-stack cap, unique below-60%-HP foe bookkeeping",
+    "Resistance Attack buff and A4 Highlight stack gain",
+    "A1 main/secondary target damage and S3 debuff/extra-action conditional damage through per-target damage hooks"
+  ],
+  "missing": [
+    "At three Will, Joker receives an extra action after his normal action. It spends three Will on completion and preserves timed effects. Extra-action shared Highlight and cooldown semantics still need live confirmation.",
+    "A2 extra-action cost and SP-dependent Attack, A6 pursuit, Curse ailment, weapons and skill-level awareness upgrades are not applied.",
+    "Curse ailment, weapons and skill-level awareness upgrades are evidence only."
+  ],
+  "retrievedAt": "2026-09-12",
+  "pageUrl": "https://lufel.net/en/character/joker/",
+  "sourceKey": "렌",
+  "commit": "025fa21a111545d54a22044910935af3d8355a9d",
+  "sourceRecords": {
+    "skills": {
+      "name": "Ren Amamiya",
+      "skill1": {
+        "name": "Trickster's Plunder",
+        "element": "주원광역",
+        "type": "광역피해",
+        "sp": 19,
+        "cool": 0,
+        "description": "Deal Curse damage to all foes equal to 83.0%/91.5%/88.1%/96.6% of Attack. 20% chance to inflict Curse. Also gain 1 Will of Rebellion stack."
+      },
+      "skill2": {
+        "name": "Phantom Omen",
+        "element": "주원",
+        "type": "단일 피해",
+        "sp": 19,
+        "cool": 0,
+        "description": "Deal Curse damage to 1 foe equal to 97.6%/107.6%/103.6%/113.6% of Attack. When only 1 foe is present, gain 2 Will of Rebellion stacks."
+      },
+      "skill3": {
+        "name": "Arsène's Chains",
+        "element": "주원광역",
+        "type": "광역피해",
+        "sp": 22,
+        "cool": 0,
+        "description": "Deal Curse damage to all foes equal to 74.2%/81.8%/78.7%/86.3% of Attack. When used on an extra action, increase damage by 25%. When attacking foes with debuffs, increase damage by 25% more."
+      },
+      "skill_highlight": {
+        "name": "Highlight",
+        "element": "주원광역",
+        "type": "광역피해",
+        "sp": 0,
+        "cool": 4,
+        "description": "Deal Curse damage to all foes equal to 205.0%/226.0%/217.6%/238.6% of Attack, and gain 1 Will of Rebellion stack."
+      },
+      "passive1": {
+        "name": "Resistance",
+        "element": "패시브",
+        "description": "Increase Attack by 18.0% for each Will of Rebellion stack.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Adverse Resolve",
+        "element": "패시브",
+        "description": "Increase damage on extra actions by 72.0%.",
+        "cool": 0
+      }
+    },
+    "awareness": {
+      "name": "Ren Amamiya",
+      "r0": "Rebellion Resurgence",
+      "r0_detail": "At the end of Ren's action, gain 1 Will of Rebellion stack for each foe with less than 60% HP (up to 5 stacks).\nWhen Will of Rebellion reaches 3 stacks, gain an extra action.\nAn additional extra action cannot be gained during the extra action. (Extra actions do not affect the duration of effects with turn limits).\nAt the end of an extra action, spend 3 Will of Rebellion stacks.\n*Can gain 1 Will of Rebellion stack per foe per battle.",
+      "r1": "Calling Card",
+      "r1_detail": "Increase skill damage to the main target by 30%, and increase skill damage to other targets by 10%.",
+      "r2": "Meditate",
+      "r2_detail": "On an extra action, decrease SP cost of skills by 80%. When Ren's SP is above 60%, increase Attack by 50%.",
+      "r3": "Secret Maneuvers",
+      "r3_detail": "Increase the skill levels of Arsène's Chains and Thief Tactics by 3.",
+      "r4": "Highway Robbery",
+      "r4_detail": "Highlight Enhanced: Increase number of Will of Rebellion stacks gained to 3.",
+      "r5": "Moonlit Evening",
+      "r5_detail": "Increase the skill levels of Trickster's Plunder and Phantom Omen by 3.",
+      "r6": "Merciless Pursuit",
+      "r6_detail": "After taking an extra action, if there are foes with below 25% HP, deal damage to those foes equal to up to 250% of Ren's Attack (once per enemy per battle).\nAfter using a skill on an extra action, deal Curse damage equal to 50% of Attack to all foes."
+    },
+    "stats": {
+      "a0_lv1": {
+        "HP": 291.03,
+        "SP": 100,
+        "attack": 105.02,
+        "defense": 49.84,
+        "crit_rate": 5,
+        "crit_mult": 150,
+        "speed": 102
+      },
+      "awake7": {
+        "attack_per": 29
+      },
+      "a0_lv80": {
+        "HP": 3270.01,
+        "attack": 1179.97,
+        "defense": 560
+      },
+      "a1_lv80": {
+        "HP": 3329.21,
+        "attack": 1201.57,
+        "defense": 570.4
+      },
+      "a2_lv80": {
+        "HP": 3387.61,
+        "attack": 1222.37,
+        "defense": 580
+      },
+      "a3_lv80": {
+        "HP": 3446.81,
+        "attack": 1243.97,
+        "defense": 590.4
+      },
+      "a4_lv80": {
+        "HP": 3505.21,
+        "attack": 1264.77,
+        "defense": 600
+      },
+      "a5_lv80": {
+        "HP": 3564.41,
+        "attack": 1286.37,
+        "defense": 610.4
+      },
+      "a6_lv80": {
+        "HP": 3622.81,
+        "attack": 1307.17,
+        "defense": 620.8
+      },
+      "a0_lv100": {
+        "HP": 4045.47,
+        "attack": 1459.79,
+        "defense": 692.8
+      },
+      "a1_lv100": {
+        "HP": 4119.47,
+        "attack": 1486.79,
+        "defense": 705.8
+      },
+      "a2_lv100": {
+        "HP": 4192.47,
+        "attack": 1512.79,
+        "defense": 717.8
+      },
+      "a3_lv100": {
+        "HP": 4266.47,
+        "attack": 1539.79,
+        "defense": 730.8
+      },
+      "a4_lv100": {
+        "HP": 4339.47,
+        "attack": 1565.79,
+        "defense": 742.8
+      },
+      "a5_lv100": {
+        "HP": 4413.47,
+        "attack": 1592.79,
+        "defense": 755.8
+      },
+      "a6_lv100": {
+        "HP": 4486.47,
+        "attack": 1618.79,
+        "defense": 768.8
+      }
+    },
+    "weapons": {
+      "name": "Ren Amamiya",
+      "weapon4-1": {
+        "name": "Machete",
+        "health": 1728.63,
+        "attack": 623.35,
+        "defense": 296.11,
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. When attacking a foe with an ailment, increase Attack by 19.1%/24.8%/24.8%/30.5%/30.5%/36.2%/36.2%."
+      },
+      "weapon5-1": {
+        "name": "Phoenix Dagger",
+        "health": 2160.41,
+        "attack": 779.61,
+        "defense": 370,
+        "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%. After gaining Will of Rebellion, increase Ren's Curse damage by 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% for 2 turns. Stacks up to 3 times. At 3 or more Will of Rebellion stacks, increase Ren's next damage by 23.0%/30.0%/30.0%/37.0%/37.0%/44.0%/44.0%."
+      }
+    }
+  },
+  "integration": {
+    "definition": "Replace the legacy record by id in the live registry. Do not merge legacy estimated skills or buffs.",
+    "hooks": "Initialize after live unit construction; call beforeSkill once on the cloned skill before payment, beforeDamage per target, and afterSkill once after cast resolution. After a normal action is consumed, call getExtraActionRequest. If present, retain Joker without beginActorTurn, SP recovery, owner cooldown/status ticks, navigator cooldown decrement, action-number increment, or extra turnActionsUsed; call onExtraActionStart, then onActionEnd({ isExtraAction: true }) exactly once before clearing the scheduler marker. Timed effects preserve because no status tick runs. Shared Highlight, score, and ally-counted listeners are engine-policy decisions not asserted here.",
+    "sourceTier": "Explicit index 0..3: characterResearch.sourceTier, then sourceTier alias, then unit default, then 0. Coefficients retain upstream ordering."
+  }
+}

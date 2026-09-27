@@ -1,0 +1,161 @@
+// Reviewed public snapshot: 2026-09-12. Full provenance in data/character-research/mont-frostgale.json.
+export const characterResearch = {
+  "slug": "mont-frostgale",
+  "name": "Frostgale Kotone",
+  "coverage": "partial-source-verified",
+  "limitations": [
+    "Not battle-replay calibrated. Disabled actions must be filtered by parent before spending cost or ammo.",
+    "Source tiers explicitly ordered [10,10+5,13,13+5], selected by loadout characterResearch.sourceTier; default 3 follows Cosmic Yui. Skill-level awareness is not multiplied again.",
+    "Static weapon passives use the selected refinement; equipped stats must set staticWeaponStatsIncluded to avoid double counting.",
+    "Mode selection and Spring multi-hit packets are modeled; the UI still needs a free mode-toggle action.",
+    "Edge follow-up/finale expiry uses the owner-turn clock, which needs live ordering confirmation.",
+    "Ailment application, Spiral Sequence/On Ice, Winter shield callbacks and A6 Edge reset/extension remain incomplete."
+  ],
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/mont-frostgale/",
+      "retrievedAt": "2026-09-12",
+      "type": "community-game-data"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/skill.js",
+      "sha256": "c05f525c8be7081d8c6e107bc01be508f43a57c8f35f2b289805302f978389c0",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/ritual.js",
+      "sha256": "5a6838620fd6562762ff10c05c1dc6a4492d214cd670091b607eecaaf32d951c",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/weapon.js",
+      "sha256": "b1643370077b9ec321b4dd5d8477411da6163692beea0e59f8525420fc94cea0",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    }
+  ],
+  "implemented": [
+    "A0 initial Spring/Winter choice excluding owner from ally counts",
+    "Spring and Winter S1/S2/S3/Highlight packet coefficients and elemental targeting",
+    "Edge, Vestige, Performance/Technical Scoring, A1/A2/A4 and sourced Edge follow-up/finale damage",
+    "Static and supported dynamic weapon effects at refinement 0-6"
+  ],
+  "missing": [
+    "Mode selection and Spring multi-hit packets are modeled; the UI still needs a free mode-toggle action.",
+    "Edge follow-up/finale expiry uses the owner-turn clock, which needs live ordering confirmation.",
+    "Ailment application, Spiral Sequence/On Ice, Winter shield callbacks and A6 Edge reset/extension remain incomplete."
+  ],
+  "comparison": {
+    "liveSnapshot": "data/lufel-live-recent.json",
+    "englishSkillsExactlyMatch": true,
+    "catalog": "data/lufel-catalog.json",
+    "existingBespokeEngineLogic": false,
+    "corrections": [
+      "A0 initial Spring/Winter choice excluding owner from ally counts",
+      "Winter S1/S2 single-packet coefficients and elemental targeting",
+      "Performance Scoring elemental damage; Winter Highlight no-field bonus and A4",
+      "Opt-in static weapon stat at refinement 0-6"
+    ]
+  },
+  "integration": {
+    "initialize": "After live unit loadouts and party construction; once per unit. Ange uses state.navigator.",
+    "beforeSkill": "Before SP/HP/ammo changes and before cloning damageSkill. Return value must replace skill.",
+    "afterSkill": "Once per successful outer cast after damage, using prepared skill; never for unrelated source types.",
+    "onTurnEnd": "After all counted actions of owner turn, before next turn starts. Howler stance clock only.",
+    "navigator": null
+  },
+  "awareness": {
+    "name": "Frostgale Kotone",
+    "r0": "Swan on the Ice",
+    "r0_detail": "Frostgale Kotone has 2 modes: Spring and Winter. During battle, she can freely change between modes while Spring's Edge / Winter's Edge is not active. When changing modes, the attributes of her skills and Highlight change. At the start of battle, she will be in Spring mode, but if there are more allies in the party that have the Ice attribute than the Wind attribute, she will be in Winter mode.\nFor every 1 Spring's Vestige or Winter's Vestige stack she gains, permanently increase Attack by 5% (stacks up to 7 times).",
+    "r1": "Etched in Ice",
+    "r1_detail": "Spring mode: Each time Spring's Edge is activated, gain 1 Spring's Vestige stack. When Spring's Edge ends, increase Resonance damage by 8% for each Spring's Vestige stack (up to 40%).\nWinter mode: Each time Winter's Edge is activated, gain 1 Winter's Vestige stack. When Winter's Edge ends, increase Resonance damage by 8% for each Winter's Vestige stack (up to 40%).",
+    "r2": "Swan's Gaze",
+    "r2_detail": "Spring mode: While Spring's Edge is active, decrease all foes' Defense by 40%, and decrease party's SP costs for skills by 25%.\nWinter mode: While Winter's Edge is active, increase party's Ice damage by 30%, and decrease SP costs for skills by 25%.",
+    "r3": "Triple Axel",
+    "r3_detail": "Increase the skill levels of Zephyr / Sapphire Storm and Ailes au Vent / Frozen Wings by 3.",
+    "r4": "Queen of Ice and Wind",
+    "r4_detail": "Spring mode: When activating a Highlight, if Spring's Edge is active, gain 1 more Spring's Vestige stack (this additional stack can exceed the maximum limit). If Spring's Edge is not active, increase Highlight damage by 35%.\nWinter mode: When activating a Highlight, if Winter's Edge is active, gain 1 more Winter's Vestige stack (this additional stack can exceed the maximum limit). If Winter's Edge is not active, increase Highlight damage by 35%.",
+    "r5": "Seasonal Highlight",
+    "r5_detail": "Increase the skill levels of Éclat de Vent / Iceburst and Thief Tactics by 3.",
+    "r6": "Dance of Love",
+    "r6_detail": "Spring mode: After activating the Resonance when Spring's Edge ends, extend the duration of Spring's Edge by 1 turn. Regain up to 2 spent Spring's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again (the duration cannot be extended again). Also increase Resonance pierce rate by 4% for each Spring's Vestige stack (up to 20%).\nWinter mode: After activating the Resonance when Winter's Edge ends, extend the duration of Winter's Edge by 1 turn. Regain up to 2 spent Winter's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again (the duration cannot be extended again). Also increase Resonance pierce rate by 4% for each Winter's Vestige stack (up to 20%)."
+  },
+  "weapons": {
+    "weapon5-1": {
+      "name": "Lame de l'Amour",
+      "health": 2299.15,
+      "attack": 759.73,
+      "defense": 374.35,
+      "skill_name": "",
+      "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%. Each time Frostgale Kotone gains a Spring's Vestige or Winter's Vestige stack, increase critical rate by 5.4%/7.0%/7.0%/8.6%/8.6%/10.2%/10.2% for 2 turns. This effect can stack up to 3 times. When activating Spring's Edge or Winter's Edge, increase Wind or Ice damage by 27.0%/35.0%/35.0%/43.0%/43.0%/51.0%/51.0% for 2 turns."
+    },
+    "weapon4-1": {
+      "name": "Lame de l'Aube",
+      "health": 1838.99,
+      "attack": 607.79,
+      "defense": 299.47,
+      "skill_name": "",
+      "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. Each time Frostgale Kotone gains a Spring's Vestige or Winter's Vestige stack, permanently increase Attack by 1.8%/2.3%/2.3%/2.8%/2.8%/3.3%/3.3%. This effect can stack up to 10 times."
+    }
+  },
+  "skills": {
+    "skill1": {
+      "name": "Éclat de Vent / Iceburst",
+      "element": "질풍빙결",
+      "type": "단일 피해",
+      "sp": 24,
+      "cool": 0,
+      "description": "Spring mode: Deal Wind damage to 1 foe equal to 73.8%/81.3%/78.3%/85.9% of Attack (3 hits), with a 30% chance to inflict Windswept. When Spring's Edge is active, also gain 1 Spring's Vestige stack and inflict Spiral Sequence for 2 turns. When Frostgale Kotone attacks a foe with Spiral Sequence, increase critical damage by 29.3%/29.3%/31.1%/31.1%.\nWinter mode: Deal Ice damage to 1 foe equal to 152.7%/168.4%/162.1%/177.8% of Attack, with a 97.6%/97.6%/103.6%/103.6% chance to inflict Freeze. If the target is already Frozen, inflict On Ice for 2 turns. Increase Ice damage taken by 13.7%/13.7%/14.5%/14.5% for foes with On Ice."
+    },
+    "skill2": {
+      "name": "Zephyr / Sapphire Storm",
+      "element": "질풍빙결광역",
+      "sp": 24,
+      "cool": 0,
+      "description": "Spring mode: Deal Wind damage to all foes equal to 31.3%/34.5%/33.3%/36.5% of Attack (3 hits). When Spring's Edge is active, also gain 2 Spring's Vestige stacks.\nWinter mode: Deal Ice damage to all foes equal to 83.8%/92.4%/89.0%/97.6% of Attack, with a 48.8%/48.8%/51.8%/51.8% chance to inflict Freeze. When Winter's Edge is active, increase this skill's damage by 20%."
+    },
+    "skill3": {
+      "name": "Ailes au Vent / Frozen Wings",
+      "element": "질풍빙결",
+      "type": "단일 피해",
+      "sp": 28,
+      "cool": 0,
+      "description": "Spring mode: Activate Spring's Edge for 1 turn, and deal Wind damage to 1 foe equal to 92.8%/102.3%/98.5%/108.0% of Attack (3 hits). While Spring's Edge is active, when allies deal Wind damage with a skill, Highlight, Theurgy or Resonance, deal Wind damage to the selected target equal to 20% of Frostgale Kotone's Attack, and gain 1 Spring's Vestige stack. When Spring's Edge ends, spend all Spring's Vestige stacks, and deal Wind damage to the target selected that turn equal to (number of Spring's Vestige stacks + 4) x 36.4%/40.1%/38.6%/42.3% of Attack. This damage is counted as a Resonance.\nWinter mode: Activate Winter's Edge for 1 turn, and deal Ice damage to 1 foe equal to 229.0%/252.5%/243.1%/266.5% of Attack. While Winter's Edge is active, when an ally takes an attack, grant Glacial Heart to all allies for 2 turns, protecting them from up to 1301/1301/1380/1380 damage. This effect can be activated up to 2 times. Also, when allies deal Ice damage with a skill, Highlight, Theurgy, or Resonance, gain 1 Winter's Vestige stack. When Winter's Edge ends, spend all Winter's Vestige stacks, and deal Ice damage to the target selected that turn equal to (number of Winter's Vestige stacks + 4) x 27.9%/30.8%/29.6%/32.5% of Attack. This damage is counted as a Resonance."
+    },
+    "passive1": {
+      "name": "Performance Scoring",
+      "element": "패시브",
+      "cool": 0,
+      "description": "At the start of battle, if a Wind ally is in the party, increase Frostgale Kotone's Wind damage by 33.0%.\nAt the start of battle, if an Ice ally is in the party, increase Frostgale Kotone's Ice damage by 33.0%."
+    },
+    "passive2": {
+      "name": "Technical Scoring",
+      "element": "패시브",
+      "cool": 0,
+      "description": "While in Spring mode, each time an ally attacks with the Wind attribute, increase party's Attack by 8.1% for 2 turns. Stacks up to 5 times.\nWhile in Winter mode, each time Frostgale Kotone gains a shield, increase party's Defense by 9.0% for 2 turns. Stacks up to 4 times."
+    },
+    "skill_highlight": {
+      "element": "질풍빙결",
+      "cool": 4,
+      "description": "Spring mode: Deal Wind damage to 1 foe equal to 212.5%/234.2%/225.5%/247.3% of Attack (3 hits). When Spring's Edge is active, gain 1 more Spring's Vestige stack (this additional stack can exceed the maximum limit). If Spring's Edge is not active, deal 1 more hit of Wind damage to selected target.\nWinter mode: Deal Ice damage to 1 foe equal to 380.6%/419.6%/404.0%/443.0% of Attack, with a 68.3%/68.3%/72.5%/72.5% chance to inflict Icebound. When Winter's Edge is active, increase chance to inflict Icebound by 29.3%/29.3%/31.1%/31.1%. If Winter's Edge is not active, increase Highlight damage by 20%."
+    },
+    "name": "Frostgale Kotone"
+  }
+};
+
+export function adaptCharacterDefinition(record) {
+  if (record.slug !== characterResearch.slug) return record;
+  const result = structuredClone(record);
+  result.mechanicsCoverage = characterResearch.coverage;
+  result.characterResearch = characterResearch;
+  for (const skill of [...(result.skills || []), result.highlightSkill].filter(Boolean)) {
+    for (const key of ['buff','buffTarget','debuff','heal','healAttack','healFlat','healTarget','spRestore','actionBonus']) delete skill[key];
+  }
+  return result;
+}

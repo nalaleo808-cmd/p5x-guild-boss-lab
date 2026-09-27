@@ -1,0 +1,2219 @@
+{
+  "description": "Awareness (A0 to A6) update checks, 2026-09-12: release check, browser results and the release file hash manifest. Test log: verification/awareness-test-results.txt.",
+  "combinedOn": "2026-09-26",
+  "note": "Each entry under \"files\" is the original file parsed as JSON, keyed by its original path. Paths inside the entries are as originally recorded.",
+  "sources": {
+    "verification/awareness-release-check.json": {
+      "bytes": 424,
+      "sha256": "d867ea9179f9288cf3b3169b74a0f9aa3af72b88fe9aa53530df9e1ad68fe7a3"
+    },
+    "verification/awareness-browser-results.json": {
+      "bytes": 1419,
+      "sha256": "a146bfdffbffc76b11166723387bfc672921dff909c6fadd316d0597e512673a"
+    },
+    "verification/awareness-file-manifest.json": {
+      "bytes": 86589,
+      "sha256": "7d8988573d39cc7b21d85a2ab763d62a5a68f6646aa9b4b4e6d043cfc44597a6"
+    }
+  },
+  "files": {
+    "verification/awareness-release-check.json": {
+      "unchanged_original_asset_files": 59,
+      "original_catalog_and_character_definitions_unchanged": true,
+      "matching_build_files": 98,
+      "version": "2.2.0",
+      "tests_passed": 274,
+      "tests_failed": 0,
+      "browser_rank_checks": 182,
+      "browser_test_mode": "offline browser renderer; serialized storage adapter; no navigation or network",
+      "existing_roster_entries": 26,
+      "combatant_entries": 23,
+      "navigator_entries": 3
+    },
+    "verification/awareness-browser-results.json": {
+      "execution": "offline browser renderer; serialized storage adapter; no navigation or network",
+      "errors": [],
+      "roster_count": 26,
+      "rank_selections_checked": 182,
+      "checks": [
+        "Every A0–A6 button for all 26 entries saves the correct numeric rank (182 selections).",
+        "Old Cosmic Yui nested awareness migrates, preserving weapon/refinement options.",
+        "Manual stats are unchanged by rank switches; blank stats track rank-specific source defaults.",
+        "Rendered app launches an engine with independent party/navigator ranks after a simulated storage reload; J&C A6 is no longer forced.",
+        "Changing a rank invalidates the old battle; the next battle uses the new awareness mechanics.",
+        "Desktop and 390px mobile layouts have no horizontal page overflow; all referenced artwork loads.",
+        "Both recorded A6 presets explicitly restore all party and navigator ranks to A6."
+      ],
+      "battle_state": {
+        "party": [
+          {
+            "id": "wonder",
+            "rank": 3
+          },
+          {
+            "id": "lufel-recent-bui-cosmic",
+            "rank": 0
+          },
+          {
+            "id": "lufel-recent-berry",
+            "rank": 2
+          },
+          {
+            "id": "lufel-recent-puppet-wavecatcher",
+            "rank": 4
+          }
+        ],
+        "navigator": {
+          "id": "navigator-miku",
+          "rank": 0
+        },
+        "jcA6Unlocked": false,
+        "cosmicPermanent": false
+      },
+      "mobile_overflow": false,
+      "passed": true
+    },
+    "verification/awareness-file-manifest.json": {
+      ".claude/launch.json": {
+        "bytes": 223,
+        "sha256": "6b803a6542ef64ff4bd8402f9b9faa0459af7a67b9dbe1c43d5c47f668da49b1"
+      },
+      "AGENTS.md": {
+        "bytes": 403,
+        "sha256": "3772ce58c0b53664b9bf81a3d9a1725db1ac602144b3800961353b5570dace86"
+      },
+      "AWARENESS-UPDATE.md": {
+        "bytes": 4841,
+        "sha256": "b3ecd4b886f49cce58685b5cfc8f348a0b6273d271f8932eb51053c8cc168b19"
+      },
+      "CHAT-CONTEXT-EXPORT-2026-09-12.md": {
+        "bytes": 13814,
+        "sha256": "58519625d69b7c27def27007ec2d6ab477451f7975a95f4e1bc992e45ab57140"
+      },
+      "COSMIC-YUI-REVIEW-2026-09-12.md": {
+        "bytes": 8244,
+        "sha256": "f7a96e6b95a52caa525e06a3bc189a1e0363c1a783ab5c4247aa0248f9128fe4"
+      },
+      "GAME_DATA_CONTRACT.md": {
+        "bytes": 2161,
+        "sha256": "338a1380bcf0f25e26539ff57a9b9e0a67879e704b7a9839fdec6e5e70291ba8"
+      },
+      "HACHIMAN-COMPARISON-2026-09-05.md": {
+        "bytes": 20103,
+        "sha256": "3e1ed87d9fd4e95dc5a25dea2f5db4f6831bf7759b2baf2dc6f916c5249baef5"
+      },
+      "HACHIMAN-DAMAGE-AUDIT-2026-09-05.md": {
+        "bytes": 10710,
+        "sha256": "15789d57e8f0b589559ac54ee09675c51f4828401b80cfbbdd416fc4ea291b55"
+      },
+      "HACHIMAN-HIGHLIGHT-AUDIT-2026-09-05.md": {
+        "bytes": 9329,
+        "sha256": "add2dc549ce8168acd0527607dbf240c9e6dd715da736c300480145252231dc8"
+      },
+      "HACHIMAN-HIGHLIGHT-RULES-2026-09-05.md": {
+        "bytes": 13079,
+        "sha256": "65ca35d915a7e4cddf804de19d698e581144014578c175c94e02aec795fed437"
+      },
+      "HACHIMAN-NEXT-PASS-2026-09-05.md": {
+        "bytes": 6520,
+        "sha256": "3be7aa48118d261eda099cb9efdc13f83ac56ace49416e1cf72d751b770485e5"
+      },
+      "HACHIMAN-ROTATION-CHECK-2026-09-05.md": {
+        "bytes": 53168,
+        "sha256": "2cfcdb8e3b945571d73e65dcbb27c78c4a6cc877229ef56a7743f4b96cea71a8"
+      },
+      "HACHIMAN-STAT-EVIDENCE-2026-09-06.md": {
+        "bytes": 44136,
+        "sha256": "46c8ed4fb37f5606dd2c73137777414110d3791f265aedd910279df2742a17f5"
+      },
+      "HACHIMAN-VARIANCE-DIAGNOSIS-2026-09-06.md": {
+        "bytes": 5881,
+        "sha256": "de242fcfaa615bd9f2c8fc8ece4eaddae9b0e124ebd13d32e6a1f7859ad06095"
+      },
+      "HACHIMAN-VARIANCE-FIXES-2026-09-06.md": {
+        "bytes": 6599,
+        "sha256": "098dcf6cea8d52168f29bdce066e4752c2521f18852e063984931bffc6eb7a72"
+      },
+      "HANDOFF-VERIFICATION-2026-09-04.md": {
+        "bytes": 9252,
+        "sha256": "2b2a06e4dda051bf0aacba544a077ef49b026475db2c618b2f3a5888f62319e6"
+      },
+      "JC-A6-CORRECTION-2026-09-05.md": {
+        "bytes": 3847,
+        "sha256": "d64c413be1024e2cd2644936b2f5ac28cd95a9cfbd9215536b85788af4d17597"
+      },
+      "LIVE-BATTLE-CHECK-2026-09-04.md": {
+        "bytes": 51075,
+        "sha256": "409c28e37f0e644c1f3e92f1c971904024101f619cbc7f2ac6d2c2ead82816cd"
+      },
+      "LOVESICK-FORMULA-EVIDENCE-2026-09-06.md": {
+        "bytes": 3552,
+        "sha256": "6f0372f8d76b1a99321b4f659c32c4e298311b99e1b8d929949cfd805c03d79e"
+      },
+      "MECHANICS-AUDIT-2026-08-29.md": {
+        "bytes": 7685,
+        "sha256": "a2deba900fbdd4beaa7578022e58ccda4ed25c4a9e5b41d4e76e8e95ba2f28c3"
+      },
+      "MODE-EVIDENCE-2026-09-05.md": {
+        "bytes": 7946,
+        "sha256": "eecec5649916a9c31f63e7a51dee2372d00d302d292cb09b3b67b45e1c8bf8ac"
+      },
+      "OPEN-ON-NEW-COMPUTER.md": {
+        "bytes": 4104,
+        "sha256": "60c389cc5a06671421f5526556bc3b1d67a5b90f3743e9d677d1dd06f31c5e3c"
+      },
+      "OPTIMIZED-ROTATION-A6-AUDIT-2026-08-29.md": {
+        "bytes": 3611,
+        "sha256": "8ac2186bb0444fab57c20db4a08134bac5ebdc974fd0115b5fee7ee49cf06a16"
+      },
+      "OPTIMIZER-RESULT-2026-09-04.md": {
+        "bytes": 5084,
+        "sha256": "c4d07aaa50fe2a8fc3474daaf21e918eda5f138eae2ae0bb1f9d20c6179eaf89"
+      },
+      "OPTIMIZER-RESULT-2026-09-05.md": {
+        "bytes": 3061,
+        "sha256": "f1b1ec5888f07d62a3a71ecea2f10e6390a1ab38ef95d6b7d869f0462a5251c6"
+      },
+      "PROJECT-COMPLETION-STATUS-2026-09-05.md": {
+        "bytes": 18034,
+        "sha256": "91738f1729941618bb81be765674587e437f5e4abc45e5b58594c753bc056e74"
+      },
+      "README.md": {
+        "bytes": 17182,
+        "sha256": "685af178f4ee26dbe034d50ee7aad81878dd76562bc5378921f3119673bd52bc"
+      },
+      "VALIDATION-2026-09-05.md": {
+        "bytes": 4270,
+        "sha256": "ca221a2fd87ad58ec8aba43991c8837cff210cc91480930fee4099e4f574facd"
+      },
+      "WONDER-WEAPON-EVIDENCE-2026-09-05.md": {
+        "bytes": 7565,
+        "sha256": "bc1846e19bfdda58145808a558bbc5f921e380153e1720d7b10a4725c07147e1"
+      },
+      "assets/bosses/abyssal-warden.png": {
+        "bytes": 1903041,
+        "sha256": "156c69fd550b4b53c61c486f8c144ef9d1660b0bb7951e3c43ec252f7eecd889"
+      },
+      "assets/bosses/crimson-turret-goofy.png": {
+        "bytes": 1381401,
+        "sha256": "0838c9152edb4e05ed9508f9fa70a7f41a1b9a89b172ec5d9b88078c038dda07"
+      },
+      "assets/bosses/dreamscape-idol-goofy.png": {
+        "bytes": 1311066,
+        "sha256": "7d031b94a39378f537518cf61eef0f856dec79c6cc2c3cfc75d040fbb34ee9e2"
+      },
+      "assets/bosses/hachiman-goofy.png": {
+        "bytes": 1944086,
+        "sha256": "ea219cb41ba34b23b753fb3e068e48db757721dd4eedda0e62691b40a7164085"
+      },
+      "assets/bosses/hachiman.png": {
+        "bytes": 1810015,
+        "sha256": "4d54351a74bf3e25c4eafe468047678d80f47d257fca665f7bea21fba57e8c25"
+      },
+      "assets/bosses/shadow-ruin.png": {
+        "bytes": 1596763,
+        "sha256": "564921b661957a6430338378f779679560a171b238bc776ab5469c22b044b628"
+      },
+      "assets/bosses/slaughter-drive.png": {
+        "bytes": 1251248,
+        "sha256": "daf4ae6653458f3e7b70a72322b24af695ceb396201c9c298c0cb639407a391e"
+      },
+      "assets/bosses/vishnu.png": {
+        "bytes": 2446939,
+        "sha256": "a01531773a075f9dfca8fb0f6a76667d4e286c3ca7ee31818f84034930cab20a"
+      },
+      "assets/characters/akihiko.webp": {
+        "bytes": 73476,
+        "sha256": "559d45d9998508554f4ce7658b1058b099b8948cee55763f5ef80695a6d44d4b"
+      },
+      "assets/characters/ange.webp": {
+        "bytes": 201372,
+        "sha256": "0aa186a094f66a76e440cb92f119354d7c0ccc34535938db8de03c5a6fa81761"
+      },
+      "assets/characters/berry.webp": {
+        "bytes": 400126,
+        "sha256": "778b59518d09b60ba459f1508604f20ef8aa2595878e79c0225bfd850b8447b7"
+      },
+      "assets/characters/blitz.webp": {
+        "bytes": 459534,
+        "sha256": "65981d364c9687e45669551894fe2e6c36c532ec8270f0f317839e8e903b7b6d"
+      },
+      "assets/characters/bui-cosmic-asparagus.png": {
+        "bytes": 448837,
+        "sha256": "cfd84e46db12515961467e91bad89fc712c7c4e6ad7f67f18bb4ce01199035f1"
+      },
+      "assets/characters/bui-cosmic-avatar.webp": {
+        "bytes": 30756,
+        "sha256": "f68d1efa5ffe6f61e137afb6b514e86a16badfcd4cb1d46ef01ba8a911811747"
+      },
+      "assets/characters/bui-cosmic-eggplant.png": {
+        "bytes": 449405,
+        "sha256": "0beeea723d784dd0fe9827463f680390912e1183948346e643f75719d2209a66"
+      },
+      "assets/characters/bui-cosmic-goofy.png": {
+        "bytes": 445525,
+        "sha256": "694ab4e48bf1f8bc8644eaab497e313211914cf7dfd627b731573b8ce01f4564"
+      },
+      "assets/characters/bui-cosmic-mushroom.png": {
+        "bytes": 447962,
+        "sha256": "6ff45f1f0752f540577156b46f67e566fb6c289e25e8d855f3f3412793e34592"
+      },
+      "assets/characters/bui-cosmic-potato.png": {
+        "bytes": 448165,
+        "sha256": "2f87a3ac0fad6b0b4e25572ce89f8d8a04613aac966c52b1b21a1482d6a0f601"
+      },
+      "assets/characters/bui-cosmic.webp": {
+        "bytes": 169850,
+        "sha256": "e20367038d4624130fc47d9cfafefa4c9887c5bc8860ee7b3d764621590f6e72"
+      },
+      "assets/characters/cosmic-yui/asset-manifest.json": {
+        "bytes": 817,
+        "sha256": "8e9eb41ea13cfbd6225fff8734aa67065b13dac10661941cfbd9fdeaac6f6eb4"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-asparagus.svg": {
+        "bytes": 13625,
+        "sha256": "6d01ef3e1106e0ae25d69d95179c13d7f7c3076a16d8622ade02ad88667c3593"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-battle.webp": {
+        "bytes": 169850,
+        "sha256": "e20367038d4624130fc47d9cfafefa4c9887c5bc8860ee7b3d764621590f6e72"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-eggplant.svg": {
+        "bytes": 13625,
+        "sha256": "29aa0f2954f587e760db485b7ab95b78c40510b694bf5634d1871922b327490b"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-mushroom.svg": {
+        "bytes": 13625,
+        "sha256": "a1c31d19b8fd53286e5c66484f1520133ec8c370637d59145ece67a37419e64d"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-potato.svg": {
+        "bytes": 13625,
+        "sha256": "336eee415031253ccac13f1f1354d49af9731a88b891de4f395d8decf72df45c"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-prismatic.svg": {
+        "bytes": 13625,
+        "sha256": "84719846135d3fdf382eac82c1fd7dd9430cf1ce26b992bee1998ff69b06b908"
+      },
+      "assets/characters/cosmic-yui/cosmic-yui-thumbnail.png": {
+        "bytes": 85388,
+        "sha256": "9ba698a92105f26a0ac1756d5e3b6320d653bed137b48b75a9f8ba96fc71c543"
+      },
+      "assets/characters/cosmic-yui/knight-asparagus.png": {
+        "bytes": 14758,
+        "sha256": "a0c8689b90878fedf719f8c13030099ba9d8e9ddfaae6951ab0627b46f37874c"
+      },
+      "assets/characters/cosmic-yui/knight-asparagus.svg": {
+        "bytes": 757,
+        "sha256": "af74c61cfcdc0b9f947e6aa4bd9ab677756de417d216e378e5b7f56684debad4"
+      },
+      "assets/characters/cosmic-yui/knight-eggplant.png": {
+        "bytes": 15572,
+        "sha256": "de91bdb24a5ab6fbc4d4e85d796c468c3bbf6dff54ae9606023ffac17b21771e"
+      },
+      "assets/characters/cosmic-yui/knight-eggplant.svg": {
+        "bytes": 728,
+        "sha256": "ef9d28550d9797a4d7d14780a5ab8c0b17cfaa60975a168669085ce2d58dff96"
+      },
+      "assets/characters/cosmic-yui/knight-mushroom.png": {
+        "bytes": 18431,
+        "sha256": "3ab0ea7aa33afce5af00ad0f2e5f3f4425da93c01052de58db024f3d52012a71"
+      },
+      "assets/characters/cosmic-yui/knight-mushroom.svg": {
+        "bytes": 931,
+        "sha256": "8a9bc83cc15ad0208783a6a912876838970159762937cb9046a870695f9d181d"
+      },
+      "assets/characters/cosmic-yui/knight-potato.png": {
+        "bytes": 20993,
+        "sha256": "6221a3be629df1e7b4fcdfffcd87de163f10b7c77f4fdb848252a06350ad8c32"
+      },
+      "assets/characters/cosmic-yui/knight-potato.svg": {
+        "bytes": 752,
+        "sha256": "b3af4d893f88cd277ac883f3f544d1b70b07b0769ed21090552e203f0e71d979"
+      },
+      "assets/characters/crow.webp": {
+        "bytes": 199572,
+        "sha256": "616baed6f87de342bb80fabfe45fd8cb7ce1ebf5b560ef60ddb17310bf637b56"
+      },
+      "assets/characters/howler.webp": {
+        "bytes": 267372,
+        "sha256": "acf726a218bdf18a844f66fee79850a6ffdadc35eb18bd7072bf33bf86c6b8fd"
+      },
+      "assets/characters/j-c-goofy.png": {
+        "bytes": 1472270,
+        "sha256": "b33d7b2b7fa6047ab119df9903fc48d5f30c5c104bf994f23cd6eb5ac532c277"
+      },
+      "assets/characters/j-c.webp": {
+        "bytes": 377820,
+        "sha256": "521d528b2957a315d984572833293dc79fb9f3bef59c880bca69483f762759bc"
+      },
+      "assets/characters/joker.webp": {
+        "bytes": 201338,
+        "sha256": "76c911b5f3469e15f89cdc93133a36f43100f5a14441b9c77d56f391d48e2f7b"
+      },
+      "assets/characters/luce.webp": {
+        "bytes": 284718,
+        "sha256": "1cc1fc6c8f3d72376f25caf43db2cb054edfdd7c4df9b04691e61294c026c552"
+      },
+      "assets/characters/makoto.webp": {
+        "bytes": 155162,
+        "sha256": "f73fa185e2f29ed9cd21fd29838bd99e92b90023457a739ba5d761573ce93c0c"
+      },
+      "assets/characters/marian-beachflower-goofy.png": {
+        "bytes": 2159251,
+        "sha256": "de18552698b1000e6a7e454ffbda02163d3375b5a56cddb17d3f4768980c536e"
+      },
+      "assets/characters/marian-beachflower.webp": {
+        "bytes": 278292,
+        "sha256": "5787125ddbb471aab2785aff778578da06c656ab20010128a6e938813a60f154"
+      },
+      "assets/characters/matoi.webp": {
+        "bytes": 179092,
+        "sha256": "6f7374b1d9339b112deb06b8a5f112d88d26b73512ce6c3021b3cdc501a0ff8c"
+      },
+      "assets/characters/miku.webp": {
+        "bytes": 354354,
+        "sha256": "13d1346ef9197f32713954dd3d45d9e5c4349f19048767420cb463818ee8e54d"
+      },
+      "assets/characters/mona.webp": {
+        "bytes": 163738,
+        "sha256": "a725061c9bdc1ba952ff1a8188a2b9e84781de464a84fd0d741663352b51b1b2"
+      },
+      "assets/characters/mont-frostgale.webp": {
+        "bytes": 495324,
+        "sha256": "adc4aacd936746d250c2d30532e24123eb44f2de06785692a0a30eb903bfc297"
+      },
+      "assets/characters/noir.webp": {
+        "bytes": 448778,
+        "sha256": "1ffd3eeaf171609fab62bd12a26db32f0e90df7f18369d720c989200b3e8119d"
+      },
+      "assets/characters/okyann.webp": {
+        "bytes": 545790,
+        "sha256": "f05d0daaf8788b46ff0c68f343def29c215d30c5c99e7cdf0c802d221a925486"
+      },
+      "assets/characters/puppet-wavecatcher-goofy.png": {
+        "bytes": 1569740,
+        "sha256": "a7fcb79462f3c320a5a1a5860759244dd91bb9ef0e2abc46ffeb70b478b047b4"
+      },
+      "assets/characters/puppet-wavecatcher.webp": {
+        "bytes": 265814,
+        "sha256": "f80d5846f45c4555b73ffaae1f233fbc3d87ac67053dfd530cb15e7d95fbf34e"
+      },
+      "assets/characters/rin-firecracker.webp": {
+        "bytes": 237412,
+        "sha256": "d5339976fa4ba89dbb75e1ba4e5811e09b819866ff4e21ea5b1f48425ee203df"
+      },
+      "assets/characters/rin.webp": {
+        "bytes": 632804,
+        "sha256": "244d2326c9bf4aec47e0092894699c2f41ad8b7d5ae3e46aac575ba8455e9445"
+      },
+      "assets/characters/turbo.webp": {
+        "bytes": 221516,
+        "sha256": "397568af9cec84be359ae66b4d277ff79def61102c34bd3591d52f620cca6d07"
+      },
+      "assets/characters/violet.webp": {
+        "bytes": 354352,
+        "sha256": "c7ea4f13a438518830b90b1242a69c5a0a17fe7dc9aeeed5995a83e6e4e4dbb4"
+      },
+      "assets/characters/wind-tempest.webp": {
+        "bytes": 765276,
+        "sha256": "656dfffd92de6e63c82a55e7cb5e2e9626a7ad9c3da2357f80590c933b6360a3"
+      },
+      "assets/characters/wonder.png": {
+        "bytes": 1718779,
+        "sha256": "ee42c933050e1af6bb15bab8acda126275bb5af4882718e65594192af1100afc"
+      },
+      "assets/characters/yukari.webp": {
+        "bytes": 229068,
+        "sha256": "484d9012e580a6d0c1f873b9a170ccc3bf5358b845a7487a50ba75d2703932d4"
+      },
+      "data/berry-s3-shield-evidence-2026-09-05.json": {
+        "bytes": 632,
+        "sha256": "bd4f38e08368c0530e6b5fd0048f4165a910fa2a3b924928d528c1e9051f7f23"
+      },
+      "data/berry-talent-text-2026-09-06.json": {
+        "bytes": 3418,
+        "sha256": "559ca2abab3b2ae3fab4aa081193dd150ea44ffff5593d3f8f0ae97ede670eb3"
+      },
+      "data/cosmic-yui-source-2026-09-12.json": {
+        "bytes": 7381,
+        "sha256": "f7fa20299b375a33f6270023a10579132600003b0618c12899d23c35cd126441"
+      },
+      "data/daisoujou-photo-evidence-2026-09-05.json": {
+        "bytes": 1490,
+        "sha256": "8eebe59f20e55c021b7fa76194096f0acc1f87dcb5a4201e93cb6a74a8e6381d"
+      },
+      "data/game-api-template.json": {
+        "bytes": 2500,
+        "sha256": "8e1adfec55034c91d991a193f3f95b05e170c4769d531e0c796f9aa917a818d5"
+      },
+      "data/hachiman-damage-formula-research-2026-09-05.json": {
+        "bytes": 1950,
+        "sha256": "2138096dd3182036fb87b0f90a5b9a25c5089741b9281bdf8907d2855e306706"
+      },
+      "data/hachiman-dod-live-run-2026-09-10.json": {
+        "bytes": 8995,
+        "sha256": "5933ab5febdb12c2a4c6469063bfe339a4e5f917afb08f9685226130ac564ada"
+      },
+      "data/hachiman-highlight-candidate-2026-09-05.json": {
+        "bytes": 1415,
+        "sha256": "f0bbe09cb9ab663800ef6460e9a0330ad87a2bd0f95bcb7654a7a0b2dfcbd0e1"
+      },
+      "data/hachiman-loadout-evidence-2026-09-05.json": {
+        "bytes": 16159,
+        "sha256": "5e7d47b4e8bea206e06f077b3d4c010b14891f097632d80e599b04ec0343f25a"
+      },
+      "data/hachiman-panels-2026-09-06.json": {
+        "bytes": 3485,
+        "sha256": "ed8c5fd8ca860d5a99f09b33d4b2296860a6d7c2ef36002727f8e4be079e8722"
+      },
+      "data/hachiman-t2-start-status-2026-09-06.json": {
+        "bytes": 4566,
+        "sha256": "c05e10463bed5d3b10725680da18eb4046e538aeb4a87daa32232c78f1148039"
+      },
+      "data/hachiman-t5-continuation-evidence-2026-09-05.json": {
+        "bytes": 800,
+        "sha256": "017b960e963fffa31dfafd618bc04edbde2da7c6f14e4e9e89dbfd3d7ad30748"
+      },
+      "data/hachiman-t6-status-2026-09-06.json": {
+        "bytes": 9068,
+        "sha256": "2d863b3739908f2a7d8cadcead90675d655b3f8301cbae3624c0c3c6fcd277b5"
+      },
+      "data/hachiman-t7-resource-evidence-2026-09-05.json": {
+        "bytes": 1094,
+        "sha256": "dc089c8a33c5f00dd4c3c9a3a05b23c5589d74a2b280452e99f134c075abdc04"
+      },
+      "data/highlight-charge-evidence-2026-09-05.json": {
+        "bytes": 1759,
+        "sha256": "0d6b82bf3aa04061180bb75d98e7ce754faca3370d5f934059d6a79e8b5efa3c"
+      },
+      "data/ichigo-live-t3-snapshot-2026-09-05.json": {
+        "bytes": 5338,
+        "sha256": "68d92d9ed5fe0feff26420d5b095fff82894275917706c92a91791bdfb7cfedb"
+      },
+      "data/jc-a6-user-evidence-2026-09-05.json": {
+        "bytes": 1677,
+        "sha256": "efb889ae0b86023949cf337c4b6aa686dd796a20e25585257593159fd8af4443"
+      },
+      "data/lufel-catalog.json": {
+        "bytes": 828081,
+        "sha256": "55766a0bf77abdb0a2f7cf6f18733eb1c7f550f8a2c36802a48c4e135cc9ed0f"
+      },
+      "data/lufel-live-persona-skills.json": {
+        "bytes": 320607,
+        "sha256": "66c036ce0c6c65ba6c69d8621716e7727bfc8b9dd206a4d8e62bdaa838f15a8d"
+      },
+      "data/lufel-live-recent.json": {
+        "bytes": 158359,
+        "sha256": "0e73913f9de5b131f545479d0ebb9b376bcdf081239af44ccacaf723e5d92221"
+      },
+      "data/optimizer-slaughter-2026-09-04-archive-replay.json": {
+        "bytes": 30168,
+        "sha256": "4ec44f9c01457d9375e8ad441f673a5d2043b3bc15cc486d222d1bb8283d66dc"
+      },
+      "data/optimizer-slaughter-2026-09-04-archive.json": {
+        "bytes": 61466,
+        "sha256": "a443219b501796f930dfb1722d48b902f70870861f05ff88a62e8517bce6e8d1"
+      },
+      "data/optimizer-slaughter-2026-09-05-replay.json": {
+        "bytes": 30435,
+        "sha256": "47dd9ee3ef65dd3138085aa678480dbd79ebcdb553636b127100cb69848d0493"
+      },
+      "data/optimizer-slaughter-latest.json": {
+        "bytes": 61955,
+        "sha256": "2aba2819245cd6ff913c368bea60cf372d4c7026f8b7251ecac8ac477ba06b12"
+      },
+      "data/turn-start-sp-recovery-evidence-2026-09-05.json": {
+        "bytes": 1148,
+        "sha256": "fb11be265a45a6e80e19e6d471cb0be84ed05ee9fa96ee21ab38b5e19b6ecfa2"
+      },
+      "dist/assets/bosses/abyssal-warden.png": {
+        "bytes": 1903041,
+        "sha256": "156c69fd550b4b53c61c486f8c144ef9d1660b0bb7951e3c43ec252f7eecd889"
+      },
+      "dist/assets/bosses/crimson-turret-goofy.png": {
+        "bytes": 1381401,
+        "sha256": "0838c9152edb4e05ed9508f9fa70a7f41a1b9a89b172ec5d9b88078c038dda07"
+      },
+      "dist/assets/bosses/dreamscape-idol-goofy.png": {
+        "bytes": 1311066,
+        "sha256": "7d031b94a39378f537518cf61eef0f856dec79c6cc2c3cfc75d040fbb34ee9e2"
+      },
+      "dist/assets/bosses/hachiman-goofy.png": {
+        "bytes": 1944086,
+        "sha256": "ea219cb41ba34b23b753fb3e068e48db757721dd4eedda0e62691b40a7164085"
+      },
+      "dist/assets/bosses/hachiman.png": {
+        "bytes": 1810015,
+        "sha256": "4d54351a74bf3e25c4eafe468047678d80f47d257fca665f7bea21fba57e8c25"
+      },
+      "dist/assets/bosses/shadow-ruin.png": {
+        "bytes": 1596763,
+        "sha256": "564921b661957a6430338378f779679560a171b238bc776ab5469c22b044b628"
+      },
+      "dist/assets/bosses/slaughter-drive.png": {
+        "bytes": 1251248,
+        "sha256": "daf4ae6653458f3e7b70a72322b24af695ceb396201c9c298c0cb639407a391e"
+      },
+      "dist/assets/bosses/vishnu.png": {
+        "bytes": 2446939,
+        "sha256": "a01531773a075f9dfca8fb0f6a76667d4e286c3ca7ee31818f84034930cab20a"
+      },
+      "dist/assets/characters/akihiko.webp": {
+        "bytes": 73476,
+        "sha256": "559d45d9998508554f4ce7658b1058b099b8948cee55763f5ef80695a6d44d4b"
+      },
+      "dist/assets/characters/ange.webp": {
+        "bytes": 201372,
+        "sha256": "0aa186a094f66a76e440cb92f119354d7c0ccc34535938db8de03c5a6fa81761"
+      },
+      "dist/assets/characters/berry.webp": {
+        "bytes": 400126,
+        "sha256": "778b59518d09b60ba459f1508604f20ef8aa2595878e79c0225bfd850b8447b7"
+      },
+      "dist/assets/characters/blitz.webp": {
+        "bytes": 459534,
+        "sha256": "65981d364c9687e45669551894fe2e6c36c532ec8270f0f317839e8e903b7b6d"
+      },
+      "dist/assets/characters/bui-cosmic-asparagus.png": {
+        "bytes": 448837,
+        "sha256": "cfd84e46db12515961467e91bad89fc712c7c4e6ad7f67f18bb4ce01199035f1"
+      },
+      "dist/assets/characters/bui-cosmic-avatar.webp": {
+        "bytes": 30756,
+        "sha256": "f68d1efa5ffe6f61e137afb6b514e86a16badfcd4cb1d46ef01ba8a911811747"
+      },
+      "dist/assets/characters/bui-cosmic-eggplant.png": {
+        "bytes": 449405,
+        "sha256": "0beeea723d784dd0fe9827463f680390912e1183948346e643f75719d2209a66"
+      },
+      "dist/assets/characters/bui-cosmic-goofy.png": {
+        "bytes": 445525,
+        "sha256": "694ab4e48bf1f8bc8644eaab497e313211914cf7dfd627b731573b8ce01f4564"
+      },
+      "dist/assets/characters/bui-cosmic-mushroom.png": {
+        "bytes": 447962,
+        "sha256": "6ff45f1f0752f540577156b46f67e566fb6c289e25e8d855f3f3412793e34592"
+      },
+      "dist/assets/characters/bui-cosmic-potato.png": {
+        "bytes": 448165,
+        "sha256": "2f87a3ac0fad6b0b4e25572ce89f8d8a04613aac966c52b1b21a1482d6a0f601"
+      },
+      "dist/assets/characters/bui-cosmic.webp": {
+        "bytes": 169850,
+        "sha256": "e20367038d4624130fc47d9cfafefa4c9887c5bc8860ee7b3d764621590f6e72"
+      },
+      "dist/assets/characters/cosmic-yui/asset-manifest.json": {
+        "bytes": 817,
+        "sha256": "8e9eb41ea13cfbd6225fff8734aa67065b13dac10661941cfbd9fdeaac6f6eb4"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-asparagus.svg": {
+        "bytes": 13625,
+        "sha256": "6d01ef3e1106e0ae25d69d95179c13d7f7c3076a16d8622ade02ad88667c3593"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-battle.webp": {
+        "bytes": 169850,
+        "sha256": "e20367038d4624130fc47d9cfafefa4c9887c5bc8860ee7b3d764621590f6e72"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-eggplant.svg": {
+        "bytes": 13625,
+        "sha256": "29aa0f2954f587e760db485b7ab95b78c40510b694bf5634d1871922b327490b"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-mushroom.svg": {
+        "bytes": 13625,
+        "sha256": "a1c31d19b8fd53286e5c66484f1520133ec8c370637d59145ece67a37419e64d"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-potato.svg": {
+        "bytes": 13625,
+        "sha256": "336eee415031253ccac13f1f1354d49af9731a88b891de4f395d8decf72df45c"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-prismatic.svg": {
+        "bytes": 13625,
+        "sha256": "84719846135d3fdf382eac82c1fd7dd9430cf1ce26b992bee1998ff69b06b908"
+      },
+      "dist/assets/characters/cosmic-yui/cosmic-yui-thumbnail.png": {
+        "bytes": 85388,
+        "sha256": "9ba698a92105f26a0ac1756d5e3b6320d653bed137b48b75a9f8ba96fc71c543"
+      },
+      "dist/assets/characters/cosmic-yui/knight-asparagus.png": {
+        "bytes": 14758,
+        "sha256": "a0c8689b90878fedf719f8c13030099ba9d8e9ddfaae6951ab0627b46f37874c"
+      },
+      "dist/assets/characters/cosmic-yui/knight-asparagus.svg": {
+        "bytes": 757,
+        "sha256": "af74c61cfcdc0b9f947e6aa4bd9ab677756de417d216e378e5b7f56684debad4"
+      },
+      "dist/assets/characters/cosmic-yui/knight-eggplant.png": {
+        "bytes": 15572,
+        "sha256": "de91bdb24a5ab6fbc4d4e85d796c468c3bbf6dff54ae9606023ffac17b21771e"
+      },
+      "dist/assets/characters/cosmic-yui/knight-eggplant.svg": {
+        "bytes": 728,
+        "sha256": "ef9d28550d9797a4d7d14780a5ab8c0b17cfaa60975a168669085ce2d58dff96"
+      },
+      "dist/assets/characters/cosmic-yui/knight-mushroom.png": {
+        "bytes": 18431,
+        "sha256": "3ab0ea7aa33afce5af00ad0f2e5f3f4425da93c01052de58db024f3d52012a71"
+      },
+      "dist/assets/characters/cosmic-yui/knight-mushroom.svg": {
+        "bytes": 931,
+        "sha256": "8a9bc83cc15ad0208783a6a912876838970159762937cb9046a870695f9d181d"
+      },
+      "dist/assets/characters/cosmic-yui/knight-potato.png": {
+        "bytes": 20993,
+        "sha256": "6221a3be629df1e7b4fcdfffcd87de163f10b7c77f4fdb848252a06350ad8c32"
+      },
+      "dist/assets/characters/cosmic-yui/knight-potato.svg": {
+        "bytes": 752,
+        "sha256": "b3af4d893f88cd277ac883f3f544d1b70b07b0769ed21090552e203f0e71d979"
+      },
+      "dist/assets/characters/crow.webp": {
+        "bytes": 199572,
+        "sha256": "616baed6f87de342bb80fabfe45fd8cb7ce1ebf5b560ef60ddb17310bf637b56"
+      },
+      "dist/assets/characters/howler.webp": {
+        "bytes": 267372,
+        "sha256": "acf726a218bdf18a844f66fee79850a6ffdadc35eb18bd7072bf33bf86c6b8fd"
+      },
+      "dist/assets/characters/j-c-goofy.png": {
+        "bytes": 1472270,
+        "sha256": "b33d7b2b7fa6047ab119df9903fc48d5f30c5c104bf994f23cd6eb5ac532c277"
+      },
+      "dist/assets/characters/j-c.webp": {
+        "bytes": 377820,
+        "sha256": "521d528b2957a315d984572833293dc79fb9f3bef59c880bca69483f762759bc"
+      },
+      "dist/assets/characters/joker.webp": {
+        "bytes": 201338,
+        "sha256": "76c911b5f3469e15f89cdc93133a36f43100f5a14441b9c77d56f391d48e2f7b"
+      },
+      "dist/assets/characters/luce.webp": {
+        "bytes": 284718,
+        "sha256": "1cc1fc6c8f3d72376f25caf43db2cb054edfdd7c4df9b04691e61294c026c552"
+      },
+      "dist/assets/characters/makoto.webp": {
+        "bytes": 155162,
+        "sha256": "f73fa185e2f29ed9cd21fd29838bd99e92b90023457a739ba5d761573ce93c0c"
+      },
+      "dist/assets/characters/marian-beachflower-goofy.png": {
+        "bytes": 2159251,
+        "sha256": "de18552698b1000e6a7e454ffbda02163d3375b5a56cddb17d3f4768980c536e"
+      },
+      "dist/assets/characters/marian-beachflower.webp": {
+        "bytes": 278292,
+        "sha256": "5787125ddbb471aab2785aff778578da06c656ab20010128a6e938813a60f154"
+      },
+      "dist/assets/characters/matoi.webp": {
+        "bytes": 179092,
+        "sha256": "6f7374b1d9339b112deb06b8a5f112d88d26b73512ce6c3021b3cdc501a0ff8c"
+      },
+      "dist/assets/characters/miku.webp": {
+        "bytes": 354354,
+        "sha256": "13d1346ef9197f32713954dd3d45d9e5c4349f19048767420cb463818ee8e54d"
+      },
+      "dist/assets/characters/mona.webp": {
+        "bytes": 163738,
+        "sha256": "a725061c9bdc1ba952ff1a8188a2b9e84781de464a84fd0d741663352b51b1b2"
+      },
+      "dist/assets/characters/mont-frostgale.webp": {
+        "bytes": 495324,
+        "sha256": "adc4aacd936746d250c2d30532e24123eb44f2de06785692a0a30eb903bfc297"
+      },
+      "dist/assets/characters/noir.webp": {
+        "bytes": 448778,
+        "sha256": "1ffd3eeaf171609fab62bd12a26db32f0e90df7f18369d720c989200b3e8119d"
+      },
+      "dist/assets/characters/okyann.webp": {
+        "bytes": 545790,
+        "sha256": "f05d0daaf8788b46ff0c68f343def29c215d30c5c99e7cdf0c802d221a925486"
+      },
+      "dist/assets/characters/puppet-wavecatcher-goofy.png": {
+        "bytes": 1569740,
+        "sha256": "a7fcb79462f3c320a5a1a5860759244dd91bb9ef0e2abc46ffeb70b478b047b4"
+      },
+      "dist/assets/characters/puppet-wavecatcher.webp": {
+        "bytes": 265814,
+        "sha256": "f80d5846f45c4555b73ffaae1f233fbc3d87ac67053dfd530cb15e7d95fbf34e"
+      },
+      "dist/assets/characters/rin-firecracker.webp": {
+        "bytes": 237412,
+        "sha256": "d5339976fa4ba89dbb75e1ba4e5811e09b819866ff4e21ea5b1f48425ee203df"
+      },
+      "dist/assets/characters/rin.webp": {
+        "bytes": 632804,
+        "sha256": "244d2326c9bf4aec47e0092894699c2f41ad8b7d5ae3e46aac575ba8455e9445"
+      },
+      "dist/assets/characters/turbo.webp": {
+        "bytes": 221516,
+        "sha256": "397568af9cec84be359ae66b4d277ff79def61102c34bd3591d52f620cca6d07"
+      },
+      "dist/assets/characters/violet.webp": {
+        "bytes": 354352,
+        "sha256": "c7ea4f13a438518830b90b1242a69c5a0a17fe7dc9aeeed5995a83e6e4e4dbb4"
+      },
+      "dist/assets/characters/wind-tempest.webp": {
+        "bytes": 765276,
+        "sha256": "656dfffd92de6e63c82a55e7cb5e2e9626a7ad9c3da2357f80590c933b6360a3"
+      },
+      "dist/assets/characters/wonder.png": {
+        "bytes": 1718779,
+        "sha256": "ee42c933050e1af6bb15bab8acda126275bb5af4882718e65594192af1100afc"
+      },
+      "dist/assets/characters/yukari.webp": {
+        "bytes": 229068,
+        "sha256": "484d9012e580a6d0c1f873b9a170ccc3bf5358b845a7487a50ba75d2703932d4"
+      },
+      "dist/data/berry-s3-shield-evidence-2026-09-05.json": {
+        "bytes": 632,
+        "sha256": "bd4f38e08368c0530e6b5fd0048f4165a910fa2a3b924928d528c1e9051f7f23"
+      },
+      "dist/data/berry-talent-text-2026-09-06.json": {
+        "bytes": 3418,
+        "sha256": "559ca2abab3b2ae3fab4aa081193dd150ea44ffff5593d3f8f0ae97ede670eb3"
+      },
+      "dist/data/cosmic-yui-source-2026-09-12.json": {
+        "bytes": 7381,
+        "sha256": "f7fa20299b375a33f6270023a10579132600003b0618c12899d23c35cd126441"
+      },
+      "dist/data/daisoujou-photo-evidence-2026-09-05.json": {
+        "bytes": 1490,
+        "sha256": "8eebe59f20e55c021b7fa76194096f0acc1f87dcb5a4201e93cb6a74a8e6381d"
+      },
+      "dist/data/game-api-template.json": {
+        "bytes": 2500,
+        "sha256": "8e1adfec55034c91d991a193f3f95b05e170c4769d531e0c796f9aa917a818d5"
+      },
+      "dist/data/hachiman-damage-formula-research-2026-09-05.json": {
+        "bytes": 1950,
+        "sha256": "2138096dd3182036fb87b0f90a5b9a25c5089741b9281bdf8907d2855e306706"
+      },
+      "dist/data/hachiman-dod-live-run-2026-09-10.json": {
+        "bytes": 8995,
+        "sha256": "5933ab5febdb12c2a4c6469063bfe339a4e5f917afb08f9685226130ac564ada"
+      },
+      "dist/data/hachiman-highlight-candidate-2026-09-05.json": {
+        "bytes": 1415,
+        "sha256": "f0bbe09cb9ab663800ef6460e9a0330ad87a2bd0f95bcb7654a7a0b2dfcbd0e1"
+      },
+      "dist/data/hachiman-loadout-evidence-2026-09-05.json": {
+        "bytes": 16159,
+        "sha256": "5e7d47b4e8bea206e06f077b3d4c010b14891f097632d80e599b04ec0343f25a"
+      },
+      "dist/data/hachiman-panels-2026-09-06.json": {
+        "bytes": 3485,
+        "sha256": "ed8c5fd8ca860d5a99f09b33d4b2296860a6d7c2ef36002727f8e4be079e8722"
+      },
+      "dist/data/hachiman-t2-start-status-2026-09-06.json": {
+        "bytes": 4566,
+        "sha256": "c05e10463bed5d3b10725680da18eb4046e538aeb4a87daa32232c78f1148039"
+      },
+      "dist/data/hachiman-t5-continuation-evidence-2026-09-05.json": {
+        "bytes": 800,
+        "sha256": "017b960e963fffa31dfafd618bc04edbde2da7c6f14e4e9e89dbfd3d7ad30748"
+      },
+      "dist/data/hachiman-t6-status-2026-09-06.json": {
+        "bytes": 9068,
+        "sha256": "2d863b3739908f2a7d8cadcead90675d655b3f8301cbae3624c0c3c6fcd277b5"
+      },
+      "dist/data/hachiman-t7-resource-evidence-2026-09-05.json": {
+        "bytes": 1094,
+        "sha256": "dc089c8a33c5f00dd4c3c9a3a05b23c5589d74a2b280452e99f134c075abdc04"
+      },
+      "dist/data/highlight-charge-evidence-2026-09-05.json": {
+        "bytes": 1759,
+        "sha256": "0d6b82bf3aa04061180bb75d98e7ce754faca3370d5f934059d6a79e8b5efa3c"
+      },
+      "dist/data/ichigo-live-t3-snapshot-2026-09-05.json": {
+        "bytes": 5338,
+        "sha256": "68d92d9ed5fe0feff26420d5b095fff82894275917706c92a91791bdfb7cfedb"
+      },
+      "dist/data/jc-a6-user-evidence-2026-09-05.json": {
+        "bytes": 1677,
+        "sha256": "efb889ae0b86023949cf337c4b6aa686dd796a20e25585257593159fd8af4443"
+      },
+      "dist/data/lufel-catalog.json": {
+        "bytes": 828081,
+        "sha256": "55766a0bf77abdb0a2f7cf6f18733eb1c7f550f8a2c36802a48c4e135cc9ed0f"
+      },
+      "dist/data/lufel-live-persona-skills.json": {
+        "bytes": 320607,
+        "sha256": "66c036ce0c6c65ba6c69d8621716e7727bfc8b9dd206a4d8e62bdaa838f15a8d"
+      },
+      "dist/data/lufel-live-recent.json": {
+        "bytes": 158359,
+        "sha256": "0e73913f9de5b131f545479d0ebb9b376bcdf081239af44ccacaf723e5d92221"
+      },
+      "dist/data/optimizer-slaughter-2026-09-04-archive-replay.json": {
+        "bytes": 30168,
+        "sha256": "4ec44f9c01457d9375e8ad441f673a5d2043b3bc15cc486d222d1bb8283d66dc"
+      },
+      "dist/data/optimizer-slaughter-2026-09-04-archive.json": {
+        "bytes": 61466,
+        "sha256": "a443219b501796f930dfb1722d48b902f70870861f05ff88a62e8517bce6e8d1"
+      },
+      "dist/data/optimizer-slaughter-2026-09-05-replay.json": {
+        "bytes": 30435,
+        "sha256": "47dd9ee3ef65dd3138085aa678480dbd79ebcdb553636b127100cb69848d0493"
+      },
+      "dist/data/optimizer-slaughter-latest.json": {
+        "bytes": 61955,
+        "sha256": "2aba2819245cd6ff913c368bea60cf372d4c7026f8b7251ecac8ac477ba06b12"
+      },
+      "dist/data/turn-start-sp-recovery-evidence-2026-09-05.json": {
+        "bytes": 1148,
+        "sha256": "fb11be265a45a6e80e19e6d471cb0be84ed05ee9fa96ee21ab38b5e19b6ecfa2"
+      },
+      "dist/index.html": {
+        "bytes": 564,
+        "sha256": "07c6f3afe8c3ae11e6e798d0f1dc07dafbcdf221ba8ee55a10bcfc2b8522550c"
+      },
+      "dist/manifest.webmanifest": {
+        "bytes": 185,
+        "sha256": "29ad4181f82037d4b28314934f318967a5887d432c7508d56433893d8bce2533"
+      },
+      "dist/src/app.js": {
+        "bytes": 153236,
+        "sha256": "b87154e486f3ca474e6d8d51afec59ffd233e40aac790d3c00ca3941117da878"
+      },
+      "dist/src/awareness.js": {
+        "bytes": 3814,
+        "sha256": "b88b4643a6c4cf65b4535e371ac6ad176c516ad46479da20b67319e143195532"
+      },
+      "dist/src/cosmic-yui-data.js": {
+        "bytes": 8141,
+        "sha256": "edea0f5cbcb7a4dba7d5f185692923f23b22412aed6ea041ba4b5ea3e586c9cc"
+      },
+      "dist/src/cosmic-yui-mechanics.js": {
+        "bytes": 18510,
+        "sha256": "fb1e8bf2ef61811af2f26e1915c237a7df124dc854cab872fab5275e6bc830c7"
+      },
+      "dist/src/data.js": {
+        "bytes": 17525,
+        "sha256": "64acc291e58b14183557ac2bce8afcb3377499db641bcc7d851c8d01b9fbfa06"
+      },
+      "dist/src/default-presets.js": {
+        "bytes": 3437,
+        "sha256": "c3c0a339aae8512dd4cf77b37e62aa15314b83c2c265913e28d00b6e4f5bf884"
+      },
+      "dist/src/engine.js": {
+        "bytes": 274896,
+        "sha256": "e8b6bcaa4cdbcad0114df7d3011b33958a57b7e232f6c3c650132daf801c9e02"
+      },
+      "dist/src/generated/lufel-catalog.js": {
+        "bytes": 828176,
+        "sha256": "474372bf7afbb0fa514141e79d1ca4c73e48bc955557cdd0185935e6aca9170c"
+      },
+      "dist/src/hachiman-dod-route.js": {
+        "bytes": 17585,
+        "sha256": "e638033e844f1a9984d0f604bbb9badb3d0e025e68201d843748828890a8b294"
+      },
+      "dist/src/hachiman-recorded-team.js": {
+        "bytes": 50240,
+        "sha256": "769d0820cd4c90c67496f83fb712ded7328147ca811c643a26211090ae405a62"
+      },
+      "dist/src/mode-scoring.js": {
+        "bytes": 3134,
+        "sha256": "0c668ab2d976fff295469b46010d9ebcfdb217f93816b55b542bf9529a0aa09c"
+      },
+      "dist/src/persona-loadout.js": {
+        "bytes": 3447,
+        "sha256": "ff766ac75f39c903c9a4271795b1d18516db8146a068b253a8277eb93930dff2"
+      },
+      "dist/src/styles.css": {
+        "bytes": 115712,
+        "sha256": "5fda6aa49feadc080bd45914061110af43d57a65f14168d889bd8a06a6220fe9"
+      },
+      "dist/src/wonder-weapons.js": {
+        "bytes": 1804,
+        "sha256": "58bb5876a210b327f769efb0118572f771407b537fbb691073180a6d0f01f522"
+      },
+      "index.html": {
+        "bytes": 564,
+        "sha256": "07c6f3afe8c3ae11e6e798d0f1dc07dafbcdf221ba8ee55a10bcfc2b8522550c"
+      },
+      "launch-p5x.bat": {
+        "bytes": 980,
+        "sha256": "f1bf8cc737150597eb9c100bf1bd3af36a6cfde5abd6d053c808db01dbcf43cc"
+      },
+      "manifest.webmanifest": {
+        "bytes": 185,
+        "sha256": "29ad4181f82037d4b28314934f318967a5887d432c7508d56433893d8bce2533"
+      },
+      "optimizer-full-replay-check.json": {
+        "bytes": 30123,
+        "sha256": "88f7b0266125fa97431f6ef43c711f5576931245413895a3e96554a426344052"
+      },
+      "optimizer-validation-seed17-replay.json": {
+        "bytes": 28698,
+        "sha256": "1636b9437751c06fa99e71d8cddce1fbb939687f7eada9a758bc8cf6ce95e896"
+      },
+      "optimizer-validation-seed17.json": {
+        "bytes": 57849,
+        "sha256": "7818d811df4226264ac0280b3f059fc907b1b59f729c741f7e7f6dd581eee9f0"
+      },
+      "optimizer-validation-small-replay.json": {
+        "bytes": 30556,
+        "sha256": "2f4f1c88a7b478ef2b634eadbae6c716e8f7f90d07a5a5f9e1321ab9cc4cb26e"
+      },
+      "optimizer-validation-small.json": {
+        "bytes": 60045,
+        "sha256": "03bb2241aac48b0aa071fe19943310f79ad9d9aff2defb7793ab223630eaf56e"
+      },
+      "outputs/chat-transcript-1de62095-2026-09-12.jsonl": {
+        "bytes": 96137752,
+        "sha256": "85e74a67bb40b6520959ff115c5789a857a435767810fbc99f6be31f92cd6e1a"
+      },
+      "outputs/hachiman-after-boss-tick-2026-09-11.json": {
+        "bytes": 2425415,
+        "sha256": "e86e26724f6e55acdff175809e9e096a094846831947eb0e15ad415f1ceb6f46"
+      },
+      "outputs/hachiman-after-concert-dedupe-2026-09-09.json": {
+        "bytes": 2469536,
+        "sha256": "a9af26543c37a0e8e27a5a80ad185820c35c81e9e2e1a458865dcd088aeee4d1"
+      },
+      "outputs/hachiman-after-dod-2026-09-09.json": {
+        "bytes": 2515510,
+        "sha256": "c486071677991360bebab761c79d979230d3baf98d4a0de26df0fab83eb274b0"
+      },
+      "outputs/hachiman-after-dod2-2026-09-09.json": {
+        "bytes": 2515995,
+        "sha256": "d3c8251ad1249ceef024ce51415fb2b2f6b6b17a385962924315ce584ecea3c0"
+      },
+      "outputs/hachiman-after-labor-2026-09-10.json": {
+        "bytes": 2444864,
+        "sha256": "91b6c2ee1b0a765129720095825305d1b001b18f1eb6ff3f4c24bc62737ae9c5"
+      },
+      "outputs/hachiman-after-live-run-2026-09-10.json": {
+        "bytes": 2444862,
+        "sha256": "9f1d9ef91cbe2d8f3e26e3d254e5fba77ac835f01aa72c62a0080e88ce87251d"
+      },
+      "outputs/hachiman-after-prescriptions-2026-09-11.json": {
+        "bytes": 2444862,
+        "sha256": "8280926706ee406c14f3fc37200f7b5f449b4a4f75fe6dbe9ed9907510defce0"
+      },
+      "outputs/hachiman-after-truedesire-2026-09-09.json": {
+        "bytes": 2515995,
+        "sha256": "ba5cc926bcc1335b2ecd8c8ef8bcdbdc25422d85ea2ffbc15e5fbeebb1cd80e3"
+      },
+      "outputs/hachiman-amplification-2026-09-06.json": {
+        "bytes": 2517187,
+        "sha256": "965db9bb6547372da5a68ff4152a80f48c05b19ac8bb5c9a9e55c5a5908806ef"
+      },
+      "outputs/hachiman-bucket-flat_base_attack-2026-09-06.json": {
+        "bytes": 2539008,
+        "sha256": "16866ed3f4281461836a09a9fc68c18fd9ac703565d2d99f7ee147684cd25bcc"
+      },
+      "outputs/hachiman-bucket-flat_buffed_attack_defense-2026-09-06.json": {
+        "bytes": 2539008,
+        "sha256": "15e037943aa4c618ff4288905301437cd873e807f94109437b824dd3b731bae0"
+      },
+      "outputs/hachiman-comparison-2026-09-05-berry-reset.json": {
+        "bytes": 196374,
+        "sha256": "17cc868368c34eaa9d141e26cf1fb016aa1dd6eae9e71409ec46b89462a846a9"
+      },
+      "outputs/hachiman-comparison-2026-09-05-current.json": {
+        "bytes": 113363,
+        "sha256": "23e9766703fa522a80910d1e0f93e073649e1fc6b188695aaada18ec15f853d6"
+      },
+      "outputs/hachiman-comparison-2026-09-05-defeat-stacks.json": {
+        "bytes": 195597,
+        "sha256": "6d104615f0ef0d52c2d6a6f88b57ca4db1177ad73e1c70079c26d236bd3a5eb2"
+      },
+      "outputs/hachiman-continuation-2026-09-05.json": {
+        "bytes": 700166,
+        "sha256": "cc8720ebf1a0f0ec254e66b420dfe3e6677a1f4ee3d1e593889d72ac381e030e"
+      },
+      "outputs/hachiman-continuation-both180-2026-09-05.json": {
+        "bytes": 754637,
+        "sha256": "82120d7cab07a9a02980b40193bc3d354dd09850ed1f25cc5891f448a5343229"
+      },
+      "outputs/hachiman-continuation-marian180-2026-09-05.json": {
+        "bytes": 713587,
+        "sha256": "b2541fd3e96d2cb1223ed9374419bde73c9ea7ebc502d1ac1ba4db88e372ecbe"
+      },
+      "outputs/hachiman-continuation-turn-start-sp-2026-09-05.json": {
+        "bytes": 820025,
+        "sha256": "98e3b33068c9af7aa3fb3885bb1a69a01f47187842cb323fdad13fd76c3d0137"
+      },
+      "outputs/hachiman-defense-364-2026-09-06.json": {
+        "bytes": 2512312,
+        "sha256": "f63fe8278c64db2a048ab310c6cd604a016d44dfb11d4251a9c78476d8bbd937"
+      },
+      "outputs/hachiman-defense-567-2026-09-06.json": {
+        "bytes": 2458228,
+        "sha256": "26ebc3d6b50ba749937d06ef668bd0722e7f74f6d3540a9e1d3137fb3dfda92a"
+      },
+      "outputs/hachiman-defense-821-2026-09-06.json": {
+        "bytes": 2512203,
+        "sha256": "70dd8bfd695fe4fe1acdd57a995c263f1dfc5a5285341692c27e10abd0a79345"
+      },
+      "outputs/hachiman-dod-live-replay-2026-09-10.json": {
+        "bytes": 1637,
+        "sha256": "cfcdbded925eb17b916232a85c95f80dd4c5742d7320e66239c7ebe6e063b193"
+      },
+      "outputs/hachiman-dod-optimizer-2026-09-09.json": {
+        "bytes": 16761,
+        "sha256": "24ec43328fa68a658f8af2efbfb4d63400b0b01371cf05a250405bb41a8df9d4"
+      },
+      "outputs/hachiman-dod-optimizer-sleepy-2026-09-09.json": {
+        "bytes": 17091,
+        "sha256": "1b16de57dc50585834e44a0dac03fb46bca80917e7d50fd2fc9527ca1b824e8d"
+      },
+      "outputs/hachiman-dod-optimizer-sleepy.log": {
+        "bytes": 6282,
+        "sha256": "8eeb8aab7ea3bf8c6fde5b9ee6ba75be62c70797af58c4450fe4ce1d91cbaef4"
+      },
+      "outputs/hachiman-dod-optimizer-joker-2026-09-09.json": {
+        "bytes": 17071,
+        "sha256": "a11fc37fdd4af0eaa4be9273ec8e560d6b820015c98a1b0296bd4b9d802b178f"
+      },
+      "outputs/hachiman-dod-optimizer-joker-2026-09-10.json": {
+        "bytes": 16847,
+        "sha256": "80a0bf92c3c2721054211da6168496036b718b2363c648bee1b06ffeb9fbeebb"
+      },
+      "outputs/hachiman-dod-optimizer-joker-2026-09-11.json": {
+        "bytes": 17011,
+        "sha256": "9e40f7a8bacd3f377b42c5ba483d5848dc78cba93e983ce5459717069df31894"
+      },
+      "outputs/hachiman-dod-optimizer-joker-2026-09-11b.json": {
+        "bytes": 16761,
+        "sha256": "24ec43328fa68a658f8af2efbfb4d63400b0b01371cf05a250405bb41a8df9d4"
+      },
+      "outputs/hachiman-dod-optimizer-joker-live-2026-09-10.json": {
+        "bytes": 17011,
+        "sha256": "7ccccb1d5aa4222395db0908923c99cf596220e634980ce424924cbee7e3c4c3"
+      },
+      "outputs/hachiman-dod-optimizer-joker-live.log": {
+        "bytes": 6226,
+        "sha256": "63686eecf09fadbe6c902b5233e4d03c36c92ebafcb3a6c56999a68981918dda"
+      },
+      "outputs/hachiman-dod-optimizer-joker-tick.log": {
+        "bytes": 5978,
+        "sha256": "3b70d08b4d92dcfc3cbedcfd4a9c10163f47dd245a9f84e492c9184d7db1d135"
+      },
+      "outputs/hachiman-dod-optimizer-joker.log": {
+        "bytes": 6035,
+        "sha256": "b9e8ce9cdfe8af8fca66a2175f7826b5dd120430abcf58022f67aca8caa7ec2c"
+      },
+      "outputs/hachiman-dod-sleepy-2026-09-09.json": {
+        "bytes": 8711,
+        "sha256": "ab919debd3f190ed7f28d2be853d3df8c8ce29988501db379b046f973c8c71e5"
+      },
+      "outputs/hachiman-dod-joker-best.json": {
+        "bytes": 8712,
+        "sha256": "8a03039182b3c2cb8ebccda2c3fb1a0e49394dea8f9f63760a7d9edc8b1816ea"
+      },
+      "outputs/hachiman-formula-correction-2026-09-05.json": {
+        "bytes": 895481,
+        "sha256": "61b501a0425b4f0a9c02b6e164f33acbc7ad157ecabda407aa01fc8c0779e27f"
+      },
+      "outputs/hachiman-full-rerun-2026-09-05.json": {
+        "bytes": 820025,
+        "sha256": "98e3b33068c9af7aa3fb3885bb1a69a01f47187842cb323fdad13fd76c3d0137"
+      },
+      "outputs/hachiman-highhp-fix-2026-09-06.json": {
+        "bytes": 2515510,
+        "sha256": "5a004903e4f061cf7f88927254023a987e20f7760480709d04bddf1ee70b25fa"
+      },
+      "outputs/hachiman-highlight-candidate-2026-09-05.json": {
+        "bytes": 1395912,
+        "sha256": "76a2a6f3ce77e4355f3c837c18f5aa32702df97f0b1b475edbaa2e057480d3d6"
+      },
+      "outputs/hachiman-hybrid-flat_base_attack-2026-09-06.json": {
+        "bytes": 2512083,
+        "sha256": "7aad3c707ca732e13dd360d3a32719d6f3dcf8bd421dd08473abd5e6b235ba6e"
+      },
+      "outputs/hachiman-hybrid-flat_buffed_attack_defense-2026-09-06.json": {
+        "bytes": 2512313,
+        "sha256": "e29ddaacf5d27be4a9d0a661bb06ffde93281cb74b4c6af15283e89fe935fe9c"
+      },
+      "outputs/hachiman-mataru-2026-09-06.json": {
+        "bytes": 2515328,
+        "sha256": "0e4aa209b52bfe8f50d1fffb9e420c929e9886f8e6ff2c29f2272ee7934303e5"
+      },
+      "outputs/hachiman-navigator-share-2026-09-06.json": {
+        "bytes": 2457840,
+        "sha256": "b4ff6a88e1cb90101a5451b11d6623cd1985a4538d5b8354d654cfd8e0b2a252"
+      },
+      "outputs/hachiman-optimizer-2026-09-06.json": {
+        "bytes": 8294,
+        "sha256": "f90c991611990c98399d75aac9c7a44932e922e1ea35fe93dc485e3dafaf1965"
+      },
+      "outputs/hachiman-panels-2026-09-06.json": {
+        "bytes": 2423118,
+        "sha256": "f39cf7301f52be5a7a92e47a5ee1d1635b07fe5960b627ee42f01cffbd10262c"
+      },
+      "outputs/hachiman-rakunda-fix-2026-09-06.json": {
+        "bytes": 2515531,
+        "sha256": "a32126a1d33442c4b138c0f54c54ba9f293b858019628ba65141f981e28e6562"
+      },
+      "outputs/hachiman-recorded-team-2026-09-06.json": {
+        "bytes": 2456278,
+        "sha256": "5a7cfb916564122d2df79f0690423c4b2e85889e46108c7aebf66a59a8a74f07"
+      },
+      "outputs/hachiman-score-multiplier-2026-09-06.json": {
+        "bytes": 380,
+        "sha256": "63d8b80eebeb70b0399e96796004ddceca60632c0182260d29b455f48bd83796"
+      },
+      "outputs/hachiman-stat-evidence-2026-09-06.json": {
+        "bytes": 2446540,
+        "sha256": "fcc5a9ef17823bcea9401262e3b32613be039c473a78780a0339359e2753515b"
+      },
+      "outputs/hachiman-structure-2026-09-06.json": {
+        "bytes": 2512075,
+        "sha256": "170e996ae3298a30909576b693cc77c7c3386e9bc633e1f658691161b9c3a026"
+      },
+      "outputs/hachiman-t2-status-2026-09-06.json": {
+        "bytes": 2510470,
+        "sha256": "adbd4f2c5531cb4492707806026e69245d790b2626c338ff5b52aeb479f218fa"
+      },
+      "outputs/hachiman-turn-weighted-final-2026-09-06.json": {
+        "bytes": 1422497,
+        "sha256": "6818c0fa47865d9ee3f86662f61810f0b1ba440752c4f57edba96e5651c3f954"
+      },
+      "outputs/hachiman-variance-fixes-2026-09-06.json": {
+        "bytes": 1669681,
+        "sha256": "b1085acd95b409c6fba47d09175b67f413ce07a118f67477d0d18000165bc27d"
+      },
+      "outputs/hachiman-variant-route-2026-09-06.json": {
+        "bytes": 2601166,
+        "sha256": "c43beace46538a0c2c2c7e1436e40cc180e8473adcb649b7f3c19591a870e678"
+      },
+      "outputs/server-2026-09-06-error.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "outputs/server-2026-09-06.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "outputs/validation-2026-09-05-current.txt": {
+        "bytes": 46374,
+        "sha256": "2fa4caa485f4137cebcb14f5b6336f820755e1d7a1f47916e9d1669450714b52"
+      },
+      "package.json": {
+        "bytes": 372,
+        "sha256": "c53526ff6c9616d66d8ef0cbd5cbd93e515008ccf9bee5bbdc690c0660243f16"
+      },
+      "preview-battle.png": {
+        "bytes": 77758,
+        "sha256": "f3c26cf7aaf50f10837da3d96ac43354b95e36b2537cce6bfa28c894e54b9dc5"
+      },
+      "run-local.bat": {
+        "bytes": 408,
+        "sha256": "4d22ee7fb3e5472d6e046b240dd88852df9546cad5792f6f06795c67dd8716e1"
+      },
+      "run-local.sh": {
+        "bytes": 54,
+        "sha256": "13121f7bff0a5e232613b6028cbe8da51e3b999bca8d5a08428ab592d420c26f"
+      },
+      "scripts/benchmark-slaughter.mjs": {
+        "bytes": 10043,
+        "sha256": "dd395f2b489a74a9b9b0486026818d617908850e04e6c307e75ec3ace63b4a91"
+      },
+      "scripts/build.mjs": {
+        "bytes": 509,
+        "sha256": "46041415ce90ab0457d4df5026af39c9227c40380cbd8f89bfd5706e96b70ad1"
+      },
+      "scripts/compare-hachiman-opening.mjs": {
+        "bytes": 29013,
+        "sha256": "12baaac4711c5c981fde3ae0a7dfa1f02b41b87d5472fbbf8f7999b217b087af"
+      },
+      "scripts/import-lufelnet.mjs": {
+        "bytes": 24509,
+        "sha256": "1982813859dd11f0deeae180940f082c891df8db6d913a6b0ae9771adb5eab02"
+      },
+      "scripts/optimize-hachiman-dod.mjs": {
+        "bytes": 18020,
+        "sha256": "cc1e3b15de0c5cf850d085693894f66cbd2ce3be913e81a7073ce9a235aeee75"
+      },
+      "scripts/optimize-hachiman.mjs": {
+        "bytes": 17230,
+        "sha256": "fa4ee3fa05a52a4bf2d40db9fd557122d053e6d2dcc56a76b41381ee45307ef8"
+      },
+      "scripts/optimize-slaughter.mjs": {
+        "bytes": 26340,
+        "sha256": "26e227bdcf234492473889c578ea8bbf88ae40798f2fbce6c848fc8b2245ce73"
+      },
+      "scripts/render-cosmic-assets.py": {
+        "bytes": 15253,
+        "sha256": "c1fa3ff85c6519d1d6960eafea1aecbc7e94ad33d2a0652b61382f61c05f188c"
+      },
+      "scripts/replay-hachiman-dod-live.mjs": {
+        "bytes": 6336,
+        "sha256": "940f15dda960ee3f40af17313976f2384c9f140cd04e84076ddb84f1793e23f0"
+      },
+      "scripts/run-hachiman-dod.mjs": {
+        "bytes": 5828,
+        "sha256": "ef23ae6ff13ad90f7d8b27d60f2b344c3d69cdb240156230ed33f28ff888d1f6"
+      },
+      "scripts/sync-lufel-recent.mjs": {
+        "bytes": 5862,
+        "sha256": "d41eeb8f9357683c6a6baa9d6f3497188e7fb2921e2f59e8080e48a6daa719a4"
+      },
+      "serve.mjs": {
+        "bytes": 1450,
+        "sha256": "f4031097adf21572b6c0a636d7965d093fbcca6873d0e76553fac25bc18f721f"
+      },
+      "src/app.js": {
+        "bytes": 153236,
+        "sha256": "b87154e486f3ca474e6d8d51afec59ffd233e40aac790d3c00ca3941117da878"
+      },
+      "src/awareness.js": {
+        "bytes": 3814,
+        "sha256": "b88b4643a6c4cf65b4535e371ac6ad176c516ad46479da20b67319e143195532"
+      },
+      "src/cosmic-yui-data.js": {
+        "bytes": 8141,
+        "sha256": "edea0f5cbcb7a4dba7d5f185692923f23b22412aed6ea041ba4b5ea3e586c9cc"
+      },
+      "src/cosmic-yui-mechanics.js": {
+        "bytes": 18510,
+        "sha256": "fb1e8bf2ef61811af2f26e1915c237a7df124dc854cab872fab5275e6bc830c7"
+      },
+      "src/data.js": {
+        "bytes": 17525,
+        "sha256": "64acc291e58b14183557ac2bce8afcb3377499db641bcc7d851c8d01b9fbfa06"
+      },
+      "src/default-presets.js": {
+        "bytes": 3437,
+        "sha256": "c3c0a339aae8512dd4cf77b37e62aa15314b83c2c265913e28d00b6e4f5bf884"
+      },
+      "src/engine.js": {
+        "bytes": 274896,
+        "sha256": "e8b6bcaa4cdbcad0114df7d3011b33958a57b7e232f6c3c650132daf801c9e02"
+      },
+      "src/generated/lufel-catalog.js": {
+        "bytes": 828176,
+        "sha256": "474372bf7afbb0fa514141e79d1ca4c73e48bc955557cdd0185935e6aca9170c"
+      },
+      "src/hachiman-dod-route.js": {
+        "bytes": 17585,
+        "sha256": "e638033e844f1a9984d0f604bbb9badb3d0e025e68201d843748828890a8b294"
+      },
+      "src/hachiman-recorded-team.js": {
+        "bytes": 50240,
+        "sha256": "769d0820cd4c90c67496f83fb712ded7328147ca811c643a26211090ae405a62"
+      },
+      "src/mode-scoring.js": {
+        "bytes": 3134,
+        "sha256": "0c668ab2d976fff295469b46010d9ebcfdb217f93816b55b542bf9529a0aa09c"
+      },
+      "src/persona-loadout.js": {
+        "bytes": 3447,
+        "sha256": "ff766ac75f39c903c9a4271795b1d18516db8146a068b253a8277eb93930dff2"
+      },
+      "src/styles.css": {
+        "bytes": 115712,
+        "sha256": "5fda6aa49feadc080bd45914061110af43d57a65f14168d889bd8a06a6220fe9"
+      },
+      "src/wonder-weapons.js": {
+        "bytes": 1804,
+        "sha256": "58bb5876a210b327f769efb0118572f771407b537fbb691073180a6d0f01f522"
+      },
+      "tests/awareness-settings.test.mjs": {
+        "bytes": 11058,
+        "sha256": "9c4da612786e90c46251f386ea879edd94ddd6314c92386368196953ed8f9738"
+      },
+      "tests/berry-reset-highlight.test.mjs": {
+        "bytes": 6163,
+        "sha256": "adc6cd32431b4d9d54af4e14aeb79865772305367daaf35a11b68e8ab40cc17f"
+      },
+      "tests/catalog.test.mjs": {
+        "bytes": 34524,
+        "sha256": "21f9a6a46c24e29387d53920bb8aead6bf2b1555d96304d8682b21227aaab8b3"
+      },
+      "tests/cosmic-yui.test.mjs": {
+        "bytes": 22294,
+        "sha256": "b5afedee454889ec9a4872f658a34a6d68a0ffebfe2ceb4368ee8b6643d388bc"
+      },
+      "tests/default-presets.test.mjs": {
+        "bytes": 3178,
+        "sha256": "0466ee2e8f84414c676677e14de6585e02f9ed3dfdab43f7b9a36483982d7cae"
+      },
+      "tests/engine.test.mjs": {
+        "bytes": 41857,
+        "sha256": "fbc4f1389a5899e6e83a7888e31ee837db5846ec25731dc22f33ecfb65487a90"
+      },
+      "tests/equipped-stats.test.mjs": {
+        "bytes": 6091,
+        "sha256": "f0373415faee97ce69e20d0ffbb5fe175a6090c20096924f26e10467d0f601e2"
+      },
+      "tests/hachiman-defeat-stacks.test.mjs": {
+        "bytes": 3625,
+        "sha256": "8e6f9d1bd3d74b54efa642b4c8775b5f63bebccaa2e98aefb1426aecb4decd88"
+      },
+      "tests/hachiman-dreamscape-confirmed.test.mjs": {
+        "bytes": 7671,
+        "sha256": "abc309bc313d2a45bba894ed0c2cda49d20e1e5dce3387e7ad7a791360539ace"
+      },
+      "tests/hachiman-items.test.mjs": {
+        "bytes": 6683,
+        "sha256": "4b50c6828b8d9498a8c5499184c9f7c76b86d7837d7241446290bfac71862f1a"
+      },
+      "tests/integration-edgecases.test.mjs": {
+        "bytes": 5426,
+        "sha256": "73b6cbd7e97fad79c08e3d03b508e4fcd7ab980b4bdb5737c1dcbd347a938a35"
+      },
+      "tests/jc-opening-timing.test.mjs": {
+        "bytes": 9139,
+        "sha256": "6b22767b7d23e01cb66e2db641ad072d67d52d189d45ddcc64dbf5ea185e41f0"
+      },
+      "tests/jc-true-desire-a6.test.mjs": {
+        "bytes": 10385,
+        "sha256": "5a323a12635ef2e6febc5f4403f30265922222a050f710e626d3abd0cc9477ec"
+      },
+      "tests/live-mechanics.test.mjs": {
+        "bytes": 27289,
+        "sha256": "3ab5dbaf9a4c9a5153e0ec6c254b2712fd5dd03bcc0a8c7a2c9f9e07266be74e"
+      },
+      "tests/live-persona-costs.test.mjs": {
+        "bytes": 4538,
+        "sha256": "106fd3d0b98c678e4e152c5cd5ad0073de7e0d92638a58c8d233db78fa0ea6d9"
+      },
+      "tests/mode-engine.test.mjs": {
+        "bytes": 7688,
+        "sha256": "8a6e89a97873d868e0d1dea146a3a7c243af640e937e1fb6fd3483ac658d4e9a"
+      },
+      "tests/mode-scoring.test.mjs": {
+        "bytes": 4517,
+        "sha256": "d4984f3e2df42bab874ef0f931afe59d7c10fe155be00de18e99aec24b93daab"
+      },
+      "tests/optimizer.test.mjs": {
+        "bytes": 3818,
+        "sha256": "a51cf269d668f3dc3d323bd2e6d51a589b5f6d8e023bc86f2c5241e8227893ab"
+      },
+      "tests/persona-loadout.test.mjs": {
+        "bytes": 3407,
+        "sha256": "aa5d111c1916ce8bed51f058b7e147924bc85abd02ed8d759c24d1cc3f711700"
+      },
+      "tests/rin-matoi.test.mjs": {
+        "bytes": 4566,
+        "sha256": "ce201e0334edcebb20256616dd8305a02f51344106f04ef22cc30c18639503b7"
+      },
+      "tests/shared-combat.test.mjs": {
+        "bytes": 11014,
+        "sha256": "3274814699077932a856b8827f4a24a9867f0c326fb9e54181d575a03ef5f919"
+      },
+      "tests/shared-highlight.test.mjs": {
+        "bytes": 7378,
+        "sha256": "092a2709036ce3e9db650f3f06dbd1a44a288cb8034685bc1a0bd6193c809809"
+      },
+      "vendor/lufelnet-data-source/.editorconfig": {
+        "bytes": 84,
+        "sha256": "7b8c4b6f7a3c195fbe969572078a7b44b2fb096d2d90179f424c3d64686920dc"
+      },
+      "vendor/lufelnet-data-source/.gitignore": {
+        "bytes": 2212,
+        "sha256": "762adb01ba8aa79911f15cc586996de8a414c174411ea628e994de864ca696e7"
+      },
+      "vendor/lufelnet-data-source/AGENTS.md": {
+        "bytes": 2164,
+        "sha256": "4e06d858ed28ffa64f5bb74cde25b4425fe165dc8f330cf3b5fc4329d47cd8c2"
+      },
+      "vendor/lufelnet-data-source/CNAME": {
+        "bytes": 9,
+        "sha256": "96d432dab4bb1dc332f92ab1b240e33e0693edf1a08672addc39e5c156218eaf"
+      },
+      "vendor/lufelnet-data-source/Gemfile": {
+        "bytes": 208,
+        "sha256": "e5138868c45be8f8b7d2222b82d183863699cbaabad78b4a9d18e9a6267cdcb6"
+      },
+      "vendor/lufelnet-data-source/Gemfile.lock": {
+        "bytes": 8252,
+        "sha256": "beba21527ae10c5667bdbfdcd6b90be3e5cd426ce78d994350da7073fb33d807"
+      },
+      "vendor/lufelnet-data-source/SOURCE-COMMIT.txt": {
+        "bytes": 41,
+        "sha256": "bc96a49bd904c4a6068cffe087a4c367ebd6cb8faeaa853da1a77664b6a2693a"
+      },
+      "vendor/lufelnet-data-source/_config.yml": {
+        "bytes": 1581,
+        "sha256": "77008cf9d499ea3cdd30f9e91dd60310a47ec92eb7ce127982664aa710b78f4b"
+      },
+      "vendor/lufelnet-data-source/ads.txt": {
+        "bytes": 58,
+        "sha256": "b618fd7e209639eebe59fe54c8c89cc4c06ae9870e1b39d47e7b33d65455cde5"
+      },
+      "vendor/lufelnet-data-source/data/character_info.js": {
+        "bytes": 49595,
+        "sha256": "569afbfe149e9474a821ce07ceeb7cb13bd73e3813b7885e4618ef4dc6d0ad42"
+      },
+      "vendor/lufelnet-data-source/data/character_info_glb.js": {
+        "bytes": 5573,
+        "sha256": "fb6f9f739682e0fedd06fafc57bcb1cbad3e51408f4a8f5617246cd9294165a8"
+      },
+      "vendor/lufelnet-data-source/data/en/revelations/revelations.js": {
+        "bytes": 21110,
+        "sha256": "1ed10c22ca04b267e6d5744f87336fd385dbcaa39b193f8745750daa4fd3372c"
+      },
+      "vendor/lufelnet-data-source/data/fword_list.txt": {
+        "bytes": 6669,
+        "sha256": "761247d526928894a0b1aab881c262fd80602b0992eac0929bf8f1ea6b735bf3"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/가네샤.js": {
+        "bytes": 8548,
+        "sha256": "c0f5c81632f92c510f44efc5fafd0aa8a17f59e1faf25d3fabf6c5188429c1f9"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/가루다.js": {
+        "bytes": 8263,
+        "sha256": "3d9424d4811d6adba247ab0b8dec3a3da1bd29be7737ae070597d7b8150be29d"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/가브리엘.js": {
+        "bytes": 7211,
+        "sha256": "feb51974c512fe50f3c2b20575359b95118f5ad1f7ac26418cffb6f330ff8e04"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/나가.js": {
+        "bytes": 6241,
+        "sha256": "1e89a832261ac3679638e231b9416aeea0f4712d88b080b9e90f702b6140ca64"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/나가라자.js": {
+        "bytes": 6825,
+        "sha256": "731a96ce558d9856f103630ce8405686312d38fbd0fc944b45e22e46599e5931"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/네비로스.js": {
+        "bytes": 7163,
+        "sha256": "c1c589e3a62aec8a769afb1d16a6d9ea61a5e19ef5645643a82f4f85c70c9152"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/네코마타.js": {
+        "bytes": 5859,
+        "sha256": "10dd33fff1a2be9bd3c44538692f8c1b9cd5a89b060a8e5ff9b7dd011d95547d"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/누에.js": {
+        "bytes": 6012,
+        "sha256": "ca7e00e13bb16016cad2a2d28d3138a8329e67464ffc02cfa8e374c50fc603e1"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/니기미타마.js": {
+        "bytes": 4911,
+        "sha256": "3772c4c200ebe167ade02b82f97847562182dce1b1fc1b1dfaef36cff7699164"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/다키니.js": {
+        "bytes": 7584,
+        "sha256": "775bd0feb39142d3cd998202cebf51d601846cf707762f13e4d8b6499536fbbb"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/대승정.js": {
+        "bytes": 6938,
+        "sha256": "17f1513593f3daeae5c950072a1029011d3173c5ec9f1974668b176d6efa3383"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/데카라비아.js": {
+        "bytes": 6526,
+        "sha256": "7095a78bb98d0e18f3033faf869a3e0b470b87aa77919210515d26198cca9c67"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/라케시스.js": {
+        "bytes": 6653,
+        "sha256": "8ef050f39af7ad90ed18b0f04d1ffda0c0e0c73cf1b24db392df19e5410e03a2"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/락샤사.js": {
+        "bytes": 5572,
+        "sha256": "a20ca5714b3da1d55fd88456bf42e8b6da031c9fc6c3d4714e5a02e74ba7a923"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/랑다.js": {
+        "bytes": 7463,
+        "sha256": "4f40b383427420cf67d0bd396f95503f3f28b20639be1e5c273b409ce72363ec"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/랴난시.js": {
+        "bytes": 5775,
+        "sha256": "fd1f92cd528fa8351020f9f9d4c186f7bc9ca94efacc1723bd733e4efd944151"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/레드 라이더.js": {
+        "bytes": 7514,
+        "sha256": "57b8ae2c384021a59ca2a2bd8d87f02a321f445efb0d3fbb972904432e369e69"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/릴림.js": {
+        "bytes": 6047,
+        "sha256": "5cb2ef83ee78e84dddabc0640f9333248a5a1d3d6c93f03ab315726c95238473"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/마다.js": {
+        "bytes": 6277,
+        "sha256": "24681f563f23c460178de7e459e453276bcc48c768182a457ba8502ecfebce2d"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/마라.js": {
+        "bytes": 6481,
+        "sha256": "c34617e256339db70f58d8379b47feb961a011cd26580c8797c1a974530fe889"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/마카미.js": {
+        "bytes": 5135,
+        "sha256": "50b8b9ec19de13c80ff1909149f2178e658392df42f41b98d76f3ed99cfd3cf4"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/마타도르.js": {
+        "bytes": 5267,
+        "sha256": "810738721f38757e96d4aa1b4765df5d1e5356120e2f890ba49c03e60c10e22f"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/맨드레이크.js": {
+        "bytes": 4008,
+        "sha256": "b9344c42132160b19803e347fcee03198043763821465373e11aa374288f6cdb"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/모스맨.js": {
+        "bytes": 6734,
+        "sha256": "7ad65757194702726f7fa9a8d43f74cd7efa46407689731eba2ca654d2c7214c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/모코이.js": {
+        "bytes": 4603,
+        "sha256": "2b386d1bfdaf44d1e082f91f80b9e991346a6cbae62ef798f8acf9cbc28c74f8"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/몰록.js": {
+        "bytes": 8052,
+        "sha256": "695ed5858675538001fff3aa810d67d9f6c0f88f2b0a561138e0565822ffd650"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/미카엘.js": {
+        "bytes": 8181,
+        "sha256": "2d033a6a3d9c1a01d6b7d8407ed148391711c12c3e5f6d9ce681589cb8b4da41"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/미트라.js": {
+        "bytes": 6629,
+        "sha256": "f009146f7bd2b375999170b31d7e219cc41160e857bc2091d7b3b769fd9f6eab"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/바롱.js": {
+        "bytes": 7560,
+        "sha256": "8d52047b970b3069ec9261841a3d78c36e0795959a937eb7c25ebcf42e68c3f5"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/바이콘.js": {
+        "bytes": 4320,
+        "sha256": "0efea283a418c968a615ecf83a744f1516f525ed7a066a9d1c1c5c3ce1d87db5"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/발키리.js": {
+        "bytes": 6900,
+        "sha256": "8d479478db3cbbc5fe3d1c71ca6054aa3462ac0e6830a1e626cb0d44f634d868"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/백호.js": {
+        "bytes": 7568,
+        "sha256": "fc2adc3689293d976e00b1be40ff46beff32cdb53744e87601c3e9a9f783b27d"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/벅스.js": {
+        "bytes": 7076,
+        "sha256": "298d44e297bdf3ad799e6745c70f3416c81be8a28f339e4de02bbaa2477b4127"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/베리스.js": {
+        "bytes": 4432,
+        "sha256": "1df0bdbdc171f466d1b66d7e11ae087019f9ce943a80feb96fa47cb177a2b8cb"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/벨리알.js": {
+        "bytes": 10069,
+        "sha256": "61a831904814d21215e95baee0f1dd077eea29d842cbd8dfc4b7664f49f98639"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/봉황.js": {
+        "bytes": 5917,
+        "sha256": "98070a62118488f95c00299c243379580f32e4e98a4554580e9841a07fcc2efd"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/블랙 라이더.js": {
+        "bytes": 8387,
+        "sha256": "90996ab128b02d85bb4205c67267f48c42f0dc349d60b8038facecc6da1e9159"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/블랙 우즈.js": {
+        "bytes": 6284,
+        "sha256": "94136f0cbc3bdb1f2fa121cd3f831c278481ddccf4ba168e62346059173e3552"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/사키미타마.js": {
+        "bytes": 4241,
+        "sha256": "84538bcf370c11856c9a1c3f5906781ca9cd3f8ac256e47f0c79f326e1ce6baa"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/샌드맨.js": {
+        "bytes": 6020,
+        "sha256": "6e47a9240bb748e264a6c26171a6740a52ae329ce04e5f5ed887b0aa279a4f5c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/세트.js": {
+        "bytes": 8114,
+        "sha256": "ececaa1b0c2af6cbbef3c79b64eb76ac3578d2f3892faf1c4ac29e1231105372"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/스다마.js": {
+        "bytes": 5106,
+        "sha256": "df0085e842dba99ef5671e0e6195dc6151a8f4ff6bc6dfcb156a07df71187fdc"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/스이키.js": {
+        "bytes": 6045,
+        "sha256": "7ac84a748097e34c23bb9ea1062a95bbff197335e6fccc9bb76228f68e306334"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/스카디.js": {
+        "bytes": 8889,
+        "sha256": "4f663f8848287c92f759683e2416c84e06a1cbe00550dc175181a53050be9b5e"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/스카아하.js": {
+        "bytes": 7096,
+        "sha256": "f07d4388aca08a807dca1ae46e952f134e19cf3a2f074e999244fe8fa93d17cf"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/슬라임.js": {
+        "bytes": 4168,
+        "sha256": "ab5f41b26f36088a3e2ac29295d29f866be883094258b4f49459988fe82bc6da"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/시사.js": {
+        "bytes": 5003,
+        "sha256": "cd319cba977b48af5ff6f136dfaf6e34d38fe6c8729983c6c11151689573c8c4"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/시키오우지.js": {
+        "bytes": 5955,
+        "sha256": "fbe0b3f6eca53464c16a83a2f580f8114f37ab381535890e34cc5ab812f82428"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/실키.js": {
+        "bytes": 4474,
+        "sha256": "81a5bbb753853b692ecca039dd7c9addb99ad984c3873266e1dae45ac93c8140"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/아가시온.js": {
+        "bytes": 4248,
+        "sha256": "1e9d036c1a64c58ac75b25d0f7a98395782bd489c4c807ebb7a43e9b02100b3f"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/아라미타마.js": {
+        "bytes": 6434,
+        "sha256": "87467aad9b0e4bf8de3f5ab1d536c76cb2ed021247aa877b9886f61b0eb73b88"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/아크엔젤.js": {
+        "bytes": 6992,
+        "sha256": "af2fbec55fa6149c93c3ccfc188471f9e135eeb6c7b6a37c4921fd91a5723e6c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/아트로포스.js": {
+        "bytes": 7006,
+        "sha256": "5b94a597d7b9a1f00a4f810f12b02914d074757482c39f55abcc6ea3723b22c1"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/안드라스.js": {
+        "bytes": 4608,
+        "sha256": "29a3a35d09e42fbc052a14d54aa635da2f38153da10e4d7d2fe7289d330e0894"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/안즈.js": {
+        "bytes": 5649,
+        "sha256": "562b0254051fb9958f8c8aa805b40c1710696a53f8b666e8e43665bacc5a50bf"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/야크시니.js": {
+        "bytes": 5103,
+        "sha256": "7ab9c59f796e87b0792a85f9942e6507514ccbe4763dcf1a100b27690204c247"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/엔젤.js": {
+        "bytes": 5036,
+        "sha256": "77e0057aca4c8fac8801f959026886101e489f53a70d33a2aa4a0cdbac5680dd"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/엘리고르.js": {
+        "bytes": 5858,
+        "sha256": "ed88e8c4f962c8a4266983628365857b17edb9e36eacd2348b6f23c27bfba018"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/오니.js": {
+        "bytes": 4556,
+        "sha256": "8eee1041c11982b6a75b16e746dc3ba3ee9d943a83070861d56251f729798dd0"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/오르트로스.js": {
+        "bytes": 6054,
+        "sha256": "9375d33bc3840b5fed377ab722cc8cfd38ec4c121285d71d660e8bb2f280c5c1"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/오바리욘.js": {
+        "bytes": 4574,
+        "sha256": "7687f6b39a528137d31a95b9d33061536bda517417009d42566f772f9ad9d840"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/오베론.js": {
+        "bytes": 9067,
+        "sha256": "c54fae509dee622a4dd571777181f3202ab1515865e818ee2ed524515e601ed5"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/오세.js": {
+        "bytes": 6713,
+        "sha256": "8557aad447cd3a91f17fcac9969e9bea0b8b7b9f27a6063cfb84ea688b4f721e"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/온모라키.js": {
+        "bytes": 5137,
+        "sha256": "e0dc9770aa44f0fd2b7c5c7e16be6d17bfb70212352950f94c0dc4c05d55ee4c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/유니콘.js": {
+        "bytes": 6732,
+        "sha256": "74e8956907aef935272c540750cb8b382cef7acd1a8c0d5ae7a5945e2c720e52"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/이누가미.js": {
+        "bytes": 5827,
+        "sha256": "6a4dc58b9b7b23541a0b44f29c269ea526e257b68aa6cb0a001ed1b5be8fcc65"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/인큐버스.js": {
+        "bytes": 4697,
+        "sha256": "cf17048f32e2908c32c8717d6ea025a784c506c594968cc53c13a08d1c0a5f96"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/잇폰다타라.js": {
+        "bytes": 5392,
+        "sha256": "8dcddb8a6bf2ae80fff5f197bd3cc4b68a8bb117d4405879dccc928f1c2235ee"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/잭 오 랜턴.js": {
+        "bytes": 4472,
+        "sha256": "bcdd69bdc37efa24678c898bd356594e263c37e3af858e8d20f41dab91ee333a"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/잭 프로스트.js": {
+        "bytes": 5409,
+        "sha256": "03fe78e726f3f0d48e219acdd06f23f0501c546edd27b1aed1294061feef4e97"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/주작.js": {
+        "bytes": 5495,
+        "sha256": "4c1db88bebf001f7cd9c363a67b90068876a6f201efe877ac514521deaa37c02"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/증장천.js": {
+        "bytes": 6757,
+        "sha256": "3582554170b823ba3cf2829f4c7d41d9ca90824e5d575c549a5d7b5bae07be89"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/청룡.js": {
+        "bytes": 7931,
+        "sha256": "16795e1b7542deccd8c4bdded5e1ad222c0cd6bcc9a2527c73928672ad9064ec"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/케르베로스.js": {
+        "bytes": 6851,
+        "sha256": "b59b71c352403d08247f911a5bf41c079faaa4db20a4b9ebaf2ea333dc3ef607"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/케완.js": {
+        "bytes": 6787,
+        "sha256": "d1c0cb4033f461a87c93494e546b3de68c24aa5e6ca46edbf81b0cce692d2d84"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/케찰코아틀.js": {
+        "bytes": 7250,
+        "sha256": "5425e30a5cc96354614463f6c82f32d3cc73d2b49e3e2954eded546555f14a0f"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/켈피.js": {
+        "bytes": 4536,
+        "sha256": "a3766f38154aa84cb1f79f93e463433ac074c97cd746ef63b14b08ca4122aed4"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/코다마.js": {
+        "bytes": 5500,
+        "sha256": "ae22573695dfe860ced97b8d836af8673ce3e047b53ed094a362643d0f56d1c2"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/코로포클.js": {
+        "bytes": 4673,
+        "sha256": "953b73a4ab4c648581f73ed56f65556740937086a7f106a21627f67fc0dd2b84"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/콧파텐구.js": {
+        "bytes": 5079,
+        "sha256": "8d74903ba4ae4c7021038853384fab4f3890af9e74e6bf616fbb73dea595a7bc"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/쿠라마텐구.js": {
+        "bytes": 9002,
+        "sha256": "51153f84d0a0f8e77f4b45d573f432406c7226c7ecbfe27b2648e1e24fb37372"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/쿠반다.js": {
+        "bytes": 6079,
+        "sha256": "fc84c647bf7a51a4e7771d882e05ced79e940e0f7fd19d929be9feec8009d716"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/쿠시미타마.js": {
+        "bytes": 5222,
+        "sha256": "5545b1f95593f420cfbfc774c31bb7daa6ea47594994e815345dfc539891bcf6"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/퀸 메이브.js": {
+        "bytes": 7852,
+        "sha256": "94eef1625bce3d374c1e57c222ee813594cdccb3300b69b43822a2ac48302d0c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/클로토.js": {
+        "bytes": 5855,
+        "sha256": "e63c9a63e85924b61818a75a4036a66fd8f22f3c3bf76a6825ed762430a154be"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/키쿠리히메.js": {
+        "bytes": 6031,
+        "sha256": "838f9cd42e4aca2801d35294e258a69dfc05ac16cfeaedfa4f533351f8156847"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/킨키.js": {
+        "bytes": 5578,
+        "sha256": "1f77708c523f63d93e15956fb2ab9853343642b4284924f90674eab2b92672c0"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/토트.js": {
+        "bytes": 6523,
+        "sha256": "1444069939f2010e4bba2a22e2cd43175441458ea0189f8d89836ffd6e38d78d"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/파워.js": {
+        "bytes": 7372,
+        "sha256": "23b9038098a84f1d591c557908d813b40dc3a134948aeb8ab4c03c4c027a91ce"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/페일 라이더.js": {
+        "bytes": 7997,
+        "sha256": "60d8ca76a62811930ef8aa89b8de327c8470043c9bd5222d08b3aa5cfa737f72"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/프린시펄리티.js": {
+        "bytes": 6388,
+        "sha256": "3643c1f04a89cc017dce6a38670cfecfd062d9ceab39303b5d19dbc6c3623183"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/플라로우스.js": {
+        "bytes": 5531,
+        "sha256": "8f880bd25039e469f515054205a6f7b98fb80458bdbfb1ce965b8f955e694c18"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/픽시.js": {
+        "bytes": 4453,
+        "sha256": "1983ecb306997b90d4241104a7dd4279346773cdfe2682c58fcf68d4dca36a9c"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/하리티.js": {
+        "bytes": 6671,
+        "sha256": "01bbed050195d9eac1f658675ee78f87180a35783b50f2098c25358884aa779a"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/하이픽시.js": {
+        "bytes": 5093,
+        "sha256": "def6c0489b430d4fbb2465a43dad2da4050c1c1ae4fb7319827bc98609b7ceab"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/헤카톤케일.js": {
+        "bytes": 6240,
+        "sha256": "83bfd32979084de34b5aa13af61312242aea35eac780566865d1b29425ee1d0f"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/헬즈 엔젤.js": {
+        "bytes": 7814,
+        "sha256": "52ca9f4a4a2f4cb45bb75f5a2cde53f753c159140b2f25a791318a1b42abf420"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/현무.js": {
+        "bytes": 5103,
+        "sha256": "2fa69670095e6ef468c23256f1703041c7631c4007458024df5d6bbd40707e75"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/호루스.js": {
+        "bytes": 7529,
+        "sha256": "79af711064f25402efc23a10f6f37b6d1c3033d2ff3276192e257f8a3f74a121"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/화백.js": {
+        "bytes": 4620,
+        "sha256": "6bae0e0fcb54f1d38bc96301ba43d68901b8f5b8f624bfa72d8fc013c5ed1ef5"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/화이트 라이더.js": {
+        "bytes": 8583,
+        "sha256": "d687b9f23b5fb9a03437b25f1cc4853d4d3c1ef4ecf8b11e05fb9e29681eeaa2"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder/후우키.js": {
+        "bytes": 6153,
+        "sha256": "3513310152f6fef3dbb4623a214b5704dceebc3719cb3643625edcb0fd663ff1"
+      },
+      "vendor/lufelnet-data-source/data/persona/nonorder.js": {
+        "bytes": 1907,
+        "sha256": "e0a3acbe2ff062346eb319cbb96fe5f149a5d5b23c85a1ce2ebe3488512a4343"
+      },
+      "vendor/lufelnet-data-source/data/persona/order.js": {
+        "bytes": 1218,
+        "sha256": "5d6f251ddc1ca41a16fccb233b9267e03e75ad895fafc5afe2fc7bfae08ce5e7"
+      },
+      "vendor/lufelnet-data-source/data/persona/광목천.js": {
+        "bytes": 9846,
+        "sha256": "02f8216a3084585c7ce63a5834fdceb709ac1ddd83736589c0f4734544814d40"
+      },
+      "vendor/lufelnet-data-source/data/persona/기리메칼라.js": {
+        "bytes": 6918,
+        "sha256": "7a22e82bbe3e638122e147d21ac0f5216fa57b8bf96e890a62668b6a3bfcf55d"
+      },
+      "vendor/lufelnet-data-source/data/persona/나르키소스.js": {
+        "bytes": 9831,
+        "sha256": "22d4c5e12146afb4c49e66e20a33a79db8664b57542b740b75f8cf446683b06a"
+      },
+      "vendor/lufelnet-data-source/data/persona/네코쇼군.js": {
+        "bytes": 8377,
+        "sha256": "3311239ace25b50f56d6de28f181e7c5f202d672efc9a30f480461a54dcb2a73"
+      },
+      "vendor/lufelnet-data-source/data/persona/년수.js": {
+        "bytes": 14875,
+        "sha256": "8d6254bca49f888f496977f61eab15b448ca615342c7c3ab0c1104c0bb385dd8"
+      },
+      "vendor/lufelnet-data-source/data/persona/노른.js": {
+        "bytes": 9745,
+        "sha256": "1a1fe25adb79d71d4d801d9d61f062489904c2929089684dd89c6f5b512fb445"
+      },
+      "vendor/lufelnet-data-source/data/persona/도미니온.js": {
+        "bytes": 11775,
+        "sha256": "8595037369b80e7704bc4e3589c76ea77a7d128387d05cf89d94c39ed532340f"
+      },
+      "vendor/lufelnet-data-source/data/persona/디오니소스.js": {
+        "bytes": 12073,
+        "sha256": "4d9ec850da9aeafc34481f6254b3e1ced69239dc34dec0257adbba9d0934c680"
+      },
+      "vendor/lufelnet-data-source/data/persona/라미아.js": {
+        "bytes": 8393,
+        "sha256": "9363481d1dfb47a31ff1599fbb0ac1cec1b86f3dee2459262e9ac674fd8042c7"
+      },
+      "vendor/lufelnet-data-source/data/persona/라파엘.js": {
+        "bytes": 11248,
+        "sha256": "8b4f28171920044781d329c58508f0391fc8ef46ac6edeea8145c6bd226f735c"
+      },
+      "vendor/lufelnet-data-source/data/persona/락슈미.js": {
+        "bytes": 10270,
+        "sha256": "e6be8397575a45812ea7dcc61b93a1dbdb51ba9759849dc9c077ea51a8354b3b"
+      },
+      "vendor/lufelnet-data-source/data/persona/릴리스.js": {
+        "bytes": 15023,
+        "sha256": "cf9705af52bd66b3da31e521ba460e4af063403b9248ba082549b38695950c1d"
+      },
+      "vendor/lufelnet-data-source/data/persona/마카브르.js": {
+        "bytes": 12499,
+        "sha256": "df5964c0fef0132bbc4cb02a6c11344582d1a717a8d72f74e7e2c9091a6a4b61"
+      },
+      "vendor/lufelnet-data-source/data/persona/멜키세덱.js": {
+        "bytes": 11324,
+        "sha256": "adce3f664e1d7936f15908bd4a6151a7cdeabdb31172c2d50e04e5f294de4f61"
+      },
+      "vendor/lufelnet-data-source/data/persona/미트라스.js": {
+        "bytes": 8958,
+        "sha256": "f23a663bd514c1db614bac0f4f63c98c1860a37ee4de60f548cd0debc9fba690"
+      },
+      "vendor/lufelnet-data-source/data/persona/바스키.js": {
+        "bytes": 13514,
+        "sha256": "7fc46ab0e8f5593e3e6991c7e92bb6341f640e58591c4040ed3c9e144b652a96"
+      },
+      "vendor/lufelnet-data-source/data/persona/바포멧.js": {
+        "bytes": 10837,
+        "sha256": "3ab3a6bb87f4d3398f9bce7e860ced4f31f9d05b05bf223a8f5453738363017d"
+      },
+      "vendor/lufelnet-data-source/data/persona/벨페고르.js": {
+        "bytes": 9211,
+        "sha256": "b24efa1bfe44ee2fc7bf1c1d8ea43f4827928de17f4e0e5e295c53d361359c92"
+      },
+      "vendor/lufelnet-data-source/data/persona/비사문천.js": {
+        "bytes": 11085,
+        "sha256": "15619b02f2c1be733ff0831af4638bc3b3c3c7c339a870fe2f017d3076b719fe"
+      },
+      "vendor/lufelnet-data-source/data/persona/비슈누.js": {
+        "bytes": 12075,
+        "sha256": "8c800cb59ca79fe75e133c3f951a1a8c2e13afbb5d4a3776cd8d74112215f83e"
+      },
+      "vendor/lufelnet-data-source/data/persona/사라스바티.js": {
+        "bytes": 7878,
+        "sha256": "187e3e847c0643e20d72ce530826239f48820f99dea7cf11cbfb290dc57e32b0"
+      },
+      "vendor/lufelnet-data-source/data/persona/사악한 프로스트.js": {
+        "bytes": 12209,
+        "sha256": "6fd51f8d893778893c1137884916efb29369687f61a963270b7e29e111fff50d"
+      },
+      "vendor/lufelnet-data-source/data/persona/사히모치노카미.js": {
+        "bytes": 14538,
+        "sha256": "3d898fcd5c7ca4d2c918436c7d1315bdbfb6ff0af7af4d87e5f8ee1d09b9f4d9"
+      },
+      "vendor/lufelnet-data-source/data/persona/산달폰.js": {
+        "bytes": 10965,
+        "sha256": "928e36473e9b160c0977cfd2326822d82134d39d601d80b930d5e08358dce1b9"
+      },
+      "vendor/lufelnet-data-source/data/persona/서큐버스.js": {
+        "bytes": 6986,
+        "sha256": "aa9755b98a47e4f8012192c8f26d2c74c0f18444968ba9c4ad90a3bad87a7c90"
+      },
+      "vendor/lufelnet-data-source/data/persona/세탄타.js": {
+        "bytes": 7482,
+        "sha256": "8adba73148ec44b545ff5b150cffb655d53505d3fbbd57e4ce7f0dba0d862d60"
+      },
+      "vendor/lufelnet-data-source/data/persona/수르트.js": {
+        "bytes": 8895,
+        "sha256": "30450d84c248cc2cab6916e227ce94cc17acb913ae3fb90e217ad45739e74bdb"
+      },
+      "vendor/lufelnet-data-source/data/persona/스라오샤.js": {
+        "bytes": 17412,
+        "sha256": "78a729a3be2b3c036d0024a68d5b287e2f04099925a48a0efa1a5823a4824d13"
+      },
+      "vendor/lufelnet-data-source/data/persona/시바.js": {
+        "bytes": 15143,
+        "sha256": "b07bdaeca25dfed3e7d5d762d4980486e1333bedfce8a0fcea2c54e468b9d517"
+      },
+      "vendor/lufelnet-data-source/data/persona/아누비스.js": {
+        "bytes": 10089,
+        "sha256": "0dd7a72d765e506f78c494f71c25f3bdef1832f09cc8b24fc7cf1793c7b3a38f"
+      },
+      "vendor/lufelnet-data-source/data/persona/아라하바키.js": {
+        "bytes": 6445,
+        "sha256": "8cc770a77cf83af87d05bd5ee1b80b6d8e0682af202b081bb993ae068a71009c"
+      },
+      "vendor/lufelnet-data-source/data/persona/아메노우즈메.js": {
+        "bytes": 7729,
+        "sha256": "1b0789a6c24543e927f26d9bffc893a4f1a9c6dad14601e79e8da37d1d78d3a1"
+      },
+      "vendor/lufelnet-data-source/data/persona/아프사라스.js": {
+        "bytes": 6942,
+        "sha256": "aae21304e94f55de97d383d3a99eca34d4dec0fc40595e7934f4ce8c8e3338d1"
+      },
+      "vendor/lufelnet-data-source/data/persona/앨리스.js": {
+        "bytes": 12349,
+        "sha256": "14f73f6d70444c668f4d1737fd066e65b11badf9a9e65eb5eb7938fdecb0bdf3"
+      },
+      "vendor/lufelnet-data-source/data/persona/야노식.js": {
+        "bytes": 16211,
+        "sha256": "c149c3c5a55d4fc5b8819d8beb78dab2b0a9f3de22a151d5ced044e854c5f3bb"
+      },
+      "vendor/lufelnet-data-source/data/persona/야마타노오로치.js": {
+        "bytes": 13227,
+        "sha256": "02498b59d3315792dacfb95f2e490b50539c879bd13845fee0ae5485b3a5e0b9"
+      },
+      "vendor/lufelnet-data-source/data/persona/야타가라스.js": {
+        "bytes": 8139,
+        "sha256": "beecef56896d7e75943dee9130a020644432c2b10f4eb213f25284e395c5f553"
+      },
+      "vendor/lufelnet-data-source/data/persona/오로바스.js": {
+        "bytes": 6812,
+        "sha256": "148a759460b33df81ca653cc964815a33e6d21fac84bd5a9157a3347e40843c4"
+      },
+      "vendor/lufelnet-data-source/data/persona/오오쿠니누시.js": {
+        "bytes": 9243,
+        "sha256": "85206e0f7dec2a0b0538bf81f60477bb4fcea1ce0e840e8d9f2b88a2e57e6737"
+      },
+      "vendor/lufelnet-data-source/data/persona/요시츠네.js": {
+        "bytes": 12167,
+        "sha256": "6939f55606da8f291e85835d0a301598db54e833705aa4e78a5917e1f121cd42"
+      },
+      "vendor/lufelnet-data-source/data/persona/유룽.js": {
+        "bytes": 8972,
+        "sha256": "ef0a0af3df4b600775d90b7229f408424ddf1342ecc574fedac9a793566398bd"
+      },
+      "vendor/lufelnet-data-source/data/persona/이시스.js": {
+        "bytes": 7371,
+        "sha256": "22916b4a7d42c8d0e8db802bf722df6561573a31d38d6a74706506ac2332f427"
+      },
+      "vendor/lufelnet-data-source/data/persona/자오우곤겐.js": {
+        "bytes": 13923,
+        "sha256": "d32b1667d9bcebb950a77b1dfcadce00bed22585dfe5e45356a22711e84bb9bc"
+      },
+      "vendor/lufelnet-data-source/data/persona/자타유.js": {
+        "bytes": 7539,
+        "sha256": "850def77b751b9818bcc7b446f6870d704b998391642f29bf67049ee1924d334"
+      },
+      "vendor/lufelnet-data-source/data/persona/지국천.js": {
+        "bytes": 8145,
+        "sha256": "2e311deb4b7eb77f48a9b250b56662f824f13a9c9b8101737c1b4c0d1dd2cec2"
+      },
+      "vendor/lufelnet-data-source/data/persona/지크프리트.js": {
+        "bytes": 12824,
+        "sha256": "c07de18c79ec4fa795f9d5b3a7d6e26945c858c8ac1a3b5595e4d7084c4635ce"
+      },
+      "vendor/lufelnet-data-source/data/persona/체르노보그.js": {
+        "bytes": 13977,
+        "sha256": "ae255ab1d1ac0a75222b95f97483602c2b208d8608752bbd0f94f8e8aaca0369"
+      },
+      "vendor/lufelnet-data-source/data/persona/쿠 훌린.js": {
+        "bytes": 10896,
+        "sha256": "47c0d3cec4369275fa50ba139a3a6b9a861bcf0135da24618cc408e41a7303f9"
+      },
+      "vendor/lufelnet-data-source/data/persona/쿠시나다히메.js": {
+        "bytes": 8506,
+        "sha256": "42fb8dd980132f041e2add48ff78a600c4ff6744b6400ab7d8e1afaaa5117dd1"
+      },
+      "vendor/lufelnet-data-source/data/persona/킹 프로스트.js": {
+        "bytes": 9132,
+        "sha256": "308b6ebd90975b1aeef2dab7990bae9223ca394255edae4d1ac8c81a64c5a917"
+      },
+      "vendor/lufelnet-data-source/data/persona/토르.js": {
+        "bytes": 13931,
+        "sha256": "62983f253e9ed327068a46144350038a5211b04ef410257da702c177ef5e6195"
+      },
+      "vendor/lufelnet-data-source/data/persona/트럼페터.js": {
+        "bytes": 11670,
+        "sha256": "8e17a282a2c30bfae4204af239c11e67872c1b5d2a1ecfbb57a1105b016d1829"
+      },
+      "vendor/lufelnet-data-source/data/persona/트론.js": {
+        "bytes": 19838,
+        "sha256": "5774e60666d23257d5e0e516b083f92f0cd8ca55bddf14bae2f12285d0aa7a36"
+      },
+      "vendor/lufelnet-data-source/data/persona/티타니아.js": {
+        "bytes": 9744,
+        "sha256": "9c6886d213cd3476209ef6f550416bb27badf8d1816ac281068e7d11ea2f8a91"
+      },
+      "vendor/lufelnet-data-source/data/persona/파르바티.js": {
+        "bytes": 9414,
+        "sha256": "5914a7e055cc8ef49b44fd27fe49e776c0a8986f32dde40fee7bd1b55a1299f2"
+      },
+      "vendor/lufelnet-data-source/data/persona/파즈스.js": {
+        "bytes": 9322,
+        "sha256": "236ee044f6b30f91dc94d391fde2a29397fc9ddd90b715a2a8237f14faedeb4a"
+      },
+      "vendor/lufelnet-data-source/data/persona/황룡.js": {
+        "bytes": 14831,
+        "sha256": "cab6d039a388b12484edb0679e1483e4de09f577ef19043957f39164be4b7981"
+      },
+      "vendor/lufelnet-data-source/data/weapon-manifest.js": {
+        "bytes": 1170,
+        "sha256": "636f41116f37f0111d143d49304139b6caa6106a875446b4ed05aa0caa9106ca"
+      },
+      "vendor/lufelnet-data-source/miku-mobile-sync-toolbar-final-mobile.png": {
+        "bytes": 64276,
+        "sha256": "1a25939cc710c95e9040cc10308b6bab51424e665ed2aae098100e3025d22180"
+      },
+      "vendor/lufelnet-data-source/miku-mobile-sync-toolbar-final.png": {
+        "bytes": 563274,
+        "sha256": "2e149e9ca3db3086b19f8a545d029d16e1036dbbda02f6f6415f405050bbcf9f"
+      },
+      "vendor/lufelnet-data-source/miku-mobile-sync-toolbar-skills.png": {
+        "bytes": 423344,
+        "sha256": "95a1ab4876cc50ed228f06292238e0812fe4ed0c608c63c369b58f2ba79fbb53"
+      },
+      "vendor/lufelnet-data-source/miku-mobile-sync-toolbar.png": {
+        "bytes": 563293,
+        "sha256": "6c8c1f7c0afacf7efec4592741cccffee1bc8756cc4b437f0b04b5661ddbb4a9"
+      },
+      "vendor/lufelnet-data-source/miku-sync-color-fix.png": {
+        "bytes": 563328,
+        "sha256": "1a9605e9510349e80735440a6a8c8540a4a6dfcb5529ec82eb242ea2f58f7ee3"
+      },
+      "vendor/lufelnet-data-source/package-lock.json": {
+        "bytes": 5232,
+        "sha256": "a806d3bdea0d5715b0b7ead45907825d0820eef2bbc01e198115ca5c67a88548"
+      },
+      "vendor/lufelnet-data-source/package.json": {
+        "bytes": 7255,
+        "sha256": "076fc55c3603adc50cdd6d3aec5d50921264eb3feb8aaaa1f8ecfcd28eafd429"
+      },
+      "vendor/lufelnet-data-source/robots.txt": {
+        "bytes": 104,
+        "sha256": "461719871b0cc74dcf95393c96a6477d30cf5cb1f51c96b16cf7be1f36d5b632"
+      },
+      "vendor/lufelnet-data-source/sitemap.xml": {
+        "bytes": 588,
+        "sha256": "36a8c5a4967124744c645a30883605ce0e55f9628ee0ceb0ee4e41c3fe4e581b"
+      },
+      "vendor/lufelnet-data-source/supabase-plan.md": {
+        "bytes": 13517,
+        "sha256": "d995a028e1338c23295cfa8ef2e0dffacfd9390d21f532a16554fffddd87fcf5"
+      },
+      "vendor/lufelnet-data-source/sw.js": {
+        "bytes": 8205,
+        "sha256": "b569f00a20e347143a594d43140f68244e891185f32cbc9283e230b832d3f6cb"
+      },
+      "vendor/lufelnet-data-source/todo.md": {
+        "bytes": 3025,
+        "sha256": "122f87e703d95f73bd0c16e90f3789443461315e43798d34ddc51b432daf0720"
+      },
+      "verification/artwork-check.json": {
+        "bytes": 1258,
+        "sha256": "682c0cc5e8fcd36dc374745bc5546b2120c8890b24de10e0fb49ab076c592e46"
+      },
+      "verification/awareness-browser-results.json": {
+        "bytes": 1419,
+        "sha256": "a146bfdffbffc76b11166723387bfc672921dff909c6fadd316d0597e512673a"
+      },
+      "verification/awareness-desktop.png": {
+        "bytes": 755194,
+        "sha256": "56ec3d63b4744b62dd790df9bb1018e6ecd96ea2ab64265ac10ad670719d97a1"
+      },
+      "verification/awareness-mobile.png": {
+        "bytes": 252896,
+        "sha256": "d8007c93226a7ecde5cb39e38556750b022b8886a9f2dc461758fb46e559b682"
+      },
+      "verification/awareness-release-check.json": {
+        "bytes": 424,
+        "sha256": "d867ea9179f9288cf3b3169b74a0f9aa3af72b88fe9aa53530df9e1ad68fe7a3"
+      },
+      "verification/awareness-test-results.txt": {
+        "bytes": 61741,
+        "sha256": "a5eba62bd52078c66beaa26ba9062fe590ad77d083257b81183ed79263a62b48"
+      },
+      "verification/browser-check.json": {
+        "bytes": 534,
+        "sha256": "c7206ef273e8c1483252cf735ed505fcc4ef4b9a2073ea793c44337ae4977f21"
+      },
+      "verification/changed-files.json": {
+        "bytes": 3596,
+        "sha256": "f6608b6d52494dafca86165c08c73f819584203b3d9694f7180a084d190093bd"
+      },
+      "verification/cosmic-battle-preview.png": {
+        "bytes": 516401,
+        "sha256": "d365d4a6537da680260a1d944c8368838ce963a339c4c5ad373c23dc64c87a8c"
+      },
+      "verification/cosmic-build-preview.png": {
+        "bytes": 365731,
+        "sha256": "1d9eff8414c0e4a09bedad74033e045ba89afd5873eefb1c3c2653ea26eaf297"
+      },
+      "verification/http-check.json": {
+        "bytes": 1558,
+        "sha256": "b9a9df159dbe6bfd9028ca4da501ddfd2887a74f84306d8ca69867b52ae0819f"
+      },
+      "verification/node-tests.txt": {
+        "bytes": 53103,
+        "sha256": "150856515077ce46c9c6855afc54075ae28fa516cbb082c934ef5b0943682956"
+      },
+      "verification/offline_browser_fixture.py": {
+        "bytes": 3056,
+        "sha256": "702b01febe09c452fd3181d2219564227d365b0d273af9c524daf54d48640c24"
+      },
+      "verification/verification-report.json": {
+        "bytes": 1019,
+        "sha256": "e7a43ac41bf86ff5a257bd97c8e350c9da6ae9a04accc0883b5e40ad78011455"
+      },
+      "verification/verify-awareness-ui.py": {
+        "bytes": 9604,
+        "sha256": "dbd559801af0f222b2bfe43dfde30f76ca11314e83fcc2865289c45485f10218"
+      },
+      "verification-benchmark-2026-09-05.json": {
+        "bytes": 1089,
+        "sha256": "1de3f26cfca571ee4aef6eaf03a1ae3a39c54f09f8c9952a49622dc44a2cd37c"
+      },
+      "verification-tests-2026-09-05.txt": {
+        "bytes": 9001,
+        "sha256": "584783142246b82df54b28d04307d4a821f51c762dadc294496c60973f4bdb9e"
+      }
+    }
+  }
+}

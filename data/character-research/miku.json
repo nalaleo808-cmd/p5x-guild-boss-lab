@@ -1,0 +1,312 @@
+{
+  "slug": "miku",
+  "name": "Hatsune Miku",
+  "coverage": "partial: researched source; legacy engine methods integrated, weapon effects excluded",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/miku/",
+      "kind": "client-rendered-character-page",
+      "accessedAt": "2026-09-12"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/skill.js",
+      "sha256": "9287893eb620c559361c2f21cb222f47974928b2948d885151533cf06948b7cc",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/ritual.js",
+      "sha256": "efcef305d3c2018c5d230222340d0645db0a288873c038b4f2a35dd43e88cf02",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/weapon.js",
+      "sha256": "9171a3e4e24534b567f03dc03869147e18474f1bf080881b1425f2abbb65241a",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    }
+  ],
+  "implemented": [
+    "Legacy engine methods mixed into BattleEngine: isMikuNavigator, isVirtualConcertActive, applyMikuSongEffect, applyMikuTrackSkill."
+  ],
+  "weaponEffects": "Excluded: source weapon rules are evidence only and do not create selectable loadout options or runtime effects.",
+  "missing": [
+    "Navigator base Attack and weapon Attack require a real navigator stat/scaling pipeline; current song methods use capped constants.",
+    "Weapon track gains, three-turn critical stacks, four-star Attack and Concert Skill Amplification require actual track-acquisition and concert-enter hooks.",
+    "Current r0 says repeat a track's effect; skill text says only when absent. Source contradiction must not silently replace observed behavior.",
+    "Awareness-dependent Concert final amplification versus ordinary damage and sync_description variants require review; sync text is not executed."
+  ],
+  "limitations": [
+    "Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "Navigator base Attack and weapon Attack require a real navigator stat/scaling pipeline; current song methods use capped constants.",
+    "Weapon track gains, three-turn critical stacks, four-star Attack and Concert Skill Amplification require actual track-acquisition and concert-enter hooks.",
+    "Current r0 says repeat a track's effect; skill text says only when absent. Source contradiction must not silently replace observed behavior.",
+    "Awareness-dependent Concert final amplification versus ordinary damage and sync_description variants require review; sync text is not executed."
+  ],
+  "engineOwned": [
+    "createNavigatorState/applyMikuTrackSkill/applyMikuSongEffect own songs and tracks; startVirtualConcert/endVirtualConcertRound/finishVirtualConcert own Concert timing and A6 echo.",
+    "applyMikuPartyBuff owns extension/deduplication; stepHighlight owns A4; shared gauge resolver owns Concert gain rules."
+  ],
+  "integration": {
+    "removeEngineMethods": [
+      "isMikuNavigator",
+      "isVirtualConcertActive",
+      "applyMikuSongEffect",
+      "applyMikuTrackSkill"
+    ],
+    "mixIn": "Object.assign(BattleEngine.prototype, mikuLegacyMethods) before any engine construction; import legacyMethods under that alias. Remove named class definitions in the same change.",
+    "dependencies": [
+      "applyMikuPartyBuff",
+      "healMikuParty",
+      "emit"
+    ],
+    "hooks": [
+      "Registry must initialize state.navigator as well as party, identify sourceCharacterId lufel-recent-miku or navigator-miku.",
+      "Use applyUnitBuff with equipment sourceType and mikuGranted for party critical buff; do not amplify equipment using applyMikuPartyBuff navigator sourceType.",
+      "Remaining effects require onTrackGained, onConcertStart/onConcertEnd, and navigator stat sampling. Counted ally hooks cannot infer track acquisition."
+    ],
+    "legacyPolicy": "Exact existing bodies, including incomplete rules and archived-profile behavior. Do not also call these methods from generic lifecycle hooks. Tangled resolver branches remain at original call sites."
+  },
+  "comparison": {
+    "liveGeneratedAt": "2026-08-28T23:07:36.661Z",
+    "skillChanges": [],
+    "catalogGeneratedAt": "2026-09-12T21:05:39.231Z",
+    "catalogId": "lufel-recent-miku",
+    "catalogSkills": [
+      {
+        "name": "Feel the Beat",
+        "power": 0,
+        "buff": {
+          "id": "attack_up",
+          "name": "ATK ↑",
+          "stat": "attack",
+          "value": 0.005699999999999999,
+          "duration": 2
+        },
+        "slot": "S1"
+      },
+      {
+        "name": "Clear Sound",
+        "power": 0,
+        "buff": {
+          "id": "crit_rate_up",
+          "name": "CRIT RATE ↑",
+          "stat": "critRate",
+          "value": 0.002,
+          "duration": 3
+        },
+        "slot": "S2"
+      },
+      {
+        "name": "Showstopper",
+        "power": 0,
+        "slot": "S3"
+      }
+    ]
+  },
+  "reviewNotes": [
+    "Navigator record may be in catalog.navigators, not catalog.characters. Raw skill_highlight is stat transfer, not an executable Highlight attack."
+  ],
+  "awarenessRules": [
+    {
+      "level": 0,
+      "name": "Virtual Stage",
+      "description": "During battle, Miku can change the battle scenery and song playing during her allies' turns, and her skill effects are enhanced based on the current song playing. When Miku's skills become available, the current song will automatically switch.\nWhen using Feel the Beat or Clear Sound on songs where Miku has already gained the corresponding Track, reapply the same additional effect.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 1,
+      "name": "Hologram Screen",
+      "description": "Gain Skill Amplification equal to 15%.\nWhen Virtual Concert is activated, reset all allies' Highlight cooldowns.\nWhile Virtual Concert is active, increase Highlight and Theurgy Final Damage Amplification by 10%, and double the rate at which the Highlight and Theurgy gauges are filled.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 2,
+      "name": "Blue-Green Sea",
+      "description": "When Virtual Concert is activated, grant all effects of Feel the Beat and Clear Sound for 2 turns.\nWhile Virtual Concert is active, increase party's Final Damage Amplification by 8%.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 3,
+      "name": "Echoing in your Heart",
+      "description": "Increase the skill levels of Feel the Beat and Showstopper by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 4,
+      "name": "Let's Sing Together",
+      "description": "When an ally activates a Highlight or Theurgy, increase that ally's Attack by 25% for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 5,
+      "name": "Reaching your Heart",
+      "description": "Increase the skill level of Clear Sound by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 6,
+      "name": "Neverending Song",
+      "description": "When Virtual Concert ends, all foes take a fixed amount of Almighty damage equal to 100% of each target's total damage taken during Virtual Concert.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    }
+  ],
+  "weaponRules": {
+    "partyCrit": [
+      0.181,
+      0.235,
+      0.235,
+      0.289,
+      0.289,
+      0.343,
+      0.343
+    ]
+  },
+  "configuration": {
+    "path": "config.loadouts[unit.id].characterWeapon",
+    "weapon": [
+      "none",
+      "four-star",
+      "signature"
+    ],
+    "refinement": "integer 0..6 (default 0); invalid values throw",
+    "staticWeaponStatsIncluded": "defaults true when unit.statsMode is equipped; otherwise false",
+    "partyWeaponStatsIncluded": "MIKU only: suppress permanent party critical effect when already included in equipped party totals"
+  },
+  "sourceKey": "미쿠",
+  "sourceSnapshot": {
+    "skill.js": {
+      "name": "Hatsune Miku",
+      "skill1": {
+        "name": "Feel the Beat",
+        "element": "버프",
+        "type": "버프",
+        "sp": 0,
+        "cool": 0,
+        "description": "Increase party's Attack by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, increase party's pierce rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical damage by 0.41% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 18.0%/19.8%/20.2%/22.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+        "sync_description": "Increase party's Attack by 2.27% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 100.0%/110.0%/112.0%/122.0%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: Increase party's pierce rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's damage by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical damage by 0.68% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 30.0%/33.0%/33.6%/36.6%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+        "sync_highlight_values": [
+          "2.27%",
+          "100.0%/110.0%/112.0%/122.0%",
+          "0.34%",
+          "15.0%/16.5%/16.8%/18.3%",
+          "0.57%",
+          "25.0%/27.5%/28.0%/30.5%",
+          "0.68%",
+          "30.0%/33.0%/33.6%/36.6%"
+        ]
+      },
+      "skill2": {
+        "name": "Clear Sound",
+        "element": "버프",
+        "type": "버프",
+        "sp": 0,
+        "cool": 0,
+        "description": "Increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, restore HP to party based on 30% of their max HP. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's weakness damage by 0.11% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 4.8%/5.3%/5.4%/5.9%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+        "sync_description": "Increase party's damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 3 turns. Also grant efects to party based on the current song playing.\nHeaven: Restore HP to party based on 30% of their max HP. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's weakness damage by 0.18% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 8.0%/8.8%/9.0%/9.8%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+        "sync_highlight_values": [
+          "1.82%",
+          "80.0%/88.0%/89.6%/97.6%",
+          "0.18%",
+          "8.0%/8.8%/9.0%/9.8%",
+          "0.34%",
+          "15.0%/16.5%/16.8%/18.3%"
+        ]
+      },
+      "skill3": {
+        "name": "Showstopper",
+        "element": "버프",
+        "type": "버프",
+        "sp": 0,
+        "cool": 0,
+        "unlock": "Requires 3 different types of Track.",
+        "description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (these turns are not counted as extra actions and do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra turns, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+        "sync_description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (extra turns do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra actions, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+        "sync_highlight_values": [
+          "1.82%",
+          "80.0%/88.0%/89.6%/97.6%"
+        ]
+      },
+      "skill_highlight": {
+        "name": "Stat Buff",
+        "element": "패시브",
+        "description": "Increase party's stats by 20% of Miku's stats."
+      },
+      "passive1": {
+        "name": "Setlist",
+        "element": "패시브",
+        "description": "When gaining a Track, increase party's Attack by 12.0% for 3 turns. Stacks up to 3 times.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Fan Favorite",
+        "element": "패시브",
+        "description": "When Virtual Concert is active, increase party's damage by 24.0%.",
+        "cool": 0
+      }
+    },
+    "ritual.js": {
+      "name": "Hatsune Miku",
+      "r0": "Virtual Stage",
+      "r0_detail": "During battle, Miku can change the battle scenery and song playing during her allies' turns, and her skill effects are enhanced based on the current song playing. When Miku's skills become available, the current song will automatically switch.\nWhen using Feel the Beat or Clear Sound on songs where Miku has already gained the corresponding Track, reapply the same additional effect.",
+      "r1": "Hologram Screen",
+      "r1_detail": "Gain Skill Amplification equal to 15%.\nWhen Virtual Concert is activated, reset all allies' Highlight cooldowns.\nWhile Virtual Concert is active, increase Highlight and Theurgy Final Damage Amplification by 10%, and double the rate at which the Highlight and Theurgy gauges are filled.",
+      "r2": "Blue-Green Sea",
+      "r2_detail": "When Virtual Concert is activated, grant all effects of Feel the Beat and Clear Sound for 2 turns.\nWhile Virtual Concert is active, increase party's Final Damage Amplification by 8%.",
+      "r3": "Echoing in your Heart",
+      "r3_detail": "Increase the skill levels of Feel the Beat and Showstopper by 3.",
+      "r4": "Let's Sing Together",
+      "r4_detail": "When an ally activates a Highlight or Theurgy, increase that ally's Attack by 25% for 2 turns.",
+      "r5": "Reaching your Heart",
+      "r5_detail": "Increase the skill level of Clear Sound by 3.",
+      "r6": "Neverending Song",
+      "r6_detail": "When Virtual Concert ends, all foes take a fixed amount of Almighty damage equal to 100% of each target's total damage taken during Virtual Concert."
+    },
+    "weapon.js": {
+      "name": "Hatsune Miku",
+      "weapon4-1": {
+        "name": "Trendsetter",
+        "health": 1870.83,
+        "attack": 581.37,
+        "defense": 317.1,
+        "skill_name": "",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen gaining a Track, increase Miku's Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+      },
+      "weapon5-1": {
+        "name": "Light Up Your World",
+        "health": 2338.77,
+        "attack": 726.72,
+        "defense": 396.41,
+        "skill_name": "",
+        "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nIncrease party's critical damage by 18.1%/23.5%/23.5%/28.9%/28.9%/34.3%/34.3%. For each Track gained, increase party's critical damage by 3.0%/3.9%/3.9%/4.8%/4.8%/5.7%/5.7% more for 3 turns. Stacks up to 3 times.\nWhen Virtual Concert is active, gain Skill Amplification equal to 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0%."
+      }
+    }
+  },
+  "legacyExtraction": [
+    {
+      "name": "isMikuNavigator",
+      "engineLineAtExtraction": 934
+    },
+    {
+      "name": "isVirtualConcertActive",
+      "engineLineAtExtraction": 938
+    },
+    {
+      "name": "applyMikuSongEffect",
+      "engineLineAtExtraction": 2249
+    },
+    {
+      "name": "applyMikuTrackSkill",
+      "engineLineAtExtraction": 2264
+    }
+  ]
+}

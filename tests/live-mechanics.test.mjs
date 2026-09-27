@@ -410,6 +410,38 @@ test('Akihiko applies sourced Grit pierce and separate downed-target passive mul
   assert.ok(grit.amount > standing);
 });
 
+test('Akihiko weapons apply sourced static stats, Mettle Crit stacks, conditional Attack, and critical-hit amplification', () => {
+  const definition = character('akihiko');
+  const signature = fixture(['akihiko'], { loadouts: { [definition.id]: { characterResearch: {
+    weapon: 'signature', refinement: 0, staticWeaponStatsIncluded: false
+  } } } });
+  const sigAkihiko = signature.actor;
+  assert.equal(sigAkihiko.akihikoWeapon.criticalStacks, 2);
+  assert.equal(sigAkihiko.buffs.find(buff => buff.id === 'akihiko_signature_static')?.value, .363);
+  assert.equal(sigAkihiko.buffs.find(buff => buff.id === 'akihiko_sabazios_crit')?.value, .164);
+  signature.random = () => .5;
+  const sigHit = signature.calculateDamage(sigAkihiko, {
+    name: 'Weapon test', power: 1, element: 'electric', guaranteedCritical: true
+  }, signature.state.boss, 'character_skill');
+  assert.equal(sigHit.damageFormula.criticalHitDamageMultiplier, 1.34);
+
+  const fourStar = fixture(['akihiko'], { loadouts: { [definition.id]: { characterResearch: {
+    weapon: 'four-star', refinement: 0, staticWeaponStatsIncluded: true
+  } } } });
+  const cestusAkihiko = fourStar.actor;
+  fourStar.random = () => .5;
+  cestusAkihiko.gritStacks = 1;
+  const lowGrit = fourStar.calculateDamage(cestusAkihiko, {
+    name: 'Weapon test', power: 1, element: 'electric', canCrit: false
+  }, fourStar.state.boss, 'character_skill');
+  fourStar.random = () => .5;
+  cestusAkihiko.gritStacks = 2;
+  const highGrit = fourStar.calculateDamage(cestusAkihiko, {
+    name: 'Weapon test', power: 1, element: 'electric', canCrit: false
+  }, fourStar.state.boss, 'character_skill');
+  assert.ok(highGrit.amount > lowGrit.amount * 1.2);
+});
+
 test('Yukari starts with A1 resources, applies exclusive Erosion, and triggers support once per cycle', () => {
   const engine = fixture(['yukari', 'akihiko']);
   const yukari = engine.actor;

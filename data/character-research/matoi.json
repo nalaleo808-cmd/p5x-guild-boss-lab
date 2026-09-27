@@ -1,0 +1,272 @@
+{
+  "slug": "matoi",
+  "name": "Mio Natsukawa",
+  "coverage": "partial: researched source; legacy engine methods integrated, weapon effects excluded",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/matoi/",
+      "kind": "client-rendered-character-page",
+      "accessedAt": "2026-09-12"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/skill.js",
+      "sha256": "e4dfe935913062c9814de21f0ae82152a81e868c3128e294302f479fb6edc6e5",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/ritual.js",
+      "sha256": "827102657c20c77f44ccbfa46d9976a62fb82f1cec3b63a364b2b541af44cbeb",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/weapon.js",
+      "sha256": "89e77a0e053500b01e7751f7cfccf13077310fda8b913aedf7688cc110d24b04",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    }
+  ],
+  "implemented": [
+    "Legacy engine methods mixed into BattleEngine: isMatoi, matoiSkill, applyMatoiTorrentEffects."
+  ],
+  "weaponEffects": "Excluded: source weapon rules are evidence only and do not create selectable loadout options or runtime effects.",
+  "missing": [
+    "Signature Attack text omits a numeric result: do not invent an ailment-accuracy-to-Attack coefficient.",
+    "Signature/four-star ailment accuracy and Technical-trigger defense debuff await stat and Technical integration.",
+    "Ailment-accuracy scaling of Defense/Cold Flames, Freeze duration and Icebound/Technical classification remain incomplete.",
+    "A6 automatic Torrent and repeated-Guidance exposure need owner-action/target-history extraction without duplicate casts."
+  ],
+  "limitations": [
+    "Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "Signature Attack text omits a numeric result: do not invent an ailment-accuracy-to-Attack coefficient.",
+    "Signature/four-star ailment accuracy and Technical-trigger defense debuff await stat and Technical integration.",
+    "Ailment-accuracy scaling of Defense/Cold Flames, Freeze duration and Icebound/Technical classification remain incomplete.",
+    "A6 automatic Torrent and repeated-Guidance exposure need owner-action/target-history extraction without duplicate casts."
+  ],
+  "engineOwned": [
+    "matoiSkill owns Extinguish spend gate and Requiem transformation; applyMatoiTorrentEffects owns Freeze, Scald conversion and base defense reductions.",
+    "resolveSkill owns Guidance spend, Damnation and Highlight extra hit; damage resolver owns Freeze/Icebound vulnerability and Ice resistance bypass."
+  ],
+  "integration": {
+    "removeEngineMethods": [
+      "isMatoi",
+      "matoiSkill",
+      "applyMatoiTorrentEffects"
+    ],
+    "mixIn": "Object.assign(BattleEngine.prototype, matoiLegacyMethods) before any engine construction; import legacyMethods under that alias. Remove named class definitions in the same change.",
+    "dependencies": [
+      "usesLiveMechanics",
+      "emit",
+      "applyEnemyStatus",
+      "random",
+      "convertBurnToScald"
+    ],
+    "hooks": [
+      "initialize applies only reviewed four-star Attack. Signature selection records unsupported effects but executes no coefficient.",
+      "Need afterTechnical(actor,target,result), stat sampling for ailmentAccuracy, and action-start auto-cast ownership before migrating other effects."
+    ],
+    "legacyPolicy": "Exact existing bodies, including incomplete rules and archived-profile behavior. Do not also call these methods from generic lifecycle hooks. Tangled resolver branches remain at original call sites."
+  },
+  "comparison": {
+    "liveGeneratedAt": "2026-08-28T23:07:36.661Z",
+    "skillChanges": [],
+    "catalogGeneratedAt": "2026-09-12T21:05:39.231Z",
+    "catalogId": "lufel-recent-matoi",
+    "catalogSkills": [
+      {
+        "name": "Sub-Zero Torrent",
+        "power": 1.136,
+        "slot": "S1"
+      },
+      {
+        "name": "Freezing Prison",
+        "power": 2.272,
+        "slot": "S2"
+      },
+      {
+        "name": "Extinguishing Guidance",
+        "power": 1.278,
+        "slot": "S3"
+      }
+    ]
+  },
+  "reviewNotes": [
+    "Existing catalog basic powers match English source; importer does not encode full conditional accuracy scaling."
+  ],
+  "awarenessRules": [
+    {
+      "level": 0,
+      "name": "Smothering Agony",
+      "description": "Some skills and Highlight can activate Ice Technicals. Also, when dealing Ice damage, ignore foes' Ice resistance.\nOn Natsukawa's action, gain 1 Extinguish stack. Stacks up to 4 times. When using Extinguishing Guidance, spend Extinguish stacks, and inflict 1 Damnation stack on all foes for each stack spent.\nDamnation: Increase damage taken by 6% for 2 turns. Stacks up to 4 times.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 1,
+      "name": "Cooling Spray",
+      "description": "When using Sub-Zero Torrent, gain 1 more Extinguish stack. When spending Extinguish stacks, increase all foes' critical damage taken by 30% for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 2,
+      "name": "Frozen Gateway",
+      "description": "When spending Extinguish stacks, increase party's Attack by 20%, Defense by 30%, and damage dealt by 15% for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 3,
+      "name": "Whirlpool Cannon",
+      "description": "Increase the skill levels of Extinguishing Guidance and Thief Tactics by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 4,
+      "name": "Terrifying Chill",
+      "description": "Highlight Enhanced: Extend the duration of the damage taken increase effect by 1 turn. Also, when the Highlight activates Deepfreeze, the chance to inflict Icebound becomes 44%.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 5,
+      "name": "Wellspring of Grief",
+      "description": "Increase the skill levels of Sub-Zero Torrent and Freezing Prison by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 6,
+      "name": "Firefighter's Soul",
+      "description": "If foes have Burn or Scald on Natsukawa's action, activate Sub-Zero Torrent on that foe 1 time.\nAlso, when the same foe is attacked repeatedly with Extinguishing Guidance or Requiem Guidance, increase the target's damage taken by 25% more for 1 turn.\nThe maximum number of Damnation stacks becomes 6.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    }
+  ],
+  "weaponRules": {
+    "four-star": {
+      "stat": "attack",
+      "values": [
+        0.12,
+        0.12,
+        0.16,
+        0.16,
+        0.2,
+        0.2,
+        0.24
+      ]
+    }
+  },
+  "configuration": {
+    "path": "config.loadouts[unit.id].characterWeapon",
+    "weapon": [
+      "none",
+      "four-star",
+      "signature"
+    ],
+    "refinement": "integer 0..6 (default 0); invalid values throw",
+    "staticWeaponStatsIncluded": "defaults true when unit.statsMode is equipped; otherwise false",
+    "partyWeaponStatsIncluded": "MIKU only: suppress permanent party critical effect when already included in equipped party totals"
+  },
+  "sourceKey": "미오",
+  "sourceSnapshot": {
+    "skill.js": {
+      "name": "Mio Natsukawa",
+      "skill1": {
+        "name": "Sub-Zero Torrent",
+        "element": "빙결광역",
+        "type": "버프",
+        "sp": 22,
+        "cool": 0,
+        "description": "Gain 1 Extinguish stack, and deal Ice damage to all foes equal to 97.6%/107.6%/103.6%/113.6% of Attack. 50% chance to inflict Freeze.\nAlso, decrease Defense by 7.8%/8.6%/8.3%/9.1% for 3 turns (for every 5.47% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%). When an ally attacks a foe whose Defense has been decreased by this skill, increase Technical Precision by 195/195/207/207.\nIf at least 1 foe is inflicted with Burn, remove Burn and inflict Scald on all foes (cannot be inflicted if Scald is already active).\nScald: Counts as Burn. Lasts for 3 turns. When allies attack the affected foe, increase Technical Precision by 1186/1308/1259/1381."
+      },
+      "skill2": {
+        "name": "Freezing Prison",
+        "element": "빙결",
+        "type": "제어",
+        "sp": 24,
+        "cool": 0,
+        "description": "Deal Ice damage to 1 foe equal to 195.2%/215.2%/207.2%/227.2% of Attack, and can activate an Ice Technical. When Deepfreeze is activated, 48.0%/52.9%/51.0%/55.9% chance to inflict Icebound."
+      },
+      "skill3": {
+        "name": "Extinguishing Guidance",
+        "element": "빙결광역",
+        "type": "버프",
+        "sp": 25,
+        "cool": 0,
+        "description": "Can be used at 2 or more Extinguish stacks. Spend 2 Extinguish stacks to deal Ice damage to all foes equal to 109.8%/121.0%/116.6%/127.8% of Attack. Also, decrease Defense by 7.3%/8.1%/7.8%/8.5% for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 9.8%/10.8%/10.4%/11.4% (for every 4.38% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%).\nAt 4 or more Extinguish stacks, evolve this skill to Requiem Guidance.\nSpend 4 Extinguish stacks to deal Ice damage to all foes equal to 131.8%/145.3%/139.9%/153.4% of Attack. Also, decrease Defense by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 4.86% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 11.7%/12.9%/12.4%/13.6% (for every 3.65% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 46.8%/51.6%/49.7%/54.5%)."
+      },
+      "skill_highlight": {
+        "element": "빙결광역",
+        "type": "디버프",
+        "description": "Deal Ice damage to all foes equal to 39.0%/43.0%/41.4%/45.4% of Attack, and increase their damage taken for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Deepfreeze is activated, 32% chance to inflict Icebound. Also, increase damage taken by enemies inflicted with Freeze by this Highlight (for every 17.5% of Natsukawa's ailment accuracy, increase damage taken by 1%, up to a maximum of 9.8%/10.8%/10.4%/11.4%).\nThen, deal additional Ice damage to all foes equal to 117.1%/129.1%/124.3%/136.3% of Attack.",
+        "cool": 4
+      },
+      "passive1": {
+        "name": "Disaster Preparedness",
+        "element": "패시브",
+        "description": "Each time Natsukawa activates a Technical, grant all allies a shield that protects against 1050 damage for 2 turns.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Biting Cold",
+        "element": "패시브",
+        "description": "When Natsukawa is present, increase damage taken of foes inflicted with Freeze by 27.0%, and increase damage taken of foes inflicted with Icebound by 27.0%.",
+        "cool": 0
+      }
+    },
+    "ritual.js": {
+      "name": "Mio Natsukawa",
+      "r0": "Smothering Agony",
+      "r0_detail": "Some skills and Highlight can activate Ice Technicals. Also, when dealing Ice damage, ignore foes' Ice resistance.\nOn Natsukawa's action, gain 1 Extinguish stack. Stacks up to 4 times. When using Extinguishing Guidance, spend Extinguish stacks, and inflict 1 Damnation stack on all foes for each stack spent.\nDamnation: Increase damage taken by 6% for 2 turns. Stacks up to 4 times.",
+      "r1": "Cooling Spray",
+      "r1_detail": "When using Sub-Zero Torrent, gain 1 more Extinguish stack. When spending Extinguish stacks, increase all foes' critical damage taken by 30% for 2 turns.",
+      "r2": "Frozen Gateway",
+      "r2_detail": "When spending Extinguish stacks, increase party's Attack by 20%, Defense by 30%, and damage dealt by 15% for 2 turns.",
+      "r3": "Whirlpool Cannon",
+      "r3_detail": "Increase the skill levels of Extinguishing Guidance and Thief Tactics by 3.",
+      "r4": "Terrifying Chill",
+      "r4_detail": "Highlight Enhanced: Extend the duration of the damage taken increase effect by 1 turn. Also, when the Highlight activates Deepfreeze, the chance to inflict Icebound becomes 44%.",
+      "r5": "Wellspring of Grief",
+      "r5_detail": "Increase the skill levels of Sub-Zero Torrent and Freezing Prison by 3.",
+      "r6": "Firefighter's Soul",
+      "r6_detail": "If foes have Burn or Scald on Natsukawa's action, activate Sub-Zero Torrent on that foe 1 time.\nAlso, when the same foe is attacked repeatedly with Extinguishing Guidance or Requiem Guidance, increase the target's damage taken by 25% more for 1 turn.\nThe maximum number of Damnation stacks becomes 6."
+    },
+    "weapon.js": {
+      "name": "Mio Natsukawa",
+      "weapon4-1": {
+        "name": "Abyssal Thorn",
+        "health": 1870.83,
+        "attack": 539.4,
+        "defense": 331.38,
+        "skill_name": "Waterflowing Afterglow",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nFor each Extinguish stack, increase ailment accuracy by 6.0%/7.8%/7.8%/9.6%/9.6%/11.4%/11.4%."
+      },
+      "weapon5-1": {
+        "name": "Entropy",
+        "health": 2338.77,
+        "attack": 673.89,
+        "defense": 414.04,
+        "skill_name": "Conflagrations, Dauntless",
+        "description": "Increase ailment accuracy by 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%.\nDuring battle, for every 66.0%/68.0%/68.0%/70.0%/70.0%/72.0%/72.0% of Natsukawa's ailment accuracy, increase Attack.\nAlso, each time an Ice Technical is activated, decrease the target's Defense by 23.3%/30.3%/30.3%/37.3%/37.3%/44.3%/44.3% more for 2 turns."
+      }
+    }
+  },
+  "legacyExtraction": [
+    {
+      "name": "isMatoi",
+      "engineLineAtExtraction": 873
+    },
+    {
+      "name": "matoiSkill",
+      "engineLineAtExtraction": 1203
+    },
+    {
+      "name": "applyMatoiTorrentEffects",
+      "engineLineAtExtraction": 2019
+    }
+  ]
+}

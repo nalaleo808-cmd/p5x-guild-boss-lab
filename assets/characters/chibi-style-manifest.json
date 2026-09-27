@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "style": "Uniform cute chibi character assets generated from the simulator's existing character references only.",
+  "canvas": {
+    "width": 724,
+    "height": 724,
+    "format": "transparent RGBA",
+    "contentBoxMax": 674
+  },
+  "charactersUpdated": 26,
+  "noNewCharactersAdded": true,
+  "cosmicYui": {
+    "asset": "assets/characters/bui-cosmic-goofy.png",
+    "size": [
+      724,
+      724
+    ],
+    "variantsNormalized": true
+  },
+  "assets": [
+    {
+      "character": "Akihiko Sanada",
+      "asset": "assets/characters/akihiko.webp",
+      "generatedSource": "chibi_masquerade_heroes_trio.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "0cb9ef1a4124d6e9863ca0e8bed6f4c5a44aa202680af7fcf876a1e8629107da"
+    },
+    {
+      "character": "Manaka Nagao / ANGE",
+      "asset": "assets/characters/ange.webp",
+      "generatedSource": "chibi_masquerade_heroes_trio.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "338f7d1438094fee89d4501b7cc406f2ead18411bd251c65b9d45e54eae428b1"
+    },
+    {
+      "character": "Ichigo Shikano / BERRY",
+      "asset": "assets/characters/berry.webp",
+      "generatedSource": "chibi_masquerade_heroes_trio.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "590a6524af118fdfe8cc6a24c24ad2495a2f3f99ea8bdcbc7ccf689859012117"
+    },
+    {
+      "character": "Kumi Katayama / BLITZ",
+      "asset": "assets/characters/blitz.webp",
+      "generatedSource": "chibi_heroes_in_dynamic_action.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "a753b09964fd5d6276568271b91a8aaf40266b626c2965c5898e356bc4e2f331"
+    },
+    {
+      "character": "Goro Akechi / CROW",
+      "asset": "assets/characters/crow.webp",
+      "generatedSource": "chibi_heroes_in_dynamic_action.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "a52591bf584ca342a2eb5a36f79a0b1f95966ff553799be265b1ca346a413f80"
+    },
+    {
+      "character": "Runa Dogenzaka / HOWLER",
+      "asset": "assets/characters/howler.webp",
+      "generatedSource": "chibi_heroes_in_dynamic_action.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "8a759239b19944fd7d498b0fe919f426dfd6951d1421c02f1597e44ecd644aa7"
+    },
+    {
+      "character": "Justine & Caroline / J&C",
+      "asset": "assets/characters/j-c.webp",
+      "generatedSource": "chibi_persona_battle_sticker_trio.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "524016ce6350688caa4f025547e8bee8f4819a4ea48d93823babe3a6b888039b"
+    },
+    {
+      "character": "Ren Amamiya / Joker",
+      "asset": "assets/characters/joker.webp",
+      "generatedSource": "chibi_persona_battle_sticker_trio.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "5d227b50d955bb1bc2e868c5b0e73912d14c9279c064ab76c0b736fb47434f9c"
+    },
+    {
+      "character": "Shoki Ikenami / LUCE",
+      "asset": "assets/characters/luce.webp",
+      "generatedSource": "chibi_persona_battle_sticker_trio.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "7f14c52f89e47b8a6fe3d2266c20af9014c83749093a4683f86d195059e3dedd"
+    },
+    {
+      "character": "Makoto Yuki",
+      "asset": "assets/characters/makoto.webp",
+      "generatedSource": "chibi_heroes_midnight_beach_and_blue_steel.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "eb4402241c4524ef4b20ce2334fb731752b94ba586b09c93e14c612f2da05966"
+    },
+    {
+      "character": "Beachflower Minami",
+      "asset": "assets/characters/marian-beachflower.webp",
+      "generatedSource": "chibi_heroes_midnight_beach_and_blue_steel.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "cec5049c827dfcbb55cdb5e3c59b943b17d24f44ab787d6eecd402be74f8ec9d"
+    },
+    {
+      "character": "Mio Natsukawa / MATOI",
+      "asset": "assets/characters/matoi.webp",
+      "generatedSource": "chibi_heroes_midnight_beach_and_blue_steel.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "b9f34307a875f1e1b0c23cc209705c0a7889f78b53530f3d07fe3f57a68d8204"
+    },
+    {
+      "character": "Hatsune Miku",
+      "asset": "assets/characters/miku.webp",
+      "generatedSource": "chibi_idol_cat_hero_and_ice_dancer.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "bdc19d9f61b707287c89b68b50890ece850c73994ba8fa7c198996b7a8e4d7c4"
+    },
+    {
+      "character": "Morgana / Mona",
+      "asset": "assets/characters/mona.webp",
+      "generatedSource": "chibi_idol_cat_hero_and_ice_dancer.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "4979e46e4359bc4578f848f98a41feff054d35e2be695314c86400889b289902"
+    },
+    {
+      "character": "Frostgale Kotone",
+      "asset": "assets/characters/mont-frostgale.webp",
+      "generatedSource": "chibi_idol_cat_hero_and_ice_dancer.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "72f4ecad924187197645d6ac02e8f8ed9e854de0f4d801e79ebf2ac524ee6134"
+    },
+    {
+      "character": "Haru Okumura / NOIR",
+      "asset": "assets/characters/noir.webp",
+      "generatedSource": "chibi_trio_phantom_cat_and_ocean_cheer.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "3e85ec0578f8af63ee95844364df57081fa54ac473c479d70b312de295377832"
+    },
+    {
+      "character": "Kayo Tomiyama / Okyann",
+      "asset": "assets/characters/okyann.webp",
+      "generatedSource": "chibi_trio_phantom_cat_and_ocean_cheer.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "a6936b24fd20e56b12dfe6094e454a5271098cb9ebd4d27364d9095b4053efd4"
+    },
+    {
+      "character": "Wavecatcher Miyu",
+      "asset": "assets/characters/puppet-wavecatcher.webp",
+      "generatedSource": "chibi_trio_phantom_cat_and_ocean_cheer.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "bc169160e1b33903e58d9bb9b5e18c280183f85505f319b0d37d765843ab871b"
+    },
+    {
+      "character": "Firecracker Yaoling",
+      "asset": "assets/characters/rin-firecracker.webp",
+      "generatedSource": "chibi_masked_trio_in_action.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "e1becb80ba7c3e4e6c79494b8afd7a8f693743d8c4a2142b8c5254eec9d95e27"
+    },
+    {
+      "character": "Rin Nishimori",
+      "asset": "assets/characters/rin.webp",
+      "generatedSource": "chibi_masked_trio_in_action.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "3c667bafda15bef68c1c3548366ba85b420458f0147a4d97ccf1ab6d8d6816a6"
+    },
+    {
+      "character": "Mayumi Hashimoto / TURBO",
+      "asset": "assets/characters/turbo.webp",
+      "generatedSource": "chibi_masked_trio_in_action.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "8465419c18b0cf450a776788890acfb80c1a40ce90fdc6781cf6757034c5b105"
+    },
+    {
+      "character": "Kasumi Yoshizawa / VIOLET",
+      "asset": "assets/characters/violet.webp",
+      "generatedSource": "chibi_masked_phantom_trio.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "e4444d1c1552d6d22a2d0a8023d6316416229dd0c259799416298e02fa6b7211"
+    },
+    {
+      "character": "Tempest Riko",
+      "asset": "assets/characters/wind-tempest.webp",
+      "generatedSource": "chibi_masked_phantom_trio.png",
+      "panel": 2,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "96503299436e86b156c0a976c59d6aae0065746700e3310f2bf5b11eca21cd88"
+    },
+    {
+      "character": "Wonder",
+      "asset": "assets/characters/wonder.png",
+      "generatedSource": "chibi_masked_phantom_trio.png",
+      "panel": 3,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "9d84bbbd2f17ef635efbb58e55830eec633b989041448caf0ea92e583b24d901"
+    },
+    {
+      "character": "Yukari Takeba",
+      "asset": "assets/characters/yukari.webp",
+      "generatedSource": "chibi_yukari_s_verdant_arrow_storm.png",
+      "panel": 1,
+      "size": [
+        724,
+        724
+      ],
+      "sha256": "04d9593ce62a95452830793cfa7a571e437b8237870be55eae2bd92cc0c4e576"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ export const DREAMSCAPE_RESULT_FORMULA_EVIDENCE = Object.freeze({
   status: 'verified_observed_result_composition',
   expression: '(foeDefensePoints + turnsSurvivedBonus) * difficultyBonus',
   scope: 'One Hachiman NIGHTMaRe Multidimensional Dreamscape result screen',
-  source: 'docs/LIVE-BATTLE-CHECK-2026-09-04.md',
+  source: 'LIVE-BATTLE-CHECK-2026-09-04.md',
   limitation: 'This does not define how Foe Defense Points or Turns Survived Bonus accumulate.'
 });
 
@@ -23,20 +23,24 @@ export const DREAMSCAPE_SURVIVAL_HUD_OBSERVATIONS = Object.freeze([
   Object.freeze({ attackTurnsLeft: 0, displayedMultiplier: 2 })
 ]);
 
-export const HACHIMAN_DREAMSCAPE_TURN_SCORE_MULTIPLIERS = Object.freeze([
+export const MULTIDIMENSIONAL_DREAMSCAPE_TURN_SCORE_MULTIPLIERS = Object.freeze([
   Object.freeze({ normalTurn: 1, multiplier: 0.5 }),
   Object.freeze({ normalTurn: 2, multiplier: 1 }),
   Object.freeze({ normalTurn: 3, multiplier: 1.5 }),
   Object.freeze({ normalTurn: 4, multiplier: 2, continuesFromNormalTurn: 4 })
 ]);
 
-export function getHachimanDreamscapeTurnScoreMultiplier(normalTurn) {
+export function getMultidimensionalDreamscapeTurnScoreMultiplier(normalTurn) {
   if (typeof normalTurn !== 'number' || !Number.isInteger(normalTurn) || normalTurn < 1) return null;
   if (normalTurn === 1) return 0.5;
   if (normalTurn === 2) return 1;
   if (normalTurn === 3) return 1.5;
   return 2;
 }
+
+// Backward-compatible alias for callers that used the original Hachiman-only name.
+export const HACHIMAN_DREAMSCAPE_TURN_SCORE_MULTIPLIERS = MULTIDIMENSIONAL_DREAMSCAPE_TURN_SCORE_MULTIPLIERS;
+export const getHachimanDreamscapeTurnScoreMultiplier = getMultidimensionalDreamscapeTurnScoreMultiplier;
 
 export function calculateDreamscapeResult({
   foeDefensePoints = 0,

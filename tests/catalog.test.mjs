@@ -3,25 +3,40 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BattleEngine } from '../src/engine.js';
+import { BattleEngine, CURRENT_MECHANICS_PROFILE } from '../src/engine.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
 
 const artworkDirectory = fileURLToPath(new URL('../assets/characters/', import.meta.url));
 
 test('generated Lufelnet catalog contains the imported Persona and Revelation records', () => {
-  assert.equal(lufelCatalog.counts.personas, 57);
-  assert.equal(lufelCatalog.counts.personaSkills, 337);
+  assert.equal(lufelCatalog.counts.personas, 159);
+  assert.equal(lufelCatalog.counts.orderedPersonas, 57);
+  assert.equal(lufelCatalog.counts.personaSkills, 889);
   assert.equal(lufelCatalog.counts.transferablePersonaSkills, 458);
-  assert.equal(lufelCatalog.counts.characters, 20);
+  assert.equal(lufelCatalog.counts.characters, 21);
+  assert.equal(lufelCatalog.counts.weapons, 53);
   assert.equal(lufelCatalog.counts.revelationMains, 18);
   assert.equal(lufelCatalog.counts.revelationSets, 32);
   assert.match(lufelCatalog.source.commit, /^[0-9a-f]{40}$/);
   assert.ok(lufelCatalog.personas.some(persona => persona.name === 'Alice'));
+  assert.equal(lufelCatalog.personas.filter(persona => persona.availability === 'reference').length, 102);
   assert.deepEqual(lufelCatalog.characters.slice(0, 3).map(character => character.codename), ['BLITZ', 'BERRY', 'PUPPET·Wavecatcher']);
-  assert.equal(lufelCatalog.characters.at(-1).codename, 'NOIR');
+  assert.equal(lufelCatalog.characters[19].codename, 'NOIR');
   assert.equal(lufelCatalog.source.characterPage.spoilers, false);
   assert.ok(lufelCatalog.characters.every(character => character.artwork?.startsWith('/assets/characters/')));
   assert.ok(lufelCatalog.characters.every(character => existsSync(join(artworkDirectory, `${character.slug}.webp`))));
+});
+
+test('generated weapon catalog preserves mined names, stats, descriptions, and character ownership', () => {
+  const sabazios = lufelCatalog.weapons.find(weapon => weapon.name === 'Sabazios');
+  const angelHymn = lufelCatalog.weapons.find(weapon => weapon.name === "Angel's Hymn");
+  const starlight = lufelCatalog.weapons.find(weapon => weapon.name === 'Starlight Decimators');
+  assert.deepEqual({ slug: sabazios.characterSlug, rarity: sabazios.rarity, attack: sabazios.stats.attack },
+    { slug: 'akihiko', rarity: 5, attack: 773.01 });
+  assert.match(sabazios.description, /Mettle stacks/);
+  assert.equal(angelHymn.skillName, 'Divine Radiance');
+  assert.equal(starlight.characterSlug, 'bui-cosmic');
+  assert.equal(starlight.refinementEffects.critRate.length, 7);
 });
 
 test('Rebellion is a transferable executable buff that can be equipped by Dionysus', () => {
@@ -110,6 +125,7 @@ test('ANGE uses independent actions while MIKU starts with a shared four-action 
 
   const mikuEngine = new BattleEngine({
     seed: 808,
+    bossId: 'surt', modeId: 'multidimensional',
     navigatorDefinition: { ...miku, id: 'navigator-miku', skills: miku.skills }
   });
   const feel = mikuEngine.getNavigatorActions().find(candidate => candidate.name === 'Feel the Beat');
@@ -253,7 +269,7 @@ test('Gentle Sea Breeze grants two medicines and stays unavailable for two follo
   assert.equal(engine.getAvailableActions().find(action => action.skillId === breeze.id).enabled, true);
 });
 
-test('Paddle Out enters Surf with two Catch a Waves, and Catch a Wave follows an ally turn for free', () => {
+test('Paddle Out enters Surf and Catch a Wave follows character turns without reducing Down gauge', () => {
   const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
   const paddleOut = wavecatcher.skills.find(skill => skill.name === 'Paddle Out');
   const engine = new BattleEngine({
@@ -264,30 +280,30 @@ test('Paddle Out enters Surf with two Catch a Waves, and Catch a Wave follows an
   });
   const wavecatcherState = engine.state.party[0];
   const startingSp = wavecatcherState.sp;
+  assert.equal(startingSp, 10);
+  wavecatcherState.sp = engine.spCap(wavecatcherState);
+  const allyTurnRecovery = 15 * wavecatcherState.spRecovery / 100;
   const damageBefore = engine.state.totalDamage;
   const paddleResult = engine.step({ type: 'skill', skillId: paddleOut.id, targetId: 'boss' });
 
   assert.equal(paddleResult.reward, 0);
-  // Entering Surf ends her turn and fires two Catch a Waves (30 SP, then 60 SP at 1 Offshore).
   assert.ok(engine.state.totalDamage > damageBefore);
   assert.equal(wavecatcherState.surfActive, true);
-  assert.equal(wavecatcherState.sp, startingSp - 60 - 30 - 60);
+  // Entering Surf fires Catch a Wave on entry (30 SP) and again at turn end (60 SP at 1 Offshore).
+  assert.equal(wavecatcherState.sp, engine.spCap(wavecatcherState) - 60 - 30 - 60 + allyTurnRecovery);
+  const spAfterOwnTurn = wavecatcherState.sp;
+  assert.equal(wavecatcherState.catchAWaveCount, 2);
   assert.equal(wavecatcherState.offshoreStacks, 2);
   assert.equal(engine.state.actionNumber, 2);
-  assert.notEqual(engine.actor.id, wavecatcher.id);
-
-  // Top up SP so the next Catch a Wave (90 SP at 2 Offshore) can follow an ally turn.
-  wavecatcherState.sp = startingSp;
-  const damageBeforeAllyTurn = engine.state.totalDamage;
 
   for (const enemy of engine.enemies) enemy.weakness = 'ice';
   const downPoints = engine.enemies.map(enemy => [enemy.id, enemy.downPoints]);
   const allyResult = engine.step({ type: 'guard', skillId: 'guard', targetId: 'self' });
 
   assert.equal(engine.state.actionNumber, 3);
-  assert.equal(wavecatcherState.sp, startingSp - 90);
+  assert.ok(Math.abs(wavecatcherState.sp - (spAfterOwnTurn - 90 + allyTurnRecovery)) < 1e-12);
   assert.equal(wavecatcherState.offshoreStacks, 3);
-  assert.ok(engine.state.totalDamage > damageBeforeAllyTurn);
+  assert.ok(engine.state.totalDamage > damageBefore);
   assert.ok(allyResult.events.some(event => event.type === 'follow_up' && event.sourceType === 'resonance_follow_up'));
   assert.ok(allyResult.events.some(event => event.type === 'damage' && event.sourceType === 'resonance_follow_up'));
   for (const [id, points] of downPoints) assert.equal(engine.findEnemy(id)?.downPoints, points);
@@ -297,6 +313,10 @@ test('A6 Miyu begins battle in Surf state', () => {
   const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
   const engine = new BattleEngine({
     seed: 808,
+    bossId: 'surt',
+    modeId: 'multidimensional',
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
     characterDefinitions: [{ ...wavecatcher, awareness: 6 }],
     teamIds: [wavecatcher.id, 'wonder', 'joker', 'mona']
   });
@@ -304,6 +324,135 @@ test('A6 Miyu begins battle in Surf state', () => {
   const miyu = engine.state.party[0];
   assert.equal(miyu.awareness, 6);
   assert.equal(miyu.surfActive, true);
+  assert.equal(miyu.totalRecoveredSp, miyu.maxSp);
+  for (const id of ['miyu_recovered_attack', 'miyu_recovered_damage', 'miyu_recovered_crit', 'miyu_recovered_crit_damage']) {
+    assert.ok(miyu.buffs.some(buff => buff.id === id), id);
+  }
+
+  const aerialTide = miyu.skills.find(skill => skill.name === 'Aerial Tide');
+  engine.resolveSkill(miyu, aerialTide, engine.state.boss.id, 'character_skill');
+  const aerialDamage = engine.state.log.filter(event => event.type === 'damage').at(-1);
+  assert.equal(aerialDamage.calculation.damageClass, 'resonance_follow_up');
+});
+
+test('Marian medicine does not end her turn or trigger Miyu Catch a Wave', () => {
+  const marian = lufelCatalog.characters.find(character => character.slug === 'marian-beachflower');
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({
+    seed: 808,
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
+    characterDefinitions: [marian, wavecatcher],
+    teamIds: [marian.id, 'wonder', wavecatcher.id, 'joker']
+  });
+  const miyu = engine.state.party.find(unit => unit.slug === 'puppet-wavecatcher');
+  engine.actor.midsummerPrescription = 1;
+  engine.actor.lastMedicineCharacterTurn = -1;
+  const actorBefore = engine.actor.id;
+  const catchesBefore = miyu.catchAWaveCount;
+
+  const medicine = engine.stepMedicine('fighter_salve', miyu.id);
+
+  assert.equal(medicine.consumedAction, false);
+  assert.equal(engine.actor.id, actorBefore);
+  assert.equal(miyu.catchAWaveCount, catchesBefore);
+  assert.equal(medicine.events.some(event => event.type === 'follow_up'), false);
+
+  const completedTurn = engine.step({ type: 'guard', skillId: 'guard', targetId: engine.actor.id });
+  assert.equal(miyu.catchAWaveCount, catchesBefore + 1);
+  assert.equal(completedTurn.events.filter(event => event.type === 'follow_up').length, 1);
+});
+
+test('Miyu repeats Catch a Wave only after the fourth regular ally-turn trigger', () => {
+  const marian = lufelCatalog.characters.find(character => character.slug === 'marian-beachflower');
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({
+    seed: 808,
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
+    characterDefinitions: [marian, wavecatcher],
+    teamIds: [marian.id, 'wonder', wavecatcher.id, 'joker']
+  });
+  const miyu = engine.state.party.find(unit => unit.slug === 'puppet-wavecatcher');
+  engine.actor.midsummerPrescription = 1;
+  engine.actor.lastMedicineCharacterTurn = -1;
+
+  engine.stepMedicine('fighter_salve', miyu.id);
+  assert.equal(miyu.catchAWaveCount, 0);
+  assert.equal(engine.state.log.some(event => event.skillId === 'catch_a_wave_special'), false);
+
+  for (let trigger = 1; trigger <= 4; trigger += 1) {
+    const specialBefore = engine.state.log.filter(event => event.skillId === 'catch_a_wave_special').length;
+    const spBefore = miyu.sp;
+    engine.resolveAllyTurnFollowUps('wonder');
+    assert.equal(miyu.catchAWaveCount, trigger);
+    assert.equal(
+      engine.state.log.filter(event => event.skillId === 'catch_a_wave_special').length,
+      trigger === 4 ? specialBefore + 1 : specialBefore
+    );
+    if (trigger === 4) assert.equal(miyu.sp, spBefore - 72);
+  }
+  assert.equal(miyu.offshoreStacks, 4);
+});
+
+test('Miyu own turn can trigger Catch a Wave while Surf is active', () => {
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({
+    seed: 808,
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
+    characterDefinitions: [{ ...wavecatcher, awareness: 6 }],
+    teamIds: [wavecatcher.id, 'wonder', 'joker', 'mona']
+  });
+  const miyu = engine.state.party[0];
+  miyu.sp = engine.spCap(miyu);
+  const downPointsBefore = engine.enemies.map(enemy => enemy.downPoints);
+
+  engine.resolveAllyTurnFollowUps(miyu.id);
+
+  assert.equal(miyu.catchAWaveCount, 1);
+  assert.equal(miyu.offshoreStacks, 1);
+  assert.deepEqual(engine.enemies.map(enemy => enemy.downPoints), downPointsBefore);
+});
+
+test('Miyu A2, A4, and Mermaid Dreamer R6 apply only to sourced Resonance windows', () => {
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({
+    seed: 808,
+    bossId: 'surt',
+    modeId: 'multidimensional',
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
+    characterDefinitions: [{ ...wavecatcher, awareness: 6 }],
+    teamIds: [wavecatcher.id, 'wonder', 'joker', 'mona'],
+    loadouts: { [wavecatcher.id]: { awareness: 6, characterResearch: {
+      weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: false
+    } } }
+  });
+  const miyu = engine.state.party[0];
+  assert.equal(miyu.wavecatcherWeapon.weapon, 'signature');
+  assert.equal(miyu.buffs.find(buff => buff.id === 'miyu_mermaid_dreamer_static').value, 0.69);
+
+  const catchSkill = { id: 'test_catch', name: 'Catch a Wave', element: 'ice', cost: 18, power: 0.584, target: 'boss' };
+  engine.resolveSkill(miyu, catchSkill, engine.state.boss.id, 'resonance_follow_up');
+  const resonance = engine.state.log.filter(event => event.type === 'damage').at(-1).calculation;
+  assert.equal(miyu.wavecatcherWeapon.spendStacks, 1);
+  assert.ok(Math.abs(miyu.buffs.find(buff => buff.id === 'miyu_mermaid_dreamer_spend_damage').value - 0.128) < 1e-12);
+  const storedCritRate = miyu.buffs.filter(buff => buff.stat === 'critRate').reduce((sum, buff) => sum + buff.value, 0);
+  const storedCritDamage = miyu.buffs.filter(buff => buff.stat === 'critDamage').reduce((sum, buff) => sum + buff.value, 0);
+  assert.ok(Math.abs(resonance.damageFormula.rawCritRate - (miyu.crit + storedCritRate + 0.314)) < 1e-12);
+  assert.ok(Math.abs(resonance.damageFormula.criticalMultiplier - (miyu.critMult + storedCritDamage + 0.20
+    + engine.surtResonanceCritDamageBonus('resonance_follow_up'))) < 1e-12);
+
+  const freeRepeat = { ...catchSkill, id: 'test_catch_free', cost: 0 };
+  engine.resolveSkill(miyu, freeRepeat, engine.state.boss.id, 'resonance_follow_up', { ignoreCost: true });
+  assert.equal(miyu.wavecatcherWeapon.spendStacks, 1);
+
+  const highlight = miyu.highlightSkill;
+  engine.resolveSkill(miyu, highlight, engine.state.boss.id, 'highlight', { ignoreCost: true });
+  const highlightBuff = miyu.buffs.find(buff => buff.id === 'miyu_highlight_resonance_damage');
+  assert.equal(highlightBuff.value, 0.30);
+  assert.equal(highlightBuff.duration, 3);
 });
 
 test('Jellyfish Splash can bank SP above Miyu’s normal maximum', () => {
@@ -320,7 +469,12 @@ test('Jellyfish Splash can bank SP above Miyu’s normal maximum', () => {
   engine.step({ type: 'skill', skillId: jellyfish.id, targetId: 'boss' });
 
   assert.equal(miyu.spRecovery, 188.5);
-  assert.equal(miyu.sp, miyu.maxSp + 75);
+  const jellyfishRecovery = Math.round(60 * miyu.spRecovery / 100);
+  const allyTurnRecovery = 15 * miyu.spRecovery / 100;
+  const catchCost = 30 * 0.6;
+  assert.equal(miyu.maxSp, 450);
+  assert.equal(miyu.sp, miyu.maxSp + jellyfishRecovery - catchCost + allyTurnRecovery);
+  assert.equal(miyu.catchAWaveCount, 1);
   assert.equal(engine.spCap(miyu), miyu.maxSp * 2);
 });
 
@@ -458,6 +612,37 @@ test('all J&C Oxymoron mask pairs apply their complete passive bonuses', () => {
   assert.equal(serviceLuck.state.party[0].speed, twins.speed + 5);
   assert.ok(serviceLuck.enemies.every(enemy => enemy.debuffs.some(debuff => debuff.id === 'jc_oxymoron_exposure' && debuff.value === 0.24)));
   assert.equal(create(['absurdity', 'luck']).state.party[0].buffs.find(buff => buff.id === 'jc_oxymoron_crit_damage').value, 0.3);
+});
+
+test("J&C Warden's Judgement R6 applies opening Butterfly stacks and Two Masks Desire bonus", () => {
+  const twins = lufelCatalog.characters.find(character => character.slug === 'j-c');
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({
+    seed: 808,
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE,
+    wavecatcherSourceMechanics: true,
+    characterDefinitions: [{ ...twins, awareness: 6 }, { ...wavecatcher, awareness: 6 }],
+    teamIds: [twins.id, 'wonder', wavecatcher.id, 'joker'],
+    jcMaskPair: ['mischief', 'service'],
+    loadouts: {
+      [twins.id]: {
+        jcDesireLevel: 120,
+        characterResearch: { weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true }
+      }
+    }
+  });
+  const jc = engine.state.party.find(unit => unit.slug === 'j-c');
+  const miyu = engine.state.party.find(unit => unit.slug === 'puppet-wavecatcher');
+  assert.equal(jc.desireLevel, 120);
+  assert.equal(jc.jcWeapon.weapon, 'signature');
+  assert.deepEqual(
+    [jc.buffs.find(buff => buff.id === 'jc_one_winged_butterfly_damage').value,
+      jc.buffs.find(buff => buff.id === 'jc_one_winged_butterfly_damage').stacks],
+    [0.5, 2]
+  );
+  assert.equal(jc.buffs.find(buff => buff.id === 'jc_one_winged_butterfly_damage').duration, 2);
+  assert.equal(miyu.buffs.find(buff => buff.id === 'jc_one_winged_butterfly_damage').duration, 3);
+  assert.ok(Math.abs(jc.buffs.find(buff => buff.id === 'jc_two_masks_damage').value - 0.71029) < 1e-12);
 });
 
 test('J&C Service healing, reduction, and shield pair honor Oxymoron', () => {

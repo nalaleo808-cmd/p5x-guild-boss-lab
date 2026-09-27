@@ -6,6 +6,7 @@ import {
   battleSkillsForPersona,
   buildPersonaLoadoutCatalog,
   fixedPersonaSkills,
+  highestRankPersonaPassive,
   legalTransferableSkillsForPersona,
   sanitizePersonaSkillIds
 } from '../src/persona-loadout.js';
@@ -13,6 +14,28 @@ import {
 const catalog = buildPersonaLoadoutCatalog(lufelCatalog);
 const persona = name => lufelCatalog.personas.find(item => item.name === name);
 const transferable = name => catalog.transferableSkills.find(item => item.name === name);
+
+test('highest sourced Persona passive rank is selected by default', () => {
+  const selected = highestRankPersonaPassive({ passive: [
+    { name: 'Example III', rank: 'III', sourceIndex: 2 },
+    { name: 'Example I', rank: 'I', sourceIndex: 0 },
+    { name: 'Example IV', rank: 'IV', sourceIndex: 1 }
+  ] });
+  assert.equal(selected.name, 'Example IV');
+
+  const janosik = persona('Janosik');
+  assert.equal(janosik.maxRankPassive.name, 'Hunting IV');
+  assert.equal(janosik.maxRankPassive.rankValue, 4);
+  assert.equal(highestRankPersonaPassive(janosik).name, 'Hunting IV');
+  assert.ok(janosik.maxRankPassive.combat.limitations.some(item => item.includes('Battle-start')));
+  assert.ok(janosik.maxRankPassive.combat.limitations.some(item => item.includes('Conditional')));
+
+  const sakiMitama = persona('Saki Mitama');
+  const maxHp = highestRankPersonaPassive(sakiMitama);
+  assert.equal(maxHp.combat.effects[0].stat, 'maxHp');
+  assert.equal(maxHp.combat.effects[0].runtimeSupported, false);
+  assert.ok(maxHp.combat.limitations.some(item => item.includes('switch')));
+});
 
 test('the screenshot Persona loadouts resolve all transferable equipment skills', () => {
   const examples = {

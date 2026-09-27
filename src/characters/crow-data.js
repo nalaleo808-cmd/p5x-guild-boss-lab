@@ -1,0 +1,185 @@
+// Reviewed English upstream snapshot, 2026-09-12. Full evidence in data/character-research/crow.json.
+export const characterResearch = {
+  "slug": "crow",
+  "name": "Goro Akechi",
+  "coverage": "partial-source-modeled",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/crow/",
+      "retrievedAt": "2026-09-12",
+      "note": "Client-rendered shell; numeric verification uses public upstream English source."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/skill.js",
+      "sha256": "a4bd26470ded44774c408f016ce1055dfe5c11950b39526371818e2b1e0aab07",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/ritual.js",
+      "sha256": "79d5d1dc41457c4e5f3610ce6a98f12f105dc6e92ce8ee628c3930c5ec4d8432",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/weapon.js",
+      "sha256": "4d20bd86bc3d6aed57fd4eefc2d3f68f78b4115ec2126d608bd3874855db99e0",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    }
+  ],
+  "implemented": [
+    "S1 Bless damage, fixed healing, Blessing and Deduction party damage; S2 Curse damage and Stratagem party-wide defense reduction.",
+    "A1 battle-start Deduction with four-turn state duration, Mastermind selection, and qualifying Mastermind damage recording.",
+    "Highlight resolves independent Bless and Curse packets; Rending Arrow and four-star Almighty damage apply at per-hit damage time."
+  ],
+  "missing": [
+    "Rain of Justice remains blocked: recorded-damage-to-fixed-damage conversion, Arrow stack expiry, and random Perjury target resolution are not modeled.",
+    "Flames of Desire counting, A2/A4/A6 interactions and signature weapon conditional procs remain unsupported.",
+    "S1/S2 state duration buffs use engine status clocks; exact source-owner versus recipient timing requires live validation."
+  ],
+  "limitations": [
+    "This is a partial source-based implementation, not a live-battle calibration.",
+    "sourceTier explicitly selects one of four printed coefficient columns, default 3 to match the current catalog. A3/A5 skill ranks are not multiplied again.",
+    "No weapon is assumed. characterOptions[slug].weapon accepts none, four-star, signature; refinement 0..6. staticWeaponStatsIncluded prevents double-counting passive equipment bonuses.",
+    "Rain of Justice remains blocked: recorded-damage-to-fixed-damage conversion, Arrow stack expiry, and random Perjury target resolution are not modeled.",
+    "Flames of Desire counting, A2/A4/A6 interactions and signature weapon conditional procs remain unsupported.",
+    "S1/S2 state duration buffs use engine status clocks; exact source-owner versus recipient timing requires live validation."
+  ]
+};
+export const coefficients = {
+  "powers": {
+    "S1": [
+      0.932,
+      1.028,
+      0.989,
+      1.085
+    ],
+    "S2": [
+      1.165,
+      1.285,
+      1.237,
+      1.356
+    ]
+  },
+  "heal": [
+    1561,
+    1561,
+    1657,
+    1657
+  ],
+  "deduction": [
+    0.195,
+    0.215,
+    0.207,
+    0.227
+  ],
+  "stratagem": [
+    0.254,
+    0.28,
+    0.269,
+    0.295
+  ],
+  "highlight": [
+    1.241, 1.369, 1.318, 1.445
+  ],
+  "weaponAlmighty": [
+    0.096, 0.096, 0.128, 0.128, 0.16, 0.16, 0.192
+  ]
+};
+export const awarenessRules = {
+  "name": "Goro Akechi",
+  "r0": "High School Detective",
+  "r0_detail": "At the start of battle, grant Mastermind to the ally with the highest Attack (prioritizing Sweepers or Assassins, select Akechi if no target found). At the start of each turn, can manually reselect a target to grant Mastermind. Only 1 ally can have Mastermind at one time (reselecting has a cooldown of 1 turn).\nAlso, increase Akechi's Attack by 25% of the Mastermind ally's Attack (up to a maximum of 500/750/1000, at level 1/50/70, respectively).\nWhen an ally besides Akechi has Mastermind and deals damage to all foes with an attack skill, Highlight, Theurgy, or Resonance, record the average damage dealt to all foes (if targeting 1 foe, record 40% of the damage dealt). At the start of Akechi's turn, gain 1 Arrow of Truth stack based on the amount of damage recorded, and reset the recorded damage. Arrow of Truth can be held for 2 turns.\nWhen Akechi has Mastermind, the effect of Rain of Justice changes, and Arrow of Truth deals Almighty damage based on the skill multiplier or Arrow of Perjury.",
+  "r1": "Detective Profile",
+  "r1_detail": "At the start of battle, gain Deduction, and the durations of Deduction and Stratagem are extended to 4 turns.\nAlso, when Deduction and Stratagem are both active, increase Akechi's critical rate by 16%, and increase the damage dealt by Akechi and allies with Mastermind by 25%.",
+  "r2": "Detective Advice",
+  "r2_detail": "When dealing damage with a skill, if the attribute of the last skill used was different, increase the Attack of Akechi and allies with Mastermind by 25%, and their critical damage by 30%. Lasts for 1 turn.",
+  "r3": "Detective Style",
+  "r3_detail": "Increase the skill levels of Rain of Justice and Thief Tactics by 3.",
+  "r4": "Detective Trick",
+  "r4_detail": "Highlight Enhanced: Increase the damage of Arrow of Perjury by 30% more for 4 turns.",
+  "r5": "Detective Logic",
+  "r5_detail": "Increase the skill levels of Flash of Intuition and Decisive Scheme by 3.",
+  "r6": "Masked Detective",
+  "r6_detail": "When using Rain of Justice, increase the effect of Arrow of Truth by 50%.\nAkechi and all allies are considered to have the Mastermind effect (the Attack increase from High School Detective is based on the ally with the highest Attack). During battle, increase Akechi's critical rate and critical damage more. This additional increase is equal to 40% of the critical rate of the Mastermind ally with the highest critical rate, and 40% of the highest critical multiplier exceeding 100% (up to a maximum of 20% and 40%, respectively)."
+};
+export const weaponRules = {
+  "name": "Goro Akechi",
+  "weapon4-1": {
+    "name": "Victory Beam",
+    "health": 1870.83,
+    "attack": 592.3,
+    "defense": 328.02,
+    "skill_name": "Planar Cohesion",
+    "description": "Increase Almighty damage by 9.6%/9.6%/12.8%/12.8%/16.0%/16.0%/19.2%.\nWhen gaining Suspicion, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+  },
+  "weapon5-1": {
+    "name": "Gordian Kopis",
+    "health": 2338.77,
+    "attack": 739.92,
+    "defense": 409.62,
+    "skill_name": "Divine Blessing",
+    "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen entering Deduction or Stratagem state, increase party's Attack by 21.0%/27.3%/27.3%/33.7%/33.7%/40.0%/40.0% for 2 turns.\nAlso, when an ally with Mastermind activates a skill, Highlight, Theurgy, or Resonance, increase Akechi's critical damage by 15.0%/19.5%/19.5%/24.0%/24.0%/28.5%/28.5% for 2 turns. Stacks up to 2 times."
+  }
+};
+const targets = {"S1":"all_enemies","S2":"all_enemies","S3":"all_enemies","HL":"all_enemies"};
+const blocked = {"S3":"Arrow of Truth fixed-damage conversion and Perjury target resolver required."};
+const staticWeapons = {"signature":{"stat":"attack","values":[0.3,0.3,0.39,0.39,0.48,0.48,0.57]}};
+export const owns = unit => unit?.slug === 'crow' || unit?.id === 'lufel-recent-crow';
+export const value = (unit, values) => values[unit.crow.sourceTier];
+export function initializeResearch(engine, unit) {
+  if (!owns(unit) || unit.crow) return false;
+  const options = engine.config?.characterOptions?.['crow'] || {};
+  const sourceTier = options.sourceTier ?? 3;
+  const refinement = options.refinement ?? 0;
+  if (!Number.isInteger(sourceTier) || sourceTier < 0 || sourceTier > 3) throw new RangeError('crow: sourceTier must be 0..3');
+  if (!Number.isInteger(refinement) || refinement < 0 || refinement > 6) throw new RangeError('crow: refinement must be 0..6');
+  const weapon = options.weapon ?? 'none';
+  if (!['none', 'four-star', 'signature'].includes(weapon)) throw new RangeError('crow: unknown weapon');
+  unit.crow = { sourceTier, refinement, weapon, flatAttackScale: options.flatAttackScale };
+  engine.state.mechanicsLimitations ??= [];
+  for (const limitation of characterResearch.limitations) {
+    const message = 'crow: ' + limitation;
+    if (!engine.state.mechanicsLimitations.includes(message)) engine.state.mechanicsLimitations.push(message);
+  }
+  const effect = staticWeapons[weapon];
+  if (effect && !options.staticWeaponStatsIncluded) buff(engine, unit, 'weapon_static', effect.stat, effect.values[refinement], null, 'equipment');
+  return true;
+}
+export function buff(engine, unit, id, stat, amount, duration = 2, sourceType = 'character_skill') {
+  return engine.applyUnitBuff(unit, { id: 'crow_' + id, name: 'CROW ' + id,
+    stat, value: amount, duration }, sourceType);
+}
+export function prepareSkill(actor, original, sourceType) {
+  if (!owns(actor) || !actor.crow || !['character_skill', 'highlight'].includes(sourceType) || !Object.hasOwn(targets, original.slot)) return original;
+  const skill = { ...original, target: targets[original.slot], characterPrepared: 'crow' };
+  // Remove importer guesses. Dedicated afterSkill applies reviewed effects once.
+  for (const key of ['buff', 'buffs', 'buffTarget', 'debuff', 'debuffs', 'heal', 'healFlat', 'healAttack', 'ailment']) delete skill[key];
+  if (blocked[skill.slot]) throw new Error('crow: ' + blocked[skill.slot]);
+  skill.power = coefficients.powers[skill.slot] ? value(actor, coefficients.powers[skill.slot]) : 0;
+  if (skill.slot === 'HL') {
+    skill.element = 'bless';
+    skill.power = value(actor, coefficients.highlight);
+    skill.additionalHits = [{ id: `${skill.id || 'crow-highlight'}-curse`, name: 'Crow Highlight: Curse',
+      element: 'curse', power: value(actor, coefficients.highlight), canReduceDown: false }];
+  }
+  return skill;
+}
+export function adaptCharacterDefinition(record) {
+  if (!owns(record)) return record;
+  const adapt = original => {
+    if (!original) return original;
+    const skill = { ...original, target: targets[original.slot] ?? original.target };
+    for (const key of ['buff', 'buffs', 'buffTarget', 'debuff', 'debuffs', 'heal', 'healFlat', 'healAttack', 'ailment']) delete skill[key];
+    const powers = coefficients.powers[skill.slot];
+    if (powers) { skill.powerTiers = [...powers]; skill.power = powers[3]; }
+    if (skill.slot === 'HL') { skill.element = 'bless'; skill.powerTiers = [...coefficients.highlight]; skill.power = coefficients.highlight[3];
+      skill.additionalHits = [{ id: `${skill.id || 'crow-highlight'}-curse`, name: 'Crow Highlight: Curse', element: 'curse', power: coefficients.highlight[3], canReduceDown: false }]; }
+    else { skill.power = 0; skill.powerTiers = []; }
+    if (blocked[skill.slot]) skill.characterUnavailable = blocked[skill.slot];
+    return skill;
+  };
+  return { ...record, mechanicsCoverage: characterResearch.coverage,
+    skills: record.skills.map(adapt), highlightSkill: adapt(record.highlightSkill) };
+}

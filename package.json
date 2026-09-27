@@ -1,17 +1,16 @@
 {
   "name": "p5x-showdown-guild-boss-sim",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node serve.mjs",
-    "test": "node scripts/test.mjs",
+    "test": "node --test",
     "build": "node scripts/build.mjs",
-    "build:exe": "node scripts/build-exe.mjs",
     "sync:lufel": "node scripts/import-lufelnet.mjs",
     "sync:lufel-live": "node scripts/sync-lufel-recent.mjs && node scripts/import-lufelnet.mjs",
-    "example:kotone-foundation": "node scripts/kotone-foundation-example.mjs",
     "verify:characters": "node scripts/verify-character-integrations.mjs",
-    "example:kotone": "node scripts/kotone-battle-example.mjs"
+    "example:kotone": "node scripts/kotone-battle-example.mjs",
+    "capture:baseline": "node scripts/capture-release-baseline.mjs"
   }
 }

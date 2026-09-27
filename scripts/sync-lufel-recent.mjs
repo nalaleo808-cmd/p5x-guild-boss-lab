@@ -6,8 +6,9 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const site = 'https://lufel.net';
 const version = '5.0.4';
 
-// The first 20 cards on the English character index while Show Spoilers is off.
+// Retained existing roster plus explicitly requested Cosmic Yui. Runtime bespoke mechanics use the versioned source snapshot.
 const recentCharacters = [
+  ['bui-cosmic', 'YUI·스텔라', 'Cosmic Yui', 'Assassin', 'nuclear'],
   ['blitz', '카타야마', 'BLITZ', 'Saboteur', 'electric'],
   ['berry', '이치고', 'BERRY', 'Assassin', 'curse'],
   ['puppet-wavecatcher', '미유·여름', 'PUPPET·Wavecatcher', 'Sweeper', 'ice'],
@@ -86,7 +87,7 @@ for (const [slug, sourceKey, codename, role, element] of recentCharacters) {
     stats: assignedObject(statsSource, `window.basicStatsData["${sourceKey}"]`),
     setting: assignedObject(settingSource, `window.characterSetting["${sourceKey}"]`)
   });
-  console.log(`Synced ${records.length}/20: ${codename}`);
+  console.log(`Synced ${records.length}/${recentCharacters.length}: ${codename}`);
 }
 
 const output = {

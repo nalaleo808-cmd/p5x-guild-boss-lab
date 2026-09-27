@@ -1,5 +1,0 @@
-
-> p5x-showdown-guild-boss-sim@2.0.0 build
-> node scripts/build.mjs
-
-Static build ready in dist/. Kotone remains source-gated, not playable.

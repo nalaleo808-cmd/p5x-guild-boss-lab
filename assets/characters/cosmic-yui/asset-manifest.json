@@ -1,0 +1,20 @@
+{
+  "style": "Original fan-made chibi SVGs with transparent raster exports. Teal spiral twin-tails, star headset, clear visor, white space jacket, dark suit and four Veggie Knights.",
+  "character": "Cosmic Yui / BUI\u00b7Cosmic",
+  "reference": "https://lufel.net/en/character/bui-cosmic/",
+  "battle": "../bui-cosmic-goofy.png",
+  "portrait": "../bui-cosmic-avatar.webp",
+  "variants": [
+    "../bui-cosmic-eggplant.png",
+    "../bui-cosmic-potato.png",
+    "../bui-cosmic-mushroom.png",
+    "../bui-cosmic-asparagus.png"
+  ],
+  "knights": [
+    "knight-eggplant.svg",
+    "knight-potato.svg",
+    "knight-mushroom.svg",
+    "knight-asparagus.svg"
+  ],
+  "license_note": "Unofficial fan artwork. Persona 5: The Phantom X character/game rights remain with their respective owners. No official artwork is claimed."
+}

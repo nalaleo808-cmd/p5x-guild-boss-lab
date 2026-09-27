@@ -89,12 +89,12 @@ test('items stay manual-only and obey direct pending-action and Concert completi
   assert.equal(engine.state.itemInventory.attack_tablet, 0);
 });
 
-test('ordinary items are unavailable outside the exact live Hachiman Dreamscape profile', () => {
+test('ordinary items use the shared live score-mode system and remain unavailable to archived profiles', () => {
   const liveOtherMode = new BattleEngine({ mechanicsProfile: CURRENT_MECHANICS_PROFILE, bossId: 'hachiman', modeId: 'nexus' });
   const recorded = new BattleEngine({ mechanicsProfile: RECORDED_MECHANICS_PROFILE, bossId: 'hachiman', modeId: 'multidimensional' });
-  assert.deepEqual(liveOtherMode.getItemActions(), []);
+  assert.ok(liveOtherMode.getItemActions().some(action => action.itemId === 'highlight_up'));
   assert.deepEqual(recorded.getItemActions(), []);
-  assert.equal(liveOtherMode.state.itemMaxUses, 0);
+  assert.equal(liveOtherMode.state.itemMaxUses, Infinity);
   assert.equal(recorded.state.itemUsesRemaining, 0);
 });
 

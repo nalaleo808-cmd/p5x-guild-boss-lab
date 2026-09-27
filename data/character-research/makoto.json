@@ -1,0 +1,312 @@
+{
+  "slug": "makoto",
+  "name": "Makoto Yuki",
+  "coverage": "partial: researched source; legacy engine methods integrated, weapon effects excluded",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/makoto/",
+      "kind": "client-rendered-character-page",
+      "accessedAt": "2026-09-12"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/skill.js",
+      "sha256": "09430a94f3b43dc00cbb6dd00466e5bfdd16feebc39e9f80b5cc327315ca3d3c",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/ritual.js",
+      "sha256": "7e520bd841cd50f84815efc5f0d16c4ec525fb1aecb862585a22f2fdc2d2abdf",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/weapon.js",
+      "sha256": "737fe29e24826aecea63fa2b440571a56964c922be5283c0a6fcf90454cfb231",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    }
+  ],
+  "implemented": [
+    "Legacy engine methods mixed into BattleEngine: isMakoto, gainMakotoMoonPhase, triggerMakotoEntrustedHope."
+  ],
+  "weaponEffects": "Excluded: source weapon rules are evidence only and do not create selectable loadout options or runtime effects.",
+  "missing": [
+    "Signature every-three phase gains needs cumulative actual resource-gain event, not net stacks after a cast.",
+    "Signature four-hit damage needs final resolved hit list; A1 Melody extra hit coefficient is unstated.",
+    "Four-star ally-buff party/self damage needs actual buff-grant event including A2 automatic Nocturne.",
+    "Theurgy/Assist, Full Moon generation, A6 fatal-state ending boundary and recovery cancellation remain incomplete.",
+    "Source Nocturne buffs last 2 turns; engine currently applies duration 3. Clock/grace must be audited before correction."
+  ],
+  "limitations": [
+    "Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "Signature every-three phase gains needs cumulative actual resource-gain event, not net stacks after a cast.",
+    "Signature four-hit damage needs final resolved hit list; A1 Melody extra hit coefficient is unstated.",
+    "Four-star ally-buff party/self damage needs actual buff-grant event including A2 automatic Nocturne.",
+    "Theurgy/Assist, Full Moon generation, A6 fatal-state ending boundary and recovery cancellation remain incomplete.",
+    "Source Nocturne buffs last 2 turns; engine currently applies duration 3. Clock/grace must be audited before correction."
+  ],
+  "engineOwned": [
+    "gainMakotoMoonPhase/triggerMakotoEntrustedHope own phase gains and received-support gating; constructor owns Theurgy start.",
+    "resolveSkill owns Melody hits, Nocturne, Scarlet stack spending and A2 autocast; existing damage hooks own Full Moon and four-stack modifiers."
+  ],
+  "integration": {
+    "removeEngineMethods": [
+      "isMakoto",
+      "gainMakotoMoonPhase",
+      "triggerMakotoEntrustedHope"
+    ],
+    "mixIn": "Object.assign(BattleEngine.prototype, makotoLegacyMethods) before any engine construction; import legacyMethods under that alias. Remove named class definitions in the same change.",
+    "dependencies": [
+      "usesLiveMechanics",
+      "emit",
+      "applyUnitBuff"
+    ],
+    "hooks": [
+      "initialize only applies weapon Attack.",
+      "Future onResourceGain for Moon Phase/Full Moon and finalized-cast-hit-count modifier; damage bonuses must attach to final expanded hit list.",
+      "A6 survival requires preFatalDamage and verified turn-end boundary; onActionEnd is not a safe substitute."
+    ],
+    "legacyPolicy": "Exact existing bodies, including incomplete rules and archived-profile behavior. Do not also call these methods from generic lifecycle hooks. Tangled resolver branches remain at original call sites."
+  },
+  "comparison": {
+    "liveGeneratedAt": "2026-08-28T23:07:36.661Z",
+    "skillChanges": [],
+    "catalogGeneratedAt": "2026-09-12T21:05:39.231Z",
+    "catalogId": "lufel-recent-makoto",
+    "catalogSkills": [
+      {
+        "name": "Melody of Flames",
+        "power": 0.696,
+        "slot": "S1"
+      },
+      {
+        "name": "Nocturne of Battle",
+        "power": 0,
+        "slot": "S2"
+      },
+      {
+        "name": "Scarlet Hades",
+        "power": 1.065,
+        "buff": {
+          "id": "damage_up",
+          "name": "DMG ↑",
+          "stat": "damage",
+          "value": 0.284,
+          "duration": 2
+        },
+        "slot": "S3"
+      },
+      {
+        "name": "Assist",
+        "power": 0,
+        "slot": "S4"
+      }
+    ]
+  },
+  "reviewNotes": [
+    "Makoto means Makoto Yuki (SEES), not Queen. Raw alternate Theurgy Cadenza must not be normalized into shared Highlight."
+  ],
+  "awarenessRules": [
+    {
+      "level": 0,
+      "name": "Pathfinder",
+      "description": "Makoto has 2 Theurgy: Cadenza and Ardhanari. At the start of battle, if Makoto's Theurgy Gauge is below 35, fill up to 35.\nWhen receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), gain 1 Moon Phase stack (up to 1 stack per turn). This effect lasts for 2 turns, and stacks up to 4 times.\nWith Moon Phase, increase pierce rate by 4%/8%/12% (effect changes at Lv. 1/50/70, respectively).",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 1,
+      "name": "Result of Coincidence",
+      "description": "Additional effects are added to the following skills.\nMelody of Flames: This skill deals 1 more hit of Fire damage.\nNocturne of Battle: Increase party's pierce rate by 10% for 2 turns.\nScarlet Hades: When this skill is activated with 4 Moon Phase stacks, increase Makoto's critical rate by 16%.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 2,
+      "name": "Immovable Soul",
+      "description": "When Makoto has 4 Moon Phase stacks on his action, automatically activate Nocturne of Battle 1 time.\nCooldown time: 1 turn.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 3,
+      "name": "Under the Full Moon",
+      "description": "Increase the skill levels of Scarlet Hades and Combat Tactics by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 4,
+      "name": "Thorny Path",
+      "description": "Additional effects are added to the following Theurgy.\nCadenza: Increase party's damage by 10% more for 2 turns.\nArdhanari: This skill deals 2 more hits of Fire damage.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 5,
+      "name": "Soul Flames",
+      "description": "Increase the skill levels of Melody of Flames and Nocturne of Battle by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 6,
+      "name": "Burn My Dread",
+      "description": "When Makoto activates a Theurgy, the effects of the other Theurgy are activated at the same time.\nIncrease skill damage dealt by spending Full Moon stacks with Scarlet Hades by 35%.\nThe first time that Makoto takes fatal damage, he enters a special near-death state and survives with 1 HP, and will be KO'd at the end of the turn. If Makoto's HP is restored above 25%, this state is removed.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    }
+  ],
+  "weaponRules": {
+    "four-star": {
+      "stat": "attack",
+      "values": [
+        0.12,
+        0.12,
+        0.16,
+        0.16,
+        0.2,
+        0.2,
+        0.24
+      ]
+    },
+    "signature": {
+      "stat": "attack",
+      "values": [
+        0.3,
+        0.3,
+        0.39,
+        0.39,
+        0.48,
+        0.48,
+        0.57
+      ]
+    }
+  },
+  "configuration": {
+    "path": "config.loadouts[unit.id].characterWeapon",
+    "weapon": [
+      "none",
+      "four-star",
+      "signature"
+    ],
+    "refinement": "integer 0..6 (default 0); invalid values throw",
+    "staticWeaponStatsIncluded": "defaults true when unit.statsMode is equipped; otherwise false",
+    "partyWeaponStatsIncluded": "MIKU only: suppress permanent party critical effect when already included in equipped party totals"
+  },
+  "sourceKey": "유키 마코토",
+  "sourceSnapshot": {
+    "skill.js": {
+      "name": "Makoto Yuki",
+      "skill1": {
+        "name": "Melody of Flames",
+        "element": "화염",
+        "type": "단일피해",
+        "sp": 20,
+        "cool": 0,
+        "description": "Deal Fire damage to 1 foe equal to 59.8%/66.0%/63.5%/69.6% of Attack (3 hits). Also, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times.\nAlso, when spending Moon Phase to use Scarlet Hades, increase skill multiplier by 32.5%/35.8%/34.5%/37.8% for 2 turns."
+      },
+      "skill2": {
+        "name": "Nocturne of Battle",
+        "element": "버프광역",
+        "type": "버프",
+        "sp": 20,
+        "cool": 0,
+        "description": "Increase party's critical damage by 23.4%/25.8%/24.9%/27.3%, and increase Makoto's Attack by 19.5%/21.5%/20.7%/22.7% for 2 turns.\nAlso, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times."
+      },
+      "skill3": {
+        "name": "Scarlet Hades",
+        "element": "화염",
+        "type": "단일피해",
+        "sp": 24,
+        "cool": 0,
+        "description": "Can be activated with 2 or more Moon Phase stacks. Spend all Moon Phase stacks, and deal Fire damage to 1 foe equal to 91.5%/100.8%/97.1%/106.5% of Makoto's Attack (1 hit per stack spent). Afterwards, spend all Full Moon stacks, and deal Fire damage to 1 foe equal to 150.7%/166.2%/160.0%/175.5% of Makoto's Attack (1 hit per stack spent).\nWhen this skill is activated with 4 Moon Phase stacks, increase Makoto's pierce rate by 11.7%/12.9%/12.4%/13.6%, and increase damage by 24.4%/26.9%/25.9%/28.4%."
+      },
+      "skill_highlight": {
+        "name": "Ardhanari",
+        "element": "화염",
+        "type": "",
+        "description": "Can be activated when Theurgy Gauge is at 100. Deal Fire damage to 1 foe equal to 147.5%/162.6%/156.5%/171.6% of Makoto's Attack (4 hits).\nAlso, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+        "cool": 0
+      },
+      "skill_highlight2": {
+        "name": "Cadenza",
+        "element": "버프",
+        "type": "버프",
+        "description": "Can be activated when Theurgy Gauge is at 100. Increase party's Attack by 24.4%/26.9%/25.9%/28.4%, and increase damage by 19.5%/21.5%/20.7%/22.7% for 2 turns. Also, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+        "cool": 0
+      },
+      "skill_support": {
+        "name": "Assist",
+        "element": "버프",
+        "type": "버프",
+        "description": "Increase 1 ally's Attack by 20% for 1 turn.",
+        "cool": 0
+      },
+      "passive1": {
+        "name": "On-Site Leader",
+        "element": "패시브",
+        "description": "After activating a Theurgy, increase party's Attack by 40.0% for 2 turns, and increase Attack of SEES members by 30.0% more.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Entrusted Hope",
+        "element": "패시브",
+        "description": "When receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), increase critical damage by 7.2% for 2 turns. Stacks up to 3 times.",
+        "cool": 0
+      }
+    },
+    "ritual.js": {
+      "name": "Makoto Yuki",
+      "r0": "Pathfinder",
+      "r0_detail": "Makoto has 2 Theurgy: Cadenza and Ardhanari. At the start of battle, if Makoto's Theurgy Gauge is below 35, fill up to 35.\nWhen receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), gain 1 Moon Phase stack (up to 1 stack per turn). This effect lasts for 2 turns, and stacks up to 4 times.\nWith Moon Phase, increase pierce rate by 4%/8%/12% (effect changes at Lv. 1/50/70, respectively).",
+      "r1": "Result of Coincidence",
+      "r1_detail": "Additional effects are added to the following skills.\nMelody of Flames: This skill deals 1 more hit of Fire damage.\nNocturne of Battle: Increase party's pierce rate by 10% for 2 turns.\nScarlet Hades: When this skill is activated with 4 Moon Phase stacks, increase Makoto's critical rate by 16%.",
+      "r2": "Immovable Soul",
+      "r2_detail": "When Makoto has 4 Moon Phase stacks on his action, automatically activate Nocturne of Battle 1 time.\nCooldown time: 1 turn.",
+      "r3": "Under the Full Moon",
+      "r3_detail": "Increase the skill levels of Scarlet Hades and Combat Tactics by 3.",
+      "r4": "Thorny Path",
+      "r4_detail": "Additional effects are added to the following Theurgy.\nCadenza: Increase party's damage by 10% more for 2 turns.\nArdhanari: This skill deals 2 more hits of Fire damage.",
+      "r5": "Soul Flames",
+      "r5_detail": "Increase the skill levels of Melody of Flames and Nocturne of Battle by 3.",
+      "r6": "Burn My Dread",
+      "r6_detail": "When Makoto activates a Theurgy, the effects of the other Theurgy are activated at the same time.\nIncrease skill damage dealt by spending Full Moon stacks with Scarlet Hades by 35%.\nThe first time that Makoto takes fatal damage, he enters a special near-death state and survives with 1 HP, and will be KO'd at the end of the turn. If Makoto's HP is restored above 25%, this state is removed."
+    },
+    "weapon.js": {
+      "name": "Makoto Yuki",
+      "weapon4-1": {
+        "name": "Translucent Blade",
+        "health": 1728.63,
+        "attack": 628.77,
+        "defense": 313.75,
+        "skill_name": "Silent Resolve",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Makoto grants a buff to an ally, increase party's damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2%, and also increase Makoto's damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% more for 2 turns."
+      },
+      "weapon5-1": {
+        "name": "Deus Xiphos",
+        "health": 2160.41,
+        "attack": 786.22,
+        "defense": 391.98,
+        "skill_name": "Hour of Reversal",
+        "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nFor every 3 Moon Phase or Full Moon stacks gained, increase critical rate by 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% for 2 turns.\nWhen Makoto deals 4 or more hits of damage with 1 skill or Theurgy, increase that skill or Theurgy's damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%."
+      }
+    }
+  },
+  "legacyExtraction": [
+    {
+      "name": "isMakoto",
+      "engineLineAtExtraction": 879
+    },
+    {
+      "name": "gainMakotoMoonPhase",
+      "engineLineAtExtraction": 2131
+    },
+    {
+      "name": "triggerMakotoEntrustedHope",
+      "engineLineAtExtraction": 2193
+    }
+  ]
+}

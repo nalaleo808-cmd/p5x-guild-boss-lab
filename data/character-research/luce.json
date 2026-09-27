@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-09-12",
+  "slug": "luce",
+  "name": "Shoki Ikenami",
+  "coverage": "partial-source-modeled",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/luce/",
+      "retrievedAt": "2026-09-12",
+      "note": "Client-rendered shell; numeric verification uses public upstream English source."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%87%BC%ED%82%A4/skill.js",
+      "sha256": "c9be4db1d2f85336e12ee4d3a7a12148527ec9f5854655c9a91032380be9610d",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%87%BC%ED%82%A4/ritual.js",
+      "sha256": "c8b3430b02582b03eafa43d33b42dcd2757fe8e382b7bd1c839eaa254215fce9",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%87%BC%ED%82%A4/weapon.js",
+      "sha256": "be4580cc78dfd5f8ff312b0c1618844a10852a8bd83edbe7715c058c862520c9",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    }
+  ],
+  "implemented": [
+    "S1 damage, two party Blessings and Attack-scaled party damage; S2 non-self targeted defense.",
+    "S3 and Highlight flat Attack grants with explicit unit conversion; electric crit damage, wind pierce and fire DOT bonus selected via Improv; A6 extends these selected effects to four turns.",
+    "Highlight Blessings and A4 main-target Attack; Supporting Role refresh; explicit static weapon Attack."
+  ],
+  "missing": [
+    "Improv selection requires a free start-turn action; set unit.luce.improv explicitly to fire/ice/electric/wind after selection. No default element is invented.",
+    "A0 elemental ailment chance, Adlib control immunity, A2 next-hit mitigation, ailment resistance/accuracy and Technical Precision need engine consumers.",
+    "Supporting Role requires a shared Blessing-change/expiry hook for gains by other characters; module refreshes after Luce skills and own turn only.",
+    "Method Acting requires authoritative current ailment accuracy and dynamic Attack recomputation; weapon conditional procs await selection/Blessing hooks.",
+    "Flat Attack uses mechanicAttack for source scaling but conversion to normalized attack must be configured explicitly via flatAttackScale; otherwise flat grants are omitted."
+  ],
+  "limitations": [
+    "This is a partial source-based implementation, not a live-battle calibration.",
+    "sourceTier explicitly selects one of four printed coefficient columns, default 3 to match the current catalog. A3/A5 skill ranks are not multiplied again.",
+    "No weapon is assumed. characterOptions[slug].weapon accepts none, four-star, signature; refinement 0..6. staticWeaponStatsIncluded prevents double-counting passive equipment bonuses.",
+    "Improv selection requires a free start-turn action; set unit.luce.improv explicitly to fire/ice/electric/wind after selection. No default element is invented.",
+    "A0 elemental ailment chance, Adlib control immunity, A2 next-hit mitigation, ailment resistance/accuracy and Technical Precision need engine consumers.",
+    "Supporting Role requires a shared Blessing-change/expiry hook for gains by other characters; module refreshes after Luce skills and own turn only.",
+    "Method Acting requires authoritative current ailment accuracy and dynamic Attack recomputation; weapon conditional procs await selection/Blessing hooks.",
+    "Flat Attack uses mechanicAttack for source scaling but conversion to normalized attack must be configured explicitly via flatAttackScale; otherwise flat grants are omitted."
+  ],
+  "comparison": {
+    "localSnapshot": "data/lufel-live-recent.json",
+    "localSkillsMatch": true,
+    "catalog": "data/lufel-catalog.json",
+    "catalogId": "lufel-recent-luce",
+    "catalogGenericEffects": [
+      {
+        "slot": "S1",
+        "power": 1.735,
+        "target": "boss",
+        "buff": {
+          "id": "damage_up",
+          "name": "DMG ↑",
+          "stat": "damage",
+          "value": 0.008,
+          "duration": 2
+        }
+      },
+      {
+        "slot": "S2",
+        "power": 0,
+        "target": "ally"
+      },
+      {
+        "slot": "S3",
+        "power": 0,
+        "target": "party",
+        "buff": {
+          "id": "attack_up",
+          "name": "ATK ↑",
+          "stat": "attack",
+          "value": 0.15,
+          "duration": 2
+        }
+      },
+      {
+        "slot": "HL",
+        "power": 0,
+        "target": "party",
+        "buff": {
+          "id": "attack_up",
+          "name": "ATK ↑",
+          "stat": "attack",
+          "value": 0.065,
+          "duration": 2
+        }
+      }
+    ],
+    "existingEngineLogic": "No dedicated identifier or named skill branch found for this character; generic resolveSkill is integration point, no extraction needed."
+  },
+  "sourceRecords": {
+    "skill": {
+      "name": "Shoki Ikenami",
+      "skill1": {
+        "name": "Followspot",
+        "element": "축복",
+        "type": "단일피해",
+        "sp": 20,
+        "cool": 0,
+        "description": "Deal Bless damage to 1 foe equal to 151.8%/167.3%/158.0%/173.5% of Attack.\nAlso, grant 2 Blessing stacks to all allies, and for 2 turns, increase damage by 0.8% for every 100 points of Shoki's Attack (up to a maximum of 35.1%/38.7%/36.6%/40.2%)."
+      },
+      "skill2": {
+        "name": "Adlib",
+        "element": "버프",
+        "type": "버프",
+        "sp": 24,
+        "cool": 2,
+        "description": "Increase Defense of 1 ally except Shoki by 0.83% for every 100 points of Shoki's Attack (up to a maximum of 36.6%/40.4%/38.1%/41.8%), and nullify Dizzy, Sleep, Confuse, and Forget. Lasts for 2 turns.\nCooldown: 2 turns."
+      },
+      "skill3": {
+        "name": "Improvise",
+        "element": "버프광역",
+        "type": "버프",
+        "sp": 24,
+        "cool": 0,
+        "description": "Increase party's Attack by 15% of Shoki's Attack (up to a maximum of 569/627/592/650) for 2 turns.\nAlso, based on Shoki's Improv state, grant the following additional effect to the main target.\nBlazing Passion: Increase the main target's continuous damage by 14.0%/15.4%/14.5%/16.0%, and increase ailment accuracy by 30% for 2 turns.\nChilling Intensity: Increase the main target's Technical Precision by 655/723/682/749 for 2 turns. Also, when activating a technical, increase Attack by 20%.\nElectrifying Performance: Increase the main target's critical damage by 24.4%/26.9%/25.4%/27.9% for 2 turns.\nTempestuous Drama: Increase the main target's pierce rate by 12.0%/13.2%/12.5%/13.7% for 2 turns."
+      },
+      "skill_highlight": {
+        "element": "버프광역",
+        "type": "버프",
+        "description": "Increase party's Attack by 6.5% of Shoki's Attack (up to a maximum of 284/314/296/325), and increase ailment resistance by 82.0%/90.4%/85.3%/93.7% for 2 turns.\nAlso, grant 1 Blessing stack.",
+        "cool": 4
+      },
+      "passive1": {
+        "name": "Supporting Role",
+        "element": "패시브",
+        "description": "When allies gain a Blessing, increase damage by 5% for each Blessing stack (up to a maximum of 25.0%).",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Method Acting",
+        "element": "패시브",
+        "description": "Increase Attack by 0.72% for every 1% of Shoki's ailment accuracy (up to a maximum of 72.0%).",
+        "cool": 0
+      }
+    },
+    "ritual": {
+      "name": "Shoki Ikenami",
+      "r0": "High School Heartthrob",
+      "r0_detail": "Shoki has 4 types of Improv states: Blazing Passion, Chilling Intensity, Electrifying Performance, and Tempestuous Drama. During battle, he can switch between states at the start of each turn.\nWhen dealing damage with a skill, there is a 75% chance to inflict all foes with an elemental ailment based on his current Improv state (Burn, Freeze, Shock, or Windswept).",
+      "r1": "In the Limelight",
+      "r1_detail": "When using a skill on an ally, for each Blessing stack on the target, increase the target's damage dealt by 3% (up to a maximum of 15%) for 2 turns.",
+      "r2": "Flawless Performance",
+      "r2_detail": "When using Adlib, also grant an additional effect: When the target next takes skill damage, decrease their final damage taken by 35% for 1 turn.",
+      "r3": "Heroic Climax",
+      "r3_detail": "Increase the skill levels of Followspot and Adlib by 2.",
+      "r4": "Standing Ovation",
+      "r4_detail": "Highlight Enhanced: Increase the main target's Attack by 10% for 2 turns, and grant 2 more Blessing stacks to all allies.",
+      "r5": "Flowers on the Stage",
+      "r5_detail": "Increase the skill levels of Improvise and Thief Tactics by 2.",
+      "r6": "Bright Future",
+      "r6_detail": "When the additional effects of Improvise are activated based on Improv state, extend the duration of the additional effects to 4 turns."
+    },
+    "weapon": {
+      "name": "Shoki Ikenami",
+      "weapon4-1": {
+        "name": "Mattatóre",
+        "health": 1823.43,
+        "attack": 539.4,
+        "defense": 349.01,
+        "skill_name": "Fated Enthroning",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. When Shoki grants Blessing stacks, increase his Attack by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% and ailment accuracy by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% for 2 turns. Stacks up to 3 times."
+      },
+      "weapon4-2": {
+        "name": "Sipario",
+        "health": 2497.32,
+        "attack": 594.58,
+        "defense": 449.24,
+        "skill_name": "Innumerable Stages",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen using a skill on an ally, increase Shoki's ailment accuracy by 22.0%/28.0%/28.0%/34.0%/34.0%/40.0%/40.0% and grant 60% of this effect to all allies besides Shoki for 2 turns."
+      },
+      "weapon5-1": {
+        "name": "Ribalta",
+        "health": 2279.27,
+        "attack": 673.89,
+        "defense": 436.03,
+        "skill_name": "Starstruck Throne",
+        "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen using a skill on an ally, if the target has Blessing stacks, increase damage by 11.0%/14.0%/14.0%/17.0%/17.0%/20.0%/20.0% for 2 turns.\nEach time Followspot or Improvise is activated with a different Improv state, permanently increase Shoki's Attack by 14.0%/18.0%/18.0%/22.0%/22.0%/26.0%/26.0%. This effect stacks up to 3 times. Also, allies besides Shoki gain 50% of this effect."
+      }
+    }
+  },
+  "integration": {
+    "initialize": "After live party stats/buffs initialized, once per assigned unit.",
+    "beforeSkill": "resolveSkill entry before cost/damage; replace skill with return value. Only dispatch for owning actor. Exceptions block unsupported casts before costs.",
+    "afterSkill": "Once after own resolved skill, passing returned prepared skill. Never invoke for preview or rejected action.",
+    "onTurnStart": "After characterTurnsStarted increments; owning unit only.",
+    "onAllyActionEnd": "Not consumed by this module.",
+    "adapter": "Call adaptCharacterDefinition on live record before legal actions are built; preserves IDs and sets source-aware targets. Respect characterUnavailable in legal-action listing.",
+    "options": "engine.config.characterOptions[slug]: sourceTier (0..3), weapon, refinement (0..6), staticWeaponStatsIncluded, flatAttackScale (Luce only, explicit live-flat to simulation-flat conversion)."
+  }
+}

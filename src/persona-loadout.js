@@ -5,6 +5,27 @@ const sameSkill = (left, right) => Boolean(left && right) && (
   || left.name === right.name
 );
 
+function romanRankValue(value) {
+  if (/^\d+$/.test(String(value || ''))) return Number(value);
+  const roman = String(value || '').toUpperCase();
+  if (!/^[IVXLCDM]+$/.test(roman)) return 0;
+  const values = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+  return [...roman].reduce((total, character, index, characters) => {
+    const value = values[character];
+    return total + (value < (values[characters[index + 1]] || 0) ? -value : value);
+  }, 0);
+}
+
+export function highestRankPersonaPassive(persona) {
+  const passives = Array.isArray(persona?.passive) ? persona.passive : [];
+  if (!passives.length) return persona?.maxRankPassive || null;
+  return [...passives].sort((left, right) => {
+    const leftRank = Number.isFinite(Number(left.rankValue)) ? Number(left.rankValue) : romanRankValue(left.rank);
+    const rightRank = Number.isFinite(Number(right.rankValue)) ? Number(right.rankValue) : romanRankValue(right.rank);
+    return rightRank - leftRank || Number(right.sourceIndex || 0) - Number(left.sourceIndex || 0);
+  })[0];
+}
+
 export function buildPersonaLoadoutCatalog(catalog, supplementalSkills = []) {
   const transferableSkills = [];
   const transferableSkillById = new Map();

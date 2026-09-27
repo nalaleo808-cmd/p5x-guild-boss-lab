@@ -1,7 +1,7 @@
 {
-  "note": "Captured from the unmodified uploaded v2.0.0-beta runtime. Not an upstream test suite and not a Kotone battle validation.",
-  "engineSHA256": "5b76ee312f8be38123543f2e5df79ee51be1aae1e66c41dcad8454257b8bff15",
-  "catalogSHA256": "7cc633dff6ae4d19403d851c73e55710871a7865af598e2a071f28d174a1a1cd",
+  "note": "Captured from the unmodified local 2.2.0 engine before the Kotone port. Default team, recommended actions. Not a Kotone battle validation.",
+  "engineSHA256": "5fafdd480f4ed35ab46185a6a448d7ce31013744265568aa9cfe1cb21683092f",
+  "catalogSHA256": "1a16e76baa8a2bff1cf72ae591f055b75c2c1ade7eec0b450164ca6250acb9fe",
   "cases": [
     {
       "config": {
@@ -11,10 +11,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "d16705357cebfc75d55d2f12b1b53fe951a0038cb01eb1ed8cc801c124701cbc",
-      "totalDamage": 754632,
-      "score": 3018528,
-      "actionNumber": 17
+      "expectedSHA256": "e5b5e4daec99548ae8d1eeb2ca3764852ab23c33ab059513a2822aa663ea48d4"
     },
     {
       "config": {
@@ -24,10 +21,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "4ed49c2471303ca351155a6b25372d3173ab18112a26a0c1a7b15027a36d1504",
-      "totalDamage": 653960,
-      "score": 2615840,
-      "actionNumber": 17
+      "expectedSHA256": "a2a1779e41f8419816ffeaadcdc50f51cb960419d0aa6acdc9631be6461e8e42"
     },
     {
       "config": {
@@ -37,10 +31,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "cb91f03a36e61d09a94823086b9c9c8a37e0bbd89702f397653e48e8e3bfb834",
-      "totalDamage": 755469,
-      "score": 3021876,
-      "actionNumber": 17
+      "expectedSHA256": "4532c3b813e5a41ac0713ff6ac49c2a53f98a7967437335cae541fe42a2b7893"
     },
     {
       "config": {
@@ -50,10 +41,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "f0e7f3a9d09d57980dd67c6e61e5295ec1b04e09c60d6fa511cbc98673669b60",
-      "totalDamage": 450676,
-      "score": 450676,
-      "actionNumber": 17
+      "expectedSHA256": "34eef73bcc9c689c586697f11dfc04dee864cc84f52292d4077b0418920204b7"
     },
     {
       "config": {
@@ -63,10 +51,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "c950d4664ce634654450c039c2d17a0de0e58d8a764698bc4f4ef795c9404c7b",
-      "totalDamage": 475431,
-      "score": 475431,
-      "actionNumber": 17
+      "expectedSHA256": "e680b63240b7ec59cc9e000ce40bf0d3612c1ea9fcebf36c4cbcda22257b0579"
     },
     {
       "config": {
@@ -76,10 +61,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "96caf9b4ccc1a9b49147da743a8f9442f9fb44814f6268e07d6b68eca4450b14",
-      "totalDamage": 508104,
-      "score": 508104,
-      "actionNumber": 17
+      "expectedSHA256": "4bad490bc3c0dd99773eba57321513c181f925fe7d962155f60a5f259a319ecb"
     },
     {
       "config": {
@@ -89,10 +71,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "4aaa378aa524b6b68f200e63e8f2415a086f42002f86dfab30a783c2a533ebd3",
-      "totalDamage": 261409,
-      "score": 261409,
-      "actionNumber": 17
+      "expectedSHA256": "9784536637ba6c8d9695efb5aa6b427489655226e662063780480faa513abfd6"
     },
     {
       "config": {
@@ -102,10 +81,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "f8fec5f8f873a451859fa9563b5f80e97939bea99efc947b61915fbaa4106ae8",
-      "totalDamage": 259623,
-      "score": 259623,
-      "actionNumber": 17
+      "expectedSHA256": "7986eae9b5d2d5b04154cb55500902e39982708f5b520039c2db17e2f3796ff8"
     },
     {
       "config": {
@@ -115,10 +91,37 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "782c5e451a0b7715e72590ec112fdce3a3525c7005636d84af2c61958e291234",
-      "totalDamage": 264325,
-      "score": 264325,
-      "actionNumber": 17
+      "expectedSHA256": "ebc7770e725f9790a165d3c2220fcc139d090426bf3b1e78b8d17f6ff63f0290"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 17,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "f2d0d1c7a32bcb0e67cf0e02350b30ac76ea5895b9ee5c235269fa0cca0e7edf"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 808,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "a4705acc019de28a55d7ead598c6d906141e58e40339d113373d07464ba26a1e"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 2026,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "3d5d54707019d16d1c813f58ffb230b5495c26bc4024b964b81d99daaa30c92c"
     },
     {
       "config": {
@@ -128,10 +131,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "4e167df7ba23fe3a4bea0ea603c4c03999c943b590ffbf1de2caf4252729b136",
-      "totalDamage": 754632,
-      "score": 3018528,
-      "actionNumber": 17
+      "expectedSHA256": "e0b824045a16852e590dc82d6406f523e0dde395cf08bb18a64931ed794d6833"
     },
     {
       "config": {
@@ -141,10 +141,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "41fa779500395154891a412c8a587b1bcce77fc09f1d5a3e1811159e021f2a85",
-      "totalDamage": 653960,
-      "score": 2615840,
-      "actionNumber": 17
+      "expectedSHA256": "21801b2f7d0341ee6c37e7531dcb62219f7d1aa9810f02eb0b277d2964cd5d81"
     },
     {
       "config": {
@@ -154,10 +151,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "753ee08f181e4fe07087cd0c75b280011b56adb998de77e7a377d0ca758426a3",
-      "totalDamage": 755469,
-      "score": 3021876,
-      "actionNumber": 17
+      "expectedSHA256": "df4a360fb3e1de1c8603ec0e7500114b3348b93bb007146790640d29d1406314"
     },
     {
       "config": {
@@ -167,10 +161,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "afdebccfe9da7d31ff0c680ce88f48ccb504a98c1941bc92b5709c9e639d90d3",
-      "totalDamage": 450676,
-      "score": 450676,
-      "actionNumber": 17
+      "expectedSHA256": "7d975604bd8654904beb11513b1b15ad08bb0fb0c4868db9804f80affba3daea"
     },
     {
       "config": {
@@ -180,10 +171,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "952c78b91c8a121c2fb63ec64710b0a1bb098634274bfa1e7826ad85afd8448e",
-      "totalDamage": 475431,
-      "score": 475431,
-      "actionNumber": 17
+      "expectedSHA256": "291533ff6c24bb3176e150d660d052e303cbeb2549a587e945afc6d887a187a7"
     },
     {
       "config": {
@@ -193,10 +181,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "7760497a495a5238b456118b2735a939cc33d235366e26e5e47b47bfeaeadd13",
-      "totalDamage": 508104,
-      "score": 508104,
-      "actionNumber": 17
+      "expectedSHA256": "d3c0d5c938b6cc83fd02b4347c4c0878b29cb3d0585c9f690ef0c7dcc0d7fbc1"
     },
     {
       "config": {
@@ -206,10 +191,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "9128d1f7044170e75a5cf2494ecf10ee9f13bf1f98143c1102250e6bd41c0927",
-      "totalDamage": 159613,
-      "score": 159613,
-      "actionNumber": 17
+      "expectedSHA256": "4c5aa2310e971ffb3c55a1f3a7eb204b54a98edbe8bc399ef058e797b287e5b0"
     },
     {
       "config": {
@@ -219,10 +201,7 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "23ebca9c16c947728c3c5e6dd84162126dcfcf4e9fb9b835bc48a31a1b995df0",
-      "totalDamage": 109058,
-      "score": 109058,
-      "actionNumber": 17
+      "expectedSHA256": "9984a420f0d88d142c5776c94fed182068917dc8c71e475877a9ed38a47a145d"
     },
     {
       "config": {
@@ -232,10 +211,78 @@
         "modeId": "nexus"
       },
       "steps": 16,
-      "expectedSHA256": "4000f7d86599ce51fe4ec9c3c78465663ae467fc0bd59b728bcda106bde75978",
-      "totalDamage": 138001,
-      "score": 138001,
-      "actionNumber": 17
+      "expectedSHA256": "12544380dddba90a215cd15db5c465baa936d81a40ccd2a46588720a52ad2ea9"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 17,
+        "mechanicsProfile": "recorded-2026-08-29",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "0e53391a85cabdf9ab4d92cc08f866d6336809be6cb069f8862e44074b0934a1"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 808,
+        "mechanicsProfile": "recorded-2026-08-29",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "5ca8df6a7659eef09d1296c0104ff128a06d7232b1fd267101cc5c92037e8345"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 2026,
+        "mechanicsProfile": "recorded-2026-08-29",
+        "modeId": "nexus"
+      },
+      "steps": 16,
+      "expectedSHA256": "b288b8717f587c7a12754f9daae0b1c0e79ad10606ad5b1e27276a31dd7b9af9"
+    },
+    {
+      "config": {
+        "bossId": "hachiman",
+        "seed": 17,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "multidimensional"
+      },
+      "steps": 16,
+      "expectedSHA256": "211987e9920ac2bc4d73ab926ecb9ef7c6ede52a30d36ff023f7acee6f77a16b"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 17,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "multidimensional"
+      },
+      "steps": 16,
+      "expectedSHA256": "64e3bbfc4efd171f5c9fc24c33ddaa6c027fc6162b5ff1fd8237f7ea2d0403d7"
+    },
+    {
+      "config": {
+        "bossId": "hachiman",
+        "seed": 17,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "devourer"
+      },
+      "steps": 16,
+      "expectedSHA256": "b9bef233c69f36945c172f8d7d546c1626d4c99c8326441137de327b56be50ea"
+    },
+    {
+      "config": {
+        "bossId": "surt",
+        "seed": 17,
+        "mechanicsProfile": "live-2026-09-04",
+        "modeId": "devourer"
+      },
+      "steps": 16,
+      "expectedSHA256": "8ef06ea0b191053fd8c63e9f4043f232843dfa91f42ffdf15451d02567557571"
     }
-  ]
+  ],
+  "skipped": []
 }

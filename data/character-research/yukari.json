@@ -1,0 +1,309 @@
+{
+  "slug": "yukari",
+  "name": "Yukari Takeba",
+  "coverage": "partial: researched source; legacy engine methods integrated, weapon effects excluded",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/yukari/",
+      "kind": "client-rendered-character-page",
+      "accessedAt": "2026-09-12"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/skill.js",
+      "sha256": "aeec6a2d7fb3130056a92fd70b93dd8fafb6e546f998968b5b26adbb374cd971",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/ritual.js",
+      "sha256": "2affb7ab17d975603d2ef53b006a3b99fa5422f7543b921ad2477cf59d44a132",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/weapon.js",
+      "sha256": "53256534b76f027bcf9fe92c0d2faf9a5aab3ce762d319fc75cabc5b4d371d69",
+      "language": "en",
+      "accessedAt": "2026-09-12",
+      "kind": "site-owned-data"
+    }
+  ],
+  "implemented": [
+    "Legacy engine methods mixed into BattleEngine: isYukari, applyYukariErosion, triggerYukariErosionSupport."
+  ],
+  "weaponEffects": "Excluded: source weapon rules are evidence only and do not create selectable loadout options or runtime effects.",
+  "missing": [
+    "Weapon Attack does not resample mechanicAttack or Archer HP; provide equipped Attack through existing loadout for support scaling.",
+    "Signature Erosion healing bonus requires heal event with trigger context; Arrow damage stacks require pre-spend resource snapshot and timed party buff.",
+    "Four-star Arrow HP Recovery requires cast-specific healing multiplier; Theurgy/Assist/reserve return and A6 Theurgy triggers remain unavailable."
+  ],
+  "limitations": [
+    "Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "Weapon Attack does not resample mechanicAttack or Archer HP; provide equipped Attack through existing loadout for support scaling.",
+    "Signature Erosion healing bonus requires heal event with trigger context; Arrow damage stacks require pre-spend resource snapshot and timed party buff.",
+    "Four-star Arrow HP Recovery requires cast-specific healing multiplier; Theurgy/Assist/reserve return and A6 Theurgy triggers remain unavailable."
+  ],
+  "engineOwned": [
+    "constructor/grantTheurgyGauge own gauge and reserves; initializeCharacterPassives owns HP and party Highlight passive.",
+    "applyYukariErosion/triggerYukariErosionSupport own unique Erosion and healing gate; defeat handler transfers Erosion.",
+    "resolveSkill owns Tailwind, Arrow healing, Whisperwind spending and next-Highlight amplification."
+  ],
+  "integration": {
+    "removeEngineMethods": [
+      "isYukari",
+      "applyYukariErosion",
+      "triggerYukariErosionSupport"
+    ],
+    "mixIn": "Object.assign(BattleEngine.prototype, yukariLegacyMethods) before any engine construction; import legacyMethods under that alias. Remove named class definitions in the same change.",
+    "dependencies": [
+      "usesLiveMechanics",
+      "applyEnemyStatus",
+      "emit",
+      "healUnit"
+    ],
+    "hooks": [
+      "initialize applies outgoing Attack only, explicitly excluding stale mechanicAttack-based support scaling.",
+      "Add beforeWhisperwindSpend/afterHealing with origin, target and consumed count. Do not reconstruct spent stacks from afterSkill after engine zeroes them."
+    ],
+    "legacyPolicy": "Exact existing bodies, including incomplete rules and archived-profile behavior. Do not also call these methods from generic lifecycle hooks. Tangled resolver branches remain at original call sites."
+  },
+  "comparison": {
+    "liveGeneratedAt": "2026-08-28T23:07:36.661Z",
+    "skillChanges": [],
+    "catalogGeneratedAt": "2026-09-12T21:05:39.231Z",
+    "catalogId": "lufel-recent-yukari",
+    "catalogSkills": [
+      {
+        "name": "Gale Burst",
+        "power": 2.329,
+        "slot": "S1"
+      },
+      {
+        "name": "Tailwind's Breath",
+        "power": 0,
+        "buff": {
+          "id": "damage_up",
+          "name": "DMG ↑",
+          "stat": "damage",
+          "value": 0.0024,
+          "duration": 3
+        },
+        "slot": "S2"
+      },
+      {
+        "name": "Arrow of Life",
+        "power": 0,
+        "buff": {
+          "id": "attack_up",
+          "name": "ATK ↑",
+          "stat": "attack",
+          "value": 0.341,
+          "duration": 2
+        },
+        "slot": "S3"
+      },
+      {
+        "name": "Assist",
+        "power": 0,
+        "slot": "S4"
+      }
+    ]
+  },
+  "reviewNotes": [
+    "Catalog Tailwind damage .0024 is a per-100-Attack step; engine correctly overrides it. Catalog Arrow Attack applies after Theurgy, not immediately."
+  ],
+  "awarenessRules": [
+    {
+      "level": 0,
+      "name": "Unforgettable Feeling",
+      "description": "Yukari can inflict Erosion on foes.\nWhen other allies deal skill damage to a foe inflicted with Erosion, restore HP to all allies equal to 24.5% of Yukari's Attack + 800/1600/2400 (effect changes at Lv. 1/50/70, respectively), and gain 1 Whisperwind stack (stacks up to 2 times). This effect can only activate once between the start of Yukari's turn and the start of her next turn.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 1,
+      "name": "Pull the Trigger",
+      "description": "At the start of battle, gain up to the maximum number of Whisperwind stacks, and fill Theurgy gauge by 70. If the Theurgy gauge is increased above the maximum on the first turn, up to 35 above the maximum can be reserved.\nAlso, when using a skill on an ally, increase the main target's pierce rate by 20% more for 2 turns. If using Tailwind's Breath, restore 1200 more HP to all allies, and restore 30% more HP to the main target.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 2,
+      "name": "Sign of the Lovers",
+      "description": "When activating a Theurgy, nullify spiritual ailments on Yukari, and also increase party's critical damage by 30%. Lasts for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 3,
+      "name": "Girl Clad in Pink",
+      "description": "Increase the skill levels of Gale Burst and Arrow of Life by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 4,
+      "name": "Healing Mastery",
+      "description": "When using a Theurgy, also restore HP to the ally with the lowest HP by 5% of Yukari's Attack + 500, and also increase party's damage by 10% for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 5,
+      "name": "Pursuit of Doubt",
+      "description": "Increase the skill levels of Tailwind's Breath and Combat Tactics by 3.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    },
+    {
+      "level": 6,
+      "name": "Spring Day's Meeting",
+      "description": "Double the Theurgy gauge increase from Arrow of Life.\nAlso, when an ally uses a Theurgy, increase critical damage by 30% for 2 turns.",
+      "runtime": "existing-engine-partial; see engineOwned and missing, no automatic tooltip execution"
+    }
+  ],
+  "weaponRules": {
+    "four-star": {
+      "stat": "attack",
+      "values": [
+        0.12,
+        0.12,
+        0.16,
+        0.16,
+        0.2,
+        0.2,
+        0.24
+      ]
+    },
+    "signature": {
+      "stat": "attack",
+      "values": [
+        0.3,
+        0.3,
+        0.39,
+        0.39,
+        0.48,
+        0.48,
+        0.57
+      ]
+    }
+  },
+  "configuration": {
+    "path": "config.loadouts[unit.id].characterWeapon",
+    "weapon": [
+      "none",
+      "four-star",
+      "signature"
+    ],
+    "refinement": "integer 0..6 (default 0); invalid values throw",
+    "staticWeaponStatsIncluded": "defaults true when unit.statsMode is equipped; otherwise false",
+    "partyWeaponStatsIncluded": "MIKU only: suppress permanent party critical effect when already included in equipped party totals"
+  },
+  "sourceKey": "유카리",
+  "sourceSnapshot": {
+    "skill.js": {
+      "name": "Yukari Takeba",
+      "skill1": {
+        "name": "Gale Burst",
+        "element": "질풍",
+        "type": "단일 피해",
+        "sp": 23,
+        "cool": 0,
+        "description": "Deal Wind damage to 1 foe equal to 200.1%/220.6%/212.4%/232.9% of Attack. Also, inflict Windswept and Erosion for 2 turns. Multiple foes cannot be inflicted with Erosion at the same time. If a foe with Erosion is defeated, Erosion is transferred to the foe with the highest HP.\nPassive: When an ally attacks a foe with a skill, if any target is inflicted with Erosion, increase that skill's Attack by 8.8%/9.7%/9.3%/10.2% + 0.72% for every 100 points of Yukari's Attack (up to a maximum of 29.3%/32.3%/31.1%/34.1%)."
+      },
+      "skill2": {
+        "name": "Tailwind's Breath",
+        "element": "버프광역",
+        "type": "",
+        "sp": 25,
+        "cool": 0,
+        "description": "Decrease party's damage taken by 29.3%/32.3%/31.1%/34.1% for 3 turns.\nAlso, increase the main target's Attack by 7.8%/8.6%/8.3%/9.1% + 0.78% for every 100 points of Yukari's Attack (up to a maximum of 31.2%/34.4%/33.2%/36.4%), and increase damage by 0.24% for every 100 points of Yukari's Attack (up to a maximum of 9.8%/10.8%/10.4%/11.4%) for 2 turns."
+      },
+      "skill3": {
+        "name": "Arrow of Life",
+        "element": "치료광역",
+        "type": "",
+        "sp": 27,
+        "cool": 0,
+        "description": "Restore HP to all allies equal to 39.1%/43.1%/41.5%/45.6% of Yukari's Attack + 2507/3158/3081/3773.\nSpend all Whisperwind stacks, and for each stack spent, increase the main target's Theurgy gauge by 17.5, and after the next time the target activates a Theurgy, increase Attack by 29.3%/32.3%/31.1%/34.1% for 2 turns. This effect stacks up to 2 times. If the Theurgy gauge is increased above the maximum, the amount above the maximum is temporarily reserved for up to 2 turns, and returned after the Theurgy is activated.\nIf the main target has a Highlight, the next time they activate a Highlight, increase final damage amplification by 9.8%/10.8%/10.4%/11.4% for every Whisperwind stack spent."
+      },
+      "skill_highlight": {
+        "name": "Cyclone Arrow",
+        "element": "질풍",
+        "type": "",
+        "description": "Can be activated when Theurgy gauge is at 70. Deal Wind damage to 1 foe equal to 406.0%/447.6%/431.0%/472.6% of Attack. Also, remove 2 buffs from the target, and inflict Windswept and Erosion.\nAlso, increase party's damage by 0.48% for every 100 points of Yukari's Attack (up to a maximum of 19.5%/21.5%/20.7%/22.7%) for 2 turns.",
+        "cool": 0
+      },
+      "skill_support": {
+        "name": "Assist",
+        "element": "버프",
+        "type": "",
+        "description": "Remove 1 debuff from 1 ally.",
+        "cool": 0
+      },
+      "passive1": {
+        "name": "Tailwind's Air",
+        "element": "패시브",
+        "description": "When Yukari is present, increase party's Highlight and Theurgy damage by 45.0%. When an ally activates a Highlight or Theurgy, increase that ally's damage by 20.0% for 2 turns.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Archer's Courage",
+        "element": "패시브",
+        "description": "During battle, increase max HP by 60 for every 100 points of Yukari's Attack (up to a maximum of 2700).",
+        "cool": 0
+      }
+    },
+    "ritual.js": {
+      "name": "Yukari Takeba",
+      "r0": "Unforgettable Feeling",
+      "r0_detail": "Yukari can inflict Erosion on foes.\nWhen other allies deal skill damage to a foe inflicted with Erosion, restore HP to all allies equal to 24.5% of Yukari's Attack + 800/1600/2400 (effect changes at Lv. 1/50/70, respectively), and gain 1 Whisperwind stack (stacks up to 2 times). This effect can only activate once between the start of Yukari's turn and the start of her next turn.",
+      "r1": "Pull the Trigger",
+      "r1_detail": "At the start of battle, gain up to the maximum number of Whisperwind stacks, and fill Theurgy gauge by 70. If the Theurgy gauge is increased above the maximum on the first turn, up to 35 above the maximum can be reserved.\nAlso, when using a skill on an ally, increase the main target's pierce rate by 20% more for 2 turns. If using Tailwind's Breath, restore 1200 more HP to all allies, and restore 30% more HP to the main target.",
+      "r2": "Sign of the Lovers",
+      "r2_detail": "When activating a Theurgy, nullify spiritual ailments on Yukari, and also increase party's critical damage by 30%. Lasts for 2 turns.",
+      "r3": "Girl Clad in Pink",
+      "r3_detail": "Increase the skill levels of Gale Burst and Arrow of Life by 3.",
+      "r4": "Healing Mastery",
+      "r4_detail": "When using a Theurgy, also restore HP to the ally with the lowest HP by 5% of Yukari's Attack + 500, and also increase party's damage by 10% for 2 turns.",
+      "r5": "Pursuit of Doubt",
+      "r5_detail": "Increase the skill levels of Tailwind's Breath and Combat Tactics by 3.",
+      "r6": "Spring Day's Meeting",
+      "r6_detail": "Double the Theurgy gauge increase from Arrow of Life.\nAlso, when an ally uses a Theurgy, increase critical damage by 30% for 2 turns."
+    },
+    "weapon.js": {
+      "name": "Yukari Takeba",
+      "weapon4-1": {
+        "name": "Kishin Bow",
+        "health": 1823.43,
+        "attack": 565.81,
+        "defense": 328.02,
+        "skill_name": "Effortless Arrow",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Arrow of Life is used, increase HP Recovery by 13.0%/16.9%/16.9%/20.9%/20.9%/24.8%/24.8%."
+      },
+      "weapon5-1": {
+        "name": "Sarnga",
+        "health": 2279.27,
+        "attack": 706.91,
+        "defense": 409.62,
+        "skill_name": "Verdant Arrow",
+        "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen an ally attacks a foe inflicted with Erosion and has their HP recovered, increase HP Recovery by 15.7%/20.3%/20.3%/24.9%/24.9%/29.5%/29.5% + 600/800/800/1000/1000/1200/1200.\nWhen Arrow of Life is used, for every Whisperwind stack spent, increase all allies' damage by 18.0%/23.5%/23.5%/29.0%/29.0%/34.5%/34.5% for 2 turns. Stacks up to 2 times."
+      }
+    }
+  },
+  "legacyExtraction": [
+    {
+      "name": "isYukari",
+      "engineLineAtExtraction": 877
+    },
+    {
+      "name": "applyYukariErosion",
+      "engineLineAtExtraction": 2165
+    },
+    {
+      "name": "triggerYukariErosionSupport",
+      "engineLineAtExtraction": 2176
+    }
+  ]
+}

@@ -294,7 +294,7 @@ export class KotoneShiomiMechanics {
     } else if (skill.kotoneSkill === 'S2') {
       damage = this.resolveFire(skill, options);
       if (this.countPowerful() >= 3) {
-        for (const enemy of e.enemies.filter(enemy => enemy.hp > 0 && enemy.alive !== false)) {
+        for (const enemy of e.enemies.filter(enemy => this.canHit(enemy))) {
           const status = { id: 'kotone-s2-damage-taken', name: "Burning Moon's Cry: damage taken", damageTaken: true,
             value: this.C.s2DamageTaken * scale * (1 + e.skillAmplificationFor(actor)), duration: this.duration(1, 2) };
           e.applyEnemyStatus(enemy, 'debuffs', status, 'character_skill', actor.id);
@@ -321,9 +321,12 @@ export class KotoneShiomiMechanics {
     e.triggerTrustProsperity(actor, skill, sourceType);
     return damage;
   }
+  // Like the engine's own attacks, the boss stays targetable at 0 HP: during a
+  // weakened window its HP is spent but damage still scores.
+  canHit(enemy) { return enemy.alive !== false && (enemy.hp > 0 || enemy.id === this.engine.state.boss.id); }
   resolveFire(skill, options) {
     const e = this.engine, actor = this.unit;
-    const enemies = e.enemies.filter(enemy => enemy.hp > 0 && enemy.alive !== false);
+    const enemies = e.enemies.filter(enemy => this.canHit(enemy));
     const perHit = (this.C.s2Hit + (this.state.fortune ? this.C.s2FortuneAddedPower : 0)) * (1 + Math.max(0, 5 - enemies.length) * this.C.s2MissingEnemyBonus);
     const hitSkill = { ...skill, power: perHit };
     const context = options.highlightActionContext || null;
@@ -331,7 +334,7 @@ export class KotoneShiomiMechanics {
     let damage = 0;
     for (const enemy of enemies) {
       let last = null;
-      for (let hit = 0; hit < this.C.s2Hits && enemy.hp > 0 && enemy.alive !== false; hit++) {
+      for (let hit = 0; hit < this.C.s2Hits && this.canHit(enemy); hit++) {
         const result = e.calculateDamage(actor, hitSkill, enemy, 'character_skill'); last = result;
         const before = enemy.hp, actual = e.applyEnemyDamage(enemy, result.amount);
         actor.damageDone += actual; e.state.totalDamage += actual; damage += actual;

@@ -1,16 +1,24 @@
 import { applyCurrentSkillNames, withPersonaRecommendations } from './persona-recommendations.js';
 import { withPersonaAdditions } from './persona-additions.js';
 import { withRevelationMainOverlay, withRevelationSetOverlay } from './revelation-overlay.js';
+import { AWARENESS_LEVELS, awarenessCoverage, awarenessStatDefaults, migrateAwarenessLoadout, resolveAwareness, setLoadoutAwareness } from './awareness.js';
+import { COSMIC_YUI_AWARENESS, COSMIC_YUI_COEFFICIENTS, COSMIC_YUI_LIMITATIONS, COSMIC_YUI_WEAPONS } from './cosmic-yui-data.js';
 import { renderKotonePreview } from './kotone-preview.js';
 import { kotoneShiomi, KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
-import { withLocalCharacters } from './characters/registry.js';
+import { withLocalCharacters } from './characters/kotone-overlay.js';
 import { normalizeKotoneLoadout, normalizeKotoneDraft } from './characters/kotone-shiomi-mechanics.js';
 import { kotoneBuildEditor, bindKotoneBuild, kotoneStatusMarkup, kotoneSkillSummary } from './characters/kotone-shiomi-ui.js';
 import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
-import { bosses, elementMeta, navigator, nightmareModes, recordedNightmareBenchmark, roster } from './data.js';
+import { adaptRegisteredCharacter, characterModuleFor } from './characters/registry.js';
+import { bosses, elementMeta, navigator as baseNavigator, nightmareModes, recordedNightmareBenchmark, roster as baseRoster } from './data.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
-import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresets, wonderStatsPreset } from './default-presets.js';
-import { getWonderWeaponProfile } from './wonder-weapons.js';
+import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset } from './default-presets.js';
+import {
+  getDefaultWonderWeaponProfileId,
+  getWonderWeaponDefinition,
+  getWonderWeaponProfile,
+  listWonderWeaponDefinitions
+} from './wonder-weapons.js';
 import {
   HachimanRecordedEngine, HACHIMAN_RECORDED_SEED, NAVIGATOR_SHARED_STATS, OBSERVED_STAT_EVIDENCE, PERSONA_SKILL_ADAPTERS,
   adaptPersonaSkill, createHachimanRecordedConfig, hachimanScoreDerivation, playHachimanRecordedRoute
@@ -21,17 +29,35 @@ import {
   buildPersonaLoadoutCatalog,
   defaultPersonaSkillIds,
   fixedPersonaSkills,
+  highestRankPersonaPassive,
   legalTransferableSkillsForPersona,
   sanitizePersonaSkillIds
 } from './persona-loadout.js';
 
 const root = document.querySelector('#app');
+const roster = baseRoster.map(adaptRegisteredCharacter);
+const navigator = adaptRegisteredCharacter(baseNavigator);
 const format = value => Math.round(value).toLocaleString();
 const pct = (value, max) => Math.max(0, Math.min(100, (value / max) * 100));
 const escapeHtml = value => String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 const jcMaskShort = Object.freeze({ mischief: 'MISCHIEF', service: 'SERVICE', absurdity: 'ABSURDITY', luck: 'LUCK' });
 const medicineDisplayNames = Object.freeze({ attack_tablet: 'Attacker Tablet' });
-const substantialKitSlugs = new Set(['berry', 'puppet-wavecatcher', 'marian-beachflower', 'miku', 'j-c']);
+const substantialKitSlugs = new Set(['berry', 'puppet-wavecatcher', 'marian-beachflower', 'miku', 'j-c', 'rin-firecracker', 'matoi', 'akihiko', 'yukari', 'makoto', 'bui-cosmic']);
+const wonderWeaponDefinitions = listWonderWeaponDefinitions();
+
+function wonderWeaponOptions(selectedWeaponId) {
+  return [
+    `<option value="" ${!selectedWeaponId ? 'selected' : ''}>None equipped</option>`,
+    ...wonderWeaponDefinitions.map(weapon => `<option value="${escapeHtml(weapon.id)}" ${weapon.id === selectedWeaponId ? 'selected' : ''}>${'★'.repeat(weapon.rarity)} ${escapeHtml(weapon.name)}</option>`)
+  ].join('');
+}
+
+function setWonderWeaponSelection(loadout, weaponId) {
+  loadout.weaponId = weaponId || null;
+  loadout.weaponProfileId = weaponId ? getDefaultWonderWeaponProfileId(weaponId) : null;
+  loadout.weaponProcGranularity = null;
+  loadout.weaponPresetId = wonderWeaponPreset.id;
+}
 
 function actionCooldown(action) {
   return Math.max(0, Number(action?.cooldownRemaining ?? action?.remaining ?? action?.cooldown ?? 0) || 0);
@@ -67,7 +93,13 @@ function medicineEffectiveText(action) {
 
 function coverageFor(unit) {
   if (unit?.id === KOTONE_SHIOMI_ID) return { kind: 'partial', label: 'PLAYABLE · EXPERIMENTAL', detail: 'Lufel v5.1.0 ordinary Global values with A3/A5 skill levels and skill Mindscape. Fortune, copy and Cold timing are engine policies, not source-verified.' };
+  const research = characterModuleFor(unit)?.research;
+  if (research && unit.slug !== 'bui-cosmic') return {
+    kind: 'partial', label: 'RESEARCHED · PARTIAL MECHANICS',
+    detail: `${research.name || unit.codename}: ${(research.implemented || []).join('; ') || 'Source and implementation audit available'}. ${(research.missing || []).length} documented gaps.`
+  };
   if (!unit?.id?.startsWith('lufel-recent-')) return null;
+  if (unit.slug === 'bui-cosmic') return { kind: 'substantial', label: 'SOURCE-MODELED · COSMIC', detail: 'Dedicated Veggie Knight, energy, Harvest Havoc and All-Out damage logic. Current Lufel coefficients; unverified timing and extra party All-Out scaling are disclosed, not claimed as live-calibrated.' };
   return substantialKitSlugs.has(unit.slug)
     ? { kind: 'partial', label: 'CORE MECHANICS PARTIAL', detail: 'This character has a substantial tested state machine, but the full source kit is not implemented.' }
     : { kind: 'generic', label: 'GENERIC DIRECT EFFECTS ONLY', detail: 'Direct coefficients and simple effects run. The source kit is not fully implemented.' };
@@ -89,9 +121,20 @@ function bindLimitationsToggle() {
     if (hint) hint.textContent = `These mechanics are not represented in this run. ${panel.open ? 'Hide' : 'Show'}`;
   }));
 }
-const importedPersonaBase = withPersonaAdditions(lufelCatalog.personas).filter(persona => persona.skills.some(skill => skill.kind === 'unique' && (skill.combat.executable || PERSONA_SKILL_ADAPTERS[skill.name])));
+// Restore the existing recorded-team Persona to the picker. The source importer
+// labels its raw text reference-only, but this UI already supplies these exact
+// observed values in personaDefinitionsFromLoadout below. No new coefficients.
+const importedPersonaBase = withPersonaAdditions(lufelCatalog.personas).map(persona => persona.id !== 'lufel-persona-267' ? persona : {
+  ...persona,
+  skills: persona.skills.map(skill => skill.id !== 'persona-267-unique-chilling-depth-1' ? skill : {
+    ...skill, cost: 22,
+    combat: { ...skill.combat, executable: true, confidence: 'existing-recorded-ui-adapter', power: 1.1,
+      debuff: { id: 'ice_vuln', name: 'ICE DAMAGE TAKEN', value: 0.088, duration: 2 } }
+  })
+}).filter(persona => persona.skills.some(skill => skill.kind === 'unique' && (skill.combat.executable || PERSONA_SKILL_ADAPTERS[skill.name])));
 const revelationMains = withRevelationMainOverlay(lufelCatalog.revelationMains);
 const revelationSets = withRevelationSetOverlay(lufelCatalog.revelationSets);
+const importedWeapons = lufelCatalog.weapons || [];
 const recordedMaziodyne = {
   id: 'recorded-maziodyne', name: 'Maziodyne', sourceName: 'Maziodyne', kind: 'recorded',
   description: 'Deal Electric damage to all foes equal to 66.9% of Attack.',
@@ -120,9 +163,10 @@ const characterArtworkOverrides = Object.freeze({
 });
 
 function importedCharacterDefinition(record) {
+  record = adaptRegisteredCharacter(record);
   if (record.formulaStatus === 'source-described' && record.skills?.length) {
     return {
-      ...record, actionLimit: 1, maxAmmo: 8, gunPower: .56,
+      ...record, actionLimit: 1, maxAmmo: record.maxAmmo || 8, gunPower: record.gunPower || .56,
       portrait: (record.codename || record.name || '?').replace(/[^A-Za-z0-9]/g, '').slice(0, 1).toUpperCase() || '?',
       skills: record.skills.map(skill => ({ ...skill }))
     };
@@ -169,6 +213,10 @@ const navigatorCandidates = [
   ...['ANGE', 'MIKU'].map(codename => importedCharacters.find(unit => unit.codename === codename)).filter(Boolean).map(importedNavigatorDefinition)
 ];
 const selectableCharacters = withLocalCharacters([...roster, ...importedCharacters.filter(unit => !navigatorCharacterIds.has(unit.id))]);
+// Every existing combatant and navigator is editable, including off-party units.
+const buildableCharacters = [...selectableCharacters, ...navigatorCandidates];
+const isNavigatorBuild = unit => navigatorCandidates.some(candidate => candidate.id === unit.id);
+
 
 function loadNavigatorId() {
   const saved = localStorage.getItem('p5x-navigator-v1');
@@ -213,27 +261,27 @@ function defaultPersonaSlot(name) {
   return { personaId: persona.id, skillIds: defaultPersonaSkillIds(persona, transferablePersonaSkills) };
 }
 
-function defaultLoadoutFor(characterId) {
-  if (characterId === KOTONE_SHIOMI_ID) return applyRecordedDefaultStats(characterId, { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } });
-  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: wonderStatsPreset.personaNames.map(defaultPersonaSlot), personaPresetId: wonderStatsPreset.id });
+function defaultBuildContentsFor(characterId) {
+  if (characterId === KOTONE_SHIOMI_ID) return { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } };
+  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: [defaultPersonaSlot('Alice'), defaultPersonaSlot('Yoshitsune'), defaultPersonaSlot('Trumpeter')] });
   if (characterId === 'joker') return { revelationMain: 'Nativity', revelationSet: 'Power' };
   if (characterId === 'rin') return { revelationMain: 'Resolve', revelationSet: 'Virtue' };
   if (characterId === 'mona') return { revelationMain: 'Faith', revelationSet: 'Peace' };
-  const character = selectableCharacters.find(unit => unit.id === characterId);
+  const character = buildableCharacters.find(unit => unit.id === characterId);
   const preferredMain = character?.recommendedRevelations?.main?.find(name => revelationMains.some(main => main.name === name));
   const main = revelationMains.find(item => item.name === preferredMain) || revelationMains[0];
   const preferredSet = character?.recommendedRevelations?.sets?.find(name => revelationSets.some(set => set.name === name));
   return applyRecordedDefaultStats(characterId, { revelationMain: main?.name || '', revelationSet: preferredSet || main?.compatibleSubs?.[0] || revelationSets[0]?.name || '', ...(character?.slug === 'j-c' ? { jcMasks: ['mischief', 'absurdity'] } : {}) });
 }
 
+function defaultLoadoutFor(characterId) {
+  const unit = buildableCharacters.find(item => item.id === characterId) || { id: characterId };
+  const contents = isNavigatorBuild(unit) ? {} : defaultBuildContentsFor(characterId);
+  return { ...contents, awareness: resolveAwareness(unit) };
+}
+
 function defaultLoadouts() {
-  return {
-    wonder: defaultLoadoutFor('wonder'), joker: defaultLoadoutFor('joker'),
-    rin: defaultLoadoutFor('rin'), mona: defaultLoadoutFor('mona'),
-    [ichigoStatsPreset.characterId]: defaultLoadoutFor(ichigoStatsPreset.characterId),
-    [marianRevelationPreset.characterId]: defaultLoadoutFor(marianRevelationPreset.characterId),
-    ...Object.fromEntries(liveStatsPresets.map(preset => [preset.characterId, defaultLoadoutFor(preset.characterId)]))
-  };
+  return Object.fromEntries(buildableCharacters.map(unit => [unit.id, defaultLoadoutFor(unit.id)]));
 }
 
 const HACHIMAN_RECORDED_FLAG_KEY = 'p5x-hachiman-recorded-v1';
@@ -252,7 +300,7 @@ function clearHachimanRecordedPreset() {
 // Loads the recorded Multidimensional Dreamscape Hachiman party exactly as the
 // checkpoint comparison runs it: observed maximum HP totals, sourced-cap lower
 // bounds, the Labor and Reconcilation set effects, and the reference-only
-// Persona skills bridged from their tooltips. See docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+// Persona skills bridged from their tooltips. See HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
 function loadHachimanRecordedPreset() {
   stopAuto();
   const { config, dionysus, vasuki, janosik } = createHachimanRecordedConfig(HACHIMAN_RECORDED_SEED);
@@ -269,6 +317,11 @@ function loadHachimanRecordedPreset() {
   };
   for (const id of ui.teamIds.filter(id => id !== 'wonder')) ui.loadouts[id] = structuredClone(config.loadouts[id]);
   ui.navigatorId = 'navigator-miku';
+  // These recorded presets represent A6 builds, not the last edited ranks.
+  for (const id of [...ui.teamIds, ui.navigatorId]) {
+    const member = buildableCharacters.find(unit => unit.id === id);
+    if (member) setLoadoutAwareness(member, ensureLoadout(id), 6);
+  }
   localStorage.setItem('p5x-navigator-v1', ui.navigatorId);
   saveLoadouts();
   saveTeamIds();
@@ -350,6 +403,11 @@ function loadRecordedBenchmarkPreset() {
   };
   for (const id of ui.teamIds.slice(1)) ui.loadouts[id] = { baseStats: {}, revelationMain: '', revelationSet: '', ...(id === 'lufel-recent-j-c' ? { jcMasks: ['mischief', 'service'] } : {}) };
   ui.navigatorId = 'navigator-miku';
+  // These recorded presets represent A6 builds, not the last edited ranks.
+  for (const id of [...ui.teamIds, ui.navigatorId]) {
+    const member = buildableCharacters.find(unit => unit.id === id);
+    if (member) setLoadoutAwareness(member, ensureLoadout(id), 6);
+  }
   localStorage.setItem('p5x-navigator-v1', ui.navigatorId);
   saveLoadouts();
   saveTeamIds();
@@ -363,13 +421,12 @@ function loadLoadouts() {
     const saved = JSON.parse(localStorage.getItem('p5x-loadouts-v3'));
     if (!saved || typeof saved !== 'object') return defaults;
     const merged = { ...saved };
-    for (const [id, value] of Object.entries(defaults)) merged[id] = { ...value, ...applyRecordedDefaultStats(id, saved[id] || {}) };
-    if (!Array.isArray(merged.wonder.personas) || merged.wonder.personas.length !== 3) merged.wonder.personas = defaults.wonder.personas;
-    // Apply the live Persona trio once; later deliberate changes survive.
-    if (saved.wonder?.personaPresetId !== wonderStatsPreset.id) {
-      merged.wonder.personas = defaults.wonder.personas;
-      merged.wonder.personaPresetId = wonderStatsPreset.id;
+    for (const unit of buildableCharacters) {
+      const id = unit.id;
+      const prior = saved[id] || (unit.sourceCharacterId && saved[unit.sourceCharacterId]) || {};
+      merged[id] = migrateAwarenessLoadout(unit, defaults[id], prior, applyRecordedDefaultStats(id, prior));
     }
+    if (!Array.isArray(merged.wonder.personas) || merged.wonder.personas.length !== 3) merged.wonder.personas = defaults.wonder.personas;
     merged.wonder.personas = merged.wonder.personas.map((slot, index) => {
       const personaId = importedPersonas.some(persona => persona.id === slot?.personaId) ? slot.personaId : defaults.wonder.personas[index].personaId;
       const persona = importedPersonas.find(item => item.id === personaId);
@@ -382,11 +439,10 @@ function loadLoadouts() {
       || saved[berrySpPreset.characterId]?.spPresetId !== berrySpPreset.id
       || saved[marianRevelationPreset.characterId]?.revelationPresetId !== marianRevelationPreset.id
       || saved[marianSpPreset.characterId]?.spPresetId !== marianSpPreset.id
-      || saved.wonder?.weaponPresetId !== wonderWeaponPreset.id
-      || liveStatsPresets.some(preset => saved[preset.characterId]?.statsPresetId !== preset.id)
-      || saved.wonder?.personaPresetId !== wonderStatsPreset.id) {
+      || saved.wonder?.weaponPresetId !== wonderWeaponPreset.id) {
       localStorage.setItem('p5x-loadouts-v3', JSON.stringify(merged));
     }
+    localStorage.setItem('p5x-loadouts-v3', JSON.stringify(merged));
     return merged;
   } catch { return defaults; }
 }
@@ -406,8 +462,46 @@ function selectedTeam() {
 }
 
 function ensureLoadout(characterId) {
-  return ui.loadouts[characterId] ||= defaultLoadoutFor(characterId);
+  const unit = buildableCharacters.find(item => item.id === characterId) || { id: characterId };
+  const loadout = ui.loadouts[characterId] ||= defaultLoadoutFor(characterId);
+  setLoadoutAwareness(unit, loadout, resolveAwareness(unit, loadout));
+  return loadout;
 }
+
+function awarenessFor(unit) {
+  return resolveAwareness(unit, ensureLoadout(unit.id));
+}
+
+function awarenessSelect(unit) {
+  const rank = awarenessFor(unit);
+  return `<label class="quick-awareness">Awareness<select data-awareness-select="${escapeHtml(unit.id)}" aria-label="${escapeHtml(unit.codename)} awareness">${AWARENESS_LEVELS.map(level => `<option value="${level}" ${rank === level ? 'selected' : ''}>A${level}</option>`).join('')}</select></label>`;
+}
+
+function awarenessEditor(unit, loadout) {
+  const rank = resolveAwareness(unit, loadout);
+  const coverage = awarenessCoverage(unit);
+  return `<section class="build-section awareness-editor" aria-label="Awareness settings">
+    <div class="awareness-heading"><div><span>CHARACTER AWARENESS</span><h3>${escapeHtml(unit.codename)} <b data-current-awareness>A${rank}</b></h3></div><em>${coverage.hasSourcedStats ? 'SOURCED STATS + EXISTING MECHANICS' : 'PROFILE SETTING ONLY'}</em></div>
+    <div class="awareness-segments" role="group" aria-label="Choose awareness rank">${AWARENESS_LEVELS.map(level => `<button type="button" data-awareness-rank="${level}" data-awareness-unit="${escapeHtml(unit.id)}" aria-label="Set ${escapeHtml(unit.codename)} awareness A${level}" aria-pressed="${rank === level}" class="${rank === level ? 'active' : ''}">A${level}</button>`).join('')}</div>
+    <p class="awareness-note">${escapeHtml(coverage.note)}</p>
+    ${unit.id === 'wonder' ? '<p class="awareness-note">Wonder keeps his Persona system. This profile does not create a separate in-game awakening system.</p>' : ''}
+  </section>`;
+}
+
+function bindAwarenessControls() {
+  const change = (id, value) => {
+    const unit = buildableCharacters.find(item => item.id === id);
+    if (!unit) return;
+    stopAuto();
+    setLoadoutAwareness(unit, ensureLoadout(id), value);
+    ui.engine = null;
+    saveLoadouts();
+    render();
+  };
+  document.querySelectorAll('[data-awareness-rank]').forEach(button => button.addEventListener('click', () => change(button.dataset.awarenessUnit, button.dataset.awarenessRank)));
+  document.querySelectorAll('[data-awareness-select]').forEach(select => select.addEventListener('change', () => change(select.dataset.awarenessSelect, select.value)));
+}
+
 
 function saveTeamIds() {
   localStorage.setItem('p5x-team-v2', JSON.stringify(ui.teamIds));
@@ -443,28 +537,52 @@ function personaDefinitionsFromLoadout() {
     const source = importedPersonas.find(persona => persona.id === slot.personaId);
     if (!source) return null;
     const selected = battleSkillsWithAdapters(source, slot.skillIds);
+    const passive = highestRankPersonaPassive(source);
     return {
       id: source.id, name: source.name, arcana: source.position || `Grade ${source.grade}`, element: source.element,
       role: source.role || (source.position === '우월' ? 'Strategist' : source.position),
-      trait: source.passive[0]?.name || source.description || 'Imported Persona', source: 'Lufelnet',
-      skills: selected.map((skill, index) => ({
-        id: skill.id, slot: `S${index + 1}`,
-        name: source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth' ? 'One-Fathom Fang' : skill.name,
-        element: skill.element || source.element,
-        cost: source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth' ? 22
-          : source.name === 'Sahimochi-no-kami' && skill.name === 'Maziodyne' ? 21
-            : source.name === 'Sahimochi-no-kami' && skill.name === 'Revolution' ? 22 : skill.cost || 0,
-        power: source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth' ? 1.1 : skill.combat.power || 0,
-        target: skill.target, scalingStat: skill.scalingStat,
-        debuff: source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth'
-          ? { id: 'ice_vuln', name: 'ICE DAMAGE TAKEN', value: 0.088, duration: 2 }
-          : skill.combat.debuff ? structuredClone(skill.combat.debuff) : undefined,
-        buff: source.name === 'Sahimochi-no-kami' && skill.name === 'Revolution'
-          ? { id: 'revolution', name: 'CRIT RATE UP', stat: 'critRate', value: 0.065, duration: 3 }
-          : skill.combat.buff ? structuredClone(skill.combat.buff) : undefined,
-        note: skill.description || `${skill.kind} skill`, sourceConfidence: skill.combat.confidence,
-        ...(skill.runnerPer500Attack ? { runnerPer500Attack: skill.runnerPer500Attack, runnerPer500AttackCap: skill.runnerPer500AttackCap } : {})
-      }))
+      trait: passive?.name || source.description || 'Imported Persona', source: 'Lufelnet',
+      passive: passive ? structuredClone(passive) : null,
+      skills: selected.map((skill, index) => {
+        const combat = skill.combat || {};
+        const chillingDepth = source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth';
+        const revolution = source.name === 'Sahimochi-no-kami' && skill.name === 'Revolution';
+        return {
+          id: skill.id, slot: `S${index + 1}`,
+          name: chillingDepth ? 'One-Fathom Fang' : skill.name,
+          element: skill.element || source.element,
+          cost: chillingDepth ? 22
+            : source.name === 'Sahimochi-no-kami' && skill.name === 'Maziodyne' ? 21
+              : revolution ? 22 : skill.cost || 0,
+          hpCost: skill.hpCost,
+          power: chillingDepth ? 1.1 : combat.power || 0,
+          target: skill.target, scalingStat: skill.scalingStat,
+          critBonus: combat.critBonus,
+          accuracyModifier: combat.accuracyModifier,
+          hitCount: combat.hitCount,
+          hitCountRange: combat.hitCountRange ? structuredClone(combat.hitCountRange) : undefined,
+          ignoreDefense: combat.ignoreDefense,
+          technical: combat.technical ? structuredClone(combat.technical) : undefined,
+          debuff: chillingDepth
+            ? { id: 'ice_vuln', name: 'ICE DAMAGE TAKEN', elementDamageTaken: 'ice', elementDamageTakenValue: 0.088, value: 0.088, duration: 2 }
+            : combat.debuff ? structuredClone(combat.debuff) : undefined,
+          debuffs: chillingDepth ? undefined : combat.debuffs ? structuredClone(combat.debuffs) : undefined,
+          buff: revolution
+            ? { id: 'revolution', name: 'CRIT RATE UP', stat: 'critRate', value: 0.065, duration: 3 }
+            : combat.buff ? structuredClone(combat.buff) : undefined,
+          buffs: revolution ? undefined : combat.buffs ? structuredClone(combat.buffs) : undefined,
+          buffTarget: combat.buffTarget,
+          heal: combat.heal,
+          healAttack: combat.healAttack,
+          healFlat: combat.healFlat,
+          healTarget: combat.healTarget,
+          spRestore: combat.spRestore,
+          limitations: combat.limitations ? structuredClone(combat.limitations) : undefined,
+          note: [skill.description || `${skill.kind} skill`, ...(combat.limitations || []).map(item => `Simulator limit: ${item}`)].join(' '),
+          sourceConfidence: combat.confidence,
+          ...(skill.runnerPer500Attack ? { runnerPer500Attack: skill.runnerPer500Attack, runnerPer500AttackCap: skill.runnerPer500AttackCap } : {})
+        };
+      })
     };
   }).filter(Boolean);
 }
@@ -477,19 +595,24 @@ function revelationFor(characterId) {
 function buildEngineConfig() {
   const personaDefinitions = personaDefinitionsFromLoadout();
   const team = selectedTeam();
+  const navigatorUnit = selectedNavigator();
   return {
     bossId: ui.selectedBoss, modeId: ui.selectedMode, seed: ui.seed, mechanicsProfile: 'live-2026-09-04', navigatorDefinition: selectedNavigator(),
     lifeSustainment: ui.selectedMode === 'nexus' || (ui.selectedMode === 'devourer' && ui.modeOptions.devourer.lifeSustainment),
     encounterThresholds: ui.selectedBoss === 'vishnu' ? structuredClone(ui.vishnuThresholds) : null,
     personaDefinitions, personaIds: personaDefinitions.map(persona => persona.id),
     characterDefinitions: team, teamIds: team.map(unit => unit.id),
-    jcA6Unlocked: true,
-    loadouts: Object.fromEntries(team.map(unit => {
+    characterOptions: Object.fromEntries([...team, navigatorUnit].filter(unit => unit.slug).map(unit => [unit.slug, structuredClone(ensureLoadout(unit.id).characterResearch || {})])),
+    // Account-wide effect follows the saved J&C build even when she is off-party.
+    jcA6Unlocked: awarenessFor(buildableCharacters.find(unit => unit.slug === 'j-c') || { id: 'missing-jc', awareness: 0 }) >= 6,
+    loadouts: Object.fromEntries([...team, navigatorUnit].map(unit => {
       const loadout = ensureLoadout(unit.id);
-      if (unit.id === 'wonder') return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
+      const researchOptions = { characterResearch: structuredClone(loadout.characterResearch || {}), sourceTier: loadout.characterResearch?.sourceTier ?? loadout.sourceTier };
+      if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}) }];
+      if (unit.id === 'wonder') return [unit.id, { awareness: awarenessFor(unit), baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
       if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), revelationCombat: structuredClone(set?.combat || {}) }];
-      return [unit.id, { baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), weaponId: loadout.weaponId, weaponLevel: loadout.weaponLevel }];
+      return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), cosmicYui: structuredClone(loadout.cosmicYui || {}) }];
     }))
   };
 }
@@ -521,6 +644,7 @@ const ui = {
   navigatorId: loadNavigatorId(),
   navigatorPickerOpen: false,
   buildCharacterId: 'wonder',
+  buildSearch: '',
   optimizerSearch: { status: 'idle', data: null },
   optimizerSeedComparison: false
 };
@@ -540,15 +664,17 @@ function resistanceMarkup(entity, includeNames = true) {
 }
 
 function portrait(unit, size = '') {
-  const artwork = unit.id === KOTONE_SHIOMI_ID ? unit.avatar || unit.artwork : unit.artwork;
-  return `<div class="portrait ${size} ${unit.artwork ? 'has-artwork' : ''}" style="--accent:${unit.accent || '#e61d2f'}" aria-label="${escapeHtml(unit.codename || unit.name)} portrait">
-    <span>${escapeHtml(unit.portrait || unit.name[0])}</span><i></i>${artwork ? `<img src="${escapeHtml(artwork)}" alt="">` : ''}
+  return `<div class="portrait ${size} ${unit.artwork ? 'has-artwork' : ''} ${unit.avatar && unit.id !== KOTONE_SHIOMI_ID ? 'cosmic-portrait' : ''}" style="--accent:${unit.accent || '#e61d2f'}" aria-label="${escapeHtml(unit.codename || unit.name)} portrait">
+    <span>${escapeHtml(unit.portrait || unit.name[0])}</span><i></i>${unit.artwork ? `<img src="${escapeHtml(unit.avatar || unit.artwork)}" alt="">` : ''}
   </div>`;
 }
 
 function characterModel(unit, size = '') {
   if (!unit.artwork) return portrait(unit, size === 'battle-model' ? 'field' : 'large');
-  return `<div class="character-model ${size}" aria-label="${escapeHtml(unit.codename || unit.name)} character artwork"><img src="${escapeHtml(unit.artwork)}" alt=""></div>`;
+  const cosmicColor = unit.cosmicYui?.color;
+  const artwork = unit.slug === 'bui-cosmic' && ['eggplant', 'potato', 'mushroom', 'asparagus'].includes(cosmicColor)
+    ? `/assets/characters/bui-cosmic-${cosmicColor}.png` : unit.artwork;
+  return `<div class="character-model ${size} ${unit.slug === 'bui-cosmic' ? 'cosmic-model' : ''}" aria-label="${escapeHtml(unit.codename || unit.name)} character artwork"><img src="${escapeHtml(artwork)}" alt=""></div>`;
 }
 
 function bossVisual(boss, placement = 'dossier') {
@@ -566,7 +692,7 @@ function header(active = ui.screen) {
       <span class="brand-copy"><b>GUILD BOSS</b><small>SIMULATOR LAB</small></span>
     </button>
     <nav aria-label="Primary">${navItems.map(([id, label]) => `<button data-nav="${id}" class="${active === id ? 'active' : ''}" ${id === 'battle' && !ui.engine ? 'disabled' : ''}>${label}</button>`).join('')}</nav>
-    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.1</b></div>
+    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.2</b></div>
   </header>${startErrorBanner()}`;
 }
 
@@ -579,7 +705,7 @@ function teamPickerModal() {
     <section class="roster-picker">
       <header><div><span class="eyebrow">PARTY SLOT ${slotIndex + 1}</span><h2>Choose teammate</h2><p>Select a combatant. Duplicate party members are disabled.</p></div><button data-close-team-picker aria-label="Close teammate picker">×</button></header>
       <div class="roster-picker-grid">${candidates.map(unit => `<button data-pick-teammate="${unit.id}" ${occupied.has(unit.id) ? 'disabled' : ''} style="--accent:${unit.accent || '#e61d2f'}">
-        ${portrait(unit)}<span><small>${escapeHtml(unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element)}</small><b>${escapeHtml(unit.codename)}</b><em>${escapeHtml(unit.name)}</em></span>${coverageFor(unit) ? `<i class="coverage-choice ${coverageFor(unit).kind}">${escapeHtml(coverageFor(unit).label)}</i>` : unit.formulaStatus === 'estimated-kit' ? '<i>EST. KIT</i>' : '<i>SOURCE KIT</i>'}
+        ${portrait(unit)}<span><small>${escapeHtml(unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element)}</small><b>${escapeHtml(unit.codename)}</b><em>${escapeHtml(unit.name)} · A${awarenessFor(unit)}</em></span>${coverageFor(unit) ? `<i class="coverage-choice ${coverageFor(unit).kind}">${escapeHtml(coverageFor(unit).label)}</i>` : unit.formulaStatus === 'estimated-kit' ? '<i>EST. KIT</i>' : '<i>SOURCE KIT</i>'}
       </button>`).join('')}</div>
     </section>
   </div>`;
@@ -591,7 +717,7 @@ function navigatorPickerModal() {
     <section class="roster-picker navigator-picker">
       <header><div><span class="eyebrow">INDEPENDENT SLOT</span><h2>Choose navigator</h2><p>Navigators act immediately without consuming the current character's action.</p></div><button data-close-navigator-picker aria-label="Close navigator picker">×</button></header>
       <div class="roster-picker-grid">${navigatorCandidates.map(unit => `<button data-pick-navigator="${escapeHtml(unit.id)}" class="${unit.id === ui.navigatorId ? 'selected' : ''}" style="--accent:${unit.accent || '#4fb4ff'}">
-        ${portrait(unit)}<span><small>NAVIGATOR · ${unit.skills.length} ACTIONS</small><b>${escapeHtml(unit.codename)}</b><em>${escapeHtml(unit.name)}</em></span><i>${unit.id === ui.navigatorId ? 'ACTIVE' : 'SELECT'}</i>
+        ${portrait(unit)}<span><small>NAVIGATOR · ${unit.skills.length} ACTIONS</small><b>${escapeHtml(unit.codename)}</b><em>${escapeHtml(unit.name)} · A${awarenessFor(unit)}</em></span><i>${unit.id === ui.navigatorId ? 'ACTIVE' : 'SELECT'}</i>
       </button>`).join('')}</div>
     </section>
   </div>`;
@@ -603,18 +729,20 @@ function renderSetup() {
   const activeNavigator = selectedNavigator();
   const selectedMode = nightmareModes.find(mode => mode.id === ui.selectedMode) || nightmareModes[0];
   const devourerLifeSustainment = ui.modeOptions.devourer.lifeSustainment;
-  const setupPhases = boss.id !== 'slaughter_drive' ? boss.phases
-    : ui.selectedMode === 'nexus' ? [
+  const supportsDevourerLifeSustainment = ui.selectedMode === 'devourer' && (boss.id === 'slaughter_drive' || boss.id === 'hachiman');
+  const setupPhases = boss.id === 'slaughter_drive' ? (
+    ui.selectedMode === 'nexus' ? [
       { name: 'Soul Link and Life Sustainment', thresholdLabel: '1 HP FLOOR' },
       { name: 'Manual Break', thresholdLabel: '2 WEAKENED TURNS' }
-    ] : ui.selectedMode === 'devourer' ? [
+    ] : supportsDevourerLifeSustainment ? [
       { name: 'Soul Link', thresholdLabel: 'SHARED HP' },
       { name: `Life Sustainment ${devourerLifeSustainment ? 'On' : 'Off'}`, thresholdLabel: devourerLifeSustainment ? '1 HP FLOOR' : '0 HP TRANSITION' },
       { name: 'Weakened infinite HP scoring', thresholdLabel: '3X · 2 BOSS TURNS' }
     ] : [
       { name: 'Soul Link', thresholdLabel: 'SHARED HP' },
       { name: 'Mode formula', thresholdLabel: 'PENDING' }
-    ];
+    ]
+  ) : boss.phases;
   root.innerHTML = `${header('setup')}
     <main class="setup-screen page-enter">
       <section class="setup-hero">
@@ -631,7 +759,7 @@ function renderSetup() {
       </section>
 
       <section class="mechanics-profile-card" aria-label="Mechanics profile">
-        <span>PROFILE</span><div><b>CURRENT CORRECTED RUNS · LIVE-2026-09-04</b><small>${boss.id === 'slaughter_drive' ? 'The recorded Slaughter Drive benchmark is archived as recorded-2026-08-29. Starting a battle uses the corrected live profile.' : 'This battle starts with the corrected live-mechanics profile.'} Imported coverage: five substantial kits remain partial; the other 15 use generic direct effects only.</small></div><em>${boss.id === 'slaughter_drive' ? 'ARCHIVE AVAILABLE' : 'CURRENT'}</em>
+        <span>PROFILE</span><div><b>CURRENT CORRECTED RUNS · LIVE-2026-09-04</b><small>${boss.id === 'slaughter_drive' ? 'The recorded Slaughter Drive benchmark is archived as recorded-2026-08-29. Starting a battle uses the corrected live profile.' : 'This battle starts with the corrected live-mechanics profile.'} Coverage is labeled per character. Cosmic Yui has dedicated source-modeled mechanics; unverified interactions remain disclosed.</small></div><em>${boss.id === 'slaughter_drive' ? 'ARCHIVE AVAILABLE' : 'CURRENT'}</em>
       </section>
 
       <section class="preview-versus" aria-label="Team preview">
@@ -650,20 +778,26 @@ function renderSetup() {
               <div class="preview-card-copy">
                 <span>${escapeHtml(unit.role)}</span>
                 <h3>${escapeHtml(unit.codename)}</h3>
-                <p>${iconFor(unit.element)} ${elementMeta[unit.element]?.label || 'ALMIGHTY'} · A${unit.id === KOTONE_SHIOMI_ID ? ensureLoadout(unit.id).awareness || 0 : 6}</p>
+                <p>${iconFor(unit.element)} ${elementMeta[unit.element]?.label || 'ALMIGHTY'} · A${awarenessFor(unit)}</p>
               </div>
               ${unit.id === 'wonder' ? `<button class="persona-count" data-persona-info>${selectedPersonaRecords().length} PERSONAS ↗</button>` : ''}
+              ${awarenessSelect(unit)}
               <button class="build-shortcut" data-edit-build="${unit.id}">EDIT BUILD</button>
               ${coverageFor(unit) ? `<span class="coverage-badge ${coverageFor(unit).kind}" title="${escapeHtml(coverageFor(unit).detail)}">${escapeHtml(coverageFor(unit).label)}</span>` : ''}
-              <span class="revelation-label">${unit.id === 'wonder' ? 'PERSONA SKILL LOADOUT' : `${escapeHtml(ensureLoadout(unit.id).revelationMain || '—')} · ${escapeHtml(ensureLoadout(unit.id).revelationSet || '—')}${unit.formulaStatus === 'estimated-kit' ? ' · EST. KIT' : ''}`}</span>
+              <span class="revelation-label">${unit.id === 'wonder' ? `${escapeHtml(getWonderWeaponDefinition(ensureLoadout('wonder').weaponId)?.name || 'NO WEAPON')} · PERSONA LOADOUT` : `${escapeHtml(ensureLoadout(unit.id).revelationMain || '—')} · ${escapeHtml(ensureLoadout(unit.id).revelationSet || '—')}${unit.formulaStatus === 'estimated-kit' ? ' · EST. KIT' : ''}`}</span>
             </article>`).join('')}
+          </div>
+          <div class="wonder-weapon-setup">
+            <div><small>WONDER LOADOUT</small><b>WEAPON</b><span>Level 80, rank 6 datamine profiles</span></div>
+            <select data-wonder-weapon-quick aria-label="Wonder weapon">${wonderWeaponOptions(ensureLoadout('wonder').weaponId)}</select>
           </div>
           <button class="navigator-preview" data-open-navigator-picker aria-label="Change navigator">
             <div class="nav-label">INDEPENDENT SLOT</div>
             ${portrait(activeNavigator)}
-            <div><small>NAVIGATOR · CHANGE ▾</small><strong>${escapeHtml(activeNavigator.codename)}</strong><span>${escapeHtml(activeNavigator.name)} · ${activeNavigator.skills.length} actions</span></div>
+            <div><small>NAVIGATOR · CHANGE ▾</small><strong>${escapeHtml(activeNavigator.codename)}</strong><span>${escapeHtml(activeNavigator.name)} · A${awarenessFor(activeNavigator)} · ${activeNavigator.skills.length} actions</span></div>
             <span class="ready-pill">SELECTED</span>
           </button>
+          <div class="navigator-build-controls">${awarenessSelect(activeNavigator)}<button data-edit-build="${escapeHtml(activeNavigator.id)}">EDIT NAVIGATOR BUILD</button></div>
         </div>
 
         <div class="versus-mark" aria-hidden="true"><span>V</span><b>S</b></div>
@@ -677,12 +811,6 @@ function renderSetup() {
             ${nightmareModes.map(mode => `<button data-mode="${mode.id}" class="${mode.id === ui.selectedMode ? 'active' : ''}"><b>${escapeHtml(mode.name)}</b><span>${escapeHtml(mode.note)}</span></button>`).join('')}
           </div>
           ${boss.id === 'slaughter_drive' && ui.selectedMode === 'nexus' ? `<div class="mode-rule-card locked"><span>LOCKED ON</span><div><b>LIFE SUSTAINMENT</b><small>Linked enemies stop at 1 HP. Reach the floor, then choose when to break.</small></div></div>` : ''}
-          ${boss.id === 'slaughter_drive' && ui.selectedMode === 'devourer' ? `<label class="mode-rule-card life-sustainment-toggle ${devourerLifeSustainment ? 'on' : 'off'}">
-            <input type="checkbox" data-life-sustainment ${devourerLifeSustainment ? 'checked' : ''} aria-describedby="life-sustainment-help">
-            <span class="switch-track" aria-hidden="true"><i></i></span>
-            <div><b>LIFE SUSTAINMENT</b><small id="life-sustainment-help">${devourerLifeSustainment ? 'Linked enemies stop at 1 HP.' : 'Linked HP can reach 0, then all five become infinite HP Weakened targets for 2 boss turns at 3x points.'} Applies to Slaughter Drive and all four Scarlet Turrets.</small></div>
-            <em>${devourerLifeSustainment ? 'ON' : 'OFF'}</em>
-          </label>` : ''}
           <article class="boss-dossier">
             <div class="boss-sigil">${bossVisual(boss)}<i></i><b>LV ${boss.level}</b></div>
             <div class="boss-copy">
@@ -695,6 +823,7 @@ function renderSetup() {
               </div>
               <div class="affinity-row"><span>WEAK ${iconFor(boss.weakness)} ${elementMeta[boss.weakness].label}</span><span>RESIST ${resistanceMarkup(boss)}</span></div>
               <ol>${setupPhases.map(phase => `<li><i></i><span>${escapeHtml(phase.name)}</span><b>${Number.isFinite(phase.threshold) ? `${Math.round(phase.threshold * 100)}%` : escapeHtml(phase.thresholdLabel || 'SCRIPTED')}</b></li>`).join('')}</ol>
+              ${boss.specialEffects?.length ? `<div class="boss-effect-list"><b>SPECIAL EFFECTS</b>${boss.specialEffects.map(effect => `<span>${escapeHtml(effect)}</span>`).join('')}</div>` : ''}
               ${boss.encounter?.thresholdNote ? `<p class="formula-note">${escapeHtml(boss.encounter.thresholdNote)}</p>` : ''}
               ${boss.id === 'vishnu' ? `<div class="threshold-config" aria-label="Provisional Vishnu HP gates">
                 <label><span>SPAWN TO 3</span><b><input type="number" min="1" max="99" value="${Math.round(ui.vishnuThresholds[0] * 100)}" data-vishnu-threshold="0">% HP</b></label>
@@ -728,7 +857,9 @@ function renderSetup() {
   }));
   document.querySelectorAll('[data-boss]').forEach(button => button.addEventListener('click', () => {
     ui.selectedBoss = button.dataset.boss;
-    ui.selectedMode = bosses.find(item => item.id === ui.selectedBoss)?.defaultMode || ui.selectedMode;
+    const selected = bosses.find(item => item.id === ui.selectedBoss);
+    const keepsSelectedMode = selected?.id === 'surt' && selected.supportedModes?.includes(ui.selectedMode);
+    if (!keepsSelectedMode) ui.selectedMode = selected?.defaultMode || ui.selectedMode;
     if (ui.selectedBoss !== 'hachiman') clearHachimanRecordedPreset();
     ui.engine = null;
     render();
@@ -739,17 +870,15 @@ function renderSetup() {
     ui.engine = null;
     render();
   }));
-  document.querySelector('[data-life-sustainment]')?.addEventListener('change', event => {
-    ui.modeOptions.devourer.lifeSustainment = event.target.checked;
-    saveModeOptions();
-    render();
-    requestAnimationFrame(() => document.querySelector('[data-life-sustainment]')?.focus());
-  });
   document.querySelector('[data-load-recorded-benchmark]')?.addEventListener('click', loadRecordedBenchmarkPreset);
   document.querySelector('[data-load-hachiman-recorded]')?.addEventListener('click', loadHachimanRecordedPreset);
   document.querySelector('[data-replay-hachiman-route]')?.addEventListener('click', replayHachimanRecordedRoute);
   document.querySelector('[data-start-battle]')?.addEventListener('click', startBattle);
   document.querySelector('[data-persona-info]')?.addEventListener('click', () => document.querySelector('#persona-modal')?.showModal());
+  document.querySelector('[data-wonder-weapon-quick]')?.addEventListener('change', event => {
+    setWonderWeaponSelection(ensureLoadout('wonder'), event.target.value);
+    saveLoadouts(); render();
+  });
   document.querySelectorAll('[data-open-team-picker]').forEach(button => button.addEventListener('click', () => { ui.teamPickerSlot = Number(button.dataset.openTeamPicker); render(); }));
   document.querySelector('[data-close-team-picker]')?.addEventListener('click', () => { ui.teamPickerSlot = null; render(); });
   document.querySelector('[data-open-navigator-picker]')?.addEventListener('click', () => { ui.navigatorPickerOpen = true; render(); });
@@ -985,23 +1114,29 @@ function renderBossField(state) {
   const currentEnemyId = state.actionQueue?.find(entry => entry.actorType === 'enemy' && entry.current)?.actorId;
   const enemyCount = state.enemies?.filter(enemy => enemy.alive !== false).length || 1;
   const devourerWeakened = boss.modeId === 'devourer' && state.weakened;
+  const supportsDevourerLifeSustainment = boss.modeId === 'devourer' && (boss.encounter?.soulLink || boss.id === 'hachiman');
   const weakenedBossTurnLabel = `${state.weakenedTurnsLeft} Boss Turn${state.weakenedTurnsLeft === 1 ? '' : 's'}`;
   const phaseLabel = ['threshold_clones', 'fixed_five_targets'].includes(boss.encounter?.kind) ? `TARGETS ${enemyCount}` : `PHASE ${boss.phaseIndex + 1}`;
-  const phaseName = boss.encounter?.soulLink
-    ? boss.modeId === 'nexus'
-      ? boss.weakenedActive ? 'Weakened · 2 Attack Turns' : boss.breakPending ? 'HP Floor Reached · Break Ready' : 'Soul Link · Life Sustainment'
-      : devourerWeakened
-        ? `Weakened · Infinite HP · ${weakenedBossTurnLabel}`
-        : `Soul Link · Life Sustainment ${boss.lifeSustainment ? 'On' : 'Off'}`
-    : phase.name.replace(/^Phase [IVX]+ · /, '');
+  const phaseName = supportsDevourerLifeSustainment
+    ? devourerWeakened
+      ? `Weakened · Infinite HP · ${weakenedBossTurnLabel}`
+      : `Life Sustainment ${boss.lifeSustainment ? 'On' : 'Off'}`
+    : boss.encounter?.soulLink
+      ? boss.modeId === 'nexus'
+        ? boss.weakenedActive ? 'Weakened · 2 Attack Turns' : boss.breakPending ? 'HP Floor Reached · Break Ready' : 'Soul Link · Life Sustainment'
+        : devourerWeakened
+          ? `Weakened · Infinite HP · ${weakenedBossTurnLabel}`
+          : `Soul Link · Life Sustainment ${boss.lifeSustainment ? 'On' : 'Off'}`
+      : phase.name.replace(/^Phase [IVX]+ · /, '');
   return `<section class="enemy-zone ${ui.animation?.targetId === boss.id ? 'taking-hit' : ''}" aria-label="Enemy field">
     <div class="phase-banner"><span>${phaseLabel}</span><b>${escapeHtml(phaseName)}</b></div>
     <div class="boss-hud">
       <div class="hud-title"><div><small>GUILD BOSS · LV ${boss.level}</small><h2>${escapeHtml(boss.name)}</h2></div><strong>${devourerWeakened ? '∞' : boss.finiteHp ? `${Math.ceil(pct(boss.hp, boss.maxHp))}%` : boss.scoreAttack ? '∞' : `${Math.ceil(pct(boss.hp, boss.maxHp))}%`}</strong></div>
       ${devourerWeakened ? `<div class="infinite-meter"><i></i><b>WEAKENED · 3X POINTS · ${weakenedBossTurnLabel.toUpperCase()}</b></div>` : boss.finiteHp ? resourceBar('HP', boss.hp, boss.maxHp, 'hp') : boss.scoreAttack ? `<div class="infinite-meter"><i></i><b>SCORE TARGET · ${format(state.totalDamage)} DMG</b></div>` : resourceBar('HP', boss.hp, boss.maxHp, 'hp')}
-      ${boss.encounter?.soulLink ? `<div class="life-sustainment-state ${devourerWeakened ? 'weakened' : boss.lifeSustainment ? 'on' : 'off'}"><span>SOUL LINK · ${enemyCount} ENEMIES</span><b>${devourerWeakened ? 'INFINITE HP · WEAKENED · 3X POINTS' : boss.modeId === 'nexus' && boss.breakPending ? '1 HP FLOOR · BREAK READY' : boss.lifeSustainment ? 'LIFE SUSTAINMENT ON · 1 HP FLOOR' : 'LIFE SUSTAINMENT OFF · 0 HP TO WEAKENED'}</b></div>` : ''}
+      ${supportsDevourerLifeSustainment ? `<div class="life-sustainment-state ${devourerWeakened ? 'weakened' : boss.lifeSustainment ? 'on' : 'off'}"><span>${boss.id === 'hachiman' ? 'HACHIMAN LIFE LOCK' : `SOUL LINK · ${enemyCount} ENEMIES`}</span><b>${devourerWeakened ? 'INFINITE HP · WEAKENED · 3X POINTS' : boss.modeId === 'nexus' && boss.breakPending ? '1 HP FLOOR · BREAK READY' : boss.lifeSustainment ? 'LIFE SUSTAINMENT ON · 1 HP FLOOR' : 'LIFE SUSTAINMENT OFF · 0 HP TO WEAKENED'}</b></div>` : ''}
       <div class="down-gauge"><span>DOWN</span><b>${boss.downed ? 'DOWNED' : `${boss.downPoints}/${boss.downMax}`}</b><i>${Array.from({ length: boss.downMax }, (_, index) => `<em class="${index < boss.downPoints ? 'full' : ''}"></em>`).join('')}</i></div>
       <div class="boss-statuses">${statusControl(boss, `boss-${boss.id}`, boss.name)}</div>
+      ${boss.id === 'surt' ? `<div class="surt-escalation"><span>BERSERK <b>${boss.berserkStacks || 0}/3</b></span><span>RAGNAROK <b>${boss.ragnarokStacks || 0}/10</b></span></div>` : ''}
     </div>
     <div class="summon-field">${summons.map(summon => `<article class="summon ${escapeHtml(summon.position || '')} ${summon.alive ? '' : 'defeated'} ${summon.downed ? 'downed' : ''} ${currentEnemyId === summon.id ? 'active' : ''}" data-enemy="${summon.id}">
       ${summonVisual(summon)}<b>${escapeHtml(summon.name)}</b>${devourerWeakened ? `<div class="summon-hp infinite"><span>∞ · WEAKENED · 3X</span><i><b style="width:100%"></b></i></div>` : summon.finiteHp ? `<div class="summon-hp"><span>${summon.alive ? `${format(summon.hp)}/${format(summon.maxHp)}${currentEnemyId === summon.id ? ' · ACTING' : ''}` : 'DEFEATED'}</span><i><b style="width:${pct(summon.hp, summon.maxHp)}%"></b></i></div>` : `<span>${summon.alive ? `${summon.scoreAttack ? '∞ SCORE' : `${Math.ceil(pct(summon.hp, summon.maxHp))}% HP`}${currentEnemyId === summon.id ? ' · ACTING' : ''}` : 'DEFEATED'}</span>`}
@@ -1056,7 +1191,7 @@ function renderPartyField(state) {
         ${unit.slug === 'puppet-wavecatcher' ? `<div class="mechanic-chip"><b>${unit.surfActive ? 'SURF ACTIVE' : 'SURF OFF'}</b><em>OFFSHORE ${unit.offshoreStacks} · SP REC ${unit.spRecovery}%</em></div>` : ''}
         ${unit.blessingStacks ? `<div class="mechanic-chip"><b>BLESSING ${unit.blessingStacks}</b><em>DAMAGE +${Math.min(36, unit.blessingStacks * 6)}%</em></div>` : ''}
         ${unit.slug === 'j-c' ? `<div class="mechanic-chip jc"><b>S1 ${jcMaskShort[unit.selectedMasks?.[0]] || '?'} | S2 ${jcMaskShort[unit.selectedMasks?.[1]] || '?'}</b><em>DESIRE ${unit.desireLevel} | FACADES ${unit.facades.length} | ALT ${unit.trueDesirePrimed ? 'STORED' : unit.trueDesireStacks > 0 ? 'READY' : 'USED'}</em></div>${jcHighlightCooldownMarkup(unit)}` : ''}
-        ${berryMechanicMarkup(unit)}
+        ${berryMechanicMarkup(unit)}${cosmicMechanicMarkup(unit)}${researchedResourceMarkup(unit)}
         ${kotoneStatusMarkup(unit, state.party)}
         <div class="unit-detail-controls">${characterStatsControl(unit, `party-${unit.id}`, unit.codename)}<div class="unit-statuses">${statusControl(unit, `party-${unit.id}`, unit.codename, true)}</div></div>
       </div>
@@ -1158,7 +1293,7 @@ function commandPanel(state) {
   const actions = state.availableActions;
   const recommendation = ui.aiAssist ? ui.engine.recommend() : null;
   if (ui.pendingAction) return targetPanel(state, ui.pendingAction);
-  const moves = actions.filter(action => ['skill', 'attack', 'gun', 'kotone_link', 'kotone_assist', 'kotone_cold'].includes(action.type));
+  const moves = actions.filter(action => ['skill', 'attack', 'gun', 'cosmic_assemble', 'kotone_link', 'kotone_assist', 'kotone_cold'].includes(action.type));
   const items = actions.filter(action => action.type === 'item');
   return `<section class="command-panel" aria-label="Battle controls">
     <div class="prompt-row">
@@ -1168,6 +1303,7 @@ function commandPanel(state) {
         <button class="auto-button ${ui.fullAuto ? 'active' : ''}" data-full-auto>${ui.fullAuto ? '<span class="pulse"></span> AUTO PLAYING' : 'FULL AUTO'}</button>
       </div>
     </div>
+    ${cosmicColorControls(actions)}
     <div class="command-tabs">
       <button data-command-tab="moves" class="${ui.commandTab === 'moves' ? 'active' : ''}">MOVES <b>${moves.length}</b></button>
       ${actor.id === 'wonder' ? `<button data-command-tab="personas" class="${ui.commandTab === 'personas' ? 'active' : ''}">PERSONA <b>FREE SELECT</b></button>` : ''}
@@ -1205,7 +1341,7 @@ function targetPanel(state, action) {
     && action.type === 'skill'
     && (action.skill?.slot === 'S3' || action.name === 'Gentle Sea Breeze');
   const targets = action.target === 'ally'
-    ? state.party.filter(unit => unit.hp > 0 && (!excludesMarian || unit.id !== actor.id) && (action.type !== 'kotone_link' || unit.id !== actor.id && unit.id !== actor.kotone?.linkedId))
+    ? state.party.filter(unit => unit.hp > 0 && (!(excludesMarian || action.skill?.excludeSelf) || unit.id !== actor.id) && (action.type !== 'kotone_link' || unit.id !== actor.id && unit.id !== actor.kotone?.linkedId))
     : action.target === 'boss' ? state.enemies : [];
   return `<section class="command-panel target-panel">
     <div class="prompt-row"><div class="prompt-actor">${portrait(actor)}<div><small>${action.skill?.kotoneSkill === 'S3' ? 'SELECT ORIGINAL BUFF CASTER · LINKED ALLY RECEIVES COPIES' : 'SELECT TARGET'}</small><h2>${escapeHtml(action.name)} → <em>choose one</em></h2></div></div><button data-cancel-target>← BACK</button></div>
@@ -1245,11 +1381,13 @@ function sharedHighlightMarkup(highlight) {
 function navigatorPanel(state) {
   const mikuStatus = state.navigator.codename === 'MIKU'
     ? `${state.navigator.currentSong} | TRACKS ${state.navigator.tracks.length}/3${state.navigator.virtualConcert?.active ? ` | CONCERT ${state.navigator.virtualConcert.roundsRemaining}` : ''}`
-    : 'Do not consume Actions';
+    : state.navigator.ange ? `NOTES ${state.navigator.ange.notes} | DA CAPO ${state.navigator.ange.daCapoUses}`
+      : state.navigator.okyann ? `BEATS ${state.navigator.okyann.beats}` : 'Do not consume Actions';
+  const supportsDevourerLifeSustainment = state.boss.modeId === 'devourer' && (state.boss.encounter?.soulLink || state.boss.id === 'hachiman');
   return `<section class="navigator-strip ${state.highlight?.mode === 'shared' ? 'with-shared-highlight' : ''}" aria-label="Navigator and Highlight interrupts">
     <div class="navigator-id">${portrait(state.navigator)}<div><small>INTERRUPT ACTIONS</small><b>${escapeHtml(state.navigator.codename)}</b><em>${escapeHtml(mikuStatus)}</em></div></div>
     ${sharedHighlightMarkup(state.highlight)}
-    <div class="navigator-actions">${state.boss.modeId === 'devourer' && state.boss.encounter?.soulLink ? `<button class="life-sustainment-interrupt ${state.weakened ? 'weakened' : state.boss.lifeSustainment ? 'on' : 'off'}" data-battle-life-sustainment ${ui.fullAuto || state.weakened ? 'disabled' : ''}><span class="nav-signal">HP</span><div><b>${state.weakened ? 'WEAKENED · INFINITE HP' : `LIFE SUSTAINMENT ${state.boss.lifeSustainment ? 'ON' : 'OFF'}`}</b><small>${state.weakened ? `The toggle is locked for ${state.weakenedTurnsLeft} remaining boss turn${state.weakenedTurnsLeft === 1 ? '' : 's'}. Damage points are 3x.` : ui.fullAuto ? 'Stop Full Auto to change this setting.' : state.boss.lifeSustainment ? 'Switch off to let linked HP reach 0 and start Weakened.' : 'Switch on to stop every linked enemy at 1 HP.'}</small></div><em>${state.weakened ? '3X POINTS' : ui.fullAuto ? 'AUTO LOCK' : 'FREE TOGGLE'}</em></button>` : ''}${state.canBreakBoss ? `<button class="break-interrupt" data-break-boss><span class="nav-signal">!</span><div><b>BREAK HP LOCK</b><small>Open the 2-turn Weakened scoring window now.</small></div><em>READY</em></button>` : ''}${state.navigatorActions.map(action => `<button data-navigator="${action.id}" ${!action.enabled ? 'disabled' : ''}>
+    <div class="navigator-actions">${supportsDevourerLifeSustainment ? `<button class="life-sustainment-interrupt ${state.weakened ? 'weakened' : state.boss.lifeSustainment ? 'on' : 'off'}" data-battle-life-sustainment ${ui.fullAuto || state.weakened ? 'disabled' : ''}><span class="nav-signal">HP</span><div><b>${state.weakened ? 'WEAKENED · INFINITE HP' : `LIFE SUSTAINMENT ${state.boss.lifeSustainment ? 'ON' : 'OFF'}`}</b><small>${state.weakened ? `The toggle is locked for ${state.weakenedTurnsLeft} remaining boss turn${state.weakenedTurnsLeft === 1 ? '' : 's'}. Damage points are 3x.` : ui.fullAuto ? 'Stop Full Auto to change this setting.' : state.boss.lifeSustainment ? (state.boss.id === 'hachiman' ? 'Switch off to let Hachiman reach 0 and begin Weakened.' : 'Switch off to let linked HP reach 0 and start Weakened.') : (state.boss.id === 'hachiman' ? 'Switch on to keep Hachiman at 1 HP floor.' : 'Switch on to stop every linked enemy at 1 HP.')}</small></div><em>${state.weakened ? '3X POINTS' : ui.fullAuto ? 'AUTO LOCK' : 'FREE TOGGLE'}</em></button>` : ''}${state.canBreakBoss ? `<button class="break-interrupt" data-break-boss><span class="nav-signal">!</span><div><b>BREAK HP LOCK</b><small>Open the 2-turn Weakened scoring window now.</small></div><em>READY</em></button>` : ''}${state.navigatorActions.map(action => `<button data-navigator="${action.id}" ${!action.enabled ? 'disabled' : ''}>
       <span class="nav-signal">⌁</span><div><b>${escapeHtml(action.name)}</b><small>${escapeHtml(action.unavailableReason || action.note)}</small></div><em>${escapeHtml(action.statusLabel || (action.enabled ? 'READY' : `CD ${action.remaining}`))}</em>
     </button>`).join('')}${state.highlightActions.map(highlightInterruptMarkup).join('')}</div>
   </section>`;
@@ -1725,6 +1863,7 @@ function personaLoadoutEditor(loadout) {
     <p class="formula-note">J&C A6 is unlocked in this setup: Wonder gains +1 skill and Thief Tactics level even without the twins in the party. Updated per-level values are still needed to include that bonus in calculations.</p>
     <div class="persona-loadout-grid">${loadout.personas.map((slot, slotIndex) => {
       const persona = importedPersonas.find(item => item.id === slot.personaId) || importedPersonas[0];
+      const passive = highestRankPersonaPassive(persona);
       const nativeSkills = executableSkills(persona);
       const fixedSkills = fixedPersonaSkills(persona);
       const legalSkills = legalTransferableSkillsForPersona(persona, transferablePersonaSkills);
@@ -1741,7 +1880,7 @@ function personaLoadoutEditor(loadout) {
           const current = slot.skillIds[skillIndex] || '';
           return `<label><span>E${skillIndex + 1}</span><select aria-label="${escapeHtml(persona.name)} equipped skill ${skillIndex + 1}" data-persona-skill="${slotIndex}:${skillIndex}">${personaSkillOptions(legalSkills, current, recommendedNames)}</select></label>`;
         }).join('')}</div>
-        <p>${escapeHtml(persona.passive[0]?.description || persona.description || 'No passive description available.')}</p>
+        <p>${escapeHtml(passive?.description || persona.description || 'No passive description available.')}</p>
         <span class="source-badge">LUFELNET · ${nativeSkills.length} NATIVE · ${transferablePersonaSkills.length} TRANSFERABLE</span>
       </article>`;
     }).join('')}</div>
@@ -1749,27 +1888,109 @@ function personaLoadoutEditor(loadout) {
 }
 
 function wonderWeaponEditor(loadout) {
+  const weapon = getWonderWeaponDefinition(loadout.weaponId);
   const profile = getWonderWeaponProfile(loadout.weaponId, loadout.weaponProfileId);
+  const cursedTiesNote = weapon?.id === 'cursed-ties' && profile?.forge
+    ? `<p><b>Verified R6 values:</b> ${format(profile.forge.trigger.chance * 100)}% trigger chance, ${format(profile.forge.evilEye.defenseDown * 100)}% Defense reduction, ${format(profile.forge.evilEye.curseDamageTaken * 100)}% Curse damage taken, ${format(profile.forge.holderAttackAgainstEvilEye * 100)}% Wonder Attack, and ${format(profile.forge.ailmentAccuracyBonus * 100)}% ailment accuracy.</p>`
+    : '';
   return `<section class="build-section">
-    <div class="build-section-title"><div><span>WONDER'S WEAPON</span><h3>Weapon and forge effect</h3></div></div>
-    <label>WEAPON<select data-wonder-weapon aria-label="Wonder weapon"><option value="" ${!profile ? 'selected' : ''}>None recorded</option><option value="cursed-ties" ${profile ? 'selected' : ''}>Cursed Ties, observed level 80</option></select></label>
-    ${profile ? `<p><b>Weapon stats:</b> HP ${format(profile.weaponStats.maxHp)}, Attack ${format(profile.weaponStats.attack)}, Defense ${format(profile.weaponStats.defense)}.</p>
-    <p><b>Evil Eye:</b> After an ally deals Curse damage, a 70% chance to mark the target. The mark reduces Defense by 22.9% and increases Curse damage taken by 14.7% for 3 turns. Wonder gains 33% Attack when attacking a marked foe, and the weapon grants 62.3% ailment accuracy.</p>
-    <p class="formula-note">Values read from your game. Automatic mark timing still needs verification, so automatic application is currently omitted. Weapon stats are recorded separately from Wonder's equipped totals.</p>` : '<p>Select the observed weapon to include its recorded profile in new battles.</p>'}
+    <div class="build-section-title"><div><span>WONDER'S WEAPON</span><h3>Weapon and passive</h3></div><em>${wonderWeaponDefinitions.length} DATAMINED WEAPONS</em></div>
+    <label class="wonder-weapon-picker">WEAPON<select data-wonder-weapon aria-label="Wonder weapon">${wonderWeaponOptions(loadout.weaponId)}</select></label>
+    ${profile && weapon ? `<div class="wonder-weapon-details">
+      <div class="wonder-weapon-stat-strip"><span>HP <b>${format(profile.weaponStats.maxHp)}</b></span><span>ATTACK <b>${format(profile.weaponStats.attack)}</b></span><span>DEFENSE <b>${format(profile.weaponStats.defense)}</b></span><span>PASSIVE <b>${escapeHtml(weapon.skillName)}</b></span></div>
+      <p>${escapeHtml(weapon.effectSummary)}</p>
+      ${cursedTiesNote}
+      <p class="formula-note">Datamine weapon ID ${escapeHtml(String(weapon.datamineId))}, configured at level 80 and rank 6. ${weapon.runtimeStatus === 'implemented' ? 'This passive has a tested combat adapter.' : weapon.runtimeStatus === 'partial' ? 'High-confidence numeric effects are active. Unresolved timing or targeting rules are listed as combat limitations.' : 'The weapon and stats are selectable now. Its passive is cataloged but is not applied to combat.'} Weapon HP, Attack, and Defense are added in Base Stat Input and automatic-stat mode. Equipped Stats inputs are final equipped totals, so weapon components are not added again.</p>
+    </div>` : '<p class="wonder-weapon-empty">Choose a Wonder weapon from the datamined catalog.</p>'}
   </section>`;
 }
 
+function cosmicDefaultOptions() {
+  return { awareness: 6, sourceTier: 3, weapon: 'none', refinement: 0, staticWeaponStatsIncluded: false };
+}
+
+function cosmicBuildEditor(unit, loadout) {
+  const options = loadout.cosmicYui ||= cosmicDefaultOptions();
+  const select = (key, entries, value) => `<select data-cosmic-option="${key}">${entries.map(([v, label]) => `<option value="${v}" ${String(v) === String(value) ? 'selected' : ''}>${escapeHtml(label)}</option>`).join('')}</select>`;
+  const tier = Number(options.sourceTier ?? 3);
+  const coefficient = key => `${(COSMIC_YUI_COEFFICIENTS[key][tier] * 100).toFixed(1)}%`;
+  return `<section class="build-section cosmic-builder">
+    <div class="build-section-title"><div><span>COSMIC YUI · CURRENT SOURCE</span><h3>Veggie Knight configuration</h3></div><em>12 SEP 2026</em></div>
+    <div class="cosmic-options">
+      <label>SOURCE COEFFICIENT COLUMN${select('sourceTier', [0, 1, 2, 3].map(n => [n, `Column ${n + 1} · S3 ${(COSMIC_YUI_COEFFICIENTS.mobilize[n] * 100).toFixed(1)}%`]), tier)}</label>
+      <label>WEAPON PASSIVES${select('weapon', [['none', 'None — equipment stats only'], ['signature', COSMIC_YUI_WEAPONS.signature.name], ['four-star', COSMIC_YUI_WEAPONS['four-star'].name]], options.weapon || 'none')}</label>
+      <label>REFINEMENT${select('refinement', [0,1,2,3,4,5,6].map(n => [n, `R${n}`]), options.refinement ?? 0)}</label>
+    </div>
+    <label class="cosmic-equipment-note"><input type="checkbox" data-cosmic-option="staticWeaponStatsIncluded" ${options.staticWeaponStatsIncluded ? 'checked' : ''}> Static weapon passive already included in the stat fields above</label>
+    <p class="formula-note">Stat fields are independent inputs. Weapon HP/Attack/Defense components are reference only, not silently added to them. The selected source column supplies final coefficients; awareness does not add an invented level multiplier. Awareness is controlled above. Default coefficient column: 4; weapon: none.</p>
+    <div class="character-skill-grid">${[...unit.skills, unit.highlightSkill].map(skill => `<article>${iconFor(skill.element)}<div><small>${escapeHtml(skill.slot)}${skill.freeAction ? ' · FREE ACTION · CD 1' : ''}</small><b>${escapeHtml(skill.name)}</b><p>${escapeHtml(skill.note)}</p></div></article>`).join('')}</div>
+    <div class="cosmic-coefficient-strip"><span>S1 <b>${coefficient('harvest')}</b></span><span>S3 BASE <b>${coefficient('mobilize')}</b></span><span>PER KNIGHT <b>${coefficient('knight')}</b></span><span>HAVOC <b>${coefficient('havoc')}</b></span></div>
+    <details class="cosmic-source-notes"><summary>Awareness effects & modeling boundaries</summary>${COSMIC_YUI_AWARENESS.map(a => `<p><b>A${a.level} · ${escapeHtml(a.name)}</b><br>${escapeHtml(a.description)}</p>`).join('')}${COSMIC_YUI_LIMITATIONS.map(text => `<p>${escapeHtml(text)}</p>`).join('')}<a href="https://lufel.net/en/character/bui-cosmic/" target="_blank" rel="noopener noreferrer">Open character source</a></details>
+  </section>`;
+}
+
+function cosmicColorControls(actions) {
+  const colors = actions.filter(a => a.type === 'cosmic_color');
+  if (!colors.length) return '';
+  return `<div class="cosmic-color-controls"><small>VEGETABLE AVATAR · ONE FREE CHOICE AT TURN START</small><div>${colors.map(a => `<button data-action-type="cosmic_color" data-skill="${a.skillId}" ${a.enabled ? '' : 'disabled'}>${escapeHtml(a.name)}</button>`).join('')}</div></div>`;
+}
+
+function cosmicMechanicMarkup(unit) {
+  const c = unit.cosmicYui;
+  if (!c) return '';
+  const names = { eggplant: 'EGGPLANT', potato: 'POTATO', mushroom: 'MUSHROOM', asparagus: 'ASPARAGUS', prismatic: 'PRISMATIC', none: 'NO COLOR' };
+  return `<div class="cosmic-state" aria-label="Cosmic Yui state"><div><b>${names[c.color] || 'PRISMATIC'}</b><strong>ENERGY ${c.energy}/7</strong></div>
+    <div class="cosmic-energy" role="progressbar" aria-label="Veggie Energy" aria-valuenow="${c.energy}" aria-valuemin="0" aria-valuemax="7">${Array.from({length: 7}, (_, i) => `<i class="${i < c.energy ? 'charged' : ''}"></i>`).join('')}</div>
+    <div class="cosmic-knights">${['eggplant', 'potato', 'mushroom', 'asparagus'].map(k => `<span title="${names[k]}: ${c.knights[k]}${k === 'potato' && c.seedPotato ? ' regular + 1 protected seed' : ''}"><img src="/assets/characters/cosmic-yui/knight-${k}.svg" alt="${names[k]}"><b>${c.knights[k]}${k === 'potato' && c.seedPotato ? '+1' : ''}</b></span>`).join('')}</div>
+    <small>${c.permanentHarvest ? 'HUGE HARVEST · PERMANENT' : c.harvestUntil >= unit.characterTurnsStarted ? 'HUGE HARVEST · ACTIVE' : 'HARVEST INACTIVE'} · A${unit.awareness}</small>
+  </div>`;
+}
+
 function characterSkillEditor(unit, loadout) {
+  if (unit.slug === 'bui-cosmic') return cosmicBuildEditor(unit, loadout);
   if (unit.id === KOTONE_SHIOMI_ID) return kotoneSkillSummary();
-  loadout.skillLevels = Object.fromEntries(unit.skills.map(skill => [skill.id, 13]));
   return `<section class="build-section character-skills">
-    <div class="build-section-title"><div><span>CHARACTER KIT</span><h3>A6 skill coefficients</h3></div><em>Awareness 6 · Level 13</em></div>
+    <div class="build-section-title"><div><span>CHARACTER KIT</span><h3>Imported skill coefficients</h3></div><em>A${awarenessFor(unit)} profile · source values retained</em></div>
     <div class="character-skill-grid">${unit.skills.map(skill => `<article>
       ${iconFor(skill.element)}<div><small>${escapeHtml(skill.slot)} · ${escapeHtml(elementMeta[skill.element]?.label || skill.element)}</small><b>${escapeHtml(skill.name)}</b><p>${escapeHtml(skill.note)}</p></div>
-      <label>LV <b>13</b></label>
+      <label>${unit.skillLevel ? `LV <b>${unit.skillLevel}</b>` : 'BASE KIT'}</label>
     </article>`).join('')}</div>
-    <p class="formula-note">All displayed A6 characters use the fourth source coefficient, which is the Level 13 value.</p>
+    <p class="formula-note">Skill coefficients remain the values supplied in this package. Awareness changes sourced base stats and implemented rank conditions, not unverified skill-level coefficients.</p>
   </section>`;
+}
+
+function researchedResourceMarkup(unit) {
+  const lines = [];
+  if (unit.joker) lines.push(['WILL OF REBELLION', `${unit.joker.will}/5${unit.joker.extraActionActive ? ' · EXTRA ACTION' : ''}`]);
+  if (unit.rin) lines.push(['MEMORY / SOUP', `${unit.rin.memory} / ${unit.rin.soup}`]);
+  if (unit.mona) lines.push(['CHIVALRY', unit.mona.chivalry]);
+  if (unit.blitz) lines.push(['LIGHTNING LEGS', unit.blitz.lightningLegsAvailable ? 'READY' : 'LOCKED']);
+  if (unit.luce) lines.push(['IMPROV', unit.luce.improv || 'NONE']);
+  if (unit.crow) lines.push(['RECORDED DAMAGE', format(unit.crow.recordedDamage || 0)]);
+  if (unit.turbo) lines.push(['VELOCITY / TORQUE', `${unit.turbo.velocity} / ${unit.turbo.torqueLevel || 0}`]);
+  if (unit.violet) lines.push(['LEAD / FOLLOW STEPS', `${unit.violet.leadSteps || 0} / ${unit.violet.followStep || 0}`]);
+  if (unit.howler) lines.push(['WELCOME / FOLLOW-UP', `${unit.howler.bigWelcome} / ${unit.howler.furrocious}`]);
+  if (unit.frostgale) lines.push([unit.frostgale.mode.toUpperCase(), `VESTIGES ${unit.frostgale.vestiges}`]);
+  if (unit.noir) lines.push(['THOUGHTFUL ROUNDS', unit.noir.thoughtfulRounds.length]);
+  if (unit.akihikoWeapon) lines.push(['GRIT / METTLE', `${unit.gritStacks}/${unit.gritMax} / ${unit.mettleStacks}/${unit.mettleMax}`]);
+  return lines.map(([label, value]) => `<div class="mechanic-chip"><b>${escapeHtml(label)}</b><em>${escapeHtml(value)}</em></div>`).join('');
+}
+
+function researchedOptionsEditor(unit, loadout) {
+  const module = characterModuleFor(unit);
+  if (!module?.mechanics || unit.slug === 'bui-cosmic') return '';
+  const options = loadout.characterResearch || {};
+  const select = (key, entries, selected) => `<select data-character-option="${key}">${entries.map(([value, label]) => `<option value="${value}" ${String(value) === String(selected) ? 'selected' : ''}>${escapeHtml(label)}</option>`).join('')}</select>`;
+  const weapons = importedWeapons.filter(weapon => weapon.characterSlug === unit.slug && ['four-star', 'signature'].includes(weapon.category) && weapon.sourceKey.endsWith('-1'));
+  const weaponEntries = [['none', 'None'], ...weapons.map(weapon => [weapon.category, `${weapon.rarity}-star - ${weapon.name}`])];
+  const selectedWeapon = weapons.find(weapon => weapon.category === options.weapon);
+  return `<section class="build-section"><div class="build-section-title"><h3>Researched mechanics options</h3></div>
+    <label>SOURCE COEFFICIENT COLUMN${select('sourceTier', [0,1,2,3].map(value => [value, `Column ${value + 1}`]), options.sourceTier ?? (module.definition ? 0 : 3))}</label>
+    ${weapons.length ? `<label>WEAPON EFFECTS${select('weapon', weaponEntries, options.weapon || 'none')}</label>
+    <label>REFINEMENT${select('refinement', [0,1,2,3,4,5,6].map(value => [value, `R${value}`]), options.refinement ?? 0)}</label>
+    <label><input type="checkbox" data-character-option="staticWeaponStatsIncluded" ${options.staticWeaponStatsIncluded ? 'checked' : ''}> Static weapon passive already included in entered stats</label>
+    ${selectedWeapon ? `<article class="active-formula"><small>${escapeHtml(selectedWeapon.skillName || 'WEAPON EFFECT')}</small><b>HP ${format(selectedWeapon.stats.maxHp)} - ATK ${format(selectedWeapon.stats.attack)} - DEF ${format(selectedWeapon.stats.defense)}</b><p>${escapeHtml(selectedWeapon.description)}</p></article>` : ''}` : ''}
+    <p class="formula-note">Coefficient columns are separate from awareness. Weapon names, component stats, and descriptions come from the mined source. Only tested weapon effects are applied to battle formulas.</p></section>`;
 }
 
 function jcMaskEditor(loadout) {
@@ -1791,18 +2012,17 @@ function jcMaskEditor(loadout) {
 }
 
 function baseStatsEditor(unit, loadout) {
+  const sourceScale = ui.selectedBoss === 'hachiman' && ['devourer', 'multidimensional'].includes(ui.selectedMode);
+  const unitDefaults = awarenessStatDefaults(unit, awarenessFor(unit), { sourceScale });
   const defaults = {
-    maxHp: Math.round(unit.maxHp || 1), maxSp: Math.round(unit.maxSp || 0), attack: Math.round(unit.attack || 0),
-    defense: Math.round(unit.defense || 0), speed: Math.round(unit.speed || 100), critRate: Math.round((unit.crit || 0) * 1000) / 10,
+    maxHp: Math.round(unitDefaults.maxHp || 1), maxSp: Math.round(unitDefaults.maxSp || 0), attack: Math.round(unitDefaults.attack || 0),
+    defense: Math.round(unitDefaults.defense || 0), speed: Math.round(unitDefaults.speed || 100), critRate: Math.round((unit.crit || 0) * 1000) / 10,
     critMult: Math.round((unit.critMult || 1.5) * 1000) / 10,
     spRecovery: Math.round(Number(unit.sourceStats?.awake7?.sp_recover ?? 100) * 10) / 10,
     technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 0,
     ailmentResistance: 0, damageBonus: 0, damageReduction: 0
   };
   loadout.baseStats ||= {};
-  for (const [key, value] of Object.entries(defaults)) {
-    if (!Number.isFinite(Number(loadout.baseStats[key]))) loadout.baseStats[key] = value;
-  }
   const fields = [
     ['maxHp', 'MAX HP', 1, 999999, 1], ['maxSp', 'MAX SP', 0, 9999, 1], ['attack', 'ATTACK', 0, 99999, 1],
     ['defense', 'DEFENSE', 0, 99999, 1], ['speed', 'SPEED', 0, 9999, 1], ['critRate', 'CRIT RATE %', 0, 95, .1],
@@ -1813,36 +2033,53 @@ function baseStatsEditor(unit, loadout) {
     ['damageReduction', 'DAMAGE DOWN %', 0, 100, .1]
   ];
   return `<section class="build-section base-stat-builder">
-    <div class="build-section-title"><div><span>${loadout.statsMode === 'equipped' ? 'EQUIPPED STATS' : 'BASE STAT INPUT'}</span><h3>Exact character stats</h3></div><em>${loadout.statsPresetId === ichigoStatsPreset.id ? 'Default: your Ichigo screenshots' : liveStatsPresets.some(preset => preset.id === loadout.statsPresetId) ? 'Default: your live screenshots, 2026-09-27' : 'Hard values · used at battle start'}</em></div>
-    <div class="base-stat-grid">${fields.map(([key, label, min, max, step]) => `<label>${label}<input type="number" min="${min}" max="${max}" step="${step}" value="${loadout.baseStats[key]}" data-base-stat="${key}"></label>`).join('')}</div>
-    <p class="formula-note">${loadout.statsMode === 'equipped' ? 'These are your equipped character-detail totals, including equipment bonuses. Revelation bonuses already included in these values are not added again. Battle buffs still apply.' : 'These values replace the imported defaults. Revelation percentages are applied afterward to derive the final battle stats.'} Ailment accuracy and resistance are saved for reference; their chance formulas are not yet modeled.</p>
+    <div class="build-section-title"><div><span>${loadout.statsMode === 'equipped' ? 'EQUIPPED STATS' : 'BASE STAT INPUT'}</span><h3>Exact character stats</h3></div><em>${loadout.statsPresetId === ichigoStatsPreset.id ? 'Your saved Ichigo totals' : 'Blank = automatic rank default'}</em></div>
+    <div class="base-stat-grid">${fields.map(([key, label, min, max, step]) => `<label>${label}<input type="number" min="${min}" max="${max}" step="${step}" value="${loadout.baseStats[key] ?? ''}" placeholder="${defaults[key]}" data-base-stat="${key}"></label>`).join('')}</div>
+    <p class="formula-note">${loadout.statsMode === 'equipped' ? 'These are your equipped character-detail totals, including equipment bonuses. Revelation bonuses already included in these values are not added again. Battle buffs still apply.' : 'Blank fields use the selected awareness’s sourced defaults where available. Entered values override them and are never silently changed by an awareness selection. Revelation percentages apply afterward.'} Ailment accuracy and resistance are saved for reference; their chance formulas are not yet modeled.</p>
   </section>`;
 }
 
 function coverageNotice(unit) {
   const coverage = coverageFor(unit);
   if (!coverage) return '';
-  return `<section class="coverage-notice ${coverage.kind}"><b>${escapeHtml(coverage.label)}</b><p>${escapeHtml(coverage.detail)} Five imported kits have substantial modeled mechanics, still partial. The other 15 run generic direct effects only.</p></section>`;
+  const research = characterModuleFor(unit)?.research;
+  const items = values => `<ul>${(values || []).map(value => `<li>${escapeHtml(typeof value === 'string' ? value : JSON.stringify(value))}</li>`).join('')}</ul>`;
+  const sourceLinks = (research?.sources || []).map(source => {
+    const url = typeof source === 'string' ? source : source.url || source.pageUrl;
+    if (!url || !/^https?:\/\//i.test(url)) return '';
+    return `<li><a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(typeof source === 'string' ? source : source.title || source.label || url)}</a></li>`;
+  }).join('');
+  const details = research ? `<details><summary>Character research and implementation details</summary>
+    <p><b>Implemented</b></p>${items(research.implemented)}
+    <p><b>Remaining mechanics and verification</b></p>${items(research.missing)}${items(research.limitations)}
+    ${sourceLinks ? `<p><b>Sources</b></p><ul>${sourceLinks}</ul>` : ''}</details>` : '';
+  return `<section class="coverage-notice ${coverage.kind}"><b>${escapeHtml(coverage.label)}</b><p>${escapeHtml(coverage.detail)} Source-modeled mechanics still require live-battle validation.</p>${details}</section>`;
 }
 
 function renderBuilds() {
   const team = selectedTeam();
-  const unit = selectableCharacters.find(item => item.id === ui.buildCharacterId) || team[0] || roster[0];
+  const unit = buildableCharacters.find(item => item.id === ui.buildCharacterId) || team[0] || roster[0];
+  const navBuild = isNavigatorBuild(unit);
   const loadout = ensureLoadout(unit.id);
-  const main = unit.id === 'wonder' ? null : (revelationMains.find(item => item.name === loadout.revelationMain) || revelationMains[0]);
+  const main = unit.id === 'wonder' || navBuild ? null : (revelationMains.find(item => item.name === loadout.revelationMain) || revelationMains[0]);
   const compatibleSets = main ? revelationSets.filter(set => main.compatibleSubs.includes(set.name)) : [];
   const set = main ? (compatibleSets.find(item => item.name === loadout.revelationSet) || compatibleSets[0] || revelationSets[0]) : null;
   if (set && set.name !== loadout.revelationSet) { loadout.revelationMain = main.name; loadout.revelationSet = set.name; saveLoadouts(); }
   root.innerHTML = `${header('builds')}<main class="builds-screen page-enter">
-    <section class="secondary-hero build-hero"><span class="eyebrow">LOADOUT WORKSHOP</span><h1>Build every thief.</h1><p>Wonder equips and edits Personas. His teammates equip Revelations. Only effects represented safely as structured simulator data affect battle calculations.</p></section>
+    <section class="secondary-hero build-hero"><span class="eyebrow">LOADOUT WORKSHOP</span><h1>Builds & awareness</h1><p>${buildableCharacters.length} existing entries · independent A0–A6 profiles · saved locally</p></section>
     <section class="build-workspace">
-      <aside class="character-rail" aria-label="Choose character">${team.map(member => `<button data-build-character="${member.id}" class="${member.id === unit.id ? 'active' : ''}">${portrait(member)}<span><small>${escapeHtml(member.role)}</small><b>${escapeHtml(member.codename)}</b><em>${member.id === 'wonder' ? 'PERSONA SKILLS' : escapeHtml(ensureLoadout(member.id).revelationMain || 'No build')}</em></span></button>`).join('')}</aside>
+      <aside class="character-rail full-roster-rail" aria-label="Choose character">
+        <label class="build-search-label">ALL ${buildableCharacters.length} CHARACTERS<input type="search" data-build-search aria-label="Search builds" placeholder="Search characters…" value="${escapeHtml(ui.buildSearch)}"></label>
+        <div class="build-roster-list">${buildableCharacters.map(member => `<button data-build-character="${member.id}" data-build-search-text="${escapeHtml(`${member.codename} ${member.name}`.toLowerCase())}" class="${member.id === unit.id ? 'active' : ''}" ${`${member.codename} ${member.name}`.toLowerCase().includes(ui.buildSearch.toLowerCase()) ? '' : 'hidden'}>${portrait(member)}<span><small>${isNavigatorBuild(member) ? 'NAVIGATOR' : ui.teamIds.includes(member.id) ? 'IN PARTY' : escapeHtml(member.role)}</small><b>${escapeHtml(member.codename)}</b></span><em>A${awarenessFor(member)}</em></button>`).join('')}</div>
+      </aside>
       <div class="build-editor">
-        <header class="build-editor-head">${portrait(unit, 'large')}<div><span>${escapeHtml(unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element)}</span><h2>${escapeHtml(unit.codename)}</h2><p>${unit.id === 'wonder' ? 'Equip three Personas and choose their battle-ready skills.' : unit.id === KOTONE_SHIOMI_ID ? 'Configure awareness, weapons and the experimental ordinary Global profile.' : 'Tune this character’s Revelation set and review the locked A6 Level 13 kit.'}</p></div><button data-reset-build>RESET BUILD</button></header>
+        <header class="build-editor-head">${portrait(unit, 'large')}<div><span>${escapeHtml(navBuild ? 'Navigator' : unit.role)} · ${escapeHtml(elementMeta[unit.element]?.label || unit.element || 'Support')}</span><h2>${escapeHtml(unit.codename)}</h2><p>${unit.id === 'wonder' ? 'Equip three Personas and choose their battle-ready skills.' : unit.id === KOTONE_SHIOMI_ID ? 'Configure awareness, skill Mindscape, weapons and the ordinary Global profile.' : navBuild ? 'Configure this navigator’s independent awareness profile.' : 'Configure awareness and this character’s existing build.'}</p></div><button data-reset-build>RESET BUILD</button></header>
+        ${unit.id === KOTONE_SHIOMI_ID ? '' : awarenessEditor(unit, loadout)}
         ${coverageNotice(unit)}
         ${unit.id === KOTONE_SHIOMI_ID ? kotoneBuildEditor(loadout) : ''}
         ${baseStatsEditor(unit, loadout)}
-        ${unit.id === 'wonder' ? `${wonderWeaponEditor(loadout)}${personaLoadoutEditor(loadout)}` : `<section class="build-section revelation-builder">
+        ${researchedOptionsEditor(unit, loadout)}
+        ${navBuild ? characterSkillEditor(unit, loadout) : unit.id === 'wonder' ? `${wonderWeaponEditor(loadout)}${personaLoadoutEditor(loadout)}` : `<section class="build-section revelation-builder">
           <div class="build-section-title"><div><span>REVELATION LOADOUT</span><h3>Main & four-piece set</h3></div><em>${lufelCatalog.counts.revelationMains} mains · ${lufelCatalog.counts.revelationSets} sub-sets</em></div>
           <div class="revelation-controls">
             <label>MAIN REVELATION<select data-revelation-main>${optionList(revelationMains, main.name)}</select></label><span class="set-link">＋</span>
@@ -1858,6 +2095,17 @@ function renderBuilds() {
   bindCommon();
   if (unit.id === KOTONE_SHIOMI_ID) bindKotoneBuild(root, loadout, () => { ui.engine = null; saveLoadouts(); render(); });
   document.querySelectorAll('[data-build-character]').forEach(button => button.addEventListener('click', () => { ui.buildCharacterId = button.dataset.buildCharacter; render(); }));
+  document.querySelectorAll('[data-character-option]').forEach(input => input.addEventListener('change', () => {
+    const options = loadout.characterResearch ||= {};
+    options[input.dataset.characterOption] = input.type === 'checkbox' ? input.checked : ['sourceTier', 'refinement'].includes(input.dataset.characterOption) ? Number(input.value) : input.value;
+    ui.engine = null;
+    saveLoadouts(); render();
+  }));
+  document.querySelector('[data-build-search]')?.addEventListener('input', event => {
+    ui.buildSearch = event.target.value;
+    const query = ui.buildSearch.trim().toLowerCase();
+    document.querySelectorAll('[data-build-search-text]').forEach(button => { button.hidden = !button.dataset.buildSearchText.includes(query); });
+  });
   document.querySelector('[data-revelation-main]')?.addEventListener('change', event => {
     loadout.revelationMain = event.target.value;
     const nextMain = revelationMains.find(item => item.name === loadout.revelationMain);
@@ -1866,10 +2114,7 @@ function renderBuilds() {
   });
   document.querySelector('[data-revelation-set]')?.addEventListener('change', event => { loadout.revelationSet = event.target.value; saveLoadouts(); render(); });
   document.querySelector('[data-wonder-weapon]')?.addEventListener('change', event => {
-    loadout.weaponId = event.target.value || null;
-    loadout.weaponProfileId = loadout.weaponId ? wonderWeaponPreset.weaponProfileId : null;
-    loadout.weaponProcGranularity = null;
-    loadout.weaponPresetId = wonderWeaponPreset.id;
+    setWonderWeaponSelection(loadout, event.target.value);
     saveLoadouts(); render();
   });
   document.querySelectorAll('[data-persona-select]').forEach(select => select.addEventListener('change', () => {
@@ -1892,6 +2137,12 @@ function renderBuilds() {
     saveLoadouts(); render();
   }));
   document.querySelectorAll('[data-base-stat]').forEach(input => input.addEventListener('input', () => {
+    if (input.value.trim() === '') {
+      delete loadout.baseStats[input.dataset.baseStat];
+      ui.engine = null;
+      saveLoadouts();
+      return;
+    }
     const min = Number(input.min); const max = Number(input.max);
     const value = Math.min(max, Math.max(min, Number(input.value)));
     loadout.baseStats[input.dataset.baseStat] = value;
@@ -1899,7 +2150,14 @@ function renderBuilds() {
     ui.engine = null;
     saveLoadouts();
   }));
-  document.querySelector('[data-reset-build]')?.addEventListener('click', () => { ui.loadouts[unit.id] = defaultLoadoutFor(unit.id); saveLoadouts(); render(); });
+  document.querySelectorAll('[data-cosmic-option]').forEach(input => input.addEventListener('change', () => {
+    loadout.cosmicYui ||= cosmicDefaultOptions();
+    const key = input.dataset.cosmicOption;
+    loadout.cosmicYui[key] = input.type === 'checkbox' ? input.checked : ['awareness', 'refinement', 'sourceTier'].includes(key) ? Number(input.value) : input.value;
+    ui.engine = null;
+    saveLoadouts(); render();
+  }));
+  document.querySelector('[data-reset-build]')?.addEventListener('click', () => { ui.loadouts[unit.id] = defaultLoadoutFor(unit.id); ui.engine = null; saveLoadouts(); render(); });
   document.querySelector('[data-build-to-team]')?.addEventListener('click', () => { ui.screen = 'setup'; render(); window.scrollTo(0, 0); });
   document.querySelector('[data-build-to-battle]')?.addEventListener('click', startBattle);
 }
@@ -2009,7 +2267,7 @@ function renderData() {
   root.innerHTML = `${header('data')}<main class="data-screen page-enter">
     <section class="secondary-hero"><span class="eyebrow">DATA LAYER</span><h1>Lufelnet Import</h1><p>The bundled catalog is generated from Lufelnet source files. You can also load another normalized <code>simulator-dataset.json</code>. Descriptions remain reference data until represented by validated structured effects.</p></section>
     <section class="catalog-banner"><span class="live-dot"></span><div><small>ACTIVE SOURCE</small><b>${escapeHtml(lufelCatalog.source.name)}</b><em>Commit ${escapeHtml(lufelCatalog.source.commit.slice(0, 8))} · generated ${new Date(lufelCatalog.generatedAt).toLocaleDateString()}</em></div><a href="${lufelCatalog.source.repository}" target="_blank" rel="noreferrer">SOURCE ↗</a></section>
-    <section class="data-grid"><article><div class="panel-title"><span>NORMALIZED CATALOG</span><b>SCHEMA ${lufelCatalog.schemaVersion}</b></div><dl><div><dt>Characters</dt><dd>${lufelCatalog.counts.characters}</dd></div><div><dt>Personas</dt><dd>${lufelCatalog.counts.personas}</dd></div><div><dt>Skills</dt><dd>${lufelCatalog.counts.personaSkills}</dd></div><div><dt>Rev. Mains</dt><dd>${lufelCatalog.counts.revelationMains}</dd></div><div><dt>Rev. Sets</dt><dd>${lufelCatalog.counts.revelationSets}</dd></div></dl><p>Character identity, role, and element come from Lufelnet. Imported teammate combat kits are explicitly marked as estimated until exact structured skill formulas are added.</p></article>
+    <section class="data-grid"><article><div class="panel-title"><span>NORMALIZED CATALOG</span><b>SCHEMA ${lufelCatalog.schemaVersion}</b></div><dl><div><dt>Characters</dt><dd>${lufelCatalog.counts.characters}</dd></div><div><dt>Personas</dt><dd>${lufelCatalog.counts.personas}</dd></div><div><dt>Ordered Personas</dt><dd>${lufelCatalog.counts.orderedPersonas}</dd></div><div><dt>Persona Skills</dt><dd>${lufelCatalog.counts.personaSkills}</dd></div><div><dt>Weapons</dt><dd>${lufelCatalog.counts.weapons}</dd></div><div><dt>Rev. Mains</dt><dd>${lufelCatalog.counts.revelationMains}</dd></div><div><dt>Rev. Sets</dt><dd>${lufelCatalog.counts.revelationSets}</dd></div></dl><p>Character identity, role, element, Persona records, and weapon reference data come from the mined source. Imported combat descriptions are only executable when a tested simulator adapter exists.</p></article>
     <article class="import-card"><input type="file" accept="application/json,.json" data-import-file id="import-file"><label for="import-file"><span>⇧</span><b>IMPORT DATASET</b><small>JSON · local only</small></label><div class="import-links"><a href="/data/game-api-template.json" download>DOWNLOAD API TEMPLATE</a><span>Use this shape for API responses or exported game data.</span></div><div class="import-status">${ui.importedDataset ? `<b>✓ ${escapeHtml(ui.importedDataset.source || ui.importedDataset.metadata?.source || 'Dataset loaded')}</b><span>${ui.importedDataset.characters?.length || 0} characters detected</span>` : '<b>No external dataset loaded</b><span>Built-in structured demo is active</span>'}</div></article>
     <article class="recording-card"><div class="panel-title"><span>RECORDING VALIDATION</span><b>${escapeHtml(recordedNightmareBenchmark.encounter)} · ${escapeHtml(recordedNightmareBenchmark.difficulty)}</b></div><div class="recorded-score"><span><small>BASE</small><b>${format(recordedNightmareBenchmark.baseDamagePoints)}</b></span><i>+</i><span><small>WEAKENED</small><b>${format(recordedNightmareBenchmark.weakenedDamagePoints)}</b></span><i>+</i><span><small>BOSS ATTACK</small><b>${format(recordedNightmareBenchmark.bossAttackPoints)}</b></span><i>× ${recordedNightmareBenchmark.difficultyBonus}</i><strong>${format(recordedScore)}</strong></div><ul>${recordedNightmareBenchmark.confirmedMechanics.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul><p>${escapeHtml(recordedNightmareBenchmark.source)} · ${escapeHtml(recordedNightmareBenchmark.duration)} reviewed</p></article></section>
   </main>`;
@@ -2022,6 +2280,7 @@ function renderData() {
 }
 
 function bindCommon() {
+  bindAwarenessControls();
   bindLimitationsToggle();
   document.querySelector('[data-dismiss-start-error]')?.addEventListener('click', () => { ui.startError = null; render(); });
   document.querySelector('[data-start-error-fix]')?.addEventListener('click', event => {
@@ -2058,3 +2317,5 @@ function render() {
 }
 
 render();
+
+

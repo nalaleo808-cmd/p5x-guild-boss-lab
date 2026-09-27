@@ -4081,6 +4081,221 @@
           ]
         }
       }
+    },
+    {
+      "slug": "bui-cosmic",
+      "sourceKey": "YUI·스텔라",
+      "codename": "Cosmic Yui",
+      "role": "Assassin",
+      "element": "nuclear",
+      "pageUrl": "https://lufel.net/en/character/bui-cosmic/",
+      "skills": {
+        "name": "Cosmic Yui",
+        "skill1": {
+          "name": "Harvest Fest",
+          "element": "핵열",
+          "type": "Single Target",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Nuclear damage to 1 foe equal to 120.8%/133.2%/128.3%/140.6% of Attack, gain 3 Veggie Energy stacks, and enter Huge Harvest until the end of her next turn. If a Potato Knight is present, change to Potato Yellow at turn end. Huge Harvest activates Harvest Havoc after her action: 93.5%/103.1%/99.2%/108.8% Nuclear damage to a random foe. Eggplant Purple grants 1 energy. Potato Yellow grants Potato Power (+14.6%/16.1%/15.5%/17.0% All-Out Attack damage for 3 turns). Mushroom Red applies Shroom Spores (+19.5%/21.5%/20.7%/22.7% damage taken for 2 turns). Asparagus Green heals the lowest-HP ally for 976/1076/1036/1136 HP."
+        },
+        "skill2": {
+          "name": "Veggie Knights, Go!",
+          "element": "버프",
+          "type": "Buff",
+          "sp": 0,
+          "cool": 1,
+          "description": "Increase own Attack by 29.3%/32.3%/31.1%/34.1% and critical rate by 11.7%/12.9%/12.4%/13.6% for 2 turns. Summon 1 Veggie Knight. This is a free action, not a normal Persona skill. At the start of Cosmic Yui's action, summon 1 knight. Summon order: Eggplant, Potato, Mushroom, Asparagus. Caps: 1 of each non-Potato knight and 4 regular Potato Knights."
+        },
+        "skill3": {
+          "name": "Veg-Out Attack",
+          "element": "핵열",
+          "type": "Single Target",
+          "sp": 23,
+          "cool": 0,
+          "description": "Deal Nuclear damage to 1 foe equal to 130.2%/143.5%/138.2%/151.5% of Attack. Add 1 hit of 29.3%/32.3%/31.1%/34.1% per knight. Spend all regular Potato Knights except 1, adding 1 hit of 24.4%/26.9%/25.9%/28.4% per spent potato. Damage counts as All-Out Attack damage. Manual use grants 2 energy; change to Eggplant Purple at turn end if present. At 7 energy, spend all energy to automatically activate the damage effect, divided equally among all foes, without normal-skill classification."
+        },
+        "skill_highlight": {
+          "name": "Cosmic Yui Highlight",
+          "element": "핵열",
+          "type": "Single Target",
+          "description": "Deal Nuclear damage to 1 foe equal to 439.2%/484.2%/466.2%/511.2% of Attack, then activate Harvest Havoc on that foe according to specific rules."
+        },
+        "passive1": {
+          "name": "Veggie Satellite",
+          "element": "패시브",
+          "description": "Damage +8.1% per Veggie Knight, up to 4 knights."
+        },
+        "passive2": {
+          "name": "Mixed Vegetables",
+          "element": "패시브",
+          "description": "All-Out Attack damage +15%. When participating in a party All-Out Attack, further increase its damage based on total knights; the additional coefficient is not stated."
+        }
+      },
+      "stats": {
+        "a0_lv1": {
+          "attack": 104,
+          "defense": 52,
+          "HP": 311,
+          "SP": 100,
+          "speed": 96,
+          "crit_rate": 5,
+          "crit_mult": 150
+        },
+        "awake7": {
+          "attack_per": 29
+        },
+        "a0_lv80": {
+          "HP": 3449.99,
+          "attack": 1170.01,
+          "defense": 579.99
+        },
+        "a1_lv80": {
+          "HP": 3512.39,
+          "attack": 1190.81,
+          "defense": 590.39
+        },
+        "a2_lv80": {
+          "HP": 3573.99,
+          "attack": 1212.41,
+          "defense": 600.79
+        },
+        "a3_lv80": {
+          "HP": 3636.39,
+          "attack": 1233.21,
+          "defense": 611.19
+        },
+        "a4_lv80": {
+          "HP": 3698.79,
+          "attack": 1254.01,
+          "defense": 621.59
+        },
+        "a5_lv80": {
+          "HP": 3760.39,
+          "attack": 1275.61,
+          "defense": 631.99
+        },
+        "a6_lv80": {
+          "HP": 3822.79,
+          "attack": 1296.41,
+          "defense": 642.39
+        }
+      },
+      "setting": {},
+      "awarenessData": [
+        {
+          "level": 0,
+          "name": "Vegetable Avatar",
+          "description": "Eggplant: +1 energy after a normal skill. Potato: +15% own All-Out Attack damage. Mushroom: 4.5% Brainwash chance for 1 turn on skill/All-Out damage. Asparagus: heal own HP for 1% of damage, capped at 1000 per activation."
+        },
+        {
+          "level": 1,
+          "name": "Veggie Knight Rounds",
+          "description": "Start with all 4 knight types and maximum energy. Critical damage +8% per knight, capped at 5. Start Potato Yellow, change to Eggplant Purple on the first own turn."
+        },
+        {
+          "level": 2,
+          "name": "Seed Potato Knight",
+          "description": "Gain an additional unspendable Potato Knight. Harvest Havoc grants 10 percentage points more Potato Power. Start with Potato Power for 2 turns."
+        },
+        {
+          "level": 3,
+          "name": "Veggie Knight Master",
+          "description": "Veggie Knights, Go! and Veg-Out Attack skill levels +3. Included in the selected source coefficient; no additional numeric multiplier is invented."
+        },
+        {
+          "level": 4,
+          "name": "Cyber Farmer",
+          "description": "Highlight grants Attack +35% for 4 turns."
+        },
+        {
+          "level": 5,
+          "name": "Starlight Fest",
+          "description": "Harvest Fest and Thief Tactics skill levels +3. Included in the selected source coefficient; no additional numeric multiplier is invented."
+        },
+        {
+          "level": 6,
+          "name": "Prismatic Vegetables",
+          "description": "All four color abilities apply simultaneously. Huge Harvest is permanent from battle start. Harvest Havoc triggers after every ally ends their action. Active Veggie Knights, Go! summons one extra Potato Knight."
+        }
+      ],
+      "weaponData": {
+        "signature": {
+          "name": "Starlight Decimators",
+          "stats": {
+            "HP": 2279.27,
+            "attack": 773.01,
+            "defense": 383.2
+          },
+          "critRate": [
+            0.181,
+            0.181,
+            0.235,
+            0.235,
+            0.289,
+            0.289,
+            0.343
+          ],
+          "summonAttack": [
+            0.107,
+            0.138,
+            0.138,
+            0.169,
+            0.169,
+            0.2,
+            0.2
+          ],
+          "vegOutCritDamage": [
+            0.328,
+            0.428,
+            0.428,
+            0.528,
+            0.528,
+            0.628,
+            0.628
+          ]
+        },
+        "four-star": {
+          "name": "Sprouting Voyagers",
+          "stats": {
+            "HP": 1823.43,
+            "attack": 618.71,
+            "defense": 306.25
+          },
+          "attack": [
+            0.12,
+            0.12,
+            0.16,
+            0.16,
+            0.2,
+            0.2,
+            0.24
+          ],
+          "resonanceVegOutAttack": [
+            0.22,
+            0.29,
+            0.29,
+            0.36,
+            0.36,
+            0.43,
+            0.43
+          ]
+        }
+      },
+      "sourceEvidence": {
+        "retrievedAt": "2026-09-12",
+        "pageUrl": "https://lufel.net/en/character/bui-cosmic/",
+        "repository": "https://github.com/absolroot/lufelnet",
+        "sourceKey": "YUI·스텔라",
+        "files": {
+          "skill.js": "b10b2dbb4f4dfe6babf622027ec3676968b11c35",
+          "ritual.js": "a1e826101e370d318e8d8c415bd7b7b6aa3d2fad",
+          "base_stats.js": "74ef5abad1d9d56d6f29648bba3bd397133cb04d",
+          "weapon.js": "489df0d4547849ed9b128385e4347e212672caad",
+          "review.js": "adfe1863d6fb7e095e300ac967eb2a317cfe32e5"
+        },
+        "method": "English upstream source read through GitHub; site page is client-rendered. Numeric source data retained; descriptions are condensed. The uploaded fork is older and uses Prism/Smash/Mobilize names and superseded S1/S2/S3 coefficients."
+      }
     }
   ]
 }

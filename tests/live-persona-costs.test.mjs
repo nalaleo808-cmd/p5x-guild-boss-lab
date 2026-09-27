@@ -66,8 +66,11 @@ test('live Universal Theoria charges 24 SP, buffs party Attack, and buffs only i
     assert.equal(unit.buffs.find(buff => buff.id === 'attack_up')?.value, 0.33);
     assert.equal(unit.buffs.find(buff => buff.id === 'attack_up')?.duration, 2);
   }
-  assert.equal(berryUnit.buffs.find(buff => buff.id === 'universal_theoria_damage')?.value, 0.22);
-  assert.equal(berryUnit.buffs.find(buff => buff.id === 'universal_theoria_damage')?.duration, 2);
+  const selectedBuff = berryUnit.buffs.find(buff => buff.id === 'universal_theoria_damage');
+  assert.equal(selectedBuff?.stat, 'finalDamage');
+  assert.equal(selectedBuff?.value, 0.22);
+  assert.equal(selectedBuff?.duration, 2);
+  assert.ok(Math.abs(engine.liveDamageFactors(berryUnit, 'almighty', engine.state.boss, 'character_skill').finalDamageMultiplier - 1.22) < 1e-9);
   assert.equal(engine.state.party.find(unit => unit.id === 'wonder').buffs.some(buff => buff.id === 'universal_theoria_damage'), false);
 });
 

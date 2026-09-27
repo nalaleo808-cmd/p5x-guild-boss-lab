@@ -308,8 +308,8 @@ test('Devourer and Multidimensional do not enter Weakened before their trigger',
 });
 
 test('same seed and policy produce the same complete result', () => {
-  const first = simulate({ seed: 808, bossId: 'vishnu' });
-  const second = simulate({ seed: 808, bossId: 'vishnu' });
+  const first = simulate({ seed: 808, bossId: 'shadow_ruin' });
+  const second = simulate({ seed: 808, bossId: 'shadow_ruin' });
   assert.deepEqual(first.result, second.result);
   assert.equal(first.totalDamage, second.totalDamage);
 });
@@ -372,14 +372,14 @@ test('only one navigator skill can be used in an Attack Turn', () => {
   assert.throws(() => engine.stepNavigator('encore'), /unavailable/i);
 });
 
-function createMikuTestEngine() {
+function createMikuTestEngine(bossId = 'slaughter_drive') {
   const miku = lufelCatalog.characters.find(character => character.codename === 'MIKU');
   const navigatorDefinition = {
     ...miku,
     id: 'navigator-miku-test',
     skills: miku.skills.map((skill, index) => ({ ...skill, id: `navigator-miku-test-${index + 1}`, power: 0 }))
   };
-  const engine = new BattleEngine({ seed: 808, bossId: 'slaughter_drive', navigatorDefinition });
+  const engine = new BattleEngine({ seed: 808, bossId, navigatorDefinition });
   for (const unit of engine.state.party) {
     unit.maxHp = 999999;
     unit.hp = unit.maxHp;
@@ -718,6 +718,23 @@ test('MIKU only grants a song effect when its matching Track is newly gained', (
   assert.deepEqual(engine.state.navigator.tracks, ['Break']);
 });
 
+test('current-profile Surt does not stack a Virtual Concert copy with its active MIKU song effect', () => {
+  const engine = createMikuTestEngine('surt');
+  const target = engine.state.party[0];
+
+  engine.applyMikuPartyBuff({
+    id: 'miku_feel_attack', name: 'FEEL THE BEAT ATK', stat: 'attack', value: 0.305, duration: 1
+  });
+  engine.applyMikuPartyBuff({
+    id: 'miku_concert_feel_attack', name: 'CONCERT FEEL ATK', stat: 'attack', value: 0.305,
+    duration: 2, concertOnly: true, regularId: 'miku_feel_attack'
+  });
+
+  assert.equal(target.buffs.filter(buff => buff.id === 'miku_feel_attack').length, 1);
+  assert.equal(target.buffs.some(buff => buff.id === 'miku_concert_feel_attack'), false);
+  assert.equal(target.buffs.find(buff => buff.id === 'miku_feel_attack').duration, 2);
+});
+
 test('Virtual Concert records two uncounted rounds and A6 repeats each target damage exactly', () => {
   const engine = createMikuTestEngine();
   const actionsByName = name => engine.getNavigatorActions().find(action => action.name === name);
@@ -744,6 +761,8 @@ test('Virtual Concert records two uncounted rounds and A6 repeats each target da
   assert.equal(engine.state.navigator.cooldowns[showstopper.id], 6);
   assert.ok(engine.getNavigatorActions().every(action => !action.enabled));
   assert.ok(engine.state.party.every(unit => unit.buffs.some(buff => buff.id === 'miku_concert_fan_favorite' && buff.value === 0.24)));
+  assert.ok(engine.state.party.every(unit => unit.buffs.some(buff => buff.id === 'miku_concert_a2_damage'
+    && buff.stat === 'finalDamage' && buff.value === 0.08)));
 
   let concertActions = 0;
   while (engine.isVirtualConcertActive()) {
@@ -835,7 +854,7 @@ test('unavailable SP action is rejected by the legal-action boundary', () => {
 });
 
 test('battle terminates at the configured Attack Turn limit and preserves replay frames', () => {
-  const result = simulate({ seed: 912, bossId: 'vishnu' }, engine => engine.getAvailableActions().find(item => item.type === 'guard'));
+  const result = simulate({ seed: 912, bossId: 'shadow_ruin' }, engine => engine.getAvailableActions().find(item => item.type === 'guard'));
   assert.equal(result.phase, 'results');
   assert.equal(result.result.outcome, 'timeout');
   assert.ok(result.history.length > 20);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { engine,get,act,advanceToKotone,cast,originalBuff,copies,finishFortune,finishCold,near,K,unit } from './helpers/kotone.js';
 import { kotoneShiomi,kotoneAwareness,kotoneWeapons,kotoneWeaponProfile,kotoneCoefficients as C,kotoneCoefficientsFor,kotoneSkillTables as T } from '../src/characters/kotone-shiomi-data.js';
 import { normalizeKotoneLoadout, normalizeKotoneDraft, eligibleKotoneCopySources, saveKotoneDraft,loadKotoneDraft } from '../src/characters/kotone-shiomi-mechanics.js';
-import { withLocalCharacters } from '../src/characters/registry.js';
+import { withLocalCharacters } from '../src/characters/kotone-overlay.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
 
 for(let awareness=0;awareness<=6;awareness++)test(`Runtime A${awareness}: initial link, resources and actual Go for Broke gate`,()=>{

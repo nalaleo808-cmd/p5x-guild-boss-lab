@@ -1,0 +1,163 @@
+// Reviewed public snapshot: 2026-09-12. Full provenance in data/character-research/noir.json.
+export const characterResearch = {
+  "slug": "noir",
+  "name": "Haru Okumura",
+  "coverage": "partial-source-verified",
+  "limitations": [
+    "Not battle-replay calibrated. Disabled actions must be filtered by parent before spending cost or ammo.",
+    "Source tiers explicitly ordered [10,10+5,13,13+5], selected by loadout characterResearch.sourceTier; default 3 follows Cosmic Yui. Skill-level awareness is not multiplied again.",
+    "Static weapon passives use the selected refinement; equipped stats must set staticWeaponStatsIncluded to avoid double counting.",
+    "S1 Target Audience chance is modeled from the tooltip but has not been replay-calibrated against ailment resistance.",
+    "Target Audience duration uses the simulator shared status clock; its exact live expiry clock is unverified.",
+    "Reload/ammo behavior and the A6 Focused Round ailment-resistance reduction remain incomplete."
+  ],
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/noir/",
+      "retrievedAt": "2026-09-12",
+      "type": "community-game-data"
+    },
+    {
+      "file": "skill.js",
+      "url": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/skill.js",
+      "sha256": "e504feff0ee343065427f8c0af268f96d42b54f266e67e2081104dbac20df8b6",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    },
+    {
+      "file": "ritual.js",
+      "url": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/ritual.js",
+      "sha256": "1e8b384f2ff071f4f492bcb4805867375233751d84ba57fc4720508fde534bd9",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    },
+    {
+      "file": "weapon.js",
+      "url": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/weapon.js",
+      "sha256": "b34133b0101145ad2afc47ce8c29fccddea0436e73b0a263592401733f91e55b",
+      "retrievedAt": "2026-09-12",
+      "httpStatus": 200
+    }
+  ],
+  "implemented": [
+    "Heiress Leadership, Target Audience and Thoughtful Round state, including A1/A2/A4/A6 ranged damage effects",
+    "S1 two packets, base Psychic ranged attack, S2/S3/Highlight conditional coefficients and round-driven extra hits",
+    "Static and supported dynamic weapon effects at refinement 0-6"
+  ],
+  "missing": [
+    "S1 Target Audience chance is modeled from the tooltip but has not been replay-calibrated against ailment resistance.",
+    "Target Audience duration uses the simulator shared status clock; its exact live expiry clock is unverified.",
+    "Reload/ammo behavior and the A6 Focused Round ailment-resistance reduction remain incomplete."
+  ],
+  "comparison": {
+    "liveSnapshot": "data/lufel-live-recent.json",
+    "englishSkillsExactlyMatch": true,
+    "catalog": "data/lufel-catalog.json",
+    "existingBespokeEngineLogic": false,
+    "corrections": [
+      "Heiress Leadership Attack conversion and critical damage thresholds",
+      "Base A0 ranged attack is 66% psychic AoE, not generic Gun",
+      "Remove unconditional imported S1/S3/HL buffs",
+      "Opt-in static weapon stat at refinement 0-6"
+    ]
+  },
+  "integration": {
+    "initialize": "After live unit loadouts and party construction; once per unit. Ange uses state.navigator.",
+    "beforeSkill": "Before SP/HP/ammo changes and before cloning damageSkill. Return value must replace skill.",
+    "afterSkill": "Once per successful outer cast after damage, using prepared skill; never for unrelated source types.",
+    "onTurnEnd": "After all counted actions of owner turn, before next turn starts. Howler stance clock only.",
+    "navigator": null
+  },
+  "awareness": {
+    "name": "Haru Okumura",
+    "r0": "My Name Is Beauty Thief",
+    "r0_detail": "For Haru's ranged attacks, deal Psychokinesis damage to all foes equal to 66% of Haru's Attack. When using certain skills, gain 1 corresponding Thoughtful Round stack and reload. Up to 3 stacks of Thoughtful Round with different effects can be stacked at the same time.\nFor each Thoughtful Round stack, grant unique effects to ranged attacks. When Haru uses a ranged attack, increase skill damage based on Thoughtful Round stacks (increase by 20%/40%/50% at 1/2/3 stacks, respectively). If at 2+ Thoughtful Round stacks, also increase Attack by 25%.\nAfter using a ranged attack, remove all Thoughtful Round stacks.",
+    "r1": "Expressing Emotions",
+    "r1_detail": "After a new foe appears, activate Extrasensory Aim for that foe at the start of Haru's next turn.\nBased on Haru's Target Audience stacks, increase Attack by 8% (up to 24%) and ranged attack critical rate by 6% (up to 18%).",
+    "r2": "Unwavering Faith",
+    "r2_detail": "When Haru has 1+ Target Audience stacks, decrease damage taken by 25%. When at 3+ Target Audience stacks, increase Psychokinesis damage by 60%.",
+    "r3": "Advancing Courage",
+    "r3_detail": "Increase the skill levels of Mindful Release and Thief Tactics by 3.",
+    "r4": "Straight to the Point",
+    "r4_detail": "Overload Round Enhanced: When using a ranged attack, increase critical damage by 30%.",
+    "r5": "Giving It My Best Shot",
+    "r5_detail": "Increase the skill levels of Extrasensory Aim and Precise Volley by 3.",
+    "r6": "Heroine of Justice",
+    "r6_detail": "When at 2+ Thoughtful Round stacks, evolve Haru's ranged attacks to Resonating Shots. Also, deal a ranged attack that activates all Thoughtful Round effects once. This additional attack's damage is 70% of the original attack.\nAt 2+ Thoughtful Round stacks, activate the following effects for Thoughtful Round gained from skills.\nFocused Round: When using a ranged attack, also decrease the foe's ailment resistance by 27% for 2 turns.\nPainpoint Round: When using a ranged attack and Haru has Target Audience, increase pierce rate by 12%.\nSpillover Round: When using a ranged attack and Haru has Target Audience, increase critical rate by 20% and critical damage by 20%."
+  },
+  "weapons": {
+    "name": "Haru Okumura",
+    "weapon4-1": {
+      "name": "Gilgamesh Axe",
+      "health": 1712.28,
+      "attack": 607.79,
+      "defense": 341.44,
+      "skill_name": "",
+      "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nIncrease Attack and ailment accuracy by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% for each foe with a debuff (up to 9.9%/12.9%/12.9%/15.9%/15.9%/18.9%/18.9%)."
+    },
+    "weapon5-1": {
+      "name": "Last Quarter",
+      "health": 2140.53,
+      "attack": 759.73,
+      "defense": 427.25,
+      "skill_name": "",
+      "description": "Increase ailment accuracy by 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%.\nWhen dealing Psychokinesis damage, if Haru has Target Audience, increase Psychokinesis damage by 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0%. Also, for each Thoughtful Round gained, increase Attack by 34.0%/43.0%/43.0%/52.0%/52.0%/61.0%/61.0% for 1 turn."
+    }
+  },
+  "skills": {
+    "name": "Haru Okumura",
+    "skill1": {
+      "name": "Extrasensory Aim",
+      "element": "염동광역",
+      "type": "광역피해",
+      "sp": 26,
+      "cool": 0,
+      "description": "Deal Psychokinesis damage to all foes equal to 75.8%/83.6%/80.5%/88.3% of Attack (2 hits). 97.6%/97.6%/103.6%/103.6% chance to inflict 1 Target Audience stack on the main target and 53.7%/53.7%/57.0%/57.0% chance to inflict 1 Target Audience stack on other foes. Then, transfer Target Audience stacks on foes to Haru and change Target Audience's duration to 3 turns. Also gain 1 Focused Round stack.\nFocused Round: When using a ranged attack with Target Audience, increase skill damage by 29.3%/32.3%/31.1%/34.1%. After the ranged attack, remove all Target Audience stacks granted to Haru."
+    },
+    "skill2": {
+      "name": "Precise Volley",
+      "element": "총격",
+      "type": "단일 피해",
+      "hp": 12,
+      "cool": 0,
+      "description": "Deal Gun damage to 1 foe equal to 151.6%/167.1%/160.9%/176.4% of Attack. When Haru has Target Audience, increase this skill's pierce rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Painpoint Round.\nPainpoint Round: When using a ranged attack, also deal Psychokinesis damage to the main target equal to 39.0%/43.0%/41.4%/45.4% of Attack (can gain skill damage increases from Focused Round)."
+    },
+    "skill3": {
+      "name": "Mindful Release",
+      "element": "염동광역",
+      "type": "광역피해",
+      "sp": 26,
+      "cool": 0,
+      "description": "Deal Psychokinesis damage to all foes equal to 142.1%/156.7%/150.8%/165.4% of Attack. When Haru has Target Audience, increase this skill's critical rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Spillover Round stack.\nSpillover Round: When using a ranged attack, also deal Psychokinesis damage to all foes equal to 29.3%/32.3%/31.1%/34.1% of Attack (can gain skill damage increases from Focused Round)."
+    },
+    "skill_highlight": {
+      "element": "염동광역",
+      "type": "광역피해",
+      "description": "Deal Psychokinesis damage to all foes equal to 206.9%/228.1%/219.6%/240.8% of Attack. Gain 1 Overload Round if Haru doesn't have any Overload Round stacks and is below maximum Thoughtful Round stacks.\nOverload Round: When using a ranged attack, increase critical rate by 14.6%/14.6%/15.5%/15.5%.\nIf Haru hasn't gained any Overload Round stacks, increase this skill damage by 14.6%/16.1%/15.5%/17.0%.",
+      "cool": 4
+    },
+    "passive1": {
+      "name": "Heiress's Leadership",
+      "element": "패시브",
+      "description": "During battle, increase Attack by 1% for every 1.45% of ailment accuracy (up to 165.0% of Attack). Also increase critical damage by 20% for every 50% of ailment accuracy (stacks up to 3 times).",
+      "cool": 0
+    },
+    "passive2": {
+      "name": "Helping Others",
+      "element": "패시브",
+      "description": "Permanently gain 1 Area to Improve stack for each Thoughtful Round stack gained. Gain the following effects based on the number of Area to Improve stacks.\n1 stack: Increase ailment accuracy by 18.0% and ailment resistance by 18.0%.\n2 stacks: Increase Attack by 18.0% and Defense by 18.0%.\n3 stacks: Increase critical damage by 18.0%.",
+      "cool": 0
+    }
+  }
+};
+
+export function adaptCharacterDefinition(record) {
+  if (record.slug !== characterResearch.slug) return record;
+  const result = structuredClone(record);
+  result.mechanicsCoverage = characterResearch.coverage;
+  result.characterResearch = characterResearch;
+  for (const skill of [...(result.skills || []), result.highlightSkill].filter(Boolean)) {
+    for (const key of ['buff','buffTarget','debuff','heal','healAttack','healFlat','healTarget','spRestore','actionBonus']) delete skill[key];
+  }
+  return result;
+}

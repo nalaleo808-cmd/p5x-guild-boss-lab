@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-09-12",
+  "slug": "violet",
+  "name": "Kasumi Yoshizawa",
+  "coverage": "partial-source-modeled",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/violet/",
+      "retrievedAt": "2026-09-12",
+      "note": "Client-rendered shell; numeric verification uses public upstream English source."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/skill.js",
+      "sha256": "46925bbdad2f2dbfdfa10adebbd0272a7eedcb9d8ce7de3c4537e9927b0c6e62",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/ritual.js",
+      "sha256": "82e30286bc5a67c56c6a9993f5c183d25c9cbbbeb2d2f04e859913d74afbd80f",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/weapon.js",
+      "sha256": "c4f2e99090a730a91d5269f1d6ba501797436306fadc993b04fb009a25faa1fd",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    }
+  ],
+  "implemented": [
+    "S1 damage and capped Lead Step, S2 ally targeting/Attack/Follow Step with A1 crit buff, base S3 damage with erroneous lasting buff removed.",
+    "Bless-only Rhythm Count and four-star Step conditional at per-damage timing, permanent A2 milestone buffs, and explicit weapon static/Step-trigger effects.",
+    "Highlight blocked pending Masquerade integration; Dance Partner identity and source duration recorded for future event hook."
+  ],
+  "missing": [
+    "Spellbound Cinders free activation, Masquerade duration/cooldown, no-gauge Highlight legality and A6 second cast require scheduler and shared Highlight integration. Highlight is blocked until implemented.",
+    "Dance Partner immediate reaction requires an afterAllySkill hook with main enemy target. Counted action-end cannot substitute for skill timing; follow-up remains excluded.",
+    "Masquerade S3 enhancement and A4 Highlight bonus/evasion remain excluded. English/Japanese own-turn Masquerade expiry differs.",
+    "Steps of Faith and signature Glass Slipper need shared Highlight/Theurgy event dispatch, including off-turn casts. Weapon Step-gain Attack and four-star conditional damage are supported.",
+    "Rhythm Count is a Bless-only buff; Steps currently persist because Masquerade clearing is not implemented. A2 milestone buffs are permanent once reached."
+  ],
+  "limitations": [
+    "This is a partial source-based implementation, not a live-battle calibration.",
+    "sourceTier explicitly selects one of four printed coefficient columns, default 3 to match the current catalog. A3/A5 skill ranks are not multiplied again.",
+    "No weapon is assumed. characterOptions[slug].weapon accepts none, four-star, signature; refinement 0..6. staticWeaponStatsIncluded prevents double-counting passive equipment bonuses.",
+    "Spellbound Cinders free activation, Masquerade duration/cooldown, no-gauge Highlight legality and A6 second cast require scheduler and shared Highlight integration. Highlight is blocked until implemented.",
+    "Dance Partner immediate reaction requires an afterAllySkill hook with main enemy target. Counted action-end cannot substitute for skill timing; follow-up remains excluded.",
+    "Masquerade S3 enhancement and A4 Highlight bonus/evasion remain excluded. English/Japanese own-turn Masquerade expiry differs.",
+    "Steps of Faith and signature Glass Slipper need shared Highlight/Theurgy event dispatch, including off-turn casts. Weapon Step-gain Attack and four-star conditional damage are supported.",
+    "Rhythm Count is a Bless-only buff; Steps currently persist because Masquerade clearing is not implemented. A2 milestone buffs are permanent once reached."
+  ],
+  "comparison": {
+    "localSnapshot": "data/lufel-live-recent.json",
+    "localSkillsMatch": true,
+    "catalog": "data/lufel-catalog.json",
+    "catalogId": "lufel-recent-violet",
+    "catalogGenericEffects": [
+      {
+        "slot": "S1",
+        "power": 2.175,
+        "target": "boss"
+      },
+      {
+        "slot": "S2",
+        "power": 0,
+        "target": "boss"
+      },
+      {
+        "slot": "S3",
+        "power": 2.8989999999999996,
+        "target": "boss",
+        "buff": {
+          "id": "damage_up",
+          "name": "DMG ↑",
+          "stat": "damage",
+          "value": 0.3,
+          "duration": 2
+        }
+      },
+      {
+        "slot": "HL",
+        "power": 3.178,
+        "target": "boss",
+        "buff": {
+          "id": "crit_rate_up",
+          "name": "CRIT RATE ↑",
+          "stat": "critRate",
+          "value": 0.1,
+          "duration": 2
+        }
+      }
+    ],
+    "existingEngineLogic": "No dedicated identifier or named skill branch found for this character; generic resolveSkill is integration point, no extraction needed."
+  },
+  "sourceRecords": {
+    "skill": {
+      "name": "Kasumi Yoshizawa",
+      "skill1": {
+        "name": "Cinderella Glow",
+        "element": "축복",
+        "type": "단일피해",
+        "sp": 23,
+        "cool": 0,
+        "description": "Deal Bless damage to 1 foe equal to 186.9%/206.1%/198.4%/217.5% of Attack, and gain Lead Step.\nIf this skill is activated by an ally with Dance Partner, deal Bless damage to 1 foe equal to 121.6%/134.1%/129.1%/141.5%, and gain 1 Lead Step.\nLead Step stacks up to 3 times."
+      },
+      "skill2": {
+        "name": "Invitation",
+        "element": "버프",
+        "type": "버프",
+        "sp": 22,
+        "cool": 0,
+        "description": "Grant Dance Partner to 1 ally for 1 turn. Only 1 ally may have Dance Partner at one time.\nIncrease Attack of Kasumi and the selected ally by 32.4%/35.7%/34.4%/37.7% for 3 turns. Also, Kasumi gains Follow Step. This effect does not stack.\nWhen an ally with Dance Partner uses a skill, immediately activate Cinderella Glow 1 time on 1 random foe (if the skill is activated on a foe, activate Cinderella Glow 1 time on that foe)."
+      },
+      "skill3": {
+        "name": "Midnight Magic",
+        "element": "축복",
+        "type": "단일피해",
+        "sp": 27,
+        "cool": 0,
+        "description": "Deal Bless damage to 1 foe equal to 249.1%/274.6%/264.4%/289.9% of Attack.\nWhen using this skill while in Masquerade mode, increase skill damage by 30%, and critical damage by 29.3%/29.3%/31.1%/31.1%."
+      },
+      "skill_highlight": {
+        "element": "축복",
+        "type": "단일피해",
+        "unlock": "자신이 『가면무도회』 상태.",
+        "description": "Can be activated in Masquerade mode. Deal Bless damage to 1 foe equal to 273.1%/301.0%/289.8%/317.8% of Attack. Also, with Step stacks, gain additional effects accordingly.\nLead Step: Increase Highlight damage by 15% for each stack.\nFollow Step: Increase Highlight critical rate by 10%, and critical damage by 20%.",
+        "cool": 0
+      },
+      "passive1": {
+        "name": "Rhythm Count",
+        "element": "패시브",
+        "description": "For every Step stack, increase Bless damage by 15% (up to 45.0%).",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "Steps of Faith",
+        "element": "패시브",
+        "description": "When an ally except Kasumi uses a Highlight or Theurgy, increase Kasumi's Attack by 45.0% for 2 turns. Stacks up to 2 times.",
+        "cool": 0
+      }
+    },
+    "ritual": {
+      "name": "Kasumi Yoshizawa",
+      "r0": "Masked Ball",
+      "r0_detail": "Kasumi's Highlight does not deplete the Highlight gauge, and can activate critical hits.\nOn an ally's action, with 2 or more Step stacks, can use Spellbound Cinders to enter Masquerade mode, and can activate Highlight 1 time (Spellbound Cinders has a cooldown time of 3 turns). This effect lasts until the start of Kasumi's second turn after entering Masquerade (or if Spellbound Cinders is used during her own turn, until the end of the following turn).\nAlso, for every Step stack gained while in Masquerade mode, increase Attack by 10% and critical rate by 4%.\nWhen Masquerade ends, lose all Step stacks. If Masquerade ends and Highlight has not been used, activate Highlight on 1 random foe.",
+      "r1": "Charming Invite",
+      "r1_detail": "Extend the duration of Dance Partner by 1 turn.\nWhen using Invitation, increase critical rate of Kasumi and her Dance Partner by 15% for 3 turns.",
+      "r2": "Blossoming Dance Floor",
+      "r2_detail": "With 2 Step stacks, increase Attack by 33%. With 3 or more stacks, increase critical damage by 33%. These effects are permanent.",
+      "r3": "Glittering Night",
+      "r3_detail": "Increase the skill levels of Cinderella Glow and Thief Tactics by 3.",
+      "r4": "Toll the Hour",
+      "r4_detail": "When activating a Highlight, gain 1 Stroke of Midnight stack. Spend 1 Stroke of Midnight stack when taking damage, and evade that damage (not activated by some skills).\nAlso, with 4 Step stacks, increase Highlight damage by 50%.",
+      "r5": "Neverending Dream",
+      "r5_detail": "Increase the skill levels of Invitation and Midnight Magic by 3.",
+      "r6": "Unmasked Ball",
+      "r6_detail": "After Kasumi activates her Highlight, she can activate her Highlight 1 more time while in Masquerade mode. This Highlight has 80% of its normal damage, and can be activated 1 time each time Masquerade mode is entered. Also, it will not activate automatically when Masquerade mode ends."
+    },
+    "weapon": {
+      "name": "Kasumi Yoshizawa",
+      "weapon4-1": {
+        "name": "Divine Sword of Sinai",
+        "health": 1791.59,
+        "attack": 613.28,
+        "defense": 296.11,
+        "skill_name": "Blessing",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWith 2 or more Step stacks, increase damage by 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0%."
+      },
+      "weapon5-1": {
+        "name": "Royal Étoile",
+        "health": 2239.65,
+        "attack": 766.41,
+        "defense": 370,
+        "skill_name": "Sunrise",
+        "description": "Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0%.\nWhen gaining a Step stack, increase Attack by 21.0%/27.0%/27.0%/33.0%/33.0%/39.0%/39.0% for 2 turns. This effect does not stack.\nWhen an ally activates a Highlight or Theurgy, gain 1 Glass Slipper stack, and increase Kasumi's damage by 8.4%/11.1%/11.1%/13.8%/13.8%/16.5%/16.5% for 3 turns. Stacks up to 2 times.\nWhen Glass Slipper is at 2 stacks, increase Kasumi's Highlight damage by 30.0%/39.0%/39.0%/48.0%/48.0%/57.0%/57.0% more."
+      }
+    }
+  },
+  "integration": {
+    "initialize": "After live party stats/buffs initialized, once per assigned unit.",
+    "beforeSkill": "resolveSkill entry before cost/damage; replace skill with return value. Only dispatch for owning actor. Exceptions block unsupported casts before costs.",
+    "afterSkill": "Once after own resolved skill, passing returned prepared skill. Never invoke for preview or rejected action.",
+    "onTurnStart": "After characterTurnsStarted increments; owning unit only.",
+    "onAllyActionEnd": "Not consumed by this module.",
+    "adapter": "Call adaptCharacterDefinition on live record before legal actions are built; preserves IDs and sets source-aware targets. Respect characterUnavailable in legal-action listing.",
+    "options": "engine.config.characterOptions[slug]: sourceTier (0..3), weapon, refinement (0..6), staticWeaponStatsIncluded, flatAttackScale (Luce only, explicit live-flat to simulation-flat conversion)."
+  }
+}

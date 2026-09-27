@@ -1,10 +1,11 @@
 @echo off
 title P5X Guild Boss Lab
 cd /d "%~dp0"
-set "P5X_URL=http://127.0.0.1:4173/"
+set "PORT=4174"
+set "P5X_URL=http://127.0.0.1:4174/"
 
-rem If a server is already listening on 4173, just open the page.
-netstat -ano | findstr /r /c:"127.0.0.1:4173 .*LISTENING" >nul 2>nul
+rem If a server is already listening on 4174, just open the page.
+netstat -ano | findstr /r /c:"127.0.0.1:4174 .*LISTENING" >nul 2>nul
 if not errorlevel 1 (
   echo P5X Guild Boss Lab is already running. Opening %P5X_URL%
   start "" "%P5X_URL%"

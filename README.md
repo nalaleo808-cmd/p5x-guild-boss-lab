@@ -1,27 +1,39 @@
 # P5X Guild Boss Lab - Showdown Battle Room
 
+## v2.2 — A0–A6 settings for the entire packaged roster
+
+Open **Builds**, select any existing character in the searchable roster, and choose **A0** through **A6**. All **26 entries** are included: **23 combatant entries and 3 navigators**. Team preview also has quick awareness selectors. Each profile is saved independently in this browser. Changing awareness starts the next battle with that profile rather than modifying an active battle.
+
+Rank-specific source stat rows and the engine's existing awareness conditions are used. Blank stat fields use automatic defaults; manually entered or previously saved totals remain unchanged. The existing skill coefficients are retained: missing awareness perks and A3/A5 skill-level progression are not guessed. Wonder and the other built-in templates without source progression have clearly labeled profile-only settings.
+
+The new build preserves the existing character roster, source catalog, and artwork. It fixes the previously forced J&C A6 account flag and makes recorded A6 presets explicitly restore their intended ranks. See `AWARENESS-UPDATE.md` for scope, migration, and verification details.
+
+
+
+## Kotone Shiomi (playable, experimental)
+
+Open the **Kotone** tab and click **Use Kotone in party slot 2 & open Builds**, or select her in Team. Set awareness, skill Mindscape, weapon, enhancement and stat basis in Builds, then enter your actual stats (the defaults are illustrative). In battle, pick **Select / reselect Arcana Link** at her normal-turn opening, then **Go for Broke**.
+
+Her values come from Lufel's published v5.1.0 data for ordinary Global (no Sync Mindscape, no Mindscape Core). Skill Mindscape defaults to LV5, the maximum, and can be set to None. A3 raises Skill 1 and A5 raises Skills 2 and 3 to their LV13 values; the Highlight stays LV10. Both weapons support +0 to +6, and the A2 copy ratio is the sourced 30% x 1.25 = 37.5%. Lufel publishes tooltip data rather than combat scripts, so Fortune, copy and Cold timing are engine policies. Recorded archive profiles reject her. Details: `MD/KOTONE-SOURCE-AUDIT.md` and `MD/KOTONE-IMPLEMENTATION.md`.
+
+She was ported from the v2.0.0-beta patch into this 2.2.0 checkout. Her registry overlay lives in `src/characters/kotone-overlay.js` beside the modular `registry.js`. `tests/release-regression.test.mjs` checks 28 route fingerprints captured from 2.2.0 before the port (`npm run capture:baseline` re-captures them). Extra commands: `npm run verify:characters` and `npm run example:kotone`.
+
+## Cosmic Yui update (2026-09-12)
+
+Cosmic Yui is now selectable in Team and configurable in Builds, with a dedicated source-modeled kit and original chibi assets. See `COSMIC-YUI-REVIEW-2026-09-12.md` for setup, source hashes, exact coverage and remaining live-verification boundaries. That earlier release was verified with 231 passing tests, including 48 Cosmic-specific tests. Existing saved teams are preserved; choose her explicitly in a teammate slot.
+
+
 A dependency-free, browser-based Persona 5: The Phantom X guild boss simulator built around the interaction grammar of Pokémon Showdown.
 
 ## Run
 
-No install needed on Windows: download `P5X-Guild-Boss-Lab.exe` from the latest GitHub release and double-click it. It starts the simulator and opens your browser; close its window to stop it. Windows SmartScreen may warn because the exe is unsigned: choose "More info", then "Run anyway".
+Requires Node.js 18 or newer.
 
-From source, Node.js 18 or newer is required:
-
-- Windows: double-click `launch-p5x.bat` (starts the server and opens the browser)
+- Windows: double-click `run-local.bat`
 - macOS/Linux: run `./run-local.sh`
 - Manual: run `npm start`
 
 Open <http://127.0.0.1:4173>.
-
-## Folder layout
-
-- `index.html`, `manifest.webmanifest`, `src/`, `assets/`, `data/`: the app. `npm run build` copies these to `dist/`.
-- `scripts/`: optimizers, replays, and the Lufel data importers.
-- `tests/`: `node --test` suites.
-- `docs/`: evidence reports, audits, and handoff notes. Start with [docs/README.md](docs/README.md).
-- `outputs/`: script results. `outputs/validation/` holds release validation artifacts and `outputs/logs/` holds run logs.
-- `vendor/`: pinned Lufel.net source snapshot used by the importer.
 
 ## Validate and build
 
@@ -31,14 +43,6 @@ npm run build
 ```
 
 The static production copy is written to `dist/`.
-
-`npm run build:exe` builds `dist-exe/P5X-Guild-Boss-Lab.exe`, a single file that embeds the app (the same files as `dist/`) into a copy of the running Node binary using Node's single executable application support (`scripts/build-exe.mjs`, entry point `scripts/sea-main.cjs`). It needs Node 20.12 or newer and fetches the `postject` build tool through npx on first run. Set `PORT` to change the port and `P5X_NO_BROWSER=1` to skip opening the browser.
-
-## Kotone Shiomi (playable, experimental)
-
-Open the **Kotone** tab and click **Use Kotone in party slot 2 & open Builds**, or select her in Team. Set awareness, weapon, enhancement and stat basis in Builds, then enter your actual stats (the defaults are illustrative). In battle, pick **Select / reselect Arcana Link** at her normal-turn opening, then **Go for Broke**.
-
-Her values come from Lufel's published v5.1.0 data for ordinary Global (no Sync Mindscape, no Mindscape Core). Skill Mindscape defaults to LV5, the maximum, and can be set to None in Builds. A3 raises Skill 1 and A5 raises Skills 2 and 3 to their LV13 values; the Highlight stays LV10. Both weapons support +0 to +6, and the A2 copy ratio is the sourced 30% x 1.25 = 37.5%. Lufel publishes tooltip data rather than combat scripts, so Fortune, copy and Cold timing are engine policies. Recorded archive profiles reject her. Details: [docs/KOTONE-SOURCE-AUDIT.md](docs/KOTONE-SOURCE-AUDIT.md) and [docs/KOTONE-IMPLEMENTATION.md](docs/KOTONE-IMPLEMENTATION.md). Extra commands: `npm run verify:characters` and `npm run example:kotone`.
 
 ## Persona and Revelation data
 
@@ -50,7 +54,7 @@ The app ships with a normalized snapshot generated from the public English [Lufe
 - Wonder has no Revelation slot. He can equip three Personas. Each Persona keeps its own unique skill and Thief Tactics, then has six slots for skills from the imported transferable catalog. Reference-only passive or unmodeled skills can be recorded in a loadout without being treated as executable battle actions.
 - Each of Wonder’s teammates can choose a compatible main Revelation and sub-set.
 - Team Preview lets you replace any of the three teammates and move all four party members left or right to set the battle turn order.
-- The 20 recent imported characters use their English Lufelnet names, A6 Level 80 stats, Level 13 skill coefficients, Revelation recommendations, skill priority, passives, skills, Highlights, costs, targets, and source descriptions. Supported numerical effects execute directly; more complex bespoke mechanics remain visible in the full source description.
+- The original 20 imported characters (plus the separately versioned Cosmic Yui update) use their English Lufelnet names, configurable A0–A6 Level 80 source stat rows, the existing imported skill coefficients, Revelation recommendations, skill priority, passives, skills, Highlights, costs, targets, and source descriptions. Supported numerical effects execute directly; more complex bespoke mechanics remain visible in the full source description.
 - Structured bonuses such as ATK, HP, damage, critical rate, elemental damage, and starting Highlight are applied by the battle engine.
 - Mechanics that have not been converted safely remain visible as reference text and do not alter formulas.
 
@@ -108,7 +112,7 @@ In Devourer of Dreams, Life Sustainment is a free player-turn toggle that is dis
 
 Multidimensional Dreamscape is an evidence-bounded damage preview against Level 82 Hachiman. It runs six configured party rounds and includes the observed `Attack Turns Left 0` round before ending with `preview_complete`. Its result reports simulated damage only. The live observation separately establishes `(258,098,432 Foe Defense Points + 125,000 Turns Survived Bonus) x 8 = 2,065,787,456` with 6 turns survived. The simulator does not calculate hypothetical Foe Defense Points or a hypothetical game score because their accumulation rules, survival-bonus derivation, and actual end trigger remain unknown.
 
-With Hachiman selected on Team Preview, `LOAD HACHIMAN RECORDED TEAM` installs the recorded Multidimensional Dreamscape party (J&C, Wonder, Beachflower Marian, borrowed Berry, MIKU) with the observed maximum HP totals, sourced-cap lower bounds, Revelation set effects and tooltip-bridged Persona skills from `src/hachiman-recorded-team.js`. `REPLAY RECORDED ROUTE` then plays the 64 recorded T1 to T8 actions and opens a results screen that derives the projected score per normal turn. The same module drives `node scripts/compare-hachiman-opening.mjs all --seed=8`; see [HACHIMAN-STAT-EVIDENCE-2026-09-06.md](docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md) for the evidence and the remaining gaps.
+With Hachiman selected on Team Preview, `LOAD HACHIMAN RECORDED TEAM` installs the recorded Multidimensional Dreamscape party (J&C, Wonder, Beachflower Marian, borrowed Berry, MIKU) with the observed maximum HP totals, sourced-cap lower bounds, Revelation set effects and tooltip-bridged Persona skills from `src/hachiman-recorded-team.js`. `REPLAY RECORDED ROUTE` then plays the 64 recorded T1 to T8 actions and opens a results screen that derives the projected score per normal turn. The same module drives `node scripts/compare-hachiman-opening.mjs all --seed=8`; see HACHIMAN-STAT-EVIDENCE-2026-09-06.md for the evidence and the remaining gaps.
 
 Run the Miyu regression benchmark with:
 
@@ -120,7 +124,7 @@ The seeded archive regression, including MIKU's Virtual Concert and A6 echo, sco
 
 The browser's `LOAD RECORDED TEAM` preset uses A6 Miyu in Surf, A6 MIKU with the recorded song sequence, and the J&C Mischief plus Service mask pair. Full Auto breaks on turn 7 and runs Virtual Concert inside the 2-turn Weakened window.
 
-The prior 28,743-candidate optimization is preserved in [OPTIMIZED-ROTATION-A6-AUDIT-2026-08-29.md](docs/OPTIMIZED-ROTATION-A6-AUDIT-2026-08-29.md). The September 4 search is also retained as historical output in `data/optimizer-slaughter-2026-09-04-archive.json`. Neither artifact is a current live-profile optimum.
+The prior 28,743-candidate optimization is preserved in `OPTIMIZED-ROTATION-A6-AUDIT-2026-08-29.md`. The September 4 search is also retained as historical output in `data/optimizer-slaughter-2026-09-04-archive.json`. Neither artifact is a current live-profile optimum.
 
 J&C selects exactly two masks before battle and the pair stays locked for the fight. The selected masks become active S1 and S2. Both are available for the first choice, then each mask requires the opposite slot next. Two Masks as One is automatic at A1 when both Facades are ready. The live profile tracks an independent Highlight clock for each selected mask. MIKU's A1 resets those clocks. Its same-owner-turn cooldown grace remains provisional. At A6, J&C starts with one True Desire stack, gains 20 Desire Level, and gains another stack every 8 J&C turns. The Alt stores the enhancement irreversibly for the next eligible Two Masks as One rather than acting as a reversible ON/OFF switch. Exact stack consumption and automatic hit distribution remain under review.
 
@@ -128,7 +132,7 @@ Beachflower Marian's Gentle Sea Breeze follows the observed owner-turn cadence: 
 
 BERRY has dedicated tests for direct skills, Chains of Love, Lovesick stacks, S1 and S3 conditional damage, DOUBLE BERRY thresholds and repeats, the one-time free Alt, Highlight triggers, fatal survival, Auto legality, and replay determinism. The default imported source does not provide the Lovesick continuous-damage coefficient or duration, so the engine records that limitation and adds no invented DoT damage. An explicit external DoT definition can be supplied for isolated testing.
 
-[PROJECT-COMPLETION-STATUS-2026-09-05.md](docs/PROJECT-COMPLETION-STATUS-2026-09-05.md) lists runtime coverage and remaining stateful systems for every imported character. BERRY, Miyu, Marian, MIKU, and J&C have substantial dedicated state-machine coverage, but none is claimed as full-kit complete. The other 15 imported kits remain partial generic implementations. Assist and Theurgy actions are disabled because their insertion timing, gauge rules, and clocks are not implemented.
+`PROJECT-COMPLETION-STATUS-2026-09-05.md` lists runtime coverage and remaining stateful systems for every imported character. BERRY, Miyu, Marian, MIKU, and J&C have substantial dedicated state-machine coverage, but none is claimed as full-kit complete. That dated report covers the original 20-character snapshot. The Cosmic Yui update has its own coverage review, and current coverage notices are shown per character. Assist and Theurgy actions are disabled because their insertion timing, gauge rules, and clocks are not implemented.
 
 The live and replay battle logs are reverse chronological: the latest event is at the top and the first event remains at the bottom.
 
@@ -136,13 +140,13 @@ The live and replay battle logs are reverse chronological: the latest event is a
 
 The September 4, 2026 result of **37,425,059,184** is historical and stored in `data/optimizer-slaughter-2026-09-04-archive.json`. It predates the current live mechanics and must not be cited as the current best score.
 
-The current `live-2026-09-04` search evaluated 29,119 candidates and found a best searched score of **20,757,143,632** at battle seed 808. The current Full Auto baseline is **4,699,599,848**. Baseline and optimized fast/full replays match in the saved artifact. This is a best searched result, not a guaranteed global optimum or a verified live-game score. The final suite passed 98 tests, browser QA passed, and the main project was synchronized with verified hashes. See [VALIDATION-2026-09-05.md](docs/VALIDATION-2026-09-05.md).
+The current `live-2026-09-04` search evaluated 29,119 candidates and found a best searched score of **20,757,143,632** at battle seed 808. The current Full Auto baseline is **4,699,599,848**. Baseline and optimized fast/full replays match in the saved artifact. This is a best searched result, not a guaranteed global optimum or a verified live-game score. The final suite passed 98 tests, browser QA passed, and the main project was synchronized with verified hashes. See VALIDATION-2026-09-05.md.
 
-- [Historical September 4 result and rotation](docs/OPTIMIZER-RESULT-2026-09-04.md)
+- [Historical September 4 result and rotation](OPTIMIZER-RESULT-2026-09-04.md)
 - [Historical September 4 search artifact](data/optimizer-slaughter-2026-09-04-archive.json)
-- [Current September 5 result and limitations](docs/OPTIMIZER-RESULT-2026-09-05.md)
+- [Current September 5 result and limitations](OPTIMIZER-RESULT-2026-09-05.md)
 - [Current reproducible search artifact](data/optimizer-slaughter-latest.json)
-- [Handoff verification and evidence gaps](docs/HANDOFF-VERIFICATION-2026-09-04.md)
+- [Handoff verification and evidence gaps](HANDOFF-VERIFICATION-2026-09-04.md)
 
 ```bash
 node scripts/optimize-slaughter.mjs --generations 45 --population 700 --elite 45 --refine-passes 3 --search-seed 20260829 --battle-seed 808 --mechanics-profile live-2026-09-04 --output data/optimizer-slaughter-latest.json

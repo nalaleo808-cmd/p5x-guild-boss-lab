@@ -37,13 +37,13 @@ function fixedDamage(rate, sourceType = 'character_skill') {
   return engine.calculateDamage(engine.actor, skill, engine.state.boss, sourceType);
 }
 
-test('Hachiman Dreamscape Skill and Resonance use the sourced crit-rate final-damage bonus without changing crit rolls', () => {
+test('Hachiman Stable Domain converts Skill and Resonance critical value into final damage without critical hits', () => {
   const zero = fixedDamage(0);
   const half = fixedDamage(0.5);
   const full = fixedDamage(1);
   const resonance = fixedDamage(0.5, 'resonance_follow_up');
-  assert.equal(half.critical, false, 'the retained 95% roll cap can still miss at a 0.99 roll');
-  assert.equal(full.critical, false, 'the final-damage formula does not force a critical proc');
+  assert.equal(half.critical, false, 'Stable Domain prevents the ordinary critical hit');
+  assert.equal(full.critical, false, 'Stable Domain still prevents a critical hit at 100% critical rate');
   assert.ok(Math.abs(half.amount / zero.amount - 1.5) < 0.002);
   assert.ok(Math.abs(full.amount / zero.amount - 2) < 0.002);
   assert.equal(resonance.amount, half.amount);
@@ -73,6 +73,21 @@ test('Hachiman Dreamscape Skill and Resonance use the sourced crit-rate final-da
   const gunResult = gunEngine.calculateDamage(gunEngine.actor, skill, gunEngine.state.boss, 'gun');
   assert.equal(skillResult.critical, gunResult.critical);
   assert.equal(skillEngine.state.rng, gunEngine.state.rng, 'the formula preserves the two seeded random draws');
+});
+
+test('J&C A6 does not disable ordinary critical hits outside Stable Domain', () => {
+  const ordinaryBoss = clone(hachiman);
+  ordinaryBoss.id = 'ordinary-fixture';
+  ordinaryBoss.defaultMode = 'standard';
+  const jc = unit('jc-fixture', 'Sweeper');
+  jc.slug = 'j-c';
+  jc.awareness = 6;
+  const engine = new BattleEngine({
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE, bossDefinition: ordinaryBoss, modeId: 'standard',
+    teamIds: [jc.id], characterDefinitions: [jc]
+  });
+  const result = engine.calculateDamage(engine.actor, { ...skill, guaranteedCritical: true }, engine.state.boss, 'awareness_follow_up');
+  assert.equal(result.critical, true);
 });
 
 test('Hachiman Dreamscape leaves Gun and basic attack on ordinary critical damage', () => {

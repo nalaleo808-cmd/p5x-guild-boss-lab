@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "inventoryId": "hachiman-loadout-evidence-2026-09-05",
   "subsequentWeaponUpdate": {
-    "source": "docs/WONDER-WEAPON-EVIDENCE-2026-09-05.md",
+    "source": "WONDER-WEAPON-EVIDENCE-2026-09-05.md",
     "weaponName": "Cursed Ties",
     "weaponProfileId": "cursed-ties-live-2026-09-05",
     "appAndRunnerNowPassWeapon": true,
@@ -21,7 +21,7 @@
   },
   "sourceFiles": [
     {
-      "path": "docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md",
+      "path": "HACHIMAN-ROTATION-CHECK-2026-09-05.md",
       "references": ["lines 40-60", "lines 62-95", "lines 99-115", "implementation and omissions sections"],
       "use": "User-confirmed route, runner configuration summary, observed checkpoints, and equipment/stat limitations."
     },

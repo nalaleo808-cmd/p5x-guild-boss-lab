@@ -134,7 +134,7 @@ export const multidimensionalDreamscapeEvidence = Object.freeze({
   }),
   source: Object.freeze({
     kind: 'direct_live_observation_log',
-    reference: 'docs/LIVE-BATTLE-CHECK-2026-09-04.md',
+    reference: 'LIVE-BATTLE-CHECK-2026-09-04.md',
     observedOn: '2026-09-04'
   })
 });
@@ -149,15 +149,6 @@ export const bosses = [
     hpLockDamage: 827135,
     basePointScale: 1, weakenedPointScale: 3.67084627298469,
     downedDamageTaken: 0.8,
-    // In-game Special Effect tooltips, Nightmare Devourer of Dreams, 2026-09-27.
-    // Down +80% final damage is downedDamageTaken above.
-    modeEffects: {
-      devourer: {
-        source: 'In-game Special Effect tooltips, 2026-09-27',
-        elementDamage: { electric: 0.2 },
-        roleDamage: { Sweeper: 0.2 }
-      }
-    },
     encounter: {
       kind: 'fixed_five_targets',
       soulLink: true,
@@ -250,6 +241,101 @@ export const bosses = [
       summonRespawnPolicy: 'live opening has no generic end-of-round respawn; later scripted respawns remain unverified'
     },
     phases: [{ threshold: 1, name: 'Score Phase · Infinite HP', defense: 2121.464, baseDefense: 821 }]
+  },
+  {
+    id: 'surt', name: 'Surt', subtitle: 'MLD / NOD / DOD · Screenshot Sourced', level: 82,
+    artwork: '/assets/bosses/surt.png',
+    // Lufelnet Defense Reduction Calc screenshots supplied 2026-09-20:
+    // Surt base Defense 821 and Jack-o'-Lantern base Defense 364. Both use
+    // the NTMR boss Defense coefficient 258.4%, giving damage multipliers
+    // 0.398 and 0.598 through 1400 / (1400 + baseDef x defCoef).
+    maxHp: 99999999, finiteHp: false,
+    defense: 2121.464, baseDefense: 821, defenseCoefficient: 2.584,
+    defenseEvidence: 'lufelnet_defense_calc_surt_and_jack_2026-09-20',
+    downMax: 4,
+    weakness: 'ice', resistance: 'none',
+    resistances: ['physical', 'gun', 'fire', 'nuclear'],
+    immunities: ['instant_kill'],
+    turnLimit: 5, previewAttackTurns: 6,
+    previewLimitNote: 'The live MLD battle confirms six scored Attack Turns. HP and NOD/DOD ending rules remain provisional.',
+    defaultMode: 'multidimensional', supportedModes: ['multidimensional', 'nexus', 'devourer'],
+    difficultyBonus: 4, scoreMultiplier: 1, scoreAttack: true,
+    scoreModel: 'multidimensional_dreamscape_observed',
+    dreamscapeScoreVerified: true, turnsSurvivedBonus: 250000,
+    specialEffects: [
+      'At each Attack Turn end, foes gain 1 Berserk stack, up to 3. Berserk increases damage by a set amount that is not shown.',
+      'All allies and enemies begin with 2 Ragnarok stacks and gain 2 more at each Attack Turn end, up to 10. Each stack increases damage by 5%; the HP loss amount is not shown.',
+      'Party Ice damage is increased by 20%.',
+      'Party Attack is increased by 25%. Resonance critical damage is increased by 25%.',
+      'With a Guardian or Medic, foes deal 60% less final damage and take 20% more. Without one, foes deal 60% more final damage.',
+      'Surt permanently nullifies insta-kill effects.',
+      'Party ranged attacks deal 10% more damage. Gun damage gains an additional 20%.',
+      'A party member whose ammo is depleted fully reloads after 2 turns. The exact owner or shared turn clock is still unverified.'
+    ],
+    encounter: {
+      kind: 'surt_and_jack_o_lantern',
+      initialRagnarokStacks: 2,
+      ragnarokStacksPerTurn: 2, ragnarokStackCap: 10, ragnarokDamagePerStack: 0.05,
+      berserkStacksPerTurn: 1, berserkStackCap: 3,
+      partyIceDamageBonus: 0.2, partyAttackBonus: 0.25, resonanceCritDamageBonus: 0.25,
+      rangedDamageBonus: 0.1, gunDamageBonus: 0.2, ammoReloadAfterTurns: 2,
+      note: 'Live status panels show all allies and enemies at Ragnarok x2 during the opening turn. Every later Attack Turn adds 2 more, up to 10. Each stack increases damage by 5%. The set HP loss is not shown and is not modeled. Live Battle Intel confirms party Ice damage +20%, party Attack +25%, Resonance critical damage +25%, ranged damage +10%, Gun damage +20% more, and an ammo-depletion reload after 2 turns. Reload clock ownership is not yet modeled.'
+    },
+    summons: ['far-left', 'left', 'right', 'far-right'].map((position, index) => ({
+      id: index === 0 ? 'jack_o_lantern' : `jack_o_lantern_${index + 1}`,
+      species: 'jack_o_lantern', name: "Jack-o'-Lantern",
+      artwork: '/assets/bosses/jack-o-lantern.png', maxHp: 180000, finiteHp: false,
+      defense: 940.576, baseDefense: 364, defenseCoefficient: 2.584,
+      defenseEvidence: 'lufelnet_defense_calc_surt_and_jack_2026-09-20',
+      weakness: 'ice', weaknesses: ['physical', 'gun', 'ice', 'wind'],
+      resistance: 'fire', resistances: ['fire'], downMax: 4, scoreAttack: true, position
+    })),
+    encounterEvidence: {
+      status: 'battle_log_and_result_screen_2026-09-20',
+      confirmed: ['MLD six-Attack-Turn limit', 'MLD result formula', '250,000 Turns Survived Bonus', 'difficulty bonus', 'level', 'affinities', 'Surt plus four Jack-o\'-Lanterns', 'Surt and Jack-o\'-Lantern Defense inputs', 'shared four-point Down gauges', 'Berserk stack gain and cap', 'Ragnarok stack gain, cap, and damage bonus', 'Guardian/Medic composition effect', 'Null Insta-kill', 'party Ice damage bonus', 'party Attack +25%', 'Resonance critical damage +25%', 'ranged damage bonus', 'Gun damage bonus', 'ammo reload delay'],
+      result: {
+        foeDefensePoints: 1_729_515_136, turnsSurvived: 6,
+        turnsSurvivedBonus: 250_000, difficultyBonus: 4,
+        finalScore: 6_919_060_544,
+        formula: '(1,729,515,136 + 250,000) x 4 = 6,919,060,544',
+        source: 'P5X_Battle_Log_20260920_151414 plus user-supplied result screen'
+      },
+      liveTrace: {
+        source: 'live MLD Surt calibration run, 2026-09-19',
+        team: ['Wonder', 'Ichigo Shikano', 'Beachflower Minami', 'Justine & Caroline', 'Hatsune Miku'],
+        personaLoadout: ['Dionysus', 'Nian', 'Sahimochi-no-kami'],
+        openingScore: 48212,
+        action: 'Justine & Caroline S1 Mask of Mischief & Innocence targeting Surt',
+        endingScore: 72611,
+        scoreDelta: 24399,
+        runtimePanels: {
+          wonder: { displayName: 'Shunichi Kudo', level: 64, hp: 13944, maxHp: 13944, sp: 100, maxSp: 100 },
+          marian: { displayName: 'Beachflower Minami', level: 80, hp: 17711, maxHp: 17711, sp: 100, maxSp: 100, partySlot: 3 }
+        },
+        note: 'A live trace for regression comparison only. It does not identify Surt HP, Defense, or the score conversion formula. Runtime panels captured during this trace verify the listed Wonder and Marian HP, SP, levels, and Marian party slot.'
+      },
+      unknown: ['numeric HP', 'Berserk damage amount', 'Ragnarok HP loss', 'ammo reload clock ownership', 'NOD and DOD score and ending rules', 'exact per-packet game rounding']
+    },
+    phases: [{ threshold: 1, name: "Surt and Jack-o'-Lantern · Escalating Shadows", defense: 2121.464, baseDefense: 821 }]
+  },
+  {
+    id: 'shadow_ruin', name: 'Shadow of Ruin', subtitle: 'Nexus of Dreams · Nightmare IV', level: 90,
+    artwork: '/assets/bosses/shadow-ruin.png',
+    maxHp: 3250000, defense: 385, weakness: 'curse', resistance: 'physical', turnLimit: 8, scoreMultiplier: 1.12,
+    phases: [
+      { threshold: 1, name: 'Phase I · Iron Will', defense: 385 },
+      { threshold: 0.65, name: 'Phase II · Fracture', defense: 340 },
+      { threshold: 0.3, name: 'Phase III · Desperation', defense: 300 }
+    ]
+  },
+  {
+    id: 'abyssal_warden', name: 'Abyssal Warden', subtitle: 'Multi-Dimensional · Depth 7', level: 92,
+    artwork: '/assets/bosses/abyssal-warden.png',
+    maxHp: 2900000, defense: 360, weakness: 'psychic', resistance: 'curse', turnLimit: 8, scoreMultiplier: 1.18,
+    phases: [
+      { threshold: 1, name: 'Phase I · Watchful', defense: 360 },
+      { threshold: 0.5, name: 'Phase II · Open Core', defense: 290 }
+    ]
   }
 ];
 

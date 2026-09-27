@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-09-12",
+  "slug": "blitz",
+  "name": "Kumi Katayama",
+  "coverage": "partial-source-modeled",
+  "sources": [
+    {
+      "url": "https://lufel.net/en/character/blitz/",
+      "retrievedAt": "2026-09-12",
+      "note": "Client-rendered shell; numeric verification uses public upstream English source."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/skill.js",
+      "sha256": "7894696d80c265d5b99876d2b82713e8593922ee661534ef2f295cf131e8ff0f",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/ritual.js",
+      "sha256": "25d55257e0284cf82f5ad12586014fdaf800b425afa78270410716342c4a6257",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/absolroot/lufelnet/main/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/weapon.js",
+      "sha256": "870a3d1d439a14047944f6b72cb236180bc6b5aa23c7a9a43edfc7c450b3f872",
+      "retrievedAt": "2026-09-12",
+      "language": "en"
+    }
+  ],
+  "implemented": [
+    "S1/S2 Hard Knocks, S2/S3 affinity-independent per-target Down reductions, S3 Detention, and the two-owner-turn Lightning Legs state.",
+    "Base A0 Hard Knocks enhancement at every awareness rank, A1/A2/A4 knockdown effects, Highlight permanent defense decrease and three-turn damage-taken debuff.",
+    "Explicit four-star static and knockdown Attack, signature Lightning Legs critical rate, and reviewed base coefficients."
+  ],
+  "missing": [
+    "A6 Wings of Guidance and fatal-damage evasion require damage prevention and owner-action scheduling. Signature crit-damage-taken has no critical-result status consumer.",
+    "English/Japanese S1 enhancement 35% and downed-foe Attack 36% differ from Korean/Chinese 30%; cap interpretation of speed-scaled debuffs also differs. These contested effects are excluded.",
+    "Dizzy/Shock accuracy and immunities; dynamic flat Attack conversion from live game stats to normalized simulator stats."
+  ],
+  "limitations": [
+    "This is a partial source-based implementation, not a live-battle calibration.",
+    "sourceTier explicitly selects one of four printed coefficient columns, default 3 to match the current catalog. A3/A5 skill ranks are not multiplied again.",
+    "No weapon is assumed. characterOptions[slug].weapon accepts none, four-star, signature; refinement 0..6. staticWeaponStatsIncluded prevents double-counting passive equipment bonuses.",
+    "A6 Wings of Guidance and fatal-damage evasion require damage prevention and owner-action scheduling. Signature crit-damage-taken has no critical-result status consumer.",
+    "English/Japanese S1 enhancement 35% and downed-foe Attack 36% differ from Korean/Chinese 30%; cap interpretation of speed-scaled debuffs also differs. These contested effects are excluded.",
+    "Dizzy/Shock accuracy and immunities; dynamic flat Attack conversion from live game stats to normalized simulator stats."
+  ],
+  "comparison": {
+    "localSnapshot": "data/lufel-live-recent.json",
+    "localSkillsMatch": true,
+    "catalog": "data/lufel-catalog.json",
+    "catalogId": "lufel-recent-blitz",
+    "catalogGenericEffects": [
+      {
+        "slot": "S1",
+        "power": 1.1840000000000002,
+        "target": "all_enemies"
+      },
+      {
+        "slot": "S2",
+        "power": 1.577,
+        "target": "all_enemies"
+      },
+      {
+        "slot": "S3",
+        "power": 1.652,
+        "target": "all_enemies"
+      },
+      {
+        "slot": "HL",
+        "power": 3.697,
+        "target": "all_enemies",
+        "debuff": {
+          "id": "def_down",
+          "name": "DEF ↓",
+          "value": 0.341,
+          "duration": 1
+        }
+      }
+    ],
+    "existingEngineLogic": "No dedicated identifier or named skill branch found for this character; generic resolveSkill is integration point, no extraction needed."
+  },
+  "sourceRecords": {
+    "skill": {
+      "name": "Kumi Katayama",
+      "skill1": {
+        "name": "Discharge Sprocket",
+        "element": "전격광역",
+        "type": "AoE DMG",
+        "sp": 22,
+        "cool": 0,
+        "description": "Deal Electric damage to all foes equal to 101.7%/112.1%/108.0%/118.4% of Attack, and inflict Hard Knocks for 3 turns. When in Lightning Legs state, also increase this skill's damage by 35%.\nAlso, Secret Technique: Lightning Legs can be used 1 time.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%)."
+      },
+      "skill2": {
+        "name": "Thunderbolt Outrage",
+        "element": "전격광역",
+        "type": "AoE DMG",
+        "sp": 20,
+        "cool": 0,
+        "description": "Deal Electric damage to all foes equal to 135.5%/149.3%/143.8%/157.7% of Attack. Decrease Down Points of all targets that take damage by 1 regardless of Electric affinity, and inflict Hard Knocks for 1 turn. When in Lightning Legs state, decrease Down Points of all targets that take damage by 3 more and inflict Detention for 1 turn.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Katayama's Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Katayama's Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%).\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Katayama's Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%)."
+      },
+      "skill3": {
+        "name": "Secret Technique: Lightning Legs",
+        "element": "전격광역",
+        "type": "AoE DMG",
+        "sp": 25,
+        "cool": 0,
+        "description": "Deal Electric damage to all foes equal to 141.9%/156.5%/150.6%/165.2% of Attack. When targets take damage, decrease Down Points by 5 regardless of Electric affinity, and inflict Detention for 1 turn.\nWhen this skill knocks down any target, gain Lightning Legs for 2 turns.\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%).\nLightning Legs: Enhance the skill effects of the next Discharge Sprocket or Thunderbolt Outrage used."
+      },
+      "skill_highlight": {
+        "name": "Highlight",
+        "element": "전격광역",
+        "type": "AoE DMG",
+        "sp": 0,
+        "cool": 4,
+        "description": "Deal Electric damage to all foes equal to 317.6%/350.1%/337.1%/369.7% of Attack, and 50% chance to inflict Dizzy on foes for 1 turn. Also, permanently decrease the target's Defense by 29.3%/32.3%/31.1%/34.1% (this effect does not stack). Also, increase damage taken by 19.5%/21.5%/20.7%/22.7% for 3 turns."
+      },
+      "passive1": {
+        "name": "Answer the Call",
+        "element": "패시브",
+        "description": "When an ally attacks a knocked down foe, increase Attack by 36.0%.",
+        "cool": 0
+      },
+      "passive2": {
+        "name": "High-Speed Vector",
+        "element": "패시브",
+        "description": "During battle, when Katayama's Speed is above 100, increase Attack by 24 for every 1 point of Speed above 100 (up to 1920).",
+        "cool": 0
+      }
+    },
+    "ritual": {
+      "name": "Kumi Katayama",
+      "r0": "Tenacious Teacher",
+      "r0_detail": "When Katayama uses Discharge Sprocket, Secret Technique: Lightning Legs is unlocked and becomes usable 1 time.\nWhen Secret Technique: Lightning Legs deals damage, greatly decrease the target's Down Points regardless of Electric affinity. Also, increase the Defense decrease effect of Hard Knocks by 10% for 2 turns (for every 10 points of Speed, increase by 2.22% more, up to a maximum bonus of 40%).",
+      "r1": "Lightning Lecturer",
+      "r1_detail": "When Katayama knocks down a foe, permanently decrease the target's Down Point maximum by 1.\nWhen a target is inflicted with Detention, increase critical damage taken by 30% more for 1 turn.\nWhen Katayama deals Electric damage, inflict Shock on the target.",
+      "r2": "Role Model",
+      "r2_detail": "When Katayama knocks down a foe with a skill, increase the target's damage taken while downed by 10% more for 1 turn. Also, permanently increase party's Attack by 10% (stacks up to 3 times).",
+      "r3": "Electric Cycle",
+      "r3_detail": "Increase the skill levels of Discharge Sprocket and Thunderbolt Outrage by 3.",
+      "r4": "Class in Session",
+      "r4_detail": "Highlight Enhanced: After activating a Highlight, the next time Katayama knocks down a foe, permanently increase the target's damage taken by 20% more. This effect does not stack.",
+      "r5": "Unstoppable Light",
+      "r5_detail": "Increase the skill levels of Secret Technique: Lightning Legs and Thief Tactics by 3.",
+      "r6": "Unconditional Love",
+      "r6_detail": "At the start of battle, gain 2 Wings of Guidance stacks. Gain 1 Wings of Guidance stack after every 2 skills used. Wings of Guidance stacks up to 3 times.\nAt the start of Katayama's turn, spend 1 Wings of Guidance stack to gain the following buffs for 1 turn. Increase Katayama's Attack by 50%, critical rate by 10%, critical damage by 30%, and allow her Highlight to activate critical hits. Also, increase damage taken by foes with Hard Knocks by 30% more, and increase damage taken by downed foes with Detention by 20% more.\nWhen Katayama takes fatal damage, if she has Wings of Guidance, spend 1 Wings of Guidance stack to evade that damage (this effect activates once per battle, and is not effective against certain skills)."
+    },
+    "weapon": {
+      "name": "Kumi Katayama",
+      "weapon3-1": {
+        "name": "Combat Boots",
+        "health": 1343,
+        "attack": 424,
+        "defense": 237,
+        "skill_name": "Endless Rush",
+        "description": "When user has [Super Limit], increase Speed by 7.4/8.5/9.6/10.7/11.8/12.9/14.0."
+      },
+      "weapon4-1": {
+        "name": "Blitzkrieg Bangs",
+        "health": 1791.59,
+        "attack": 565.81,
+        "defense": 317.1,
+        "skill_name": "",
+        "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Katayama knocks down foes, increase Attack by 7.5%/9.8%/9.8%/12.0%/12.0%/14.2%/14.2% for each foe knocked down (up to a maximum of 22.5%/29.2%/29.2%/36.0%/36.0%/42.7%/42.7%). Lasts for 1 turn."
+      },
+      "weapon5-1": {
+        "name": "Lightning Riders",
+        "health": 2239.65,
+        "attack": 706.91,
+        "defense": 396.41,
+        "skill_name": "",
+        "description": "Increase Speed by 15.0/15.0/20.0/20.0/25.0/25.0/30.0.\nAfter using Secret Technique: Lightning Legs, increase Katayama's critical rate by 9.0%/11.7%/11.7%/14.3%/14.3%/17.0%/17.0% for 2 turns.\nIf any foes are knocked down when Katayama is present, increase the target's critical damage taken by 30.6%/39.8%/39.8%/49.0%/49.0%/58.2%/58.2% for 1 turn."
+      }
+    }
+  },
+  "integration": {
+    "initialize": "After live party stats/buffs initialized, once per assigned unit.",
+    "beforeSkill": "resolveSkill entry before cost/damage; replace skill with return value. Only dispatch for owning actor. Exceptions block unsupported casts before costs.",
+    "afterSkill": "Once after own resolved skill, passing returned prepared skill. Never invoke for preview or rejected action.",
+    "onTurnStart": "After characterTurnsStarted increments; owning unit only.",
+    "onAllyActionEnd": "Not consumed by this module.",
+    "adapter": "Call adaptCharacterDefinition on live record before legal actions are built; preserves IDs and sets source-aware targets. Respect characterUnavailable in legal-action listing.",
+    "options": "engine.config.characterOptions[slug]: sourceTier (0..3), weapon, refinement (0..6), staticWeaponStatsIncluded, flatAttackScale (Luce only, explicit live-flat to simulation-flat conversion)."
+  }
+}

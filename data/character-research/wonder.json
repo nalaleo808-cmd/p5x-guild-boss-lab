@@ -1,0 +1,39 @@
+{
+  "slug": "wonder",
+  "name": "Wonder",
+  "coverage": "audit-only",
+  "auditedAt": "2026-09-12",
+  "implemented": [
+    "Persona loadouts remain a separate system: three equip slots, fixed unique skills, and six legal transferable skill slots per Persona.",
+    "Cursed Ties remains a separate weapon record with one observed level-80, rank-6 profile and bounded panel stats.",
+    "The existing engine owns Cursed Ties Evil Eye candidate collection, configured per-hit/per-cast timing, owner-only 33% Attack condition, and its explicit unresolved-mechanic notices."
+  ],
+  "preservedSeparately": [
+    "src/persona-loadout.js",
+    "src/wonder-weapons.js",
+    "existing Cursed Ties engine integration"
+  ],
+  "limitations": [
+    "This record does not create a generic Wonder character replacement or merge Persona skills into a character kit.",
+    "Cursed Ties holder eligibility for the ally trigger, interaction of stated ailment accuracy with the 70% chance, reapplication behavior, and per-hit versus per-cast selection remain configuration- or evidence-gated.",
+    "No weapon panel stat is silently injected into Wonder's equipped totals."
+  ],
+  "sources": [
+    {
+      "file": "src/persona-loadout.js",
+      "role": "Persona slot legality and executable battle-skill selection"
+    },
+    {
+      "file": "src/wonder-weapons.js",
+      "role": "Observed Cursed Ties profile and evidence bounds"
+    },
+    {
+      "file": "src/engine.js",
+      "role": "Existing Cursed Ties effect resolution and limitation reporting"
+    }
+  ],
+  "integration": {
+    "boundary": "Keep Persona loadouts and Cursed Ties as their existing dedicated systems; character replacement modules must not duplicate or overwrite either.",
+    "status": "metadata audit only"
+  }
+}

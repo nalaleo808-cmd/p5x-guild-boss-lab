@@ -1,7 +1,7 @@
 // Verify the editable import overlay without rewriting any synced source data.
 import {readFile,access} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {withLocalCharacters,characterMechanicsRegistry} from '../src/characters/registry.js';
+import {withLocalCharacters,characterMechanicsRegistry} from '../src/characters/kotone-overlay.js';
 import {lufelCatalog} from '../src/generated/lufel-catalog.js';
 export async function verifyCharacterIntegrations() {
  const root=new URL('../',import.meta.url);

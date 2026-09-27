@@ -21,14 +21,14 @@ export function required(value, message) {
   return value;
 }
 
-// Direct in-game observations from docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md and
+// Direct in-game observations from HACHIMAN-ROTATION-CHECK-2026-09-05.md and
 // data/ichigo-live-t3-snapshot-2026-09-05.json. Maximum HP values are the
 // full-heal totals after the T3 Two Masks as One (Berry reached her separately
 // confirmed 11,334 maximum, so every member was capped at maximum). Lower
 // bounds are derived from buff values that sit exactly at their sourced caps.
 // None of these values were chosen to move the simulated score.
 export const OBSERVED_STAT_EVIDENCE = Object.freeze({
-  source: 'docs/HACHIMAN-ROTATION-CHECK-2026-09-05.md T2/T3 checkpoints and the T3 BERRY stat snapshot',
+  source: 'HACHIMAN-ROTATION-CHECK-2026-09-05.md T2/T3 checkpoints and the T3 BERRY stat snapshot',
   rule: 'Observed totals and sourced-cap lower bounds only; no value was fitted to the recorded score.',
   'j-c': {
     maxHp: { value: 11682, kind: 'observed', evidence: 'T3 full-heal HP after Two Masks as One' },
@@ -128,19 +128,6 @@ export const PERSONA_SKILL_ADAPTERS = Object.freeze({
   // Source: "Remove Electric/Fire resistance from 1 target for 2 turns." The SP
   // cost is missing from the source data (catalog costType "missing"), so the
   // catalog's 0 is kept until an in-game cost is confirmed.
-  // Sahimochi-no-kami's unique skill; same values as the existing One-Fathom Fang
-  // UI adapter (22 SP, ICE DAMAGE TAKEN +8.8% for 2 turns; power 1.1 set in app.js).
-  'Chilling Depth': {
-    cost: 22,
-    debuff: { id: 'ice_vuln', name: 'ICE DAMAGE TAKEN', value: 0.088, duration: 2 },
-    sourceConfidence: 'existing-recorded-ui-adapter'
-  },
-  // Surt's unique skill, as executable in the newer Lufel catalog: all foes' Defense
-  // -29.8% for 3 turns. Its SP cost is missing from the source data there too (0).
-  Marakunda: {
-    debuff: { id: 'def_down', name: 'DEF DOWN', stat: 'defenseDown', value: 0.298, duration: 3 },
-    sourceConfidence: 'source-described-newer-catalog'
-  },
   'Elec Break': {
     debuff: { id: 'electric_break', name: 'ELEC BREAK', resistanceBreak: 'electric', duration: 2 },
     sourceConfidence: 'source-tooltip-sp-cost-missing',
@@ -165,16 +152,24 @@ export const PERSONA_SKILL_ADAPTERS = Object.freeze({
 export function adaptPersonaSkill(skill) {
   const adapter = PERSONA_SKILL_ADAPTERS[skill?.name];
   if (!adapter) return skill;
+  const catalogCombat = skill.combat || {};
+  const adaptedDebuff = adapter.debuff ? { ...(catalogCombat.debuff || {}), ...clone(adapter.debuff) } : null;
+  const adaptedBuff = adapter.buff ? {
+    ...(catalogCombat.buff || {}), ...clone(adapter.buff),
+    ...(catalogCombat.buff?.scaling ? {
+      scaling: { ...clone(catalogCombat.buff.scaling), base: Number(adapter.buff.value) }
+    } : {})
+  } : null;
   return {
     ...skill,
     cost: adapter.cost ?? skill.cost,
     ...(adapter.runnerPer500Attack ? { runnerPer500Attack: adapter.runnerPer500Attack, runnerPer500AttackCap: adapter.runnerPer500AttackCap } : {}),
     combat: {
-      ...(skill.combat || {}),
+      ...catalogCombat,
       executable: true,
       confidence: adapter.sourceConfidence,
-      ...(adapter.debuff ? { debuff: clone(adapter.debuff) } : {}),
-      ...(adapter.buff ? { buff: clone(adapter.buff) } : {})
+      ...(adaptedDebuff ? { debuff: adaptedDebuff, debuffs: [adaptedDebuff] } : {}),
+      ...(adaptedBuff ? { buff: adaptedBuff, buffs: [adaptedBuff] } : {})
     }
   };
 }
@@ -211,11 +206,27 @@ export function combatSkill(skill, index, override = {}) {
     name: skill.name,
     element: skill.element || 'support',
     cost: Number(skill.cost || 0),
+    hpCost: Number(skill.hpCost || 0),
     power: Number(combat.power || skill.power || 0),
     target: skill.target,
     scalingStat: skill.scalingStat,
     buff: combat.buff ? clone(combat.buff) : undefined,
+    buffs: combat.buffs ? clone(combat.buffs) : undefined,
+    buffTarget: combat.buffTarget,
     debuff: combat.debuff ? clone(combat.debuff) : undefined,
+    debuffs: combat.debuffs ? clone(combat.debuffs) : undefined,
+    critBonus: combat.critBonus,
+    accuracyModifier: combat.accuracyModifier,
+    hitCount: combat.hitCount,
+    hitCountRange: combat.hitCountRange ? clone(combat.hitCountRange) : undefined,
+    ignoreDefense: combat.ignoreDefense,
+    technical: combat.technical ? clone(combat.technical) : undefined,
+    heal: combat.heal,
+    healAttack: combat.healAttack,
+    healFlat: combat.healFlat,
+    healTarget: combat.healTarget,
+    spRestore: combat.spRestore,
+    limitations: combat.limitations ? clone(combat.limitations) : undefined,
     note: normalizeText(skill.description || skill.note || ''),
     sourceConfidence: combat.confidence || 'reference-only',
     ...override
@@ -245,6 +256,8 @@ export function dionysusDefinition() {
       arcana: persona.position || `Grade ${persona.grade}`,
       element: persona.element,
       trait: persona.passive?.at(-1)?.name || persona.description,
+      passive: clone(persona.passive || []),
+      maxRankPassive: clone(persona.maxRankPassive || null),
       source: 'Local Lufelnet catalog with checkpoint-runner adapters',
       skills: [
         combatSkill(revolution, 0, { cost: 22 }),
@@ -440,7 +453,7 @@ export class HachimanRecordedEngine extends BattleEngine {
   // Auto-Mataru IV lasts only while Dionysus is the active Persona (tooltip
   // "until user changes Personas", confirmed by Joker on 2026-09-06). The T2-start
   // capture that still showed Matarukaja IV after the T1 switch is recorded as
-  // an unexplained exception in docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+  // an unexplained exception in HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
   selectPersona(personaId) {
     const leavingDionysus = this.activePersona?.name === 'Dionysus';
     const result = super.selectPersona(personaId);
@@ -510,6 +523,8 @@ export function createHachimanRecordedConfig(seed = HACHIMAN_RECORDED_SEED, high
     loadouts: {
       [twins.id]: {
         jcMasks: ['mischief', 'service'],
+        jcDesireLevel: 120,
+        characterResearch: { weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true },
         revelationMain: OBSERVED_STAT_EVIDENCE.jcRevelation.main,
         revelationSet: OBSERVED_STAT_EVIDENCE.jcRevelation.set,
         revelationName: `${OBSERVED_STAT_EVIDENCE.jcRevelation.main} / ${OBSERVED_STAT_EVIDENCE.jcRevelation.set}`,

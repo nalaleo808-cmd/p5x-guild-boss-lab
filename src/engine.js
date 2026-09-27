@@ -1,21 +1,35 @@
+import { awarenessStatDefaults, loadoutForUnit, resolveAwareness } from './awareness.js';
+import { cosmicYuiMethods } from './cosmic-yui-mechanics.js';
+import { characterHook, characterModuleFor, initializeRegisteredCharacters, notifyCharacterActionEnd, prepareCharacterDamage, notifyCharacterDamage, notifyCharacterSpecialAction, notifyCharacterKnockout, registeredLegacyMethods } from './characters/registry.js';
 import { resolveForcedTheurgy } from './combat/forced-theurgy.js';
 import { equippedAttack } from './combat/weapon-stats.js';
 import { createSupportRuntime, effectProvenance, prepareSupportCopy, commitSupportCopy, advanceSupportClocks } from './combat/support-effects.js';
 import { enqueueSupportAction, completeSupportAction } from './combat/support-actions.js';
 import { KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
-import { withLocalCharacters, createCharacterMechanics } from './characters/registry.js';
+import { withLocalCharacters, createCharacterMechanics } from './characters/kotone-overlay.js';
 import { bosses, navigator, personas, roster, multidimensionalDreamscapeEvidence } from './data.js';
-import { getHachimanDreamscapeTurnScoreMultiplier, getObservedDreamscapeMultiplier } from './mode-scoring.js';
+import { calculateDreamscapeResult, getMultidimensionalDreamscapeTurnScoreMultiplier, getObservedDreamscapeMultiplier } from './mode-scoring.js';
 import {
   CURSED_TIES_WEAPON_ID,
   getWonderWeaponDefinition,
   getWonderWeaponProfile
 } from './wonder-weapons.js';
+import {
+  WONDER_WEAPON_EFFECT_LIMITATIONS,
+  createWonderWeaponEffectState,
+  wonderWeaponBattleStart,
+  wonderWeaponOnDamage,
+  wonderWeaponOnKnockdown,
+  wonderWeaponOnPersonaChange,
+  wonderWeaponOnSkillTargetAlly,
+  wonderWeaponOnTurnEnd
+} from './wonder-weapon-effects.js';
 
 const clone = value => structuredClone(value);
 const byId = (list, id) => list.find(item => item.id === id);
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const scorePoint = value => Math.max(0, Math.round(Number(value) || 0));
+const isWeakTo = (target, element) => target?.weakness === element || target?.weaknesses?.includes(element) === true;
 const jcMaskByName = Object.freeze({
   'Mask of Mischief & Innocence': 'mischief',
   'Mask of Service & Admonition': 'service',
@@ -25,20 +39,6 @@ const jcMaskByName = Object.freeze({
 const jcSecondaryElement = Object.freeze({ mischief: 'ice', service: 'wind', absurdity: 'nuclear', luck: 'curse' });
 const defaultJcMasks = Object.freeze(['mischief', 'absurdity']);
 const jcPairKey = masks => [...masks].sort().join('+');
-// Mermaid Dreamer [Deep Blue Tuberide], in-game Forge Details at level 80 /
-// weapon level 6 (2026-09-27). Its +69% crit damage is in equipped totals.
-const wavecatcherWeaponLevels = Object.freeze({
-  'mermaid-dreamer': Object.freeze({
-    6: Object.freeze({ resonanceCritRate: 0.314, spendDamage: 0.128, spendStackCap: 5 })
-  })
-});
-// Warden's Judgement [One-Winged Butterfly], in-game Set tooltip at weapon
-// level 6 (2026-09-27). Other levels are not recorded.
-const jcWeaponLevels = Object.freeze({
-  'wardens-judgement': Object.freeze({
-    6: Object.freeze({ twoMasksDesire: 19, facadeCritDamage: 0.25, facadeDamage: 0.25, facadeDuration: 2, facadeStackCap: 2 })
-  })
-});
 const mikuSongs = Object.freeze(['Heaven', 'Spring Storm', 'Play-With-Fire']);
 const mikuTrackBySong = Object.freeze({ Heaven: 'Break', 'Spring Storm': 'Critical', 'Play-With-Fire': 'Expert' });
 // Direct live tooltip/readback costs from the 2026-09-05 Hachiman run. The
@@ -75,7 +75,7 @@ export class BattleEngine {
     if ((config.teamIds || []).includes(KOTONE_SHIOMI_ID) && config.mechanicsProfile === RECORDED_MECHANICS_PROFILE) throw new Error('Kotone is available in the live ordinary Global profile, not archived recorded replays');
     if (config.mechanicsProfile && ![CURRENT_MECHANICS_PROFILE, RECORDED_MECHANICS_PROFILE].includes(config.mechanicsProfile)) throw new Error('Unknown mechanics profile');
     this.personaDefinitions = [...personas, ...(config.personaDefinitions || [])];
-    this.characterDefinitions = withLocalCharacters([...roster, ...(config.characterDefinitions || [])]);
+    this.characterDefinitions = withLocalCharacters([...(config.characterDefinitions || []), ...roster]);
     this.bossDefinitions = [...(config.bossDefinitions || []), ...bosses];
     this.bossDefinition = config.bossDefinition ? clone(config.bossDefinition) : null;
     this.navigatorDefinition = clone(config.navigatorDefinition || navigator);
@@ -86,7 +86,8 @@ export class BattleEngine {
       modeId: config.modeId || null,
       teamIds: config.teamIds || roster.map(member => member.id),
       personaIds: config.personaIds || personas.map(persona => persona.id),
-      loadouts: config.loadouts || {},
+      loadouts: clone(config.loadouts || {}),
+      characterOptions: clone(config.characterOptions || {}),
       ...(typeof config.kotoneOwned === 'boolean' ? { kotoneOwned: config.kotoneOwned } : {}),
       // The UI persists these on Wonder's loadout. Top-level fields keep the
       // engine usable by direct callers and replay fixtures.
@@ -95,6 +96,7 @@ export class BattleEngine {
       weaponProcGranularity: ['per-hit', 'per-cast'].includes(config.weaponProcGranularity)
         ? config.weaponProcGranularity : null,
       jcMaskPair: Array.isArray(config.jcMaskPair) ? config.jcMaskPair : null,
+      jcOpeningAutoTargetId: config.jcOpeningAutoTargetId || null,
       // When omitted, the live bonus follows an A6 J&C in the selected party.
       // Callers that model the account-wide A6 effect while J&C is off-party
       // can provide an explicit boolean.
@@ -102,6 +104,9 @@ export class BattleEngine {
       encounterThresholds: Array.isArray(config.encounterThresholds) ? clone(config.encounterThresholds) : null,
       lifeSustainment: config.lifeSustainment == null ? null : config.lifeSustainment === true,
       wavecatcherFollowUps: config.wavecatcherFollowUps !== false,
+      wavecatcherSourceMechanics: typeof config.wavecatcherSourceMechanics === 'boolean'
+        ? config.wavecatcherSourceMechanics
+        : (config.mechanicsProfile || CURRENT_MECHANICS_PROFILE) === CURRENT_MECHANICS_PROFILE,
       itemInventory: config.itemInventory && typeof config.itemInventory === 'object' ? clone(config.itemInventory) : null,
       fastMode: config.fastMode === true,
       sharedMechanics: clone(config.sharedMechanics || {}),
@@ -143,10 +148,15 @@ export class BattleEngine {
     this.supportCastContext = null;
     const bossData = clone(this.bossDefinition || byId(this.bossDefinitions, this.config.bossId) || bosses[0]);
     const modeId = this.config.modeId || bossData.defaultMode || 'nexus';
-    const dreamscapePreview = this.usesLiveMechanics() && modeId === 'multidimensional';
+    const dreamscapeRun = this.usesLiveMechanics() && modeId === 'multidimensional';
+    const dreamscapePreview = dreamscapeRun && bossData.dreamscapeScoreVerified !== true;
     const liveHachimanDreamscape = this.usesLiveMechanics() && bossData.id === 'hachiman' && modeId === 'multidimensional';
     const liveHachimanDevourer = this.usesLiveMechanics() && bossData.id === 'hachiman' && modeId === 'devourer';
     const liveHachiman = liveHachimanDreamscape || liveHachimanDevourer;
+    const liveSurt = this.usesLiveMechanics() && bossData.id === 'surt'
+      && ['multidimensional', 'nexus', 'devourer'].includes(modeId);
+    const liveScoreAttackMode = this.usesLiveMechanics() && bossData.scoreAttack === true
+      && ['multidimensional', 'nexus', 'devourer'].includes(modeId);
     if (liveHachimanDevourer) {
       // User-supplied Devourer of Dreams rules (2026-09-09): HP capped at 410,000
       // before the break, HP Lock only prevents HP going under 1, the break opens
@@ -184,7 +194,7 @@ export class BattleEngine {
     }
     const itemInventory = Object.fromEntries(observedDreamscapeItems.map(itemId => {
       const configured = this.config.itemInventory?.[itemId];
-      const defaultCount = liveHachiman ? 1 : 0;
+      const defaultCount = liveScoreAttackMode ? 1 : 0;
       return [itemId, clamp(Math.floor(Number(configured ?? defaultCount) || 0), 0, 10)];
     }));
     const lifeSustainment = liveHachimanDevourer
@@ -199,7 +209,7 @@ export class BattleEngine {
       });
     }
     const party = this.config.teamIds.map(id => clone(byId(this.characterDefinitions, id))).filter(Boolean).map(unit => {
-      const loadout = this.config.loadouts[unit.id] || {};
+      const loadout = loadoutForUnit(this.config.loadouts, unit);
       const weaponId = unit.id === 'wonder' ? (loadout.weaponId || this.config.weaponId) : null;
       const weaponProfileId = unit.id === 'wonder' ? (loadout.weaponProfileId || this.config.weaponProfileId) : null;
       const weaponProcGranularity = unit.id === 'wonder' && ['per-hit', 'per-cast'].includes(loadout.weaponProcGranularity)
@@ -208,9 +218,17 @@ export class BattleEngine {
       const weaponProfile = weapon ? getWonderWeaponProfile(weaponId, weaponProfileId) : null;
       const stats = loadout.baseStats || {};
       const equippedStats = loadout.statsMode === 'equipped' || stats.statsMode === 'equipped';
+      const weaponStats = weaponProfile?.weaponStats || {};
+      const weaponComponentStatsApplied = Boolean(weapon && weaponProfile && !equippedStats);
+      const weaponComponentStat = key => {
+        if (!weaponComponentStatsApplied) return 0;
+        const value = Number(weaponStats[key]);
+        return Number.isFinite(value) ? value : 0;
+      };
       const hasStat = key => Number.isFinite(Number(stats[key]));
       const displayedPercent = key => hasStat(key) ? Number(stats[key]) / 100 : 0;
-      const awareness = Number.isFinite(Number(unit.awareness)) ? Number(unit.awareness) : 6;
+      const awareness = resolveAwareness(unit, loadout);
+      Object.assign(unit, awarenessStatDefaults(unit, awareness));
       const sourceLevelStats = unit.sourceStats?.[`a${awareness}_lv80`] || unit.sourceStats?.a6_lv80 || unit.sourceStats?.a0_lv80 || {};
       const sourceAttack = Number(sourceLevelStats.attack ?? unit.attack ?? 0);
       const sourceMaxHp = Number(sourceLevelStats.HP ?? sourceLevelStats.maxHp ?? unit.maxHp ?? 1);
@@ -224,6 +242,13 @@ export class BattleEngine {
       }
       for (const key of ['maxHp', 'maxSp', 'attack', 'defense', 'speed']) {
         if (hasStat(key)) unit[key] = Number(stats[key]);
+      }
+      if (this.config.wavecatcherSourceMechanics && unit.slug === 'puppet-wavecatcher'
+        && awareness >= 6 && !hasStat('maxSp')) unit.maxSp = 450;
+      if (weaponComponentStatsApplied) {
+        unit.maxHp = Number(unit.maxHp || 0) + weaponComponentStat('maxHp');
+        unit.attack = Number(unit.attack || 0) + weaponComponentStat('attack');
+        unit.defense = Number(unit.defense || 0) + weaponComponentStat('defense');
       }
       if (hasStat('critRate')) unit.crit = displayedPercent('critRate');
       if (hasStat('critMult')) unit.critMult = displayedPercent('critMult');
@@ -240,8 +265,10 @@ export class BattleEngine {
       // 100% crit rate. Ordinary critical-hit rolls retain their 95% cap.
       const dreamscapeCritRateCap = liveHachiman ? 1 : 0.95;
       unit.crit = clamp(unit.crit + critRateBonus, 0, dreamscapeCritRateCap);
-      const mechanicAttackBase = hasStat('attack') ? Number(stats.attack) : sourceAttack;
-      const mechanicMaxHpBase = hasStat('maxHp') ? Number(stats.maxHp) : sourceMaxHp;
+      const mechanicAttackBase = (hasStat('attack') ? Number(stats.attack) : sourceAttack)
+        + weaponComponentStat('attack');
+      const mechanicMaxHpBase = (hasStat('maxHp') ? Number(stats.maxHp) : sourceMaxHp)
+        + weaponComponentStat('maxHp');
       const spRecovery = hasStat('spRecovery')
         ? Number(stats.spRecovery)
         : Number(unit.sourceStats?.awake7?.sp_recover ?? 100);
@@ -249,7 +276,9 @@ export class BattleEngine {
         ? this.validJcMasks(loadout.jcMasks || this.config.jcMaskPair || defaultJcMasks)
         : [];
       const combatUnit = {
-        ...unit, hp: unit.maxHp, sp: unit.maxSp, ammo: unit.maxAmmo || 8,
+        ...unit, hp: unit.maxHp,
+        sp: this.config.wavecatcherSourceMechanics && unit.slug === 'puppet-wavecatcher' && awareness < 6 ? 0 : unit.maxSp,
+        ammo: unit.maxAmmo || 8,
         awareness,
         // Recorded replays retain their individual 35-base gauges. Live Highlight
         // is a party resource initialized after every member's Revelation is known.
@@ -269,15 +298,13 @@ export class BattleEngine {
         ailmentResistance: displayedPercent('ailmentResistance'), damageReduction: displayedPercent('damageReduction'),
         technicalPrecision: hasStat('technicalPrecision') ? Number(stats.technicalPrecision) : 0,
         blessingStacks: 0, downPoints: hasStat('downPoints') ? Number(stats.downPoints) : 0,
+        ragnarokStacks: liveSurt ? Number(bossData.encounter?.initialRagnarokStacks || 0) : 0,
         midsummerPrescription: 0, medicinePrescriptionMax: 2, medicineUses: 0, lastMedicineCharacterTurn: 0,
         characterTurnsStarted: 0,
         highlightCooldowns: {}, highlightCooldownGrace: {},
         skillCooldowns: Object.fromEntries((unit.skills || []).map(skill => [skill.id, 0])),
         surfActive: unit.slug === 'puppet-wavecatcher' && awareness >= 6, offshoreStacks: 0, surfReentryLocked: false,
-        wavecatcherWeapon: unit.slug === 'puppet-wavecatcher' && this.usesLiveMechanics() && wavecatcherWeaponLevels[loadout.weaponId]?.[loadout.weaponLevel]
-          ? { id: loadout.weaponId, level: loadout.weaponLevel, ...wavecatcherWeaponLevels[loadout.weaponId][loadout.weaponLevel] }
-          : null,
-        tuberideStacks: 0,
+        catchAWaveCount: 0, totalRecoveredSp: 0, pendingOffshoreReset: false,
         spCapMultiplier: unit.skills?.some(skill => skill.name === 'Jellyfish Splash') ? 2 : 1,
         healingBonus: 0, shieldBonus: 0, nextMedicineEffectBonus: 0
       };
@@ -289,9 +316,7 @@ export class BattleEngine {
           weaponStats: clone(weaponProfile.weaponStats),
           forge: clone(weaponProfile.forge),
           procGranularity: weaponProcGranularity,
-          // Component values deliberately remain metadata because Wonder's
-          // full equipped totals are unknown.
-          componentStatsApplied: false
+          componentStatsApplied: weaponComponentStatsApplied
         };
       }
       if (unit.slug === 'rin-firecracker') Object.assign(combatUnit, {
@@ -302,13 +327,13 @@ export class BattleEngine {
         const attackDesire = Math.min(45, Math.floor(combatUnit.mechanicAttack / 100));
         const damageDesire = Math.min(15, Math.floor((combatUnit.damageBonus || 0) * 100 / 2));
         const critDesire = Math.min(15, Math.floor(Math.max(0, (combatUnit.critMult || 1.5) * 100 - 100) / 6));
+        const configuredDesire = Number(loadout.jcDesireLevel);
         Object.assign(combatUnit, {
           selectedMasks,
           facades: awareness >= 1 ? [...selectedMasks] : [],
-          desireLevel: 25 + attackDesire + damageDesire + critDesire + (awareness >= 6 ? 20 : 0),
-          jcWeapon: this.usesLiveMechanics() && jcWeaponLevels[loadout.weaponId]?.[loadout.weaponLevel]
-            ? { id: loadout.weaponId, level: loadout.weaponLevel, ...jcWeaponLevels[loadout.weaponId][loadout.weaponLevel] }
-            : null,
+          desireLevel: Number.isFinite(configuredDesire)
+            ? clamp(configuredDesire, 0, 120)
+            : 25 + attackDesire + damageDesire + critDesire + (awareness >= 6 ? 20 : 0),
           trueDesireStacks: awareness >= 6 ? 1 : 0,
           trueDesirePrimed: false,
           jcTurnsStarted: 0,
@@ -369,6 +394,8 @@ export class BattleEngine {
     const summons = (bossData.summons || []).map((summon, index) => ({
       ...summon, hp: summon.maxHp, alive: true, downMax: summon.downMax || 1,
       downPoints: summon.downMax || 1, downed: false, buffs: [], debuffs: [],
+      berserkStacks: Number(summon.berserkStacks || 0),
+      ragnarokStacks: Number(summon.ragnarokStacks ?? bossData.encounter?.initialRagnarokStacks ?? 0),
       spawnOrdinal: Number(summon.spawnOrdinal ?? index + 1), spawnedAttackTurn: 1,
       eligibleAttackTurn: 1, lastActedAttackTurn: 0
     }));
@@ -376,6 +403,8 @@ export class BattleEngine {
       ...(this.usesLiveMechanics() ? { supportRuntime: createSupportRuntime() } : {}),
       mechanicsProfile: this.config.mechanicsProfile,
       mechanicsLimitations: this.usesLiveMechanics() ? [
+        ...(party.some(unit => unit.awareness < 6) || resolveAwareness(this.navigatorDefinition, loadoutForUnit(this.config.loadouts, this.navigatorDefinition)) < 6
+          ? ['Awareness profiles use source-specific base stats and existing rank-gated mechanics. Imported skill coefficients and unimplemented awareness effects are not automatically re-derived.'] : []),
         'Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.',
         ...(wonderLevelBonus ? ['J&C A6 grants Wonder +1 Skill Level and +1 Thief Tactics Level. Per-level coefficients are unavailable, so no numeric multiplier is applied.'] : []),
         ...(party.some(unit => unit.slug === 'berry') ? ['Lovesick uses sourced level-based damage and noncritical snapshots. Highlight-trigger Pierce is unverified and excluded; the first all-DoT Highlight activation conservatively cannot crit. Reapplication at the stack cap preserves existing snapshots; transferred snapshots retain their original factors pending isolated evidence. Per-stack critical-roll granularity is unverified; each activation uses one roll.'] : []),
@@ -389,9 +418,11 @@ export class BattleEngine {
           ? ['Elec Break / Fire Break SP cost is missing from the source data; 0 SP is used until an in-game cost is confirmed.'] : []),
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
-        ...(party.some(unit => unit.slug && !['berry', 'j-c', 'marian-beachflower', 'puppet-wavecatcher', 'rin-firecracker', 'matoi', 'akihiko', 'yukari', 'makoto', 'kotone-shiomi'].includes(unit.slug)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
+        ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),
+        ...(liveSurt && modeId !== 'multidimensional' ? ['Surt is selectable in NOD and DOD, but the supplied screenshots only confirm the MLD encounter. NOD and DOD HP, score, and ending rules remain provisional.'] : []),
+        ...(party.some(unit => unit.slug && unit.id !== KOTONE_SHIOMI_ID && !characterModuleFor(unit)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
-        ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID) ? ["Cursed Ties applies its 33% Attack condition to holder Wonder only. Whether 'an ally' includes Wonder, ailment-accuracy interaction with the stated 70% chance, and Evil Eye reapplication behavior remain unverified."] : [])
+        ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID) ? ["Cursed Ties applies its 36% Attack condition to holder Wonder only. Whether 'an ally' includes Wonder, ailment-accuracy interaction with the stated 70% chance, and Evil Eye reapplication behavior remain unverified."] : [])
       ] : ['Archived mechanics reproduce the recorded 2026-08-29 replay and do not include confirmed live corrections.'],
       rng: this.initialSeed || 1,
       sharedCombat: {
@@ -431,21 +462,20 @@ export class BattleEngine {
       // is unlimited, one use per Marian turn. The earlier 10-use cap and the
       // 7-prescription reading from the live run are withdrawn; a finite count
       // can still be set with config.marianPrescriptions for what-ifs.
-      itemMaxUses: liveHachiman ? (Number(this.config.marianPrescriptions) > 0 ? Number(this.config.marianPrescriptions) : Infinity) : 0,
-      itemUsesRemaining: liveHachiman ? (Number(this.config.marianPrescriptions) > 0 ? Number(this.config.marianPrescriptions) : Infinity) : 0,
+      itemMaxUses: liveScoreAttackMode ? (Number(this.config.marianPrescriptions) > 0 ? Number(this.config.marianPrescriptions) : Infinity) : 0,
+      itemUsesRemaining: liveScoreAttackMode ? (Number(this.config.marianPrescriptions) > 0 ? Number(this.config.marianPrescriptions) : Infinity) : 0,
       followUpRng: (this.initialSeed ^ 0x9e3779b9) >>> 0 || 1,
       attackTurn: 1, attackTurnsLeft: bossData.turnLimit, round: 1,
       actorIndex: 0, turnActionsUsed: 0, turnActionsTotal: party[0]?.actionLimit || 1,
       actionNumber: 1, phase: 'battle', score: 0, totalDamage: 0,
       wonderLevelBonus,
-      scoreBreakdown: dreamscapePreview ? {
-        model: 'multidimensional_dreamscape_preview', evidenceStatus: 'damage_preview_only',
+      scoreBreakdown: dreamscapeRun ? {
+        model: dreamscapePreview ? 'multidimensional_dreamscape_preview' : 'multidimensional_dreamscape_observed',
+        evidenceStatus: dreamscapePreview ? 'damage_preview_only' : 'verified_result_formula',
         damagePreview: 0,
-        ...(liveHachimanDreamscape ? {
-          turnWeightedDamagePoints: 0, turnScoreBuckets: [], foeDefensePoints: 0,
-          foeDefensePointsRounding: 'The preview rounds cumulative turn-weighted damage once to derive Foe Defense Points. The observed game rounding convention remains unverified.'
-        } : { foeDefensePoints: null }),
-        turnsSurvivedBonus: null,
+        turnWeightedDamagePoints: 0, turnScoreBuckets: [], foeDefensePoints: 0,
+        foeDefensePointsRounding: 'The preview rounds cumulative turn-weighted damage once to derive Foe Defense Points. The observed game rounding convention remains unverified.',
+        turnsSurvivedBonus: dreamscapePreview ? null : Number(bossData.turnsSurvivedBonus || 0),
         difficultyBonus: bossData.difficultyBonus || 1,
         observedSurvivalMultiplier: getObservedDreamscapeMultiplier(bossData.turnLimit),
         formulaEvidence: clone(multidimensionalDreamscapeEvidence.resultFormula)
@@ -458,8 +488,10 @@ export class BattleEngine {
       party,
       boss: {
         ...bossData, hp: bossData.maxHp, buffs: [], debuffs: [], phaseIndex: 0,
+        berserkStacks: Number(bossData.berserkStacks || 0),
+        ragnarokStacks: Number(bossData.ragnarokStacks ?? bossData.encounter?.initialRagnarokStacks ?? 0),
         modeId,
-        ...(dreamscapePreview ? { scoreModel: 'multidimensional_dreamscape_preview', scoreEvidence: clone(multidimensionalDreamscapeEvidence) } : {}),
+        ...(dreamscapeRun ? { scoreModel: dreamscapePreview ? 'multidimensional_dreamscape_preview' : 'multidimensional_dreamscape_observed', scoreEvidence: clone(multidimensionalDreamscapeEvidence) } : {}),
         lifeSustainment,
         hpLockDamage: Number(bossData.hpLockDamage || 0), breakPending: false,
         weakenedActive: false, weakenedPending: false, weakenedTurnsLeft: 0, breakTurn: null,
@@ -473,6 +505,19 @@ export class BattleEngine {
     };
     if (this.usesEnemyTimeline()) this.initializeEnemyTimeline();
     this.initializeCharacterPassives();
+    // A6 Wavecatcher begins at full SP because Aerial Tide restores her max SP
+    // at battle start. That restoration also counts toward her cumulative
+    // recovered-SP thresholds before the opening automatic follow-up.
+    if (this.config.wavecatcherSourceMechanics) {
+      for (const unit of this.state.party.filter(member => this.isWavecatcher(member) && member.awareness >= 6)) {
+        this.recordWavecatcherRecovery(unit, unit.maxSp, 'a6_battle_start');
+      }
+    }
+    this.syncPersonaPassiveEffects();
+    this.initializeWonderWeaponEffects();
+    initializeRegisteredCharacters(this);
+    this.initializeCosmicYui();
+    for (const unit of this.state.party.filter(member => this.isCosmicYui(member))) this.resolveCosmicAutomatic(unit);
     this.kotoneMechanics = createCharacterMechanics(KOTONE_SHIOMI_ID, this);
     this.kotoneMechanics.initialize();
     if (this.config.kotoneOwned === true) this.kotoneMechanics.refreshAuras();
@@ -487,15 +532,33 @@ export class BattleEngine {
     if (this.state.boss.scoreModel === 'recorded_nightmare' && this.state.boss.modeId === 'nexus') {
       this.emit('mechanic', `Nexus HP lock: ${this.state.boss.hpLockDamage.toLocaleString()} credited pre-break damage, then 2 Weakened Attack Turns.`, { tone: 'phase' });
     }
+    if (liveSurt) {
+      this.emit('mechanic', 'Surt field effect: party Ice damage +20%, Attack +25%, and Resonance critical damage +25%.', { tone: 'phase' });
+      this.emit('mechanic', this.hasDreamscapeGuardianOrMedic()
+        ? 'Guardian or Medic active: foes deal 60% less final damage and take 20% more.'
+        : 'No Guardian or Medic: foes deal 60% more final damage.', { tone: 'phase' });
+      this.emit('mechanic', 'All combatants begin with 2 Ragnarok. At each Attack Turn end, every living combatant gains 2 more and enemy Shadows gain 1 Berserk.', { tone: 'phase' });
+    }
     this.emit('round', `Attack Turn ${this.state.attackTurn} begins — ${this.state.attackTurnsLeft} remaining.`, { tone: 'turn' });
     if (this.usesEnemyTimeline()) this.startTimelinePartySlot(0);
     else this.beginActorTurn();
+    if (this.state.party.some(unit => this.isCosmicYui(unit)) && this.allEnemiesDefeated()) this.finish('victory');
     this.recordFrame('Battle start');
     return this.getObservation();
   }
 
   createNavigatorState() {
     const definition = clone(this.navigatorDefinition);
+    const loadout = loadoutForUnit(this.config.loadouts, definition);
+    definition.awareness = resolveAwareness(definition, loadout);
+    const stats = loadout.baseStats || {};
+    const hasStat = key => stats[key] != null && String(stats[key]).trim() !== '' && Number.isFinite(Number(stats[key]));
+    for (const key of ['maxHp', 'maxSp', 'attack', 'defense', 'speed', 'spRecovery']) {
+      if (hasStat(key)) definition[key] = Number(stats[key]);
+    }
+    for (const key of ['ailmentAccuracy', 'ailmentResistance', 'damageReduction']) {
+      if (hasStat(key)) definition[key] = Number(stats[key]) / 100;
+    }
     const isMiku = definition.codename === 'MIKU';
     const cooldowns = Object.fromEntries(definition.skills.map(skill => [
       skill.id,
@@ -526,6 +589,43 @@ export class BattleEngine {
   get actor() { return this.state.party[this.state.actorIndex]; }
   get activePersona() { return byId(this.personaDefinitions, this.state.activePersonaId) || this.personaDefinitions[0]; }
   get enemies() { return [this.state.boss, ...this.state.boss.summons.filter(enemy => enemy.alive)]; }
+
+  activePersonaPassive() {
+    const persona = this.activePersona;
+    if (!persona) return null;
+    if (!Array.isArray(persona.passive)) return persona.passive || persona.maxRankPassive || null;
+    return persona.maxRankPassive || [...persona.passive].sort((left, right) => Number(right.rankValue || 0) - Number(left.rankValue || 0)
+      || Number(right.sourceIndex || 0) - Number(left.sourceIndex || 0))[0] || null;
+  }
+
+  clearPersonaPassiveEffects() {
+    for (const unit of this.state.party) {
+      unit.buffs = unit.buffs.filter(effect => effect.personaPassivePersistent !== true);
+    }
+  }
+
+  syncPersonaPassiveEffects() {
+    this.clearPersonaPassiveEffects();
+    const wonder = this.state.party.find(unit => unit.id === 'wonder');
+    const persona = this.activePersona;
+    const passive = this.activePersonaPassive();
+    if (!wonder || !persona || !passive) return;
+    const supportedStats = new Set(['attack', 'defense', 'critRate', 'critDamage', 'healing', 'elementDamage']);
+    for (const [index, effect] of (passive.combat?.effects || []).entries()) {
+      if (effect.runtimeSupported !== true || effect.scope !== 'self' || effect.timing !== 'while_active'
+        || !supportedStats.has(effect.stat) || !Number.isFinite(Number(effect.value))) continue;
+      this.applyUnitBuff(wonder, {
+        id: `persona_passive_${persona.id}_${effect.id || index}`,
+        name: passive.name, stat: effect.stat, value: Number(effect.value), duration: null,
+        ...(effect.element ? { element: effect.element } : {}),
+        personaPassivePersistent: true, sourcePersonaId: persona.id, sourcePassiveName: passive.name
+      }, 'persona_passive');
+    }
+    for (const limitation of passive.combat?.limitations || []) {
+      const message = `${persona.name} passive ${passive.name}: ${limitation}`;
+      if (!this.state.mechanicsLimitations.includes(message)) this.state.mechanicsLimitations.push(message);
+    }
+  }
 
   usesEnemyTimeline() {
     return this.state?.boss?.enemyTimingModel === 'anchored_enemy_turns';
@@ -592,13 +692,23 @@ export class BattleEngine {
     return valid.length === 2 ? valid : [...defaultJcMasks];
   }
 
-  isJc(unit) {
-    return unit?.slug === 'j-c';
-  }
 
   usesLiveMechanics() { return this.config.mechanicsProfile === CURRENT_MECHANICS_PROFILE; }
 
-  isDreamscapePreview() { return this.usesLiveMechanics() && this.state.boss.modeId === 'multidimensional'; }
+  isDreamscapeRun() { return this.usesLiveMechanics() && this.state.boss.modeId === 'multidimensional'; }
+
+  isDreamscapePreview() { return this.isDreamscapeRun() && this.state.boss.dreamscapeScoreVerified !== true; }
+
+  isDreamscapeTurnWeightedMode() {
+    return this.usesLiveMechanics()
+      && ['multidimensional', 'nexus', 'devourer'].includes(this.state.boss.modeId);
+  }
+
+  usesSourceScaleDamageFormula() {
+    return this.usesLiveMechanics()
+      && this.state.boss.scoreAttack === true
+      && ['multidimensional', 'nexus', 'devourer'].includes(this.state.boss.modeId);
+  }
 
   isHachimanDreamscape() {
     return this.usesLiveMechanics()
@@ -619,35 +729,53 @@ export class BattleEngine {
     return this.isHachimanLive() && this.state.boss.modeId === 'devourer';
   }
 
+  isSurtLive() {
+    return this.usesLiveMechanics()
+      && this.state.boss.id === 'surt'
+      && ['multidimensional', 'nexus', 'devourer'].includes(this.state.boss.modeId);
+  }
+
   canUseDreamscapeItems() {
-    return this.isHachimanLive() && this.state.itemMaxUses > 0;
+    return this.usesSourceScaleDamageFormula() && this.state.itemMaxUses > 0;
   }
 
   hasDreamscapeGuardianOrMedic() {
-    return this.isHachimanLive()
+    return (this.isHachimanLive() || this.isSurtLive())
       && (this.config.dreamscapeObservedCompositionEffect
         || this.state.party.some(unit => ['Guardian', 'Medic'].includes(unit.combatRole || unit.role)));
   }
 
   dreamscapeDamageTakenMultiplier(target) {
-    if (!this.isHachimanLive()) return Number(target.finalDamageTakenMultiplier ?? 1);
-    return this.hasDreamscapeGuardianOrMedic() ? 1.2 : 1;
+    if (this.isHachimanLive() || this.isSurtLive()) return this.hasDreamscapeGuardianOrMedic() ? 1.2 : 1;
+    return Number(target.finalDamageTakenMultiplier ?? 1);
   }
 
   dreamscapeDamageDealtMultiplier(enemy) {
-    if (!this.isHachimanLive()) return Number(enemy.finalDamageDealtMultiplier ?? 1);
-    return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
+    if (this.isHachimanLive()) return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
+    if (this.isSurtLive()) {
+      const compositionMultiplier = this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
+      return compositionMultiplier * (1 + Number(enemy.ragnarokStacks || 0) * 0.05);
+    }
+    return Number(enemy.finalDamageDealtMultiplier ?? 1);
   }
 
-  // Mode Special Effects that raise damage dealt, from boss modeEffects.
-  stageDamageBonuses(unit, element) {
-    if (!this.usesLiveMechanics()) return [];
-    const effects = this.state.boss.modeEffects?.[this.state.boss.modeId];
-    if (!effects) return [];
-    const bonuses = [];
-    if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
-    if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
-    return bonuses;
+  advanceSurtEncounterStacks() {
+    if (!this.isSurtLive()) return;
+    const encounter = this.state.boss.encounter || {};
+    const berserkGain = Number(encounter.berserkStacksPerTurn || 1);
+    const berserkCap = Number(encounter.berserkStackCap || 3);
+    const ragnarokGain = Number(encounter.ragnarokStacksPerTurn || 2);
+    const ragnarokCap = Number(encounter.ragnarokStackCap || 10);
+    for (const enemy of this.enemies) {
+      enemy.berserkStacks = clamp(Number(enemy.berserkStacks || 0) + berserkGain, 0, berserkCap);
+      enemy.ragnarokStacks = clamp(Number(enemy.ragnarokStacks || 0) + ragnarokGain, 0, ragnarokCap);
+    }
+    for (const unit of this.state.party.filter(member => member.hp > 0)) {
+      unit.ragnarokStacks = clamp(Number(unit.ragnarokStacks || 0) + ragnarokGain, 0, ragnarokCap);
+    }
+    this.emit('mechanic', `Surt's Shadows reached Berserk ${this.state.boss.berserkStacks}/${berserkCap} and Ragnarok ${this.state.boss.ragnarokStacks}/${ragnarokCap}.`, {
+      actorId: this.state.boss.id, sourceType: 'encounter', tone: 'boss'
+    });
   }
 
   isDreamscapeScoreEligibleTarget(target) {
@@ -655,13 +783,24 @@ export class BattleEngine {
       || (target?.species !== 'daisoujou' && target?.id !== 'daisoujou');
   }
 
-  // Skill/Resonance crit conversion: final damage x (1 + min(crit, 100%) x
-  // (crit damage - 100%)) with no crit roll. User-confirmed for every boss in
-  // the live profile (2026-09-27); recorded replays keep ordinary crit rolls.
-  usesDreamscapeSkillCritBonus(actor, sourceType) {
-    return this.usesLiveMechanics()
+  usesStableDomainCritConversion(actor, sourceType) {
+    return this.isDreamscapeTurnWeightedMode()
       && (['character_skill', 'persona_skill', 'berry_repeat', 'resonance_follow_up'].includes(sourceType)
         || (sourceType === 'awareness_follow_up' && this.isJc(actor)));
+  }
+
+  usesDreamscapeSkillCritBonus(actor, sourceType) {
+    return this.usesStableDomainCritConversion(actor, sourceType);
+  }
+
+  surtAttackBonus() {
+    return this.isSurtLive() ? Number(this.state.boss.encounter?.partyAttackBonus || 0) : 0;
+  }
+
+  surtResonanceCritDamageBonus(sourceType) {
+    return this.isSurtLive() && sourceType === 'resonance_follow_up'
+      ? Number(this.state.boss.encounter?.resonanceCritDamageBonus || 0)
+      : 0;
   }
 
   reportCombatLimitation(system, missing, context = {}) {
@@ -672,6 +811,271 @@ export class BattleEngine {
     const message = `${system} is not resolved: missing ${missing.join(', ')}. No effect is invented.`;
     this.state.mechanicsLimitations.push(message);
     this.emit('unmodeled_mechanic', message, { ...limitation, tone: 'system' });
+  }
+
+  wonderWeaponHolder() {
+    return this.state?.party?.find(unit => unit.id === 'wonder' && unit.wonderWeapon) || null;
+  }
+
+  initializeWonderWeaponEffects() {
+    const holder = this.wonderWeaponHolder();
+    if (!holder) return;
+    const startingPersona = byId(this.personaDefinitions, this.state.activePersonaId);
+    const start = wonderWeaponBattleStart(createWonderWeaponEffectState(holder.wonderWeapon.weaponId), {
+      partyIds: this.state.party.map(unit => unit.id),
+      startingPersonaElement: startingPersona?.element || null
+    });
+    holder.wonderWeapon.effectState = clone(start.state);
+    holder.wonderWeapon.startingPersonaElement = startingPersona?.element || null;
+    this.syncWonderWeaponStaticEffects();
+    const limitation = WONDER_WEAPON_EFFECT_LIMITATIONS[holder.wonderWeapon.weaponId];
+    if (limitation) {
+      const message = `${holder.wonderWeapon.forge.name}: ${limitation}`;
+      this.state.mechanicsLimitations.push(message);
+      this.emit('unmodeled_mechanic', message, {
+        actorId: holder.id, weaponId: holder.wonderWeapon.weaponId,
+        sourceType: 'wonder_weapon', tone: 'system'
+      });
+    }
+  }
+
+  clearWonderWeaponPersistentEffects(weaponId) {
+    for (const unit of this.state.party) {
+      unit.buffs = unit.buffs.filter(effect => !(effect.wonderWeaponPersistent && effect.sourceWeaponId === weaponId));
+    }
+    for (const enemy of this.enemies) {
+      enemy.debuffs = enemy.debuffs.filter(effect => !(effect.wonderWeaponPersistent && effect.sourceWeaponId === weaponId));
+    }
+  }
+
+  applyWonderWeaponPersistentBuff(unit, weaponId, id, stat, value, extra = {}) {
+    if (!unit || !Number.isFinite(Number(value)) || Number(value) === 0) return null;
+    return this.applyUnitBuff(unit, {
+      id: `wonder_weapon_${weaponId}_${id}`, name: id.replaceAll('_', ' ').toUpperCase(),
+      stat, value: Number(value), duration: null, wonderWeaponPersistent: true,
+      sourceWeaponId: weaponId, ...extra
+    }, 'wonder_weapon');
+  }
+
+  applyWonderWeaponPersistentDebuff(enemy, weaponId, id, stat, value, extra = {}) {
+    if (!enemy || !Number.isFinite(Number(value)) || Number(value) === 0) return null;
+    return this.applyEnemyStatus(enemy, 'debuffs', {
+      id: `wonder_weapon_${weaponId}_${id}`, name: id.replaceAll('_', ' ').toUpperCase(),
+      stat, value: Number(value), duration: null, wonderWeaponPersistent: true,
+      sourceWeaponId: weaponId, ...extra
+    }, 'wonder_weapon', 'wonder');
+  }
+
+  syncWonderWeaponStaticEffects() {
+    const holder = this.wonderWeaponHolder();
+    if (!holder?.wonderWeapon?.effectState) return;
+    const weaponId = holder.wonderWeapon.weaponId;
+    const effectState = holder.wonderWeapon.effectState;
+    this.clearWonderWeaponPersistentEffects(weaponId);
+    const holderBuff = (id, stat, value, extra) => this.applyWonderWeaponPersistentBuff(holder, weaponId, id, stat, value, extra);
+    const partyBuff = (id, stat, value, extra) => {
+      for (const unit of this.state.party) this.applyWonderWeaponPersistentBuff(unit, weaponId, id, stat, value, extra);
+    };
+    const otherPartyBuff = (id, stat, value, extra) => {
+      for (const unit of this.state.party.filter(unit => unit.id !== holder.id)) this.applyWonderWeaponPersistentBuff(unit, weaponId, id, stat, value, extra);
+    };
+    const foeDebuff = (id, stat, value, extra) => {
+      for (const enemy of this.enemies.filter(enemy => enemy.alive !== false)) this.applyWonderWeaponPersistentDebuff(enemy, weaponId, id, stat, value, extra);
+    };
+    const personaCount = this.config.personaIds.filter(id => byId(this.personaDefinitions, id)).length;
+    const personaAttributeCount = Math.min(3, new Set(this.config.personaIds
+      .map(id => byId(this.personaDefinitions, id)?.element).filter(Boolean)).size);
+
+    switch (weaponId) {
+      case 'damascus-knife': holderBuff('attack', 'attack', 0.215); break;
+      case 'fatal-knife': holderBuff('attack_per_persona', 'attack', 0.095 * personaCount); break;
+      case 'midnight-sun': holderBuff('attack', 'attack', 0.24); break;
+      case 'sennight-inferno':
+        holderBuff('attack', 'attack', 0.56);
+        holderBuff('persona_attribute_damage', 'damage', 0.12 * personaAttributeCount);
+        break;
+      case 'all-in':
+        holderBuff('healing', 'healing', 0.4);
+        holderBuff('shield', 'shieldPotency', 0.4);
+        partyBuff('defense_aura', 'defense', 0.3);
+        break;
+      case 'arc-knife':
+        holderBuff('attack', 'attack', 0.56);
+        holderBuff('elemental_ailment_accuracy', 'elementalAilmentAccuracy', 0.3);
+        break;
+      case 'ex-machina': {
+        holderBuff('attack', 'attack', 0.56);
+        partyBuff('flat_attack_aura', 'flatAttack', 240);
+        const element = holder.wonderWeapon.startingPersonaElement;
+        if (element) {
+          holderBuff('starting_element_damage', 'elementDamage', 0.34, { element });
+          otherPartyBuff('starting_element_damage_share', 'elementDamage', 0.136, { element });
+        }
+        break;
+      }
+      case 'glimmer':
+        holderBuff('attack', 'attack', 0.56);
+        holderBuff('bless_damage', 'elementDamage', 0.22, { element: 'bless' });
+        holderBuff('healing', 'healing', 0.22);
+        break;
+      case 'eye-of-obsequies': holderBuff('attack', 'attack', 0.56); break;
+      case 'starry-compass':
+        holderBuff('attack', 'attack', 0.56);
+        if (effectState.guidance >= 5) foeDebuff('guidance_defense', 'defenseDown', 0.22);
+        if (effectState.guidance >= 10) partyBuff('guidance_ailment_accuracy', 'ailmentAccuracy', 0.18);
+        if (effectState.guidance >= 15) partyBuff('guidance_psychic_damage', 'elementDamage', 0.22, { element: 'psychic' });
+        break;
+      case 'abyss-fang': {
+        holderBuff('attack', 'attack', 0.56);
+        const stacks = Number(effectState.hunterInstinct || 0);
+        if (stacks > 0) holderBuff('hunter_damage', 'damage', 0.066 * stacks);
+        if (stacks >= 5) {
+          holderBuff('hunter_crit_rate', 'critRate', 0.18);
+          holderBuff('hunter_crit_damage', 'critDamage', 0.36);
+        } else if (stacks >= 3) {
+          holderBuff('hunter_crit_rate', 'critRate', 0.12);
+          holderBuff('hunter_crit_damage', 'critDamage', 0.24);
+        }
+        break;
+      }
+      case 'purgatory':
+        holderBuff('attack', 'attack', 0.607);
+        if (effectState.trialByFire >= 1) {
+          holderBuff('trial_holder_attack', 'flatAttack', 360);
+          otherPartyBuff('trial_party_attack', 'flatAttack', 300);
+        }
+        if (effectState.trialByFire >= 2) {
+          holderBuff('trial_holder_damage', 'damage', 0.16);
+          otherPartyBuff('trial_party_damage', 'damage', 0.06);
+        }
+        if (effectState.trialByFire >= 3) partyBuff('trial_fire_damage', 'elementDamage', 0.24, { element: 'fire' });
+        break;
+      case 'plasma-blade': holderBuff('attack', 'attack', 0.607); break;
+      case 'pheromone-sting':
+        holderBuff('ailment_accuracy', 'ailmentAccuracy', 0.68);
+        holderBuff('ailment_chance', 'ailmentChance', 0.25, { ailmentKinds: ['elemental', 'spiritual'] });
+        break;
+      case 'cyclotron':
+        holderBuff('attack', 'attack', 0.56);
+        holderBuff('critical_rate', 'critRate', 0.19);
+        break;
+      case CURSED_TIES_WEAPON_ID: holderBuff('ailment_accuracy', 'ailmentAccuracy', 0.68); break;
+      case 'ice-age':
+        holderBuff('attack', 'attack', 0.56);
+        if (this.state.party.some(unit => unit.buffs.some(effect => effect.sourceWeaponId === 'ice-age' && effect.id.includes('ice-age-ancient-frost')))) {
+          holderBuff('ancient_frost_holder_damage', 'damage', 0.35);
+        }
+        break;
+      case 'event-horizon': {
+        holderBuff('attack', 'attack', 0.56);
+        const stacksByUnit = effectState.spaghettificationStacks || {};
+        const affected = this.state.party.filter(unit => Number(stacksByUnit[unit.id] || 0) > 0);
+        holderBuff('affected_ally_attack', 'flatAttack', 100 * affected.length);
+        for (const unit of affected) {
+          const stacks = Math.min(2, Number(stacksByUnit[unit.id] || 0));
+          this.applyWonderWeaponPersistentBuff(unit, weaponId, 'spaghettification_attack', 'attack', 0.11 * stacks);
+          this.applyWonderWeaponPersistentBuff(unit, weaponId, 'spaghettification_nuclear_crit', 'elementCritDamage', 0.1 * stacks, { element: 'nuclear' });
+        }
+        break;
+      }
+      default: break;
+    }
+  }
+
+  applyWonderWeaponTimedEffects(effects) {
+    const holder = this.wonderWeaponHolder();
+    if (!holder) return;
+    for (const descriptor of effects || []) {
+      const duration = descriptor.duration;
+      const changes = descriptor.changes || {};
+      const unitTargets = descriptor.target === 'all_allies' ? this.state.party
+        : descriptor.target === 'holder' ? [holder]
+          : [byId(this.state.party, descriptor.target)].filter(Boolean);
+      const enemyTargets = descriptor.target === 'all_foes' ? this.enemies
+        : [this.findEnemy(descriptor.target)].filter(Boolean);
+      const addUnit = (stat, value, suffix, extra = {}) => {
+        for (const unit of unitTargets) this.applyUnitBuff(unit, {
+          id: `wonder_weapon_${holder.wonderWeapon.weaponId}_${descriptor.id}_${suffix}`,
+          name: suffix.replaceAll('_', ' ').toUpperCase(), stat, value, duration,
+          sourceWeaponId: holder.wonderWeapon.weaponId, ...extra
+        }, 'wonder_weapon');
+      };
+      if (changes.additionalAttackBonus) addUnit('attack', changes.additionalAttackBonus * (changes.doubled ? 2 : 1), 'persona_change_attack');
+      if (changes.damageBonus) addUnit('damage', changes.damageBonus, 'timed_damage');
+      if (changes.iceDamageBonus) addUnit('elementDamage', changes.iceDamageBonus, 'ancient_frost_ice', { element: 'ice' });
+      if (changes.electricCriticalDamageBonus) addUnit('elementCritDamage', changes.electricCriticalDamageBonus, 'magnetized_electric_crit', { element: 'electric' });
+      if (changes.maxHpRecovery) {
+        for (const unit of unitTargets) this.healUnit(holder, unit, unit.maxHp * changes.maxHpRecovery);
+      }
+      if (changes.defenseDown) {
+        for (const enemy of enemyTargets) this.applyEnemyStatus(enemy, 'debuffs', {
+          id: `wonder_weapon_${holder.wonderWeapon.weaponId}_${descriptor.id}_defense`,
+          name: descriptor.id.replaceAll('-', ' ').toUpperCase(), stat: 'defenseDown',
+          value: changes.defenseDown, duration, sourceWeaponId: holder.wonderWeapon.weaponId
+        }, 'wonder_weapon', holder.id);
+      }
+    }
+  }
+
+  isWonderWeaponSkillDamage(sourceType) {
+    return ['persona_skill', 'character_skill', 'highlight', 'resonance_follow_up', 'awareness_follow_up', 'berry_repeat'].includes(sourceType);
+  }
+
+  resolveWonderWeaponDamagePacket(actor, skill, target, actualDamage, sourceType) {
+    const holder = this.wonderWeaponHolder();
+    if (!holder || !(actualDamage > 0)) return;
+    const weaponId = holder.wonderWeapon.weaponId;
+    if (!['starry-compass', 'abyss-fang', 'purgatory', 'cyclotron', 'event-horizon'].includes(weaponId)) return;
+    const transition = wonderWeaponOnDamage(holder.wonderWeapon.effectState, {
+      actorId: actor.id, holderId: holder.id, actorSide: 'ally', targetId: target.id,
+      element: skill.element, isSkillDamage: this.isWonderWeaponSkillDamage(sourceType),
+      partyIds: this.state.party.map(unit => unit.id)
+    });
+    holder.wonderWeapon.effectState = clone(transition.state);
+    this.applyWonderWeaponTimedEffects(transition.effects);
+    this.syncWonderWeaponStaticEffects();
+  }
+
+  resolveWonderWeaponPersonaChange() {
+    const holder = this.wonderWeaponHolder();
+    if (!holder || holder.wonderWeapon.weaponId !== 'midnight-sun') return;
+    const transition = wonderWeaponOnPersonaChange(holder.wonderWeapon.effectState);
+    holder.wonderWeapon.effectState = clone(transition.state);
+    this.applyWonderWeaponTimedEffects(transition.effects);
+  }
+
+  resolveWonderWeaponKnockdown(target) {
+    const holder = this.wonderWeaponHolder();
+    if (!holder || holder.wonderWeapon.weaponId !== 'sennight-inferno') return;
+    const transition = wonderWeaponOnKnockdown(holder.wonderWeapon.effectState, { targetId: target.id });
+    holder.wonderWeapon.effectState = clone(transition.state);
+    this.applyWonderWeaponTimedEffects(transition.effects);
+  }
+
+  resolveWonderWeaponAllyTarget(actor, skill, targetId) {
+    const holder = this.wonderWeaponHolder();
+    if (!holder || actor.id !== holder.id || !['all-in', 'ice-age'].includes(holder.wonderWeapon.weaponId)) return;
+    const targetType = skill.buffTarget || skill.healTarget || skill.target;
+    if (targetType !== 'ally') return;
+    const target = byId(this.state.party, targetId);
+    if (!target || target.hp <= 0) return;
+    const transition = wonderWeaponOnSkillTargetAlly(holder.wonderWeapon.effectState, {
+      actorId: actor.id, holderId: holder.id, targetId: target.id
+    });
+    holder.wonderWeapon.effectState = clone(transition.state);
+    this.applyWonderWeaponTimedEffects(transition.effects);
+    this.syncWonderWeaponStaticEffects();
+  }
+
+  resolveWonderWeaponTurnEnd(actor) {
+    const holder = this.wonderWeaponHolder();
+    if (!holder?.wonderWeapon?.effectState) return;
+    const transition = wonderWeaponOnTurnEnd(holder.wonderWeapon.effectState, {
+      actorId: actor.id,
+      holderId: holder.id
+    });
+    holder.wonderWeapon.effectState = clone(transition.state);
+    this.syncWonderWeaponStaticEffects();
   }
 
   cursedTiesHolder() {
@@ -803,10 +1207,9 @@ export class BattleEngine {
     const missing = [];
     if (!rule.sourceUrl) missing.push('source');
     if (!Array.isArray(rule.ailmentIds) || !rule.ailmentIds.length) missing.push('ailment compatibility');
-    if (!Number.isFinite(rule.chance) || rule.chance < 0 || rule.chance > 1) missing.push('activation chance');
+    const deterministicActivation = rule.activation === 'compatible_ailment';
+    if (!deterministicActivation && (!Number.isFinite(rule.chance) || rule.chance < 0 || rule.chance > 1)) missing.push('activation rule');
     if (!Number.isFinite(rule.damageMultiplier) || rule.damageMultiplier <= 0) missing.push('damage multiplier');
-    if (typeof rule.consumeAilment !== 'boolean') missing.push('ailment consumption rule');
-    if (typeof rule.canCrit !== 'boolean') missing.push('critical compatibility');
     const precision = Number(actor.technicalPrecision || 0)
       + actor.buffs.filter(effect => effect.stat === 'technicalPrecision').reduce((sum, effect) => sum + effect.value, 0);
     if (precision && !Number.isFinite(rule.chancePerPrecision)) missing.push('Technical Precision scaling');
@@ -816,10 +1219,10 @@ export class BattleEngine {
     }
     const ailment = target.debuffs.find(effect => rule.ailmentIds.includes(effect.id));
     if (!ailment) return null;
-    const chance = clamp(rule.chance + precision * (rule.chancePerPrecision || 0), 0, 1);
-    const activated = chance === 1 || (chance > 0 && this.random() < chance);
+    const chance = deterministicActivation ? 1 : clamp(rule.chance + precision * (rule.chancePerPrecision || 0), 0, 1);
+    const activated = deterministicActivation || chance === 1 || (chance > 0 && this.random() < chance);
     return { activated, ailmentId: ailment.id, damageMultiplier: activated ? rule.damageMultiplier : 1,
-      consumeAilment: activated && rule.consumeAilment, canCrit: rule.canCrit, sourceUrl: rule.sourceUrl };
+      consumeAilment: activated && rule.consumeAilment === true, canCrit: rule.canCrit, sourceUrl: rule.sourceUrl };
   }
 
   queueDownActions(actor, target, sourceType) {
@@ -911,20 +1314,11 @@ export class BattleEngine {
 
   isBerry(unit) { return this.usesLiveMechanics() && unit?.slug === 'berry'; }
 
-  isRin(unit) { return this.usesLiveMechanics() && unit?.slug === 'rin-firecracker'; }
 
-  isMatoi(unit) { return this.usesLiveMechanics() && unit?.slug === 'matoi'; }
 
-  isAkihiko(unit) { return this.usesLiveMechanics() && unit?.slug === 'akihiko'; }
 
-  isYukari(unit) { return this.usesLiveMechanics() && unit?.slug === 'yukari'; }
 
-  isMakoto(unit) { return this.usesLiveMechanics() && unit?.slug === 'makoto'; }
 
-  berrySkill(skill) {
-    // The generic importer misreads S1's conditional +200% as a persistent buff.
-    return { ...clone(skill), buff: undefined, buffTarget: undefined };
-  }
 
   livePersonaSkill(persona, skill) {
     if (!this.usesLiveMechanics()) return skill;
@@ -945,8 +1339,9 @@ export class BattleEngine {
       adjusted.buff = clone(skill.combat?.buff || {
         id: 'attack_up', name: 'ATK ↑', stat: 'attack', value: 0.33, duration: 2
       });
+      adjusted.buffs = [clone(adjusted.buff)];
       adjusted.selectedAllyBuff = {
-        id: 'universal_theoria_damage', name: 'UNIVERSAL THEORIA DMG', stat: 'damage', value: 0.22, duration: 2
+        id: 'universal_theoria_damage', name: 'UNIVERSAL THEORIA DMG', stat: 'finalDamage', value: 0.22, duration: 2
       };
     }
     if (persona.name === 'Dionysus' && skill.name === 'Revolution') {
@@ -958,29 +1353,15 @@ export class BattleEngine {
         }),
         scaling: { stat: 'crit', base: 0.072, per: 0.1, step: 0.012, cap: 0.4 }
       };
+      adjusted.buffs = [clone(adjusted.buff)];
     }
     return adjusted;
   }
 
-  isMarian(unit) {
-    return unit?.slug === 'marian-beachflower';
-  }
 
-  isWavecatcher(unit) {
-    return unit?.slug === 'puppet-wavecatcher';
-  }
 
-  marian() {
-    return this.state.party.find(unit => this.isMarian(unit) && unit.hp > 0) || null;
-  }
 
-  isMikuNavigator() {
-    return this.state.navigator?.codename === 'MIKU';
-  }
 
-  isVirtualConcertActive() {
-    return this.isMikuNavigator() && this.state.navigator.virtualConcert?.active === true;
-  }
 
   isBossWeakened() {
     if (this.isDreamscapePreview()) return false;
@@ -1003,25 +1384,25 @@ export class BattleEngine {
   addDamageScore(amount, actor, target = null) {
     const damageWasWeakened = this.lastDamageWasWeakened ?? this.isBossWeakened();
     this.lastDamageWasWeakened = undefined;
-    if (this.isDreamscapePreview()) {
+    if (this.isDreamscapeRun()) {
       if (!this.isDreamscapeScoreEligibleTarget(target)) return;
       this.state.scoreBreakdown.damagePreview += amount;
-      if (this.isHachimanDreamscape()) {
-        const normalTurn = this.state.attackTurn;
-        const multiplier = getHachimanDreamscapeTurnScoreMultiplier(normalTurn);
-        const weightedPoints = amount * multiplier;
-        let bucket = this.state.scoreBreakdown.turnScoreBuckets
-          .find(entry => entry.normalTurn === normalTurn);
-        if (!bucket) {
-          bucket = { normalTurn, rawDamage: 0, multiplier, weightedPoints: 0 };
-          this.state.scoreBreakdown.turnScoreBuckets.push(bucket);
-        }
-        bucket.rawDamage += amount;
-        bucket.weightedPoints += weightedPoints;
-        this.state.scoreBreakdown.turnWeightedDamagePoints += weightedPoints;
-        this.state.scoreBreakdown.foeDefensePoints = Math.round(this.state.scoreBreakdown.turnWeightedDamagePoints);
+      const normalTurn = this.state.attackTurn;
+      const multiplier = getMultidimensionalDreamscapeTurnScoreMultiplier(normalTurn);
+      const weightedPoints = amount * multiplier;
+      let bucket = this.state.scoreBreakdown.turnScoreBuckets
+        .find(entry => entry.normalTurn === normalTurn);
+      if (!bucket) {
+        bucket = { normalTurn, rawDamage: 0, multiplier, weightedPoints: 0 };
+        this.state.scoreBreakdown.turnScoreBuckets.push(bucket);
       }
-      this.state.score = this.state.scoreBreakdown.damagePreview;
+      bucket.rawDamage += amount;
+      bucket.weightedPoints += weightedPoints;
+      this.state.scoreBreakdown.turnWeightedDamagePoints += weightedPoints;
+      this.state.scoreBreakdown.foeDefensePoints = Math.round(this.state.scoreBreakdown.turnWeightedDamagePoints);
+      this.state.score = this.isDreamscapePreview()
+        ? this.state.scoreBreakdown.damagePreview
+        : this.state.scoreBreakdown.foeDefensePoints;
       return;
     }
     if (this.isHachimanDevourer()) {
@@ -1029,8 +1410,9 @@ export class BattleEngine {
       const breakdown = this.state.scoreBreakdown;
       breakdown.model ||= 'hachiman_devourer_observed_rules';
       breakdown.preBreakDamage ||= 0; breakdown.breakDamage ||= 0; breakdown.points ||= 0;
-      if (damageWasWeakened) { breakdown.breakDamage += amount; breakdown.points += amount * 3; }
-      else { breakdown.preBreakDamage += amount; breakdown.points += amount; }
+      const weightedAmount = amount * getMultidimensionalDreamscapeTurnScoreMultiplier(this.state.attackTurn);
+      if (damageWasWeakened) { breakdown.breakDamage += amount; breakdown.points += weightedAmount * 3; }
+      else { breakdown.preBreakDamage += amount; breakdown.points += weightedAmount; }
       breakdown.breakPointMultiplier = 3;
       // Sleepy's DOD result screen (2026-09-09): Base Damage Points 405,499 +
       // Weakened Damage Points 1,195,200,896 + Boss Attack Points 125,000, x8 =
@@ -1044,7 +1426,10 @@ export class BattleEngine {
     }
     if (this.state.boss.scoreModel !== 'recorded_nightmare') {
       const roleMultiplier = this.state.boss.scoreRoles?.includes(actor.role) ? (this.state.boss.roleScoreMultiplier || 1) : 1;
-      this.state.score += Math.round(amount * this.state.boss.scoreMultiplier * roleMultiplier);
+      const turnMultiplier = this.isDreamscapeTurnWeightedMode()
+        ? getMultidimensionalDreamscapeTurnScoreMultiplier(this.state.attackTurn)
+        : 1;
+      this.state.score += Math.round(amount * turnMultiplier * this.state.boss.scoreMultiplier * roleMultiplier);
       return;
     }
     if (damageWasWeakened) {
@@ -1243,17 +1628,6 @@ export class BattleEngine {
     return projected;
   }
 
-  matoiSkill(actor, skill) {
-    if (skill.name !== 'Extinguishing Guidance') return skill;
-    const extinguishCost = actor.extinguishStacks >= 4 ? 4 : 2;
-    return {
-      ...clone(skill),
-      name: extinguishCost === 4 ? 'Requiem Guidance' : skill.name,
-      power: extinguishCost === 4 ? 1.534 : skill.power,
-      matoiExtinguishCost: extinguishCost,
-      matoiDefenseReduction: extinguishCost === 4 ? 0.102 : 0.085
-    };
-  }
 
   jcHighlightSkill(mask) {
     const definitions = {
@@ -1276,7 +1650,9 @@ export class BattleEngine {
     const actions = this.skillsFor(actor).map(skill => {
       const cooldownRemaining = Number(actor.skillCooldowns?.[skill.id] || 0);
       const stackRequirement = Number(skill.matoiExtinguishCost || 0);
-      const unavailableReason = this.unsupportedActionReason(skill)
+      const unavailableReason = (actor.slug === 'bui-cosmic' && !this.usesLiveMechanics() ? 'Cosmic Yui requires the live mechanics profile.' : null) || this.unsupportedActionReason(skill)
+        || characterHook(this, actor, 'actionUnavailableReason', skill, 'character_skill')
+        || (skill.excludeSelf && !this.state.party.some(unit => unit.hp > 0 && unit.id !== actor.id) ? 'Requires another living ally.' : null)
         || (stackRequirement > actor.extinguishStacks ? `Requires ${stackRequirement} Extinguish stacks.` : null)
         || (this.isMakoto(actor) && skill.name === 'Scarlet Hades' && actor.moonPhaseStacks < 2 ? 'Requires 2 Moon Phase stacks.' : null);
       const enabled = actor.sp >= (skill.cost || 0)
@@ -1287,7 +1663,7 @@ export class BattleEngine {
         && cooldownRemaining === 0
         && (!jcExpectedSlot || skill.slot === jcExpectedSlot);
       return {
-        type: this.isRin(actor) && skill.name === 'Orange Blossom Blade' ? 'rin_stance' : 'skill', actorId: actor.id, skillId: skill.id, name: skill.name, target: skill.target,
+        type: this.isCosmicYui(actor) && skill.cosmicAction === 'assemble' ? 'cosmic_assemble' : this.isRin(actor) && skill.name === 'Orange Blossom Blade' ? 'rin_stance' : 'skill', actorId: actor.id, skillId: skill.id, name: skill.name, target: skill.target,
         cost: skill.cost || 0, enabled, cooldownRemaining, unavailableReason,
         statusLabel: unavailableReason ? 'LOCKED' : cooldownRemaining > 0 ? `CD ${cooldownRemaining}` : 'READY',
         skill: clone(skill)
@@ -1315,7 +1691,8 @@ export class BattleEngine {
       skill: { id: 'akihiko_flash_blow', slot: 'ALT', name: 'Flash Blow', element: 'physical',
         cost: 0, power: 0.559, target: 'all_enemies', note: 'Spend 6 Mettle. Free Resonance action.' }
     });
-    return this.kotoneMechanics?.decorateActions([...actions, ...this.getBerryAltActions(), ...this.getItemActions()]) || actions;
+    const available = [...actions, ...this.cosmicColorActions(actor), ...this.getBerryAltActions(), ...this.getItemActions()];
+    return this.kotoneMechanics?.decorateActions(available) || available;
   }
 
   getBerryAltActions() {
@@ -1336,14 +1713,16 @@ export class BattleEngine {
 
   getNavigatorActions() {
     if (this.state.phase !== 'battle') return [];
-    return this.state.navigator.skills.map(skill => {
+    const additional = characterHook(this, this.state.navigator, 'getAdditionalNavigatorActions') || [];
+    return [...this.state.navigator.skills, ...additional].map(skill => {
       const concertActive = this.isVirtualConcertActive();
       const missingMikuTracks = this.isMikuNavigator() && skill.name === 'Showstopper'
         && (this.state.navigator.tracks?.length || 0) < 3;
-      const usedThisTurn = this.state.navigator.lastUsedAttackTurn === this.state.attackTurn;
-      const remaining = this.state.navigator.cooldowns[skill.id];
+      const usedThisTurn = skill.navigatorIndependent !== true && this.state.navigator.lastUsedAttackTurn === this.state.attackTurn;
+      const remaining = Number(this.state.navigator.cooldowns[skill.id] || 0);
+      const moduleReason = characterHook(this, this.state.navigator, 'actionUnavailableReason', skill, 'navigator');
       const pendingExtraAction = this.state.sharedCombat.pendingTurnCompletion;
-      const unavailableReason = pendingExtraAction ? 'Resolve or skip the pending extra actions first.' : concertActive
+      const unavailableReason = moduleReason || (pendingExtraAction ? 'Resolve or skip the pending extra actions first.' : concertActive
         ? 'Support skills are disabled during Virtual Concert.'
         : missingMikuTracks
           ? `Requires three Track types. Current Tracks: ${this.state.navigator.tracks.length}/3.`
@@ -1351,11 +1730,13 @@ export class BattleEngine {
             ? 'A navigator skill was already used this Attack Turn.'
             : remaining > 0
               ? `${remaining} required action${remaining === 1 ? '' : 's'} remaining.`
-              : null;
+              : null);
       return { ...clone(skill), type: 'navigator',
-        enabled: !pendingExtraAction && !concertActive && remaining === 0 && !usedThisTurn && !missingMikuTracks,
+        enabled: !unavailableReason && !pendingExtraAction && !concertActive && remaining === 0 && !usedThisTurn && !missingMikuTracks,
         unavailableReason,
-        statusLabel: concertActive ? 'CONCERT' : missingMikuTracks ? `TRACKS ${this.state.navigator.tracks.length}/3` : usedThisTurn ? 'USED' : remaining > 0 ? `CD ${remaining}` : 'READY',
+        statusLabel: moduleReason ? (skill.unavailableStatusLabel || 'LOCKED')
+          : concertActive ? 'CONCERT' : missingMikuTracks ? `TRACKS ${this.state.navigator.tracks.length}/3`
+            : usedThisTurn ? 'USED' : remaining > 0 ? `CD ${remaining}` : 'READY',
         remaining };
     });
   }
@@ -1485,7 +1866,7 @@ export class BattleEngine {
     context.packets.push({
       castId: cast.castId, targetId: target?.id || null, targetKind: target?.id === this.state.boss?.id ? 'boss' : 'enemy',
       element, weakness: result?.weakness === true, actualDamage: Number(actualDamage || 0),
-      elementalWeakness: target?.weakness === element,
+      elementalWeakness: isWeakTo(target, element),
       targetDownedBefore: target?.downed === true, downPointsBefore: target?.downPoints ?? null,
       sourceType, packetKind, rootCast: cast.root, repeat: cast.repeat, repeatReason: cast.repeatReason
     });
@@ -1630,7 +2011,8 @@ export class BattleEngine {
       const unit = byId(this.state.party, action.actorId);
       const key = action.skill.jcHighlightMask || 'HL';
       const cooldownRemaining = this.usesLiveMechanics() ? Number(unit.highlightCooldowns[key] || 0) : 0;
-      const unavailableReason = this.unsupportedActionReason(action.skill);
+      const unavailableReason = (unit.slug === 'bui-cosmic' && !this.usesLiveMechanics() ? 'Cosmic Yui requires the live mechanics profile.' : this.unsupportedActionReason(action.skill))
+        || characterHook(this, unit, 'actionUnavailableReason', action.skill, 'highlight');
       return { ...action, cooldownRemaining, unavailableReason, enabled: !unavailableReason && cooldownRemaining === 0, statusLabel: unavailableReason ? 'NOT IMPLEMENTED' : cooldownRemaining ? `CD ${cooldownRemaining}` : 'READY' };
     });
   }
@@ -1716,18 +2098,24 @@ export class BattleEngine {
     return { nextState: this.config.fastMode ? null : this.getObservation(), reward: 0, done: false, consumedAction: false, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events) };
   }
 
-  hachimanDamageFactors(unit, element, target, sourceType = null, actionDamageBonus = 0, additionalBonuses = []) {
+  liveDamageFactors(unit, element, target, sourceType = null, actionDamageBonus = 0, additionalBonuses = []) {
     // Original combat research: https://forum.gamer.com.tw/G2.php?bsn=71034&sn=112
     // Damage bonus, elemental bonus and damage taken share one additive bucket.
     // Source-specific and kit-only categories below retain provisional placement.
     const bonuses = [];
     const add = (id, value) => { if (Number(value)) bonuses.push({ id, value: Number(value) }); };
     add('equipped_damage_bonus', unit.damageBonus);
+    if (this.isSurtLive()) add('surt_ragnarok_damage', Number(unit.ragnarokStacks || 0) * 0.05);
     if (unit.elementBonus?.element === element) add('equipped_element_bonus', unit.elementBonus.value);
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) add(buff.id, buff.value);
-    if (element === 'curse') add('dreamscape_curse_bonus', 0.2);
+    for (const buff of unit.buffs.filter(effect => effect.stat === 'elementDamage' && effect.element === element)) add(buff.id, buff.value);
+    if (this.isHachimanLive() && element === 'curse') add('dreamscape_curse_bonus', 0.2);
+    if (this.isSurtLive() && element === 'ice') add('surt_party_ice_damage', this.state.boss.encounter?.partyIceDamageBonus);
+    if (this.isSurtLive() && sourceType === 'gun') {
+      add('surt_ranged_damage', this.state.boss.encounter?.rangedDamageBonus);
+      add('surt_gun_damage', this.state.boss.encounter?.gunDamageBonus);
+    }
     add('action_damage_bonus', actionDamageBonus);
-    for (const [id, value] of this.stageDamageBonuses(unit, element)) add(id, value);
     if (target.downed) add('downed_damage_taken', target.downedDamageTaken ?? 0.1);
     const elementalExposure = target.debuffs.find(effect => effect.id === `${element}_vuln`);
     if (elementalExposure) add(elementalExposure.id, elementalExposure.value);
@@ -1738,16 +2126,16 @@ export class BattleEngine {
     // Skill-conditional bonuses worded "increase skill damage by N%" (Vorpal
     // Butterfly's +200% above 70% HP) add into this bucket on the Hachiman path.
     // Established from the fully itemized T1 Berry hit (431,626) and her T2-start
-    // status list on 2026-09-06; see docs/HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
+    // status list on 2026-09-06; see HACHIMAN-STAT-EVIDENCE-2026-09-06.md.
     for (const [id, value] of additionalBonuses) add(id, value);
     const damageBonusMultiplier = Math.max(0, 1 + bonuses.reduce((sum, entry) => sum + entry.value, 0));
-    let affinityMultiplier = target.weakness === element ? 1.25 : 1;
-    if (target.weakness === element) affinityMultiplier *= 1 + unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
+    let affinityMultiplier = isWeakTo(target, element) ? 1.25 : 1;
+    if (isWeakTo(target, element)) affinityMultiplier *= 1 + unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
     if (this.resistsElement(target, element)) affinityMultiplier *= 0.7;
-    const sourceStat = { resonance_follow_up: 'resonanceDamage', highlight: 'highlightDamage', dot: 'dotDamage', one_more: 'oneMoreDamage', all_out_attack: 'oneMoreDamage' }[sourceType];
+    const sourceStat = { resonance_follow_up: 'resonanceDamage', highlight: 'highlightDamage', dot: 'dotDamage', one_more: 'oneMoreDamage', all_out_attack: 'oneMoreDamage', cosmic_all_out_attack: 'allOutDamage' }[sourceType];
     let sourceMultiplier = 1;
     if (sourceStat) {
-      sourceMultiplier *= 1 + unit.buffs.filter(effect => effect.stat === sourceStat).reduce((sum, effect) => sum + (effect.value || 0), 0) + (sourceType === 'dot' ? 0.3 : 0);
+      sourceMultiplier *= 1 + unit.buffs.filter(effect => (effect.stat === sourceStat || (sourceType === 'cosmic_all_out_attack' && effect.stat === 'oneMoreDamage'))).reduce((sum, effect) => sum + (effect.value || 0), 0) + (sourceType === 'dot' ? 0.3 : 0);
     }
     // Mine Alone Chain 2 (in-game text 2026-09-06): "all of Ichigo's skill damage is
     // counted as continuous damage". Skills and their repeats convert; the
@@ -1771,21 +2159,30 @@ export class BattleEngine {
     };
   }
 
+  hachimanDamageFactors(unit, element, target, sourceType = null, actionDamageBonus = 0, additionalBonuses = []) {
+    return this.liveDamageFactors(unit, element, target, sourceType, actionDamageBonus, additionalBonuses);
+  }
+
   statusMultiplier(unit, element, target, sourceType = null) {
-    if (this.isHachimanLive()) return this.hachimanDamageFactors(unit, element, target, sourceType).multiplier;
+    if (this.usesLiveMechanics()) return this.liveDamageFactors(unit, element, target, sourceType).multiplier;
     let multiplier = 1 + (unit.damageBonus || 0);
     if (this.isWavecatcher(unit) && unit.surfActive) multiplier *= 1.3;
     if (unit.elementBonus?.element === element) multiplier *= 1 + unit.elementBonus.value;
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) multiplier *= 1 + (buff.value || 0);
-    multiplier *= 1 + this.stageDamageBonuses(unit, element).reduce((sum, [, value]) => sum + value, 0);
-    if (target.weakness === element) multiplier *= 1.25;
-    if (target.weakness === element) {
+    for (const buff of unit.buffs.filter(effect => effect.stat === 'elementDamage' && effect.element === element)) multiplier *= 1 + (buff.value || 0);
+    if (isWeakTo(target, element)) multiplier *= 1.25;
+    if (isWeakTo(target, element)) {
       const weaknessDamage = unit.buffs.filter(effect => effect.stat === 'weaknessDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
       multiplier *= 1 + weaknessDamage;
     }
     if ((target.resistance === element || (this.usesLiveMechanics() && target.resistances?.includes(element))) && !this.hasResistanceBreak(target, element)) multiplier *= 0.7;
     if (this.isHachimanLive() && element === 'curse') multiplier *= 1.2;
     if (this.usesLiveMechanics()) multiplier *= this.dreamscapeDamageTakenMultiplier(target);
+    if (this.isSurtLive() && element === 'ice') multiplier *= 1 + Number(this.state.boss.encounter?.partyIceDamageBonus || 0);
+    if (this.isSurtLive() && sourceType === 'gun') {
+      const encounter = this.state.boss.encounter || {};
+      multiplier *= 1 + Number(encounter.rangedDamageBonus || 0) + Number(encounter.gunDamageBonus || 0);
+    }
     if (target.downed) multiplier *= 1 + Number(target.downedDamageTaken ?? 0.1);
     if (target.downed && this.isAkihiko(unit)) multiplier *= unit.awareness >= 2 ? 1.4 : 1.3;
     if (this.isAkihiko(unit) && unit.awareness >= 6) multiplier *= 1 + unit.gritStacks * 0.08;
@@ -1806,10 +2203,11 @@ export class BattleEngine {
       highlight: 'highlightDamage',
       dot: 'dotDamage',
       one_more: 'oneMoreDamage',
-      all_out_attack: 'oneMoreDamage'
+      all_out_attack: 'oneMoreDamage',
+      cosmic_all_out_attack: 'allOutDamage'
     }[sourceType];
     if (sourceStat) {
-      const sourceBonus = unit.buffs.filter(effect => effect.stat === sourceStat).reduce((sum, effect) => sum + (effect.value || 0), 0);
+      const sourceBonus = unit.buffs.filter(effect => (effect.stat === sourceStat || (sourceType === 'cosmic_all_out_attack' && effect.stat === 'oneMoreDamage'))).reduce((sum, effect) => sum + (effect.value || 0), 0);
       const dreamscapeContinuousDamageBonus = this.isHachimanLive() && sourceType === 'dot' ? 0.3 : 0;
       multiplier *= 1 + sourceBonus + dreamscapeContinuousDamageBonus;
     }
@@ -1835,44 +2233,51 @@ export class BattleEngine {
     return types.size * 0.15;
   }
 
-  calculateDamage(actor, skill, target, sourceType = null) {
+  calculateDamage(actor, skill, target, sourceType = null, { prepared = false } = {}) {
     if (this.kotoneMechanics?.state) this.kotoneMechanics.refreshAuras();
+    if (!prepared) skill = prepareCharacterDamage(this, actor, skill, target, sourceType);
+    const damageSourceType = skill.damageClass || sourceType;
     if (sourceType === 'dot' && skill.lovesickSnapshots) return this.calculateLovesickSnapshotDamage(actor, skill, target);
     const technical = this.technicalOutcome(actor, skill, target, sourceType);
     const phase = target.id === this.state.boss.id ? this.state.boss.phases[this.state.boss.phaseIndex] : null;
     const sourcedHachiman = this.isHachimanLive();
-    const defDown = sourcedHachiman
+    const sourcedLive = this.usesLiveMechanics();
+    const sourceScaleFormula = this.usesSourceScaleDamageFormula();
+    const defDown = sourceScaleFormula
       ? target.debuffs.filter(effect => effect.id === 'def_down' || effect.stat === 'defenseDown' || effect.id === 'berry_lovesick_defense').reduce((sum, effect) => sum + Number(effect.value || 0), 0)
       : Math.max(
       target.debuffs.filter(effect => effect.id === 'def_down').reduce((max, effect) => Math.max(max, effect.value), 0),
       target.debuffs.filter(effect => effect.stat === 'defenseDown').reduce((max, effect) => Math.max(max, effect.value), 0)
     )
       + target.debuffs.filter(effect => effect.id === 'berry_lovesick_defense').reduce((sum, effect) => sum + effect.value, 0);
+    const effectiveDefDown = defDown + Number(skill.temporaryDefenseDown || 0);
     const gritPierce = this.isAkihiko(actor) ? actor.gritStacks * 0.04 : 0;
     const moonPierce = this.isMakoto(actor) ? actor.moonPhaseStacks * 0.12 : 0;
     const pierce = skill.lovesickSnapshotCapture ? 0 : Number(actor.pierceRate || 0)
-      + actor.buffs.filter(effect => effect.stat === 'pierce').reduce((value, effect) => (sourcedHachiman || this.kotoneMechanics?.active) ? value + (effect.value || 0) : Math.max(value, effect.value || 0), 0)
+      + actor.buffs.filter(effect => effect.stat === 'pierce').reduce((value, effect) => (sourceScaleFormula || this.kotoneMechanics?.active) ? value + (effect.value || 0) : Math.max(value, effect.value || 0), 0)
       + gritPierce + moonPierce + Number(skill.temporaryPierce || 0);
     const totalDefense = phase?.defense ?? target.defense ?? this.state.boss.defense;
     // Hachiman's actual total/base Defense remains unknown. Existing encounter
     // values (boss 385, idols 240) are explicit provisional inputs, not fitted.
     const baseDefense = phase?.baseDefense ?? target.baseDefense ?? totalDefense;
-    const defense = sourcedHachiman
-      ? Math.max(0, totalDefense - baseDefense * Math.max(0, defDown)) * (1 - clamp(pierce, 0, 1))
-      : (phase?.defense || target.defense || this.state.boss.defense) * (1 - clamp(defDown, 0, 0.7)) * (1 - clamp(pierce, 0, 0.7));
-    const variance = skill.lovesickSnapshotCapture ? 1 : sourcedHachiman ? 0.95 + this.random() * 0.1 : 0.96 + this.random() * 0.08;
+    const defense = sourceScaleFormula
+      ? Math.max(0, totalDefense - baseDefense * Math.max(0, effectiveDefDown)) * (1 - clamp(pierce, 0, 1))
+      : (phase?.defense || target.defense || this.state.boss.defense) * (1 - clamp(effectiveDefDown, 0, 0.7)) * (1 - clamp(pierce, 0, 0.7));
+    const variance = skill.lovesickSnapshotCapture ? 1 : sourceScaleFormula ? 0.95 + this.random() * 0.1 : 0.96 + this.random() * 0.08;
     const criticalBuff = actor.buffs.filter(effect => effect.stat === 'critRate').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    const resonanceCritRate = sourceType === 'resonance_follow_up' ? Number(actor.wavecatcherWeapon?.resonanceCritRate || 0) : 0;
-    const rawCritRate = skill.forcedTheurgy && skill.guaranteedCritical ? 1 : actor.crit + criticalBuff + (skill.critBonus || 0) + resonanceCritRate;
+    const rawCritRate = skill.forcedTheurgy && skill.guaranteedCritical ? 1 : actor.crit + criticalBuff + (skill.critBonus || 0);
     const critRoll = skill.lovesickSnapshotCapture ? 1 : this.random();
-    const critical = skill.canCrit !== false && !(technical?.activated && technical.canCrit === false) && (skill.guaranteedCritical === true
+    const stableDomainCritConversion = this.usesStableDomainCritConversion(actor, damageSourceType);
+    const critical = !stableDomainCritConversion
+      && skill.canCrit !== false && !(technical?.activated && technical.canCrit === false) && (skill.guaranteedCritical === true
       || critRoll < clamp(rawCritRate, 0, 0.95));
     const cursedTiesAttackBonus = skill.lovesickSnapshotCapture ? 0 : this.cursedTiesAttackBonus(actor, target);
     const attackBuff = actor.buffs.filter(effect => effect.stat === 'attack').reduce((sum, effect) => sum + (effect.value || 0), 0)
-      + this.potentMedicineAttackBonus(actor) + Number(skill.temporaryAttackBonus || 0) + cursedTiesAttackBonus
+      + this.potentMedicineAttackBonus(actor) + Number(skill.temporaryAttackBonus || 0) + cursedTiesAttackBonus + this.surtAttackBonus()
       + this.revelationWeakElementAttackBonus(actor, target);
     const flatAttack = actor.buffs.filter(effect => effect.stat === 'flatAttack').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    const critDamageBuff = actor.buffs.filter(effect => effect.stat === 'critDamage').reduce((sum, effect) => sum + (effect.value || 0), 0);
+    const critDamageBuff = actor.buffs.filter(effect => effect.stat === 'critDamage'
+      || (effect.stat === 'elementCritDamage' && effect.element === skill.element)).reduce((sum, effect) => sum + (effect.value || 0), 0);
     const skillAmplification = skill.lovesickSnapshotCapture ? 0 : actor.buffs.filter(effect => effect.stat === 'skillAmplification').reduce((sum, effect) => sum + (effect.value || 0), 0);
     const scalingValue = skill.scalingStat === 'maxHp' ? actor.maxHp : actor.attack * (1 + attackBuff) + flatAttack;
     let power = skill.power;
@@ -1883,41 +2288,46 @@ export class BattleEngine {
     if (this.isBerry(actor) && skill.name === 'Vorpal Butterfly' && targetHpRatio > 0.7) {
       // Sourced text: "increase skill damage by 200%". On the Hachiman path it
       // adds into the single damage bucket; elsewhere it retains the x3 power.
-      if (sourcedHachiman) hachimanAdditionalBonuses.push(['vorpal_butterfly_high_hp', 2]);
+      if (sourcedLive) hachimanAdditionalBonuses.push(['vorpal_butterfly_high_hp', 2]);
       else power *= 3;
     }
     if (this.isBerry(actor) && skill.name === 'My Beloved Prince') power += this.lovesickStacks(target, actor) * this.berryTierValue(actor, skill, [0.117, 0.129, 0.124, 0.136]);
-    const defenseMultiplier = sourcedHachiman
+    const defenseMultiplier = sourceScaleFormula
       ? 1400 / (1400 + (skill.ignoreDefense ? 0 : defense))
       : 760 / (260 + (skill.ignoreDefense ? 0 : defense));
-    const base = sourcedHachiman
+    const base = sourceScaleFormula
       ? scalingValue * power * (1 + skillAmplification) * defenseMultiplier
       : scalingValue * power * (1 + skillAmplification) * 760 / (260 + (skill.ignoreDefense ? 0 : defense));
-    const statusFactors = sourcedHachiman ? this.hachimanDamageFactors(actor, skill.element, target, sourceType, skill.actionDamageBonus, hachimanAdditionalBonuses) : null;
-    const multiplier = statusFactors?.multiplier ?? this.statusMultiplier(actor, skill.element, target, sourceType) * (1 + Number(skill.actionDamageBonus || 0));
+    const statusFactors = sourcedLive ? this.liveDamageFactors(actor, skill.element, target, damageSourceType, skill.actionDamageBonus, hachimanAdditionalBonuses) : null;
+    const multiplier = statusFactors?.multiplier ?? this.statusMultiplier(actor, skill.element, target, damageSourceType) * (1 + Number(skill.actionDamageBonus || 0));
+    const uncappedCriticalMultiplier = (actor.critMult || 1.5) + critDamageBuff + Number(skill.temporaryCritDamage || 0)
+      + this.surtResonanceCritDamageBonus(damageSourceType);
+    // Forced Theurgy skills (Kotone support) carry an explicit critical multiplier range.
     const criticalMultiplier = skill.criticalMultiplierMin != null
-      ? clamp((actor.critMult || 1.5) + critDamageBuff, skill.criticalMultiplierMin, skill.criticalMultiplierMax)
-      : (actor.critMult || 1.5) + critDamageBuff;
-    const dreamscapeSkillCritBonus = this.usesDreamscapeSkillCritBonus(actor, sourceType)
-      ? clamp(rawCritRate, 0, 1) * Math.max(0, criticalMultiplier - 1)
+      ? clamp(uncappedCriticalMultiplier, skill.criticalMultiplierMin, skill.criticalMultiplierMax)
+      : uncappedCriticalMultiplier;
+    const criticalHitDamageMultiplier = Math.max(0, Number(characterHook(this, actor,
+      'criticalHitDamageMultiplier', skill, target, sourceType) || 1));
+    const dreamscapeSkillCritBonus = stableDomainCritConversion
+      ? clamp(rawCritRate, 0, 1) * Math.max(0, criticalMultiplier * criticalHitDamageMultiplier - 1)
       : null;
     const critDamageMultiplier = dreamscapeSkillCritBonus == null
-      ? (critical ? criticalMultiplier : 1)
+      ? (critical ? criticalMultiplier * criticalHitDamageMultiplier : 1)
       : 1 + dreamscapeSkillCritBonus;
-    const normalization = sourcedHachiman ? 1 : 100;
+    const normalization = sourceScaleFormula ? 1 : 100;
     const amount = Math.max(1, Math.round(base * multiplier * variance * critDamageMultiplier * (technical?.damageMultiplier || 1) * normalization));
-    return { amount, critical, weakness: target.weakness === skill.element, defense: Math.round(defense), multiplier,
+    return { amount, critical, ...(skill.damageClass ? { damageClass: skill.damageClass } : {}), weakness: isWeakTo(target, skill.element), defense: Math.round(defense), multiplier,
       ...(skill.lovesickSnapshotCapture ? { lovesickSnapshot: {
         base, multiplier, normalization, noncriticalDamage: base * multiplier * normalization,
         scalingValue, power, defenseMultiplier, defenseDown: defDown, pierce: 0, actorAttack: actor.attack,
         targetId: target.id, ...(statusFactors ? { factors: clone(statusFactors) } : {})
       } } : {}),
-      ...(sourcedHachiman ? { damageFormula: {
-        model: 'hachiman_source_formula_provisional_inputs', sourceUrl: 'https://forum.gamer.com.tw/G2.php?bsn=71034&sn=112',
+      ...(sourceScaleFormula ? { damageFormula: {
+        model: sourcedLive ? 'current_source_scale_formula_provisional_inputs' : 'archived_formula', sourceUrl: 'https://forum.gamer.com.tw/G2.php?bsn=71034&sn=112',
         totalDefense, baseDefense, baseDefenseFallback: phase?.baseDefense == null && target.baseDefense == null,
-        defenseInputsStatus: 'unverified_encounter_inputs', defenseDown: defDown, pierce, effectiveDefense: defense, defenseMultiplier,
+        defenseInputsStatus: 'unverified_encounter_inputs', defenseDown: effectiveDefDown, pierce, effectiveDefense: defense, defenseMultiplier,
         actorAttack: actor.attack, attackBuff, flatAttack, scalingValue, power, skillAmplification, base,
-        ...statusFactors, variance, rawCritRate, criticalMultiplier, dreamscapeSkillCritBonus,
+        ...statusFactors, variance, rawCritRate, criticalMultiplier, criticalHitDamageMultiplier, dreamscapeSkillCritBonus,
         critDamageMultiplier, technicalMultiplier: technical?.damageMultiplier || 1, normalization, amount
       } } : {}),
       ...(cursedTiesAttackBonus ? { cursedTiesAttackBonus } : {}), ...(technical ? { technical } : {}) };
@@ -1954,13 +2364,6 @@ export class BattleEngine {
     return this.applyStatus(enemy[listName], owned, sourceType);
   }
 
-  surfAdjustedStatus(unit, status) {
-    const adjusted = clone(status);
-    if (this.isWavecatcher(unit) && unit.surfActive && Number.isFinite(adjusted.duration) && adjusted.duration < 900) {
-      adjusted.duration += 1;
-    }
-    return adjusted;
-  }
 
   // Hachiman (T6 status list, 2026-09-06): buff values granted by skills, Highlights,
   // medicines and navigator songs while Skill Amplification is active are scaled by
@@ -2095,7 +2498,7 @@ export class BattleEngine {
   isSpiritualOrControlStatus(status) {
     const id = String(status?.id || '').toLowerCase();
     return status?.spiritualAilment === true || status?.controlAilment === true || status?.unableToAct === true
-      || ['fear', 'despair', 'brainwash', 'forget', 'sleep', 'rage'].includes(id);
+      || ['fear', 'despair', 'brainwash', 'forget', 'sleep', 'rage', 'confuse', 'confusion', 'dizzy'].includes(id);
   }
 
   applyUnitDebuff(unit, status, sourceType = 'skill') {
@@ -2107,27 +2510,6 @@ export class BattleEngine {
     return target?.debuffs?.some(effect => effect.id === id) === true;
   }
 
-  addRinYearEndFlames(actor, target, stacks = 1) {
-    const existing = target.debuffs.find(effect => effect.id === 'rin_year_end_flames' && effect.sourceActorId === actor.id);
-    if (existing) {
-      existing.stacks = clamp((existing.stacks || 0) + stacks, 0, 4);
-      existing.duration = 2;
-      this.emit('debuff', `${target.name} now has ${existing.stacks} Year-End Flames stacks.`, { actorId: actor.id, targetId: target.id, status: clone(existing), sourceType: 'character_skill', tone: 'debuff' });
-      return existing;
-    }
-    this.applyContinuousDamage(actor, target, {
-      id: 'rin_year_end_flames', name: 'YEAR-END FLAMES', element: 'fire', powerPerStack: 0.738,
-      stacks, duration: 2, maxStacks: 4, stacking: 'add', canCrit: false,
-      timing: 'unverified', sourceUrl: actor.sourceUrl || null
-    }, 'character_skill');
-    const status = this.applyEnemyStatus(target, 'debuffs', {
-      id: 'rin_year_end_flames', name: 'YEAR-END FLAMES', element: 'fire', continuousDamage: false, damageOmitted: true,
-      powerPerStack: 0.738, stacks: clamp(stacks, 1, 4), duration: 2, durationKnown: true,
-      stackCap: 4, sourceUrl: actor.sourceUrl || null
-    }, 'character_skill', actor.id);
-    if (status) this.emit('debuff', `${target.name} gained ${status.stacks} Year-End Flames stack.`, { actorId: actor.id, targetId: target.id, status: clone(status), sourceType: 'character_skill', tone: 'debuff' });
-    return status;
-  }
 
   applyRinFireworkFinale(actor, targets) {
     for (const target of targets) {
@@ -2144,14 +2526,6 @@ export class BattleEngine {
     actor.rinYanhuaFlamesChance = 0.9;
   }
 
-  endRinFlamingSwordDance(actor, reason = 'turn end') {
-    if (!this.isRin(actor) || !actor.rinFlamingSwordDance) return;
-    actor.rinFlamingSwordDance = false;
-    actor.rinYanhuaBonusPower = 0;
-    actor.rinYanhuaFlamesChance = 0;
-    actor.buffs = actor.buffs.filter(effect => effect.id !== 'rin_flaming_sword_dance');
-    this.emit('status_expired', `${actor.codename}'s Flaming Sword Dance ended after ${reason}.`, { actorId: actor.id, sourceType: 'character_skill', tone: 'system' });
-  }
 
   convertBurnToScald(actor) {
     const targets = this.enemies.filter(target => target.alive !== false);
@@ -2168,26 +2542,7 @@ export class BattleEngine {
     return true;
   }
 
-  applyMatoiTorrentEffects(actor, targets) {
-    actor.extinguishStacks = clamp((actor.extinguishStacks || 0) + 1, 0, 4);
-    this.emit('resource', `${actor.codename} gained Extinguish ${actor.extinguishStacks}.`, { actorId: actor.id, resource: 'extinguishStacks', amount: actor.extinguishStacks, sourceType: 'character_skill', tone: 'buff' });
-    for (const target of targets) {
-      if (target.alive === false) continue;
-      const defenseDown = this.applyEnemyStatus(target, 'debuffs', { id: 'matoi_torrent_def', name: 'SUB-ZERO DEF ↓', stat: 'defenseDown', value: 0.091, duration: 3, technicalPrecision: 207 }, 'character_skill', actor.id);
-      if (defenseDown) this.emit('debuff', `${target.name}'s Defense fell by 9.1%.`, { actorId: actor.id, targetId: target.id, status: clone(defenseDown), sourceType: 'character_skill', tone: 'debuff' });
-      if (this.random() < 0.5) {
-        const freeze = this.applyEnemyStatus(target, 'debuffs', { id: 'matoi_freeze', name: 'FREEZE', duration: null, durationKnown: false, sourceUrl: actor.sourceUrl || null }, 'character_skill', actor.id);
-        if (freeze) this.emit('debuff', `${target.name} was inflicted with Freeze.`, { actorId: actor.id, targetId: target.id, status: clone(freeze), sourceType: 'character_skill', tone: 'debuff' });
-      }
-    }
-    this.convertBurnToScald(actor);
-  }
 
-  cleanseWavecatcher(unit) {
-    const before = unit.debuffs.length;
-    unit.debuffs = unit.debuffs.filter(status => !this.isSpiritualOrControlStatus(status));
-    return before - unit.debuffs.length;
-  }
 
   grantBlessing(recipients, amount = 1, sourceType = 'skill') {
     const marianPresent = Boolean(this.marian());
@@ -2231,7 +2586,7 @@ export class BattleEngine {
   // Strife 4-set: a further Attack bonus against an enemy weak to the set's element.
   revelationWeakElementAttackBonus(actor, target) {
     const bonus = actor?.revelationWeakElementAttack;
-    if (!this.usesLiveMechanics() || !bonus || !target || !(target.weakness === bonus.element || target.weaknesses?.includes(bonus.element))) return 0;
+    if (!this.usesLiveMechanics() || !bonus || !target || !isWeakTo(target, bonus.element)) return 0;
     return Number(bonus.value || 0);
   }
 
@@ -2293,7 +2648,13 @@ export class BattleEngine {
   }
 
   healingMultiplier(actor) {
-    return 1 + Number(actor?.healingBonus || 0);
+    const weaponHealing = actor?.buffs?.filter(effect => effect.stat === 'healing').reduce((sum, effect) => sum + Number(effect.value || 0), 0) || 0;
+    return 1 + Number(actor?.healingBonus || 0) + weaponHealing;
+  }
+
+  shieldMultiplier(actor) {
+    const weaponShield = actor?.buffs?.filter(effect => effect.stat === 'shieldPotency').reduce((sum, effect) => sum + Number(effect.value || 0), 0) || 0;
+    return 1 + Number(actor?.shieldBonus || 0) + weaponShield;
   }
 
   healUnit(actor, unit, rawAmount) {
@@ -2304,40 +2665,8 @@ export class BattleEngine {
     return actual;
   }
 
-  gainAkihikoGrit(actor, amount = 1, sourceType = 'character_skill') {
-    if (!this.isAkihiko(actor) || amount <= 0) return 0;
-    const before = actor.gritStacks;
-    actor.gritStacks = clamp(before + amount, 0, actor.gritMax);
-    const gained = actor.gritStacks - before;
-    if (gained) this.emit('resource', `${actor.codename} gained ${gained} Grit.`, {
-      actorId: actor.id, resource: 'gritStacks', amount: actor.gritStacks, sourceType, tone: 'buff'
-    });
-    return gained;
-  }
 
-  gainAkihikoMettle(actor, amount = 1, sourceType = 'character_skill') {
-    if (!this.isAkihiko(actor) || amount <= 0) return 0;
-    const before = actor.mettleStacks;
-    actor.mettleStacks = clamp(before + amount, 0, actor.mettleMax);
-    const gained = actor.mettleStacks - before;
-    if (gained) this.emit('resource', `${actor.codename} gained ${gained} Mettle.`, {
-      actorId: actor.id, resource: 'mettleStacks', amount: actor.mettleStacks, sourceType, tone: 'buff'
-    });
-    return gained;
-  }
 
-  gainMakotoMoonPhase(actor, amount = 1, sourceType = 'character_skill') {
-    if (!this.isMakoto(actor) || amount <= 0) return 0;
-    const before = actor.moonPhaseStacks;
-    actor.moonPhaseStacks = clamp(before + amount, 0, 4);
-    actor.moonPhaseDuration = 2;
-    actor.moonPhaseGrace = true;
-    const gained = actor.moonPhaseStacks - before;
-    this.emit('resource', `${actor.codename} has ${actor.moonPhaseStacks} Moon Phase stacks.`, {
-      actorId: actor.id, resource: 'moonPhaseStacks', amount: actor.moonPhaseStacks, gained, sourceType, tone: 'buff'
-    });
-    return gained;
-  }
 
   grantTheurgyGauge(unit, amount, sourceType = 'character_skill') {
     if (!unit || !Number.isFinite(Number(unit.theurgyMax)) || amount <= 0) return { granted: 0, reserved: 0 };
@@ -2360,54 +2689,8 @@ export class BattleEngine {
     return { granted, reserved, requestedAmount, nominalAmount, concertMultiplier };
   }
 
-  applyYukariErosion(target, sourceType = 'character_skill') {
-    const yukari = this.state.party.find(unit => this.isYukari(unit) && unit.hp > 0);
-    if (!yukari || !target) return;
-    for (const enemy of [this.state.boss, ...this.state.boss.summons]) enemy.debuffs = enemy.debuffs.filter(effect => effect.id !== 'yukari_erosion');
-    this.applyEnemyStatus(target, 'debuffs', { id: 'windswept', name: 'WINDSWEPT', duration: 2 }, sourceType, yukari.id);
-    this.applyEnemyStatus(target, 'debuffs', { id: 'yukari_erosion', name: 'EROSION', duration: 2 }, sourceType, yukari.id);
-    this.emit('debuff', `${target.name} is marked by Windswept and Erosion.`, {
-      actorId: yukari.id, targetId: target.id, status: { id: 'yukari_erosion', duration: 2 }, sourceType, tone: 'debuff'
-    });
-  }
 
-  triggerYukariErosionSupport(actor, enemyTargets, sourceType) {
-    if (!['character_skill', 'persona_skill'].includes(sourceType)) return;
-    const yukari = this.state.party.find(unit => this.isYukari(unit) && unit.hp > 0);
-    if (!yukari || actor.id === yukari.id || yukari.erosionTriggeredSinceTurn) return;
-    if (!enemyTargets.some(enemy => enemy.debuffs.some(effect => effect.id === 'yukari_erosion'))) return;
-    yukari.erosionTriggeredSinceTurn = true;
-    let healed = 0;
-    for (const unit of this.state.party.filter(unit => unit.hp > 0)) {
-      healed += this.healUnit(yukari, unit, yukari.mechanicAttack * 0.245 + 2400);
-    }
-    yukari.whisperwindStacks = clamp(yukari.whisperwindStacks + 1, 0, yukari.whisperwindMax);
-    this.emit('heal', `Erosion restored ${healed.toLocaleString()} party HP and granted Whisperwind ${yukari.whisperwindStacks}.`, {
-      actorId: yukari.id, targetId: 'party', amount: healed, resource: 'whisperwindStacks',
-      sourceType: 'awareness', tone: 'heal'
-    });
-  }
 
-  triggerMakotoEntrustedHope(sourceActor, skill, targetId, sourceType) {
-    if (!['character_skill', 'highlight', 'awareness_follow_up'].includes(sourceType)) return;
-    const makoto = this.state.party.find(unit => this.isMakoto(unit) && unit.hp > 0);
-    if (!makoto || sourceActor.id === makoto.id || Number(skill.power || 0) > 0 || skill.debuff) return;
-    const hasAllyEffect = Boolean(skill.allyEffect || skill.buff || skill.heal || skill.healAttack || skill.healFlat || skill.shield);
-    if (!hasAllyEffect) return;
-    const receives = ['party', 'all_allies'].includes(skill.buffTarget || skill.healTarget || skill.target)
-      || ((skill.buffTarget || skill.healTarget || skill.target) === 'ally' && targetId === makoto.id);
-    if (!receives) return;
-    makoto.entrustedHopeStacks = clamp(makoto.entrustedHopeStacks + 1, 0, 3);
-    this.applyUnitBuff(makoto, {
-      id: 'makoto_entrusted_hope', name: `ENTRUSTED HOPE x${makoto.entrustedHopeStacks}`,
-      stat: 'critDamage', value: makoto.entrustedHopeStacks * 0.072, duration: 2,
-      stacks: makoto.entrustedHopeStacks
-    }, 'passive');
-    if (makoto.entrustedHopeTriggerTurn !== this.state.attackTurn) {
-      makoto.entrustedHopeTriggerTurn = this.state.attackTurn;
-      this.gainMakotoMoonPhase(makoto, 1, 'awareness');
-    }
-  }
 
   applyMikuPartyBuff(status) {
     const sourced = { ...status, mikuGranted: true };
@@ -2417,9 +2700,9 @@ export class BattleEngine {
       // (2026-09-06, mid-Concert) shows one Feel the Beat ATK, one Clear Sound
       // DMG, one Play-With-Fire crit damage and one Spring Storm weakness entry,
       // not two of each. An active regular copy is kept and extended instead.
-      // Scoped to live Hachiman like the other observed rules; the archived Nexus
-      // benchmark was reproduced with the stacked copies and is left as recorded.
-      if (sourced.regularId && this.isHachimanLive()) {
+      // Current-profile boss encounters share this rule. Archived recorded
+      // profiles retain their captured stacking behavior.
+      if (sourced.regularId && this.usesLiveMechanics()) {
         const existing = unit.buffs.find(effect => effect.id === sourced.regularId);
         if (existing) {
           if (Number.isFinite(existing.duration) && Number.isFinite(sourced.duration)) existing.duration = Math.max(existing.duration, sourced.duration);
@@ -2444,45 +2727,7 @@ export class BattleEngine {
     });
   }
 
-  applyMikuSongEffect(skillName, song, duration = 3, idPrefix = 'miku') {
-    const id = value => `${idPrefix}_${value}`;
-    // Concert copies name the regular song effect they must not duplicate.
-    const apply = status => this.applyMikuPartyBuff(idPrefix === 'miku' ? status : { ...status, regularId: `miku_${status.id.slice(idPrefix.length + 1)}` });
-    if (skillName === 'Feel the Beat') {
-      if (song === 'Heaven') apply({ id: id('heaven_pierce'), name: 'HEAVEN PIERCE', stat: 'pierce', value: 0.11, duration });
-      if (song === 'Spring Storm') apply({ id: id('spring_damage'), name: 'SPRING STORM DMG', stat: 'damage', value: 0.183, duration });
-      if (song === 'Play-With-Fire') apply({ id: id('play_crit_damage'), name: 'PLAY-WITH-FIRE CRIT DMG', stat: 'critDamage', value: 0.22, duration });
-    } else if (skillName === 'Clear Sound') {
-      if (song === 'Heaven') this.healMikuParty(0.3);
-      if (song === 'Spring Storm') apply({ id: id('spring_weakness'), name: 'SPRING STORM WEAKNESS DMG', stat: 'weaknessDamage', value: 0.059, duration });
-      if (song === 'Play-With-Fire') apply({ id: id('play_crit_rate'), name: 'PLAY-WITH-FIRE CRIT RATE', stat: 'critRate', value: 0.11, duration });
-    }
-  }
 
-  applyMikuTrackSkill(action) {
-    const song = this.state.navigator.currentSong;
-    const track = mikuTrackBySong[song];
-    if (action.name === 'Feel the Beat') {
-      this.applyMikuPartyBuff({ id: 'miku_feel_attack', name: 'FEEL THE BEAT ATK', stat: 'attack', value: 0.305, duration: 3 });
-    } else {
-      this.applyMikuPartyBuff({ id: 'miku_clear_damage', name: 'CLEAR SOUND DMG', stat: 'damage', value: 0.183, duration: 3 });
-    }
-    if (track && !this.state.navigator.tracks.includes(track)) {
-      this.applyMikuSongEffect(action.name, song);
-      this.state.navigator.tracks.push(track);
-      this.applyMikuPartyBuff({ id: `miku_setlist_${track.toLowerCase()}`, name: `SETLIST ${track.toUpperCase()}`, stat: 'attack', value: 0.12, duration: 3 });
-      this.emit('track', `MIKU gained ${track} Track from ${song}.`, {
-        actorId: this.state.navigator.id, sourceType: 'navigator', track, song, tone: 'buff'
-      });
-    } else if (track) {
-      this.emit('track', `MIKU already held ${track} Track, so the conditional ${song} effect did not reactivate.`, {
-        actorId: this.state.navigator.id, sourceType: 'navigator', track, song, tone: 'buff'
-      });
-    }
-    for (const skill of this.state.navigator.skills.filter(item => ['Feel the Beat', 'Clear Sound'].includes(item.name))) {
-      this.state.navigator.cooldowns[skill.id] = 4;
-    }
-  }
 
   startVirtualConcert(action) {
     const concert = this.state.navigator.virtualConcert;
@@ -2520,7 +2765,7 @@ export class BattleEngine {
         this.applyMikuSongEffect('Feel the Beat', song, 2, 'miku_concert');
         this.applyMikuSongEffect('Clear Sound', song, 2, 'miku_concert');
       }
-      this.applyMikuPartyBuff({ id: 'miku_concert_a2_damage', name: 'VIRTUAL CONCERT AMP', stat: 'damage', value: 0.08, duration: 2, concertOnly: true });
+      this.applyMikuPartyBuff({ id: 'miku_concert_a2_damage', name: 'VIRTUAL CONCERT AMP', stat: 'finalDamage', value: 0.08, duration: 2, concertOnly: true });
     }
     this.applyMikuPartyBuff({ id: 'miku_concert_fan_favorite', name: 'FAN FAVORITE', stat: 'damage', value: 0.24, duration: 2, concertOnly: true });
     this.applyMikuPartyBuff({ id: 'miku_concert_crit_damage', name: 'GHOST RULE CRIT DMG', stat: 'critDamage', value: 0.183, duration: 2, concertOnly: true });
@@ -2599,7 +2844,11 @@ export class BattleEngine {
     const stat = Number(actor[scaling.stat] || 0);
     const capped = Math.min(stat, Number(scaling.cap ?? stat));
     const steps = scaling.per ? Math.floor(capped / scaling.per) : 0;
-    resolved.value = Number(scaling.base || 0) + steps * Number(scaling.step || 0);
+    const uncappedBonus = steps * Number(scaling.step || 0);
+    const bonus = Number.isFinite(Number(scaling.maxBonus))
+      ? Math.min(uncappedBonus, Number(scaling.maxBonus))
+      : uncappedBonus;
+    resolved.value = Number(scaling.base || 0) + bonus;
     return resolved;
   }
 
@@ -2647,28 +2896,8 @@ export class BattleEngine {
     this.initializeJcPassives();
   }
 
-  berryTierValue(actor, skill, values) {
-    const index = skill.powerTiers?.findIndex(value => Math.abs(value - skill.power) < 1e-8);
-    return values[index >= 0 ? index : actor.awareness >= 3 ? 3 : 1];
-  }
 
-  refreshBerryPassives(actor) {
-    const chain = actor.chainsOfLove;
-    for (const [id, stat, value] of [
-      ['berry_chains_attack', 'attack', chain * 0.15],
-      ['berry_chains_crit', 'critRate', chain >= 2 ? 0.15 : 0],
-      ['berry_chains_dot', 'dotDamage', chain >= 3 ? 0.25 : 0],
-      ['berry_chains_crit_damage', 'critDamage', chain >= 4 ? 0.36 : 0],
-      ['berry_highlight_attack', 'attack', actor.awareness >= 4 ? Math.min(actor.berryHighlightUses, 5) * 0.06 : 0]
-    ]) this.applyUnitBuff(actor, { id, name: id.replaceAll('_', ' ').toUpperCase(), stat, value, duration: 999 }, 'passive');
-    for (const target of this.enemies) this.refreshLovesickDebuffs(target, actor);
-  }
 
-  gainBerryChain(actor) {
-    actor.chainsOfLove = Math.min(actor.awareness >= 2 ? 5 : 3, actor.chainsOfLove + 1);
-    this.refreshBerryPassives(actor);
-    this.emit('resource', `${actor.codename} has ${actor.chainsOfLove} Chains of Love.`, { actorId: actor.id, resource: 'chainsOfLove', amount: actor.chainsOfLove, sourceType: 'awareness', tone: 'buff' });
-  }
 
   lovesickStatus(target, actor) { return target.debuffs.find(effect => effect.id === 'berry_lovesick' && effect.sourceActorId === actor.id); }
   lovesickStacks(target, actor) { return this.lovesickStatus(target, actor)?.stacks || 0; }
@@ -2709,7 +2938,7 @@ export class BattleEngine {
     }, 0);
     const critDamageMultiplier = critical ? criticalMultiplier : 1;
     const amount = Math.max(1, Math.round(noncriticalDamage * variance * critDamageMultiplier));
-    return { amount, critical, weakness: target.weakness === 'curse', multiplier: 1,
+    return { amount, critical, weakness: isWeakTo(target, 'curse'), multiplier: 1,
       damageFormula: { model: tickModel === 'per_stack_snapshot' ? 'lovesick_per_stack_snapshot' : `lovesick_${tickModel}`,
         sourceUrl: actor.lovesickDefinition?.sourceUrl, trigger: skill.lovesickTrigger,
         snapshots: clone(skill.lovesickSnapshots), noncriticalDamage, variance,
@@ -2774,25 +3003,7 @@ export class BattleEngine {
     return damage;
   }
 
-  marianScalingCriticalMultiplier(actor) {
-    const activeBonus = this.usesLiveMechanics()
-      ? actor.buffs.filter(effect => effect.stat === 'critDamage').reduce((sum, effect) => sum + Number(effect.value || 0), 0)
-      : 0;
-    return Math.min((actor.critMult || 1.5) + activeBonus, 2.464);
-  }
 
-  applyMarianHighlightEffect(actor, targetId) {
-    const skill = { target: 'ally', buffTarget: 'ally' };
-    const recipients = this.allyTargetsForSkill(actor, skill, targetId);
-    const critMult = this.marianScalingCriticalMultiplier(actor);
-    const critDamage = Math.max(0, (critMult - 1) / 6);
-    const duration = actor.awareness >= 4 ? 3 : 2;
-    for (const unit of recipients) {
-      this.applyUnitBuff(unit, { id: 'marian_highlight_damage', name: 'MARIAN HL DMG', stat: 'damage', value: 0.284, duration }, 'highlight');
-      this.applyUnitBuff(unit, { id: 'marian_highlight_crit_damage', name: 'MARIAN HL CRIT DMG', stat: 'critDamage', value: critDamage, duration }, 'highlight');
-    }
-    actor.nextMedicineEffectBonus = 0.114 + (actor.awareness >= 4 ? 0.05 : 0);
-  }
 
   initializeJcPassives() {
     const actor = this.state.party.find(unit => this.isJc(unit));
@@ -2817,58 +3028,9 @@ export class BattleEngine {
     if (actor.awareness >= 2) {
       for (const facade of actor.facades) this.applyJcFacadeAwareness(actor, facade);
     }
-    // Live Miyu (2026-09-27) showed One-Winged Butterfly at 2 stacks at battle
-    // start, so the two starting Facades each count as gained.
-    for (const _facade of actor.facades) this.applyJcWeaponFacadeBuff(actor);
   }
 
-  applyJcFacadeAwareness(actor, facade) {
-    if (actor.awareness < 2) return;
-    if (facade === 'mischief') {
-      for (const unit of this.state.party) this.applyUnitBuff(unit, { id: 'jc_a2_mischief', name: 'FACADE ATK', stat: 'attack', value: 0.3, duration: 2 }, 'awareness');
-    } else if (facade === 'absurdity') {
-      const target = this.state.party.filter(unit => unit.id !== actor.id && ['Sweeper', 'Assassin'].includes(unit.role)).sort((a, b) => b.attack - a.attack)[0];
-      if (target) this.applyUnitBuff(target, { id: 'jc_a2_absurdity', name: 'FACADE CRIT DMG', stat: 'critDamage', value: 0.2, duration: 2 }, 'awareness');
-    } else if (facade === 'luck') {
-      this.applyUnitBuff(actor, { id: 'jc_a2_luck', name: 'FACADE SKILL DMG', stat: 'damage', value: 0.1, duration: 2 }, 'awareness');
-    }
-  }
 
-  grantJcFacade(actor, facade) {
-    if (!facade || actor.facades.includes(facade)) return;
-    actor.facades.push(facade);
-    this.applyJcFacadeAwareness(actor, facade);
-    this.applyJcWeaponFacadeBuff(actor);
-    this.emit('resource', `${actor.codename} gained Facade of ${facade}.`, { actorId: actor.id, resource: 'facade', facade, tone: 'buff' });
-  }
-
-  // Mermaid Dreamer: spending SP on a skill or Resonance adds a permanent
-  // Wavecatcher damage stack, up to 5, before that action's damage.
-  gainTuberideStack(actor) {
-    const weapon = actor.wavecatcherWeapon;
-    if (!weapon || actor.tuberideStacks >= weapon.spendStackCap) return;
-    actor.tuberideStacks += 1;
-    this.applyUnitBuff(actor, { id: 'wavecatcher_tuberide_damage', name: `DEEP BLUE TUBERIDE ${actor.tuberideStacks}/${weapon.spendStackCap}`, stat: 'damage', value: weapon.spendDamage * actor.tuberideStacks, duration: 999 }, 'weapon');
-  }
-
-  jcDesireLevel(actor, twoMasks = false) {
-    return actor.desireLevel + (twoMasks && actor.jcWeapon ? actor.jcWeapon.twoMasksDesire : 0);
-  }
-
-  // Warden's Judgement: each Facade gained gives the party crit damage and
-  // damage for 2 turns, up to 2 stacks with separate clocks. At cap the
-  // earliest-expiring stack is refreshed. Battle-start Facades also trigger.
-  applyJcWeaponFacadeBuff(actor) {
-    const weapon = actor.jcWeapon;
-    if (!weapon) return;
-    const slots = Array.from({ length: weapon.facadeStackCap }, (_, index) => index + 1);
-    for (const unit of this.state.party.filter(member => member.hp > 0)) {
-      const durationOf = slot => unit.buffs.find(effect => effect.id === `jc_warden_crit_${slot}`)?.duration;
-      const slot = slots.find(n => durationOf(n) == null) ?? slots.reduce((best, n) => durationOf(n) < durationOf(best) ? n : best);
-      this.applyUnitBuff(unit, { id: `jc_warden_crit_${slot}`, name: 'WARDEN CRIT DMG', stat: 'critDamage', value: weapon.facadeCritDamage, duration: weapon.facadeDuration }, 'weapon');
-      this.applyUnitBuff(unit, { id: `jc_warden_damage_${slot}`, name: 'WARDEN DMG', stat: 'damage', value: weapon.facadeDamage, duration: weapon.facadeDuration }, 'weapon');
-    }
-  }
 
   applyJcMaskEffect(actor, mask) {
     const desireRatio = actor.desireLevel / 100;
@@ -2902,7 +3064,7 @@ export class BattleEngine {
     const pairs = enhanced
       ? ['mischief+service', 'absurdity+mischief', 'luck+mischief', 'absurdity+service', 'luck+service', 'absurdity+luck']
       : [jcPairKey(facadePair)];
-    const desireRatio = this.jcDesireLevel(actor, true) / 100;
+    const desireRatio = this.jcEffectiveDesire(actor, true) / 100;
     for (const pair of pairs) {
       if (pair === 'mischief+service') {
         let healed = 0;
@@ -2918,7 +3080,7 @@ export class BattleEngine {
         for (const unit of this.state.party) this.applyUnitBuff(unit, { id: 'jc_two_masks_crit_damage', name: 'TWO MASKS CRIT DMG', stat: 'critDamage', value: 0.227 * desireRatio, duration: 2 }, 'character_skill');
         if (this.usesLiveMechanics()) this.reportCombatLimitation('J&C Two Masks as One', ['Skill Amplification scope beyond direct skill damage'], { actorId: actor.id, facadePair: pair });
       } else if (pair === 'absurdity+service') {
-        const shield = Math.round((actor.attack * 0.486 + 4184) * (1 + actor.shieldBonus));
+        const shield = Math.round((actor.attack * 0.486 + 4184) * this.shieldMultiplier(actor));
         for (const unit of this.state.party) {
           this.applyUnitBuff(unit, { id: 'jc_two_masks_shield', name: 'TWO MASKS SHIELD', stat: 'shield', value: shield, duration: 2 }, 'character_skill');
           this.applyUnitBuff(unit, { id: 'jc_two_masks_defense', name: 'TWO MASKS DEF', stat: 'defense', value: 0.568 * desireRatio, duration: 2 }, 'character_skill');
@@ -2986,9 +3148,16 @@ export class BattleEngine {
   beginActorTurn() {
     const actor = this.actor;
     if (!actor) return;
+    // Kotone's Virtual Concert turns are extra turns, not new turn starts.
     const kotoneExtraTurn = actor.id === KOTONE_SHIOMI_ID && this.isVirtualConcertActive();
     if (!kotoneExtraTurn) actor.characterTurnsStarted += 1;
     this.kotoneMechanics?.turnStart(actor);
+    const wavecatcher = this.state.party.find(unit => this.isWavecatcher(unit));
+    if (this.config.wavecatcherSourceMechanics && this.usesLiveMechanics() && wavecatcher?.hp > 0 && actor.id !== wavecatcher.id && !kotoneExtraTurn) {
+      const recovered = 15 * (Number(wavecatcher.spRecovery || 100) / 100);
+      wavecatcher.sp = Math.min(this.spCap(wavecatcher), wavecatcher.sp + recovered);
+      this.recordWavecatcherRecovery(wavecatcher, recovered, 'ally_turn_start');
+    }
     if (this.usesLiveMechanics() && actor.hp > 0 && !kotoneExtraTurn) {
       // Natural recovery belongs to the owner's turn, including Concert turns.
       // Base 10 is guide-sourced; existing spRecovery values mix percentage
@@ -3006,6 +3175,8 @@ export class BattleEngine {
         actor.skillCooldowns[skillId] = Math.max(0, actor.skillCooldowns[skillId] - 1);
       }
     }
+    this.cosmicBeginTurn(actor);
+    characterHook(this, actor, 'onTurnStart');
     if (this.isYukari(actor)) actor.erosionTriggeredSinceTurn = false;
     if (this.isMakoto(actor)) {
       actor.nocturneAutoCooldown = Math.max(0, actor.nocturneAutoCooldown - 1);
@@ -3057,6 +3228,11 @@ export class BattleEngine {
     const preferredId = actor.jcLastSkillAttackTargetId;
     const preferred = preferredId ? this.findEnemy(preferredId) : null;
     if (this.isJcAutoTwoMasksTargetEligible(preferred)) return { target: preferred, rule: 'previous_skill_attack' };
+    const observedOpeningId = actor.jcTurnsStarted === 1 ? this.config.jcOpeningAutoTargetId : null;
+    const observedOpening = observedOpeningId ? this.findEnemy(observedOpeningId) : null;
+    if (this.isJcAutoTwoMasksTargetEligible(observedOpening)) {
+      return { target: observedOpening, rule: 'observed_opening_target' };
+    }
     const living = this.enemies.filter(enemy => this.isJcAutoTwoMasksTargetEligible(enemy));
     if (!living.length) return null;
     const index = Math.floor(this.random() * living.length);
@@ -3102,6 +3278,7 @@ export class BattleEngine {
     target.downed = true;
     const downedDamageTaken = Math.round(Number(target.downedDamageTaken ?? 0.1) * 100);
     this.emit('down', `${target.name} was knocked Down! Damage taken +${downedDamageTaken}%.`, { targetId: target.id, tone: 'phase' });
+    this.resolveWonderWeaponKnockdown(target);
     this.queueDownActions(actor, target, sourceType);
   }
 
@@ -3277,6 +3454,8 @@ export class BattleEngine {
   }
 
   resolveSkillBody(actor, skill, targetId, sourceType, options = {}) {
+    skill = characterHook(this, actor, 'beforeSkill', skill, targetId, sourceType) || skill;
+    skill = this.cosmicPrepareSkill(actor, skill, sourceType);
     if (this.isBerry(actor) && !options.skipBerryMechanics && ['character_skill', 'highlight', 'berry_repeat'].includes(sourceType)) skill = this.berrySkill(skill);
     const highlightActionContext = options.highlightActionContext || null;
     const highlightCast = this.recordSharedHighlightCast(highlightActionContext, {
@@ -3310,6 +3489,12 @@ export class BattleEngine {
     const facadePair = isTwoMasks ? [...actor.facades] : [];
     const trueDesireEnhanced = isTwoMasks && actor.trueDesirePrimed;
     const damageSkill = clone(skill);
+    if (isAerialTide) damageSkill.damageClass = 'resonance_follow_up';
+    const hitRange = Array.isArray(damageSkill.hitCountRange) ? damageSkill.hitCountRange.map(Number) : null;
+    const validHitRange = hitRange?.length === 2 && hitRange.every(Number.isInteger) && hitRange[0] > 0 && hitRange[1] >= hitRange[0];
+    const resolvedHitCount = Number.isInteger(damageSkill.hitCount) && damageSkill.hitCount > 0
+      ? damageSkill.hitCount
+      : validHitRange ? hitRange[0] + Math.floor(this.random() * (hitRange[1] - hitRange[0] + 1)) : 1;
     if (!this.usesLiveMechanics() && sourceType === 'highlight' && this.isVirtualConcertActive() && Number(this.state.navigator.awareness || 0) >= 1) {
       damageSkill.power *= 1.1;
     }
@@ -3332,13 +3517,12 @@ export class BattleEngine {
       }
     }
     if (jcMask) damageSkill.power = (skill.power || 0.867) * (1 + actor.desireLevel / 100);
-    if (isTwoMasks) damageSkill.power = (skill.power || 1.477) * (1 + this.jcDesireLevel(actor, true) / 100);
+    if (isTwoMasks) damageSkill.power = (skill.power || 1.477) * (1 + this.jcEffectiveDesire(actor, true) / 100);
     if (!options.ignoreCost) actor.sp = clamp(actor.sp - (skill.cost || 0), 0, this.spCap(actor));
-    if (!options.ignoreCost && (skill.cost || 0) > 0 && ['character_skill', 'resonance_follow_up'].includes(sourceType)) this.gainTuberideStack(actor);
     if (skill.hpCost) actor.hp = Math.max(1, actor.hp - Math.round(actor.maxHp * skill.hpCost / 100));
     this.emit('move', `${actor.codename} used ${skill.name}.`, { actorId: actor.id, skillId: skill.id, sourceType, tone: 'move' });
     const twoMasksHitsAll = isTwoMasks && (trueDesireEnhanced || jcPairKey(facadePair) === 'luck+mischief');
-    const enemyTargets = skill.target === 'all_enemies' || twoMasksHitsAll ? this.enemies : [this.findEnemy(targetId) || this.state.boss];
+    const enemyTargets = skill.cosmicTargetIds ? skill.cosmicTargetIds.map(id => this.findEnemy(id)).filter(Boolean) : skill.target === 'all_enemies' || twoMasksHitsAll ? [...this.enemies] : [this.findEnemy(targetId) || this.state.boss];
     const mainTarget = this.findEnemy(targetId) || this.state.boss;
     const yukari = this.state.party.find(unit => this.isYukari(unit) && unit.hp > 0);
     if (yukari && actor.id !== yukari.id && ['character_skill', 'persona_skill'].includes(sourceType)
@@ -3352,11 +3536,13 @@ export class BattleEngine {
       : 0;
     let damage = 0;
     let triggeredCritical = false;
+    const packets = [];
     const cursedTiesProcCandidates = new Map();
     if (damageSkill.power > 0) {
       for (const target of enemyTargets) {
         if (target.id !== this.state.boss.id && target.alive === false) continue;
-        const result = this.calculateDamage(actor, damageSkill, target, sourceType);
+        const resolvedDamageSkill = prepareCharacterDamage(this, actor, damageSkill, target, sourceType);
+        const result = this.calculateDamage(actor, resolvedDamageSkill, target, sourceType, { prepared: true });
         triggeredCritical ||= result.critical;
         const hpBefore = target.hp;
         const actual = this.applyEnemyDamage(target, result.amount);
@@ -3374,7 +3560,11 @@ export class BattleEngine {
         });
         this.recordCursedTiesCurseDamage(actor, target, damageSkill.element, actual, cursedTiesProcCandidates);
         this.resolveTechnicalEffect(result, actor, target, damageSkill);
-        if (options.canReduceDown !== false) this.updateDownState(target, result, damageSkill, actor, sourceType);
+        if (options.canReduceDown !== false && resolvedDamageSkill.canReduceDown !== false) this.updateDownState(target, result, resolvedDamageSkill, actor, sourceType);
+        const packet = { actor, skill: resolvedDamageSkill, target, result, actualDamage: actual, sourceType, hpBefore, hpAfter: target.hp };
+        packets.push(packet);
+        notifyCharacterDamage(this, packet);
+        this.resolveWonderWeaponDamagePacket(actor, resolvedDamageSkill, target, actual, sourceType);
         // Apply before resolving a lethal defeat so the status can move with
         // the holder during Berry's sourced kill chain.
         if (berryAddedStacks > 0) this.addLovesick(actor, target, berryAddedStacks);
@@ -3384,7 +3574,21 @@ export class BattleEngine {
       if (options.grantsHighlight !== false && !this.usesLiveMechanics()) {
         actor.highlight = clamp(actor.highlight + (this.isVirtualConcertActive() ? 36 : 18), 0, 100);
       }
-      const extraHitSkills = [];
+      const extraHitSkills = (skill.cosmicExtraHitPowers || []).map((power, index) => ({
+        ...clone(damageSkill), power, id: `${skill.id}-knight-hit-${index + 1}`, name: `Veg-Out knight hit ${index + 1}`, canReduceDown: false
+      }));
+      for (let index = 1; index < resolvedHitCount; index += 1) {
+        extraHitSkills.push({
+          ...clone(damageSkill), hitCount: 1, hitCountRange: undefined,
+          id: `${skill.id}-hit-${index + 1}`, name: `${skill.name} hit ${index + 1}`, canReduceDown: false
+        });
+      }
+      for (const [index, hit] of (skill.additionalHits || []).entries()) {
+        if (!Number.isFinite(hit.power) || hit.power <= 0) throw new Error('Additional hit requires a positive sourced power.');
+        extraHitSkills.push({ ...clone(damageSkill), ...clone(hit),
+          id: hit.id || `${skill.id}-additional-${index + 1}`, name: hit.name || `${skill.name} additional hit ${index + 1}`,
+          canReduceDown: hit.canReduceDown === true });
+      }
       if (berrySkill && skill.name === 'My Beloved Prince' && berryStacksBefore >= 10) extraHitSkills.push({
         id: `${skill.id}_lovesick_bonus`, name: 'My Beloved Prince bonus', element: 'curse', target: 'boss',
         power: this.berryTierValue(actor, skill, [1.187, 1.309, 1.261, 1.382]),
@@ -3419,15 +3623,17 @@ export class BattleEngine {
       if (jcHighlightMask === 'luck') extraHitSkills.push({ ...clone(damageSkill), element: 'curse' });
       if (trueDesireEnhanced) {
         for (const element of ['fire', 'ice', 'electric', 'wind', 'psychic', 'nuclear', 'bless', 'curse']) {
-          extraHitSkills.push({ ...clone(damageSkill), id: `${damageSkill.id}-true-desire-${element}`, name: `True Desire ${element}`, element, power: 0.4 * (1 + this.jcDesireLevel(actor, true) / 100), trueDesireMainTarget: true });
+          extraHitSkills.push({ ...clone(damageSkill), id: `${damageSkill.id}-true-desire-${element}`, name: `True Desire ${element}`, element, power: 0.4 * (1 + this.jcEffectiveDesire(actor, true) / 100), trueDesireMainTarget: true });
         }
       }
       for (const target of enemyTargets) {
         for (const hitSkill of extraHitSkills) {
+          if (hitSkill.targetId && hitSkill.targetId !== target.id) continue;
           if (hitSkill.trueDesireMainTarget && target.id !== mainTarget.id) continue;
           if (target.id !== this.state.boss.id && target.alive === false) continue;
           const hitSourceType = hitSkill.sourceTypeOverride || sourceType;
-          const result = this.calculateDamage(actor, hitSkill, target, hitSourceType);
+          const resolvedHitSkill = prepareCharacterDamage(this, actor, hitSkill, target, hitSourceType);
+          const result = this.calculateDamage(actor, resolvedHitSkill, target, hitSourceType, { prepared: true });
           triggeredCritical ||= result.critical;
           const hpBefore = target.hp;
           const actual = this.applyEnemyDamage(target, result.amount);
@@ -3445,16 +3651,20 @@ export class BattleEngine {
           });
           this.recordCursedTiesCurseDamage(actor, target, hitSkill.element, actual, cursedTiesProcCandidates);
           this.resolveTechnicalEffect(result, actor, target, hitSkill);
-          if (options.canReduceDown !== false && hitSkill.canReduceDown !== false) {
-            this.updateDownState(target, result, hitSkill, actor, hitSourceType);
+          if (options.canReduceDown !== false && resolvedHitSkill.canReduceDown !== false) {
+            this.updateDownState(target, result, resolvedHitSkill, actor, hitSourceType);
           } else if (hitSkill.canReduceDown === false
             && (result.weakness || (['physical', 'gun'].includes(hitSkill.element) && result.critical))
-            && !target.downed) {
+            && !target.downed && !this.isCosmicYui(actor)) {
             this.emit('down_suppressed', `${hitSkill.name} dealt bonus damage but did not remove a Down point; My Beloved Prince already resolved Down for this cast.`, {
               actorId: actor.id, targetId: target.id, skillId: hitSkill.id, sourceType: hitSourceType,
               reason: 'berry_s3_bonus_same_cast_down_limit', tone: 'system'
             });
           }
+          const packet = { actor, skill: resolvedHitSkill, target, result, actualDamage: actual, sourceType: hitSourceType, hpBefore, hpAfter: target.hp };
+          packets.push(packet);
+          notifyCharacterDamage(this, packet);
+          this.resolveWonderWeaponDamagePacket(actor, resolvedHitSkill, target, actual, hitSourceType);
           if (target.id !== this.state.boss.id && !target.scoreAttack && target.hp <= 0) this.defeatSummon(target);
           this.processEncounterDamageTriggers(actor, target, hpBefore, target.hp);
         }
@@ -3464,27 +3674,39 @@ export class BattleEngine {
     if (this.usesLiveMechanics() && skill.continuousDamage) {
       for (const target of enemyTargets) this.applyContinuousDamage(actor, target, skill.continuousDamage, sourceType);
     }
-    if (skill.debuff) {
-      const debuff = this.resolveStatus(skill.debuff, actor);
+    const skillDebuffs = Array.isArray(skill.debuffs) && skill.debuffs.length ? skill.debuffs : skill.debuff ? [skill.debuff] : [];
+    for (const definition of skillDebuffs) {
+      const debuff = this.resolveStatus(definition, actor);
       for (const target of enemyTargets) {
         if (target.id !== this.state.boss.id && target.alive === false) continue;
+        const chance = Number(debuff.chance);
+        if (Number.isFinite(chance) && chance < 1 && (chance <= 0 || this.random() >= chance)) {
+          this.emit('debuff_miss', `${skill.name} failed to inflict ${debuff.name} on ${target.name}.`, {
+            actorId: actor.id, targetId: target.id, skillId: skill.id, statusId: debuff.id,
+            chance, sourceType, tone: 'system'
+          });
+          continue;
+        }
         const applied = this.applyEnemyStatus(target, 'debuffs', debuff, sourceType, actor.id);
         if (applied) this.emit('debuff', `${target.name} is afflicted with ${debuff.name}.`, { targetId: target.id, status: { ...clone(debuff), sourceType }, sourceType, tone: 'debuff' });
       }
     }
-    if (skill.buff && !this.isJc(actor) && !isOrangeBlossomBlade) {
+    const skillBuffs = Array.isArray(skill.buffs) && skill.buffs.length ? skill.buffs : skill.buff ? [skill.buff] : [];
+    if (skillBuffs.length && !this.isJc(actor) && !isOrangeBlossomBlade) {
       const buffTarget = skill.buffTarget || skill.target;
       const recipients = buffTarget === 'party' ? this.state.party
         : buffTarget === 'ally' && this.isMarian(actor) ? this.allyTargetsForSkill(actor, skill, targetId)
           : buffTarget === 'ally' ? [byId(this.state.party, targetId) || actor] : [actor];
-      const buff = this.liveSkillBuffStatus(skill, this.resolveStatus(skill.buff, actor));
-      if (this.isMarian(actor) && skill.name === 'Summer Garden') {
-        const cappedHp = Math.min(actor.mechanicMaxHp || actor.maxHp, 13632);
-        buff.value = 0.091 + (this.usesLiveMechanics() ? cappedHp / 1200 : Math.floor(cappedHp / 1200)) * 0.032;
+      for (const definition of skillBuffs) {
+        const buff = this.liveSkillBuffStatus(skill, this.resolveStatus(definition, actor));
+        if (this.isMarian(actor) && skill.name === 'Summer Garden') {
+          const cappedHp = Math.min(actor.mechanicMaxHp || actor.maxHp, 13632);
+          buff.value = 0.091 + (this.usesLiveMechanics() ? cappedHp / 1200 : Math.floor(cappedHp / 1200)) * 0.032;
+        }
+        for (const unit of recipients) this.applyUnitBuff(unit, buff, sourceType, this.supportCastContext);
+        const recipientLabel = buffTarget === 'party' ? 'the party' : recipients[0].codename;
+        this.emit('buff', `${buff.name} applied to ${recipientLabel}.`, { targetId: buffTarget === 'party' ? 'party' : recipients[0].id, status: { ...clone(buff), sourceType }, sourceType, tone: 'buff' });
       }
-      for (const unit of recipients) this.applyUnitBuff(unit, buff, sourceType, this.supportCastContext);
-      const recipientLabel = buffTarget === 'party' ? 'the party' : recipients[0].codename;
-      this.emit('buff', `${buff.name} applied to ${recipientLabel}.`, { targetId: buffTarget === 'party' ? 'party' : recipients[0].id, status: { ...clone(buff), sourceType }, sourceType, tone: 'buff' });
     }
     if (skill.selectedAllyBuff) {
       const target = byId(this.state.party, targetId);
@@ -3714,42 +3936,52 @@ export class BattleEngine {
       } else {
         actor.surfActive = true;
         this.emit('stance', `${actor.codename} entered Surf state.`, { actorId: actor.id, stance: 'surf', active: true, sourceType, tone: 'buff' });
-        // Observed live: entering Surf ends her turn and triggers two Catch a Waves.
-        if (this.usesLiveMechanics() && this.config.wavecatcherFollowUps && sourceType === 'character_skill') {
-          for (let wave = 0; wave < 2; wave++) this.resolveCatchAWave(actor, 'on entering Surf');
-        }
+        // Observed live: entering Surf ends her turn and triggers two Catch a Waves,
+        // one on entry and the usual one at the end of her turn.
+        if (this.config.wavecatcherSourceMechanics && this.config.wavecatcherFollowUps && sourceType === 'character_skill') this.resolveCatchAWave(actor, 'on entering Surf');
       }
     }
     if (skill.name === 'Jellyfish Splash') {
-      const recoveryAmount = Math.round(40 * (Number.isFinite(Number(actor.spRecovery)) ? actor.spRecovery : 100) / 100);
+      const recoveryBase = this.config.wavecatcherSourceMechanics && actor.awareness >= 6 ? 60 : 40;
+      const recoveryAmount = Math.round(recoveryBase * (Number.isFinite(Number(actor.spRecovery)) ? actor.spRecovery : 100) / 100);
       const restored = Math.min(recoveryAmount, this.spCap(actor) - actor.sp);
       actor.sp += restored;
+      if (this.config.wavecatcherSourceMechanics) this.recordWavecatcherRecovery(actor, recoveryAmount, 'jellyfish_splash');
       this.emit('resource', `${actor.codename} recovered ${restored} SP.`, { actorId: actor.id, resource: 'sp', amount: restored, sourceType, tone: 'heal' });
     }
     if (isAerialTide && surfWasActive) {
-      actor.surfActive = false;
-      actor.offshoreStacks = 0;
-      actor.surfReentryLocked = true;
-      this.emit('stance', `${actor.codename} spent Surf and Offshore on Aerial Tide.`, { actorId: actor.id, stance: 'surf', active: false, sourceType, tone: 'phase' });
+      if (this.config.wavecatcherSourceMechanics && actor.awareness >= 6) {
+        actor.pendingOffshoreReset = true;
+        this.emit('stance', `${actor.codename} retained Surf after Aerial Tide; Offshore will reset at turn end.`, { actorId: actor.id, stance: 'surf', active: true, sourceType, tone: 'phase' });
+      } else {
+        actor.surfActive = false;
+        actor.offshoreStacks = 0;
+        actor.surfReentryLocked = true;
+        this.emit('stance', `${actor.codename} spent Surf and Offshore on Aerial Tide.`, { actorId: actor.id, stance: 'surf', active: false, sourceType, tone: 'phase' });
+      }
     }
     if (['character_skill', 'highlight'].includes(sourceType)) {
       this.triggerSoothingSunlight(actor, skill, targetId);
       this.triggerTrustProsperity(actor, skill, sourceType);
     }
+    this.resolveWonderWeaponAllyTarget(actor, skill, targetId);
+    damage += this.cosmicAfterSkill(actor, skill, targetId, sourceType, damage);
+    damage += Number(characterHook(this, actor, 'afterSkill', skill, targetId, sourceType,
+      { damage, critical: triggeredCritical, targets: enemyTargets, packets }) || 0);
     return damage;
   }
 
   resolveAllyTurnFollowUps(completedActorId) {
     if (!this.config.wavecatcherFollowUps) return;
     for (const unit of this.state.party) {
-      if (unit.id === completedActorId || unit.hp <= 0 || !unit.surfActive) continue;
+      if ((!this.config.wavecatcherSourceMechanics && unit.id === completedActorId) || unit.hp <= 0 || !unit.surfActive) continue;
       this.resolveCatchAWave(unit, 'after an ally turn');
     }
   }
 
   // One automatic Catch a Wave, if the unit has enough SP. Returns whether it fired.
   resolveCatchAWave(unit, reason = 'after an ally turn') {
-    const cost = 30 * (unit.offshoreStacks + 1);
+    const cost = 30 * (unit.offshoreStacks + 1) * (this.config.wavecatcherSourceMechanics && unit.awareness >= 1 ? 0.6 : 1);
     if (unit.sp < cost) return false;
     const power = 0.584 * (1 + unit.offshoreStacks * 0.05);
     this.emit('follow_up', `${unit.codename} activated Catch a Wave ${reason}.`, {
@@ -3763,11 +3995,44 @@ export class BattleEngine {
     }, this.state.boss.id, 'resonance_follow_up', { canReduceDown: false, grantsHighlight: false });
     this.state.followUpRng = this.state.rng;
     this.state.rng = primaryRng;
-    unit.offshoreStacks = clamp(unit.offshoreStacks + 1, 0, 4);
+    unit.catchAWaveCount = Number(unit.catchAWaveCount || 0) + 1;
+    const offshoreCap = this.config.wavecatcherSourceMechanics
+      ? 4 + (unit.awareness >= 1 ? 2 : 0) + (unit.awareness >= 6 ? 2 : 0)
+      : 4;
+    unit.offshoreStacks = clamp(unit.offshoreStacks + 1, 0, offshoreCap);
     this.emit('resource', `${unit.codename} gained Offshore ${unit.offshoreStacks}.`, {
       actorId: unit.id, resource: 'offshoreStacks', amount: unit.offshoreStacks, sourceType: 'resonance_follow_up', tone: 'buff'
     });
+    if (this.config.wavecatcherSourceMechanics && unit.awareness >= 2 && unit.catchAWaveCount % 4 === 0) {
+      const bonusRng = this.state.rng;
+      this.state.rng = this.state.followUpRng;
+      this.resolveSkill(unit, {
+        id: 'catch_a_wave_special', slot: 'FU', name: 'Roaring Surf Line', element: 'ice', cost: 0, power,
+        target: 'all_enemies', note: 'Every fourth Catch a Wave repeats without SP cost and cannot reduce Down points.'
+      }, this.state.boss.id, 'resonance_follow_up', { ignoreCost: true, canReduceDown: false, grantsHighlight: false });
+      this.state.followUpRng = this.state.rng;
+      this.state.rng = bonusRng;
+    }
     return true;
+  }
+
+  recordWavecatcherRecovery(unit, amount, sourceType) {
+    if (!this.isWavecatcher(unit) || amount <= 0) return;
+    unit.totalRecoveredSp = Number(unit.totalRecoveredSp || 0) + amount;
+    const thresholds = [
+      [100, 'miyu_recovered_attack', 'RECOVERED SP ATK', 'attack', 0.25],
+      [200, 'miyu_recovered_damage', 'RECOVERED SP DMG', 'damage', 0.25],
+      [300, 'miyu_recovered_crit', 'RECOVERED SP CRIT', 'critRate', 0.12],
+      [400, 'miyu_recovered_crit_damage', 'RECOVERED SP CRIT DMG', 'critDamage', 0.24]
+    ];
+    for (const [threshold, id, name, stat, value] of thresholds) {
+      if (unit.totalRecoveredSp >= threshold && !unit.buffs.some(buff => buff.id === id)) {
+        this.applyUnitBuff(unit, { id, name, stat, value, duration: 999 }, 'awareness');
+      }
+    }
+    this.emit('resource', `${unit.codename} total recovered SP reached ${Math.floor(unit.totalRecoveredSp)}.`, {
+      actorId: unit.id, resource: 'totalRecoveredSp', amount: unit.totalRecoveredSp, sourceType, tone: 'heal'
+    });
   }
 
   stepMedicine(medicineId, targetId) {
@@ -3856,11 +4121,15 @@ export class BattleEngine {
 
   completeCountedAction({ actionType = null, wasConcertAction = false, rinStanceAction = false, grantsSharedHighlight = false, highlightSource = 'character_action', highlightActionContext = null } = {}) {
     if (grantsSharedHighlight) this.resolveCountedActionHighlight(highlightActionContext, highlightSource);
+    // Kotone's Fortune extra actions are not counted actions.
     if (this.kotoneMechanics?.deferCompletion()) {
       this.updateBossPhase();
       if (this.allEnemiesDefeated()) this.finish('victory');
       return { done: this.state.phase !== 'battle', consumedAction: false, extraActionPending: true };
     }
+    if (!rinStanceAction) this.cosmicEndCountedAction(this.actor.id);
+    if (!rinStanceAction) notifyCharacterActionEnd(this, this.actor, { actionType, wasConcertAction,
+      isExtraAction: this.state.characterExtraAction?.actorId === this.actor.id });
     this.recordTrueDesireWonderAction(actionType, wasConcertAction);
     this.updateBossPhase();
     if (!wasConcertAction && !rinStanceAction) this.state.actionNumber += 1;
@@ -3902,7 +4171,12 @@ export class BattleEngine {
     const persona = byId(this.personaDefinitions, personaId);
     if (!persona || !this.config.personaIds.includes(personaId)) throw new Error('Persona unavailable');
     this.state.lastEvents = [];
+    const changed = this.state.activePersonaId !== personaId;
     this.state.activePersonaId = personaId;
+    if (changed) {
+      this.syncPersonaPassiveEffects();
+      this.resolveWonderWeaponPersonaChange();
+    }
     this.emit('switch', `Wonder equipped ${persona.name}. Choose a skill to continue.`, { actorId: 'wonder', personaId, tone: 'switch' });
     this.recordFrame(`Select ${persona.name}`);
     return { nextState: this.config.fastMode ? null : this.getObservation(), reward: 0, done: false, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events), consumedAction: false };
@@ -3914,7 +4188,9 @@ export class BattleEngine {
     this.state.lastEvents = [];
     actor.mettleStacks -= 6;
     actor.lastFlashCharacterTurn = actor.characterTurnsStarted;
-    this.applyUnitBuff(actor, { id: 'akihiko_flash_damage', name: 'GUARDIAN FIST', stat: 'damage', value: 0.3, duration: 3 }, 'awareness');
+    if (actor.awareness >= 2) this.applyUnitBuff(actor, {
+      id: 'akihiko_flash_damage', name: 'GUARDIAN FIST', stat: 'damage', value: 0.3, duration: 3
+    }, 'awareness');
     const downedBefore = new Set(this.enemies.filter(enemy => enemy.downed).map(enemy => enemy.id));
     const reward = this.resolveSkill(actor, action.skill, this.state.boss.id, 'resonance_follow_up', {
       ignoreCost: true, grantsHighlight: false, canReduceDown: false
@@ -3940,6 +4216,8 @@ export class BattleEngine {
     this.state.lastEvents = [];
     const legal = this.getAvailableActions().find(candidate => candidate.skillId === action.skillId && candidate.type === action.type);
     if (!legal || !legal.enabled) throw new Error('Unavailable action');
+    if (legal.type === 'cosmic_color') return this.stepCosmicColor(legal);
+    if (legal.type === 'cosmic_assemble') return this.stepCosmicAssemble(legal);
     if (legal.type.startsWith('kotone_')) return this.kotoneMechanics.stepControl(legal, action.targetId);
     if (legal.type === 'support_extra') return this.resolveNextSupportAction();
     if (legal.type === 'akihiko_flash') return this.stepAkihikoFlash(legal);
@@ -3951,7 +4229,7 @@ export class BattleEngine {
     const actor = this.actor;
     // Leaving Surf with Paddle Out does not use the action (source: other skills
     // can be used that turn, but Surf cannot be re-entered).
-    const surfExitAction = this.usesLiveMechanics() && legal.type === 'skill'
+    const surfExitAction = this.config.wavecatcherSourceMechanics && legal.type === 'skill'
       && legal.skill?.name === 'Paddle Out' && this.isWavecatcher(actor) && actor.surfActive === true;
     const rinStanceAction = legal.type === 'rin_stance' || surfExitAction;
     const highlightActionContext = this.usesLiveMechanics() && !rinStanceAction
@@ -3987,6 +4265,7 @@ export class BattleEngine {
     }
     // Resolve the counted action's charge plus eligible Berry S1 kill-reset
     // casts at this boundary. Free recasts do not consume another turn or SP.
+    const damageBeforeCompletion = this.state.totalDamage;
     const completion = this.completeCountedAction({
       actionType: legal.type,
       wasConcertAction, rinStanceAction,
@@ -3995,6 +4274,7 @@ export class BattleEngine {
       grantsSharedHighlight: this.usesLiveMechanics() && (legal.type !== 'guard' || this.isHachimanLive()) && !rinStanceAction,
       highlightActionContext
     });
+    if (this.state.party.some(unit => this.isCosmicYui(unit))) reward += this.state.totalDamage - damageBeforeCompletion;
     if (rinStanceAction) {
       this.recordFrame(legal.name);
       return { nextState: this.config.fastMode ? null : this.getObservation(), reward, done: completion.done, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events), consumedAction: false };
@@ -4006,8 +4286,9 @@ export class BattleEngine {
   stepNavigator(skillId) {
     if (this.state.phase !== 'battle') throw new Error('Encounter is over');
     this.state.lastEvents = [];
-    const action = this.getNavigatorActions().find(skill => skill.id === skillId);
+    let action = this.getNavigatorActions().find(skill => skill.id === skillId);
     if (!action?.enabled) throw new Error('Navigator action unavailable');
+    action = characterHook(this, this.state.navigator, 'beforeNavigatorSkill', action) || action;
     this.emit('navigator', `${this.state.navigator.codename} cut in with ${action.name}!`, { actorId: this.state.navigator.id, skillId, sourceType: 'navigator', tone: 'navigator' });
     const mikuTrackSkill = this.isMikuNavigator() && ['Feel the Beat', 'Clear Sound'].includes(action.name);
     const mikuShowstopper = this.isMikuNavigator() && action.name === 'Showstopper';
@@ -4034,9 +4315,10 @@ export class BattleEngine {
       }
       this.emit('heal', `The party recovered ${healed.toLocaleString()} HP and ${action.spRestore || 0} SP.`, { amount: healed, targetId: 'party', sourceType: 'navigator', tone: 'heal' });
     }
-    if (!mikuTrackSkill && !mikuShowstopper) this.state.navigator.cooldowns[skillId] = action.cooldown;
+    if (!mikuTrackSkill && !mikuShowstopper && action.navigatorIndependent !== true) this.state.navigator.cooldowns[skillId] = action.cooldown;
     this.state.navigator.uses += 1;
-    this.state.navigator.lastUsedAttackTurn = this.state.attackTurn;
+    if (action.navigatorIndependent !== true) this.state.navigator.lastUsedAttackTurn = this.state.attackTurn;
+    characterHook(this, this.state.navigator, 'afterNavigatorSkill', action);
     this.recordFrame(`Navigator · ${action.name}`);
     return { nextState: this.config.fastMode ? null : this.getObservation(), done: false, consumedAction: false, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events) };
   }
@@ -4082,6 +4364,7 @@ export class BattleEngine {
     if (this.isMikuNavigator() && Number(this.state.navigator.awareness || 0) >= 4) {
       this.applyUnitBuff(actor, { id: 'miku_a4_highlight_attack', name: 'MIKU A4 HIGHLIGHT ATK', stat: 'attack', value: 0.25, duration: 2, mikuGranted: true }, 'awareness');
     }
+    notifyCharacterSpecialAction(this, actor, { actionType: 'highlight', skill: highlightSkill });
     this.updateBossPhase();
     if (!wasConcertAction && !this.usesLiveMechanics()) this.state.actionNumber += 1;
     if (this.allEnemiesDefeated()) this.finish('victory');
@@ -4090,6 +4373,10 @@ export class BattleEngine {
   }
 
   consumeTurnAction() {
+    if (this.state.characterExtraAction?.actorId === this.actor.id) {
+      this.state.characterExtraAction = null;
+      return this.finishOwnerTurnIfReady();
+    }
     if (this.isRin(this.actor) && this.actor.rinFlamingSwordDance) this.endRinFlamingSwordDance(this.actor, 'turn end');
     if (this.usesLiveMechanics()) {
       for (const key of Object.keys(this.actor.highlightCooldowns)) {
@@ -4121,6 +4408,28 @@ export class BattleEngine {
         }
       }
     }
+    let extraController = this.actor;
+    let extraRequest = characterHook(this, this.actor, 'getExtraActionRequest');
+    if (!extraRequest) {
+      const navigatorRequest = characterHook(this, this.state.navigator, 'getAllyExtraActionRequest', this.actor);
+      if (navigatorRequest) {
+        extraRequest = navigatorRequest;
+        extraController = this.state.navigator;
+      }
+    }
+    const extraStarted = extraRequest && this.actor.hp > 0 && (extraController.id === this.actor.id
+      ? characterHook(this, this.actor, 'onExtraActionStart')
+      : characterHook(this, extraController, 'onAllyExtraActionStart', this.actor, extraRequest)) === true;
+    if (extraStarted) {
+      this.state.characterExtraAction = { actorId: this.actor.id, reason: extraRequest.reason, controllerId: extraController.id };
+      this.emit('extra_action', `${this.actor.codename} can take an extra action.`, { actorId: this.actor.id, sourceType: 'character_extra_action', tone: 'phase' });
+      this.notifyExtraActionStart(this.actor, 'extra action');
+      return;
+    }
+    return this.finishOwnerTurnIfReady();
+  }
+
+  finishOwnerTurnIfReady() {
     if (this.state.turnActionsUsed < this.state.turnActionsTotal) return;
     const completedActorId = this.actor.id;
     if (!this.isVirtualConcertActive()) {
@@ -4128,11 +4437,25 @@ export class BattleEngine {
       this.kotoneMechanics?.normalTurnEnd(completedActorId);
     }
     this.resolveAllyTurnFollowUps(completedActorId);
+    if (this.config.wavecatcherSourceMechanics && this.isWavecatcher(this.actor) && this.actor.awareness >= 6 && this.actor.pendingOffshoreReset) {
+      this.actor.pendingOffshoreReset = false;
+      this.actor.offshoreStacks = 0;
+      const recovered = Math.min(this.actor.maxSp, this.spCap(this.actor) - this.actor.sp);
+      this.actor.sp += recovered;
+      this.recordWavecatcherRecovery(this.actor, recovered, 'a6_aerial_tide_reset');
+      this.emit('resource', `${this.actor.codename} lost Offshore and recovered max SP at turn end.`, {
+        actorId: this.actor.id, resource: 'sp', amount: this.actor.sp, recovered, sourceType: 'awareness', tone: 'heal'
+      });
+    }
+    this.cosmicEndOwnerTurn(this.actor);
+    characterHook(this, this.actor, 'onTurnEnd');
+    this.resolveWonderWeaponTurnEnd(this.actor);
     for (const unit of this.state.party.filter(unit => this.isBerry(unit) && unit.powerOfLove > 0)) {
       unit.powerOfLove -= 1;
       if (!unit.powerOfLove) {
         unit.hp = 0;
         this.emit('knockout', `${unit.codename}'s Power of Love expired.`, { actorId: unit.id, sourceType: 'awareness', tone: 'damage' });
+        notifyCharacterKnockout(this, unit, { sourceType: 'awareness', reason: 'power_of_love_expired' });
       }
     }
     this.updateBossPhase();
@@ -4207,6 +4530,7 @@ export class BattleEngine {
     const completedWeakenedTurn = this.isBossWeakened() && this.state.boss.weakenedGraceTurn !== this.state.attackTurn;
     this.bossAction();
     this.tickStatuses();
+    this.advanceSurtEncounterStacks();
     for (const enemy of [this.state.boss, ...this.state.boss.summons]) {
       if (enemy.downed) { enemy.downed = false; enemy.downPoints = enemy.downMax; }
     }
@@ -4218,10 +4542,10 @@ export class BattleEngine {
       this.state.boss.weakenedTurnsLeft -= 1;
       if (this.state.boss.weakenedTurnsLeft <= 0) return this.finish('break_window_complete');
     }
-    if (this.isDreamscapePreview()) {
+    if (this.isDreamscapeRun()) {
       this.state.attackTurnsLeft = Math.max(0, this.state.attackTurnsLeft);
       this.state.scoreBreakdown.observedSurvivalMultiplier = getObservedDreamscapeMultiplier(this.state.attackTurnsLeft);
-      if (this.state.attackTurn >= Number(this.state.boss.previewAttackTurns || this.state.boss.turnLimit)) return this.finish('preview_complete');
+      if (this.state.attackTurn >= Number(this.state.boss.previewAttackTurns || this.state.boss.turnLimit)) return this.finish(this.isDreamscapePreview() ? 'preview_complete' : 'timeout');
     } else if (this.state.attackTurnsLeft <= 0) return this.finish('timeout');
     this.state.attackTurn += 1;
     this.state.round = this.state.attackTurn;
@@ -4236,16 +4560,17 @@ export class BattleEngine {
     const completedWeakenedTurn = this.isBossWeakened() && this.state.boss.weakenedGraceTurn !== this.state.attackTurn;
     this.runEnemiesBefore(null);
     this.tickPartyStatuses();
+    this.advanceSurtEncounterStacks();
     this.state.attackTurnsLeft -= 1;
     if (this.state.party.every(unit => unit.hp <= 0)) return this.finish('defeat');
     if (completedWeakenedTurn && ['nexus', 'devourer'].includes(this.state.boss.modeId)) {
       this.state.boss.weakenedTurnsLeft -= 1;
       if (this.state.boss.weakenedTurnsLeft <= 0) return this.finish('break_window_complete');
     }
-    if (this.isDreamscapePreview()) {
+    if (this.isDreamscapeRun()) {
       this.state.attackTurnsLeft = Math.max(0, this.state.attackTurnsLeft);
       this.state.scoreBreakdown.observedSurvivalMultiplier = getObservedDreamscapeMultiplier(this.state.attackTurnsLeft);
-      if (this.state.attackTurn >= Number(this.state.boss.previewAttackTurns || this.state.boss.turnLimit)) return this.finish('preview_complete');
+      if (this.state.attackTurn >= Number(this.state.boss.previewAttackTurns || this.state.boss.turnLimit)) return this.finish(this.isDreamscapePreview() ? 'preview_complete' : 'timeout');
     } else if (this.state.attackTurnsLeft <= 0) return this.finish('timeout');
     this.state.attackTurn += 1;
     this.state.round = this.state.attackTurn;
@@ -4365,6 +4690,7 @@ export class BattleEngine {
   }
 
   applyPartyDamage(target, damage) {
+    const hpBefore = target.hp;
     const nextHp = target.hp - damage;
     if (this.isBerry(target) && target.awareness >= 2 && target.chainsOfLove >= 5 && nextHp <= 0 && (!target.powerOfLoveUsed || target.powerOfLove > 0)) {
       target.hp = 1;
@@ -4374,10 +4700,11 @@ export class BattleEngine {
         this.emit('resource', 'BERRY survived fatal damage with 4 Power of Love stacks.', { actorId: target.id, resource: 'powerOfLove', amount: 4, sourceType: 'awareness', tone: 'buff' });
       }
     } else target.hp = Math.max(0, nextHp);
+    if (hpBefore > 0 && target.hp <= 0) notifyCharacterKnockout(this, target, { sourceType: 'encounter', damage });
   }
 
   tickStatusList(list, { sharedDotTicks = true } = {}) {
-    return list.map(effect => effect.supportClock || effect.duration == null || (effect.sharedDot && !sharedDotTicks) ? effect : ({ ...effect, duration: effect.duration - 1 })).filter(effect => effect.duration == null || effect.duration > 0);
+    return list.map(effect => effect.durationClock === 'cosmic_owner_end' || effect.supportClock || effect.duration == null || (effect.sharedDot && !sharedDotTicks) ? effect : ({ ...effect, duration: effect.duration - 1 })).filter(effect => effect.duration == null || effect.duration > 0);
   }
 
   tickEnemyStatuses(enemy, { sharedDotTicks = true } = {}) {
@@ -4453,6 +4780,15 @@ export class BattleEngine {
       this.state.scoreBreakdown.bossAttackPoints = ['timeout', 'break_window_complete'].includes(outcome) ? this.state.boss.bossAttackPoints : 0;
       this.state.score = calculateNightmareScore(this.state.scoreBreakdown);
     }
+    if (this.isDreamscapeRun() && !this.isDreamscapePreview()) {
+      const survived = ['timeout', 'break_window_complete'].includes(outcome);
+      this.state.scoreBreakdown.turnsSurvivedBonus = survived ? Number(this.state.boss.turnsSurvivedBonus || 0) : 0;
+      this.state.score = calculateDreamscapeResult({
+        foeDefensePoints: this.state.scoreBreakdown.foeDefensePoints,
+        turnsSurvivedBonus: this.state.scoreBreakdown.turnsSurvivedBonus,
+        difficultyBonus: this.state.scoreBreakdown.difficultyBonus
+      });
+    }
     this.state.result = {
       mechanicsProfile: this.config.mechanicsProfile,
       mechanicsLimitations: clone(this.state.mechanicsLimitations),
@@ -4464,6 +4800,7 @@ export class BattleEngine {
       rounds: this.isDreamscapePreview() ? this.state.attackTurn : Math.min(this.state.attackTurn, this.state.boss.turnLimit), attackTurns: this.state.attackTurn,
       remainingHp: this.state.boss.hp,
       damageByActor: this.state.party.map(unit => ({ id: unit.id, name: unit.codename, damage: unit.damageDone })),
+      awarenessProfiles: Object.fromEntries([...this.state.party, this.state.navigator].map(unit => [unit.id, unit.awareness])),
       navigatorUses: this.state.navigator.uses, seed: this.initialSeed
     };
     this.emit('end', outcome === 'preview_complete' ? 'The configured damage preview ended. The actual game ending trigger and score calculation are unverified.' : cleared
@@ -4483,7 +4820,7 @@ export class BattleEngine {
     // Items are available for deliberate player selection only. Until a
     // source-backed item policy exists, Auto and recommendations must neither
     // score them as skills nor spend their limited inventory.
-    const candidates = this.getAvailableActions().filter(action => action.enabled && !['switch', 'item'].includes(action.type));
+    const candidates = this.getAvailableActions().filter(action => action.enabled && !['switch', 'item', 'cosmic_color'].includes(action.type));
     const kotoneRecommendation = this.kotoneMechanics?.recommend(candidates);
     if (kotoneRecommendation) return kotoneRecommendation;
     if (this.state.boss.id === 'slaughter_drive' && actor.id === 'wonder') {
@@ -4501,6 +4838,8 @@ export class BattleEngine {
         ? this.state.party.find(unit => unit.slug === 'puppet-wavecatcher')?.id || actor.id : this.state.boss.id,
         reason: preferredName === 'Gentle Sea Breeze' ? 'Prepare Marian medicine for Miyu.' : 'Keep Bewitching Blossoms on the boss.', confidence: 0.94 };
     }
+    const cosmicRecommendation = this.cosmicRecommendation(candidates);
+    if (cosmicRecommendation) return cosmicRecommendation;
     if (actor.slug === 'puppet-wavecatcher') {
       const preferredName = this.state.boss.id === 'slaughter_drive'
         ? this.state.attackTurn === 6 ? 'Guard'
@@ -4559,7 +4898,7 @@ export class BattleEngine {
       if (score > bestScore) { bestScore = score; best = action; }
     }
     if (!best) return null;
-    const targetId = this.usesLiveMechanics() && best.target === 'ally' && best.skill?.selectedAllyBuff
+    const targetId = this.usesLiveMechanics() && best.target === 'ally' && (best.skill?.selectedAllyBuff || best.skill?.excludeSelf)
       ? this.recommendedAllyTarget(best)
       : best.target === 'all_enemies' || ['self', 'party'].includes(best.target)
         ? best.target : (livingSummons.sort((a, b) => a.hp - b.hp)[0]?.id || this.state.boss.id);
@@ -4567,7 +4906,7 @@ export class BattleEngine {
   }
 
   recommendedAllyTarget(action) {
-    const living = this.state.party.filter(unit => unit.hp > 0);
+    const living = this.state.party.filter(unit => unit.hp > 0 && (!action.skill?.excludeSelf || unit.id !== this.actor.id));
     const selectedBuffId = action.skill?.selectedAllyBuff?.id;
     // Prefer a living highest-Attack ally that has not received the action's
     // selected-target effect. This changes targeting only, not recommendation
@@ -4613,3 +4952,7 @@ export function simulate(config, policy = engine => engine.recommend()) {
   }
   return engine.getObservation();
 }
+
+// Kept outside the class to isolate the source-modeled character adapter.
+Object.assign(BattleEngine.prototype, cosmicYuiMethods);
+Object.assign(BattleEngine.prototype, registeredLegacyMethods);

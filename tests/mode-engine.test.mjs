@@ -42,6 +42,61 @@ test('Dreamscape credits raw simulated damage and reports turn-weighted Foe Defe
   assert.equal(engine.state.result.scoreBreakdown.difficultyBonus, 8);
 });
 
+test('all MLD bosses use the shared turn score multiplier', () => {
+  const engine = new BattleEngine({
+    seed: 55, bossId: 'surt', modeId: 'multidimensional', teamIds: ['wonder'],
+    loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+  });
+  engine.step({ type: 'attack', skillId: 'basic_attack', targetId: engine.state.boss.id });
+  const damage = engine.state.totalDamage;
+  assert.equal(engine.state.scoreBreakdown.turnScoreBuckets[0].multiplier, 0.5);
+  assert.equal(engine.state.scoreBreakdown.turnWeightedDamagePoints, damage * 0.5);
+  assert.equal(engine.isDreamscapePreview(), false);
+  assert.equal(engine.state.score, Math.round(damage * 0.5));
+});
+
+test('Surt MLD converts Foe Defense Points into the verified six-turn result', () => {
+  const engine = new BattleEngine({
+    seed: 55, bossId: 'surt', modeId: 'multidimensional', teamIds: ['wonder'],
+    loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+  });
+  while (engine.state.phase === 'battle') guard(engine);
+  const breakdown = engine.state.result.scoreBreakdown;
+  assert.equal(engine.state.result.outcome, 'timeout');
+  assert.equal(engine.state.result.attackTurns, 6);
+  assert.equal(breakdown.turnsSurvivedBonus, 250_000);
+  assert.equal(breakdown.difficultyBonus, 4);
+  assert.equal(engine.state.result.score, (breakdown.foeDefensePoints + 250_000) * 4);
+  assert.equal(engine.state.result.scoreStatus, 'simulated_score');
+});
+
+test('NOD and DOD use the same shared turn score multiplier for Surt', () => {
+  for (const modeId of ['nexus', 'devourer']) {
+    const engine = new BattleEngine({
+      seed: 55, bossId: 'surt', modeId, teamIds: ['wonder'],
+      loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+    });
+    engine.step({ type: 'attack', skillId: 'basic_attack', targetId: engine.state.boss.id });
+    assert.equal(engine.state.score, Math.round(engine.state.totalDamage * 0.5));
+  }
+});
+
+test('live MLD, NOD, and DOD score bosses share the source-scale damage formula', () => {
+  for (const modeId of ['multidimensional', 'nexus', 'devourer']) {
+    const engine = new BattleEngine({
+      seed: 55, bossId: 'surt', modeId, teamIds: ['wonder'],
+      loadouts: { wonder: { statsMode: 'equipped', baseStats: { attack: 10_000, maxHp: 100_000 } } }
+    });
+    const result = engine.calculateDamage(engine.actor, {
+      id: 'source-scale-check', name: 'Source scale check', element: 'almighty', power: 1, canCrit: false
+    }, engine.state.boss, 'character_skill');
+    assert.equal(engine.usesSourceScaleDamageFormula(), true);
+    assert.equal(result.damageFormula.normalization, 1);
+    assert.match(result.damageFormula.model, /source_scale/);
+    assert.ok(result.amount < 20_000, `${modeId}: ${result.amount}`);
+  }
+});
+
 test('Dreamscape remains playable at zero and stops at the configured six-round preview limit', () => {
   const engine = previewFixture();
   assert.equal(engine.state.boss.previewAttackTurns, 6);

@@ -1,0 +1,311 @@
+{
+  "description": "Cosmic Yui release checks, 2026-09-12: summary report, HTTP, browser and artwork checks, and the changed-file list. Test log: verification/node-tests.txt.",
+  "combinedOn": "2026-09-26",
+  "note": "Each entry under \"files\" is the original file parsed as JSON, keyed by its original path. Paths inside the entries are as originally recorded.",
+  "sources": {
+    "verification/verification-report.json": {
+      "bytes": 1019,
+      "sha256": "e7a43ac41bf86ff5a257bd97c8e350c9da6ae9a04accc0883b5e40ad78011455"
+    },
+    "verification/http-check.json": {
+      "bytes": 1558,
+      "sha256": "b9a9df159dbe6bfd9028ca4da501ddfd2887a74f84306d8ca69867b52ae0819f"
+    },
+    "verification/browser-check.json": {
+      "bytes": 534,
+      "sha256": "c7206ef273e8c1483252cf735ed505fcc4ef4b9a2073ea793c44337ae4977f21"
+    },
+    "verification/artwork-check.json": {
+      "bytes": 1258,
+      "sha256": "682c0cc5e8fcd36dc374745bc5546b2120c8890b24de10e0fb49ab076c592e46"
+    },
+    "verification/changed-files.json": {
+      "bytes": 3596,
+      "sha256": "f6608b6d52494dafca86165c08c73f819584203b3d9694f7180a084d190093bd"
+    }
+  },
+  "files": {
+    "verification/verification-report.json": {
+      "date": "2026-09-12",
+      "nodeVersion": "v22.16.0",
+      "tests": {
+        "total": 231,
+        "passed": 231,
+        "failed": 0,
+        "skipped": 0,
+        "cosmicSpecific": 48
+      },
+      "catalog": {
+        "characters": 21,
+        "original20Preserved": true,
+        "personas": 57,
+        "personaSkills": 337,
+        "transferablePersonaSkills": 458,
+        "revelationMains": 18,
+        "revelationSets": 32
+      },
+      "source": "data/cosmic-yui-source-2026-09-12.json",
+      "browser": {
+        "method": "Chromium network-free module harness (container browser policy blocks URL navigation); local files mapped to Blob/data URLs, storage/fetch mapped in memory. No claim of network server navigation.",
+        "consoleErrors": [],
+        "brokenImages": [],
+        "selectedCharacter": "Cosmic Yui",
+        "freeSkillVerified": true,
+        "persistedOptions": {
+          "awareness": 6,
+          "sourceTier": 3,
+          "weapon": "signature",
+          "refinement": 6,
+          "staticWeaponStatsIncluded": false
+        },
+        "viewports": [
+          "1440x1100",
+          "390x844"
+        ]
+      }
+    },
+    "verification/http-check.json": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 564
+      },
+      {
+        "path": "/src/app.js",
+        "status": 200,
+        "bytes": 146851
+      },
+      {
+        "path": "/src/engine.js",
+        "status": 200,
+        "bytes": 274276
+      },
+      {
+        "path": "/src/cosmic-yui-data.js",
+        "status": 200,
+        "bytes": 8141
+      },
+      {
+        "path": "/src/cosmic-yui-mechanics.js",
+        "status": 200,
+        "bytes": 18510
+      },
+      {
+        "path": "/src/generated/lufel-catalog.js",
+        "status": 200,
+        "bytes": 828176
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-goofy.png",
+        "status": 200,
+        "bytes": 445525
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-avatar.webp",
+        "status": 200,
+        "bytes": 30756
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-eggplant.png",
+        "status": 200,
+        "bytes": 449405
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-potato.png",
+        "status": 200,
+        "bytes": 448165
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-mushroom.png",
+        "status": 200,
+        "bytes": 447962
+      },
+      {
+        "path": "/assets/characters/bui-cosmic-asparagus.png",
+        "status": 200,
+        "bytes": 448837
+      },
+      {
+        "path": "/assets/characters/cosmic-yui/knight-eggplant.svg",
+        "status": 200,
+        "bytes": 728
+      },
+      {
+        "path": "/assets/characters/cosmic-yui/knight-potato.svg",
+        "status": 200,
+        "bytes": 752
+      },
+      {
+        "path": "/assets/characters/cosmic-yui/knight-mushroom.svg",
+        "status": 200,
+        "bytes": 931
+      },
+      {
+        "path": "/assets/characters/cosmic-yui/knight-asparagus.svg",
+        "status": 200,
+        "bytes": 757
+      }
+    ],
+    "verification/browser-check.json": {
+      "method": "Chromium network-free module harness (container browser policy blocks URL navigation); local files mapped to Blob/data URLs, storage/fetch mapped in memory. No claim of network server navigation.",
+      "consoleErrors": [],
+      "brokenImages": [],
+      "selectedCharacter": "Cosmic Yui",
+      "freeSkillVerified": true,
+      "persistedOptions": {
+        "awareness": 6,
+        "sourceTier": 3,
+        "weapon": "signature",
+        "refinement": 6,
+        "staticWeaponStatsIncluded": false
+      },
+      "viewports": [
+        "1440x1100",
+        "390x844"
+      ]
+    },
+    "verification/artwork-check.json": [
+      {
+        "path": "assets/characters/bui-cosmic-asparagus.png",
+        "width": 1020,
+        "height": 1200,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/bui-cosmic-eggplant.png",
+        "width": 1020,
+        "height": 1200,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/bui-cosmic-goofy.png",
+        "width": 1020,
+        "height": 1200,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/bui-cosmic-mushroom.png",
+        "width": 1020,
+        "height": 1200,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/bui-cosmic-potato.png",
+        "width": 1020,
+        "height": 1200,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/cosmic-yui/cosmic-yui-thumbnail.png",
+        "width": 255,
+        "height": 300,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/cosmic-yui/knight-asparagus.png",
+        "width": 256,
+        "height": 256,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/cosmic-yui/knight-eggplant.png",
+        "width": 256,
+        "height": 256,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/cosmic-yui/knight-mushroom.png",
+        "width": 256,
+        "height": 256,
+        "alpha": true
+      },
+      {
+        "path": "assets/characters/cosmic-yui/knight-potato.png",
+        "width": 256,
+        "height": 256,
+        "alpha": true
+      }
+    ],
+    "verification/changed-files.json": [
+      "COSMIC-YUI-REVIEW-2026-09-12.md",
+      "README.md",
+      "assets/characters/bui-cosmic-asparagus.png",
+      "assets/characters/bui-cosmic-avatar.webp",
+      "assets/characters/bui-cosmic-eggplant.png",
+      "assets/characters/bui-cosmic-goofy.png",
+      "assets/characters/bui-cosmic-mushroom.png",
+      "assets/characters/bui-cosmic-potato.png",
+      "assets/characters/bui-cosmic.webp",
+      "assets/characters/cosmic-yui/asset-manifest.json",
+      "assets/characters/cosmic-yui/cosmic-yui-asparagus.svg",
+      "assets/characters/cosmic-yui/cosmic-yui-battle.webp",
+      "assets/characters/cosmic-yui/cosmic-yui-eggplant.svg",
+      "assets/characters/cosmic-yui/cosmic-yui-mushroom.svg",
+      "assets/characters/cosmic-yui/cosmic-yui-potato.svg",
+      "assets/characters/cosmic-yui/cosmic-yui-prismatic.svg",
+      "assets/characters/cosmic-yui/cosmic-yui-thumbnail.png",
+      "assets/characters/cosmic-yui/knight-asparagus.png",
+      "assets/characters/cosmic-yui/knight-asparagus.svg",
+      "assets/characters/cosmic-yui/knight-eggplant.png",
+      "assets/characters/cosmic-yui/knight-eggplant.svg",
+      "assets/characters/cosmic-yui/knight-mushroom.png",
+      "assets/characters/cosmic-yui/knight-mushroom.svg",
+      "assets/characters/cosmic-yui/knight-potato.png",
+      "assets/characters/cosmic-yui/knight-potato.svg",
+      "data/cosmic-yui-source-2026-09-12.json",
+      "data/lufel-catalog.json",
+      "data/lufel-live-recent.json",
+      "dist/assets/characters/bui-cosmic-asparagus.png",
+      "dist/assets/characters/bui-cosmic-avatar.webp",
+      "dist/assets/characters/bui-cosmic-eggplant.png",
+      "dist/assets/characters/bui-cosmic-goofy.png",
+      "dist/assets/characters/bui-cosmic-mushroom.png",
+      "dist/assets/characters/bui-cosmic-potato.png",
+      "dist/assets/characters/bui-cosmic.webp",
+      "dist/assets/characters/cosmic-yui/asset-manifest.json",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-asparagus.svg",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-battle.webp",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-eggplant.svg",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-mushroom.svg",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-potato.svg",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-prismatic.svg",
+      "dist/assets/characters/cosmic-yui/cosmic-yui-thumbnail.png",
+      "dist/assets/characters/cosmic-yui/knight-asparagus.png",
+      "dist/assets/characters/cosmic-yui/knight-asparagus.svg",
+      "dist/assets/characters/cosmic-yui/knight-eggplant.png",
+      "dist/assets/characters/cosmic-yui/knight-eggplant.svg",
+      "dist/assets/characters/cosmic-yui/knight-mushroom.png",
+      "dist/assets/characters/cosmic-yui/knight-mushroom.svg",
+      "dist/assets/characters/cosmic-yui/knight-potato.png",
+      "dist/assets/characters/cosmic-yui/knight-potato.svg",
+      "dist/data/cosmic-yui-source-2026-09-12.json",
+      "dist/data/lufel-catalog.json",
+      "dist/data/lufel-live-recent.json",
+      "dist/src/app.js",
+      "dist/src/cosmic-yui-data.js",
+      "dist/src/cosmic-yui-mechanics.js",
+      "dist/src/engine.js",
+      "dist/src/generated/lufel-catalog.js",
+      "dist/src/styles.css",
+      "package.json",
+      "scripts/import-lufelnet.mjs",
+      "scripts/render-cosmic-assets.py",
+      "scripts/sync-lufel-recent.mjs",
+      "src/app.js",
+      "src/cosmic-yui-data.js",
+      "src/cosmic-yui-mechanics.js",
+      "src/engine.js",
+      "src/generated/lufel-catalog.js",
+      "src/styles.css",
+      "tests/catalog.test.mjs",
+      "tests/cosmic-yui.test.mjs",
+      "verification/artwork-check.json",
+      "verification/browser-check.json",
+      "verification/cosmic-battle-preview.png",
+      "verification/cosmic-build-preview.png",
+      "verification/http-check.json",
+      "verification/node-tests.txt",
+      "verification/verification-report.json"
+    ]
+  }
+}

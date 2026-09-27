@@ -1,0 +1,1400 @@
+
+> p5x-showdown-guild-boss-sim@2.1.0 test
+> node --test
+
+TAP version 13
+# Subtest: Berry S1 kill resets earn one normal or weakness charge per actual cast without extra SP, cooldown, or turn use
+ok 1 - Berry S1 kill resets earn one normal or weakness charge per actual cast without extra SP, cooldown, or turn use
+  ---
+  duration_ms: 43.058303
+  type: 'test'
+  ...
+# Subtest: Berry S1 reset diagnostics retain each cast gain and overflow at 100, including fast mode
+ok 2 - Berry S1 reset diagnostics retain each cast gain and overflow at 100, including fast mode
+  ---
+  duration_ms: 10.099688
+  type: 'test'
+  ...
+# Subtest: Berry S1 kill-reset charges use the existing Concert 2x rates
+ok 3 - Berry S1 kill-reset charges use the existing Concert 2x rates
+  ---
+  duration_ms: 3.549062
+  type: 'test'
+  ...
+# Subtest: DOUBLE BERRY and automatic J&C S3 remain unconfirmed repeat sources
+ok 4 - DOUBLE BERRY and automatic J&C S3 remain unconfirmed repeat sources
+  ---
+  duration_ms: 7.287136
+  type: 'test'
+  ...
+# Subtest: explicit scalar override remains one legacy action charge across Berry kill resets
+ok 5 - explicit scalar override remains one legacy action charge across Berry kill resets
+  ---
+  duration_ms: 5.077492
+  type: 'test'
+  ...
+# Subtest: generated Lufelnet catalog contains the imported Persona and Revelation records
+ok 6 - generated Lufelnet catalog contains the imported Persona and Revelation records
+  ---
+  duration_ms: 1.720927
+  type: 'test'
+  ...
+# Subtest: Rebellion is a transferable executable buff that can be equipped by Dionysus
+ok 7 - Rebellion is a transferable executable buff that can be equipped by Dionysus
+  ---
+  duration_ms: 21.25216
+  type: 'test'
+  ...
+# Subtest: the newest non-spoiler character records use their English Lufelnet skills
+ok 8 - the newest non-spoiler character records use their English Lufelnet skills
+  ---
+  duration_ms: 6.126861
+  type: 'test'
+  ...
+# Subtest: A6 characters use the fourth source coefficient at Level 13
+ok 9 - A6 characters use the fourth source coefficient at Level 13
+  ---
+  duration_ms: 0.467514
+  type: 'test'
+  ...
+# Subtest: ANGE uses independent actions while MIKU starts with a shared four-action lock
+ok 10 - ANGE uses independent actions while MIKU starts with a shared four-action lock
+  ---
+  duration_ms: 3.911922
+  type: 'test'
+  ...
+# Subtest: custom character definitions and their selected order become the battle queue
+ok 11 - custom character definitions and their selected order become the battle queue
+  ---
+  duration_ms: 1.0903
+  type: 'test'
+  ...
+# Subtest: an imported Persona loadout becomes Wonder’s legal move list
+ok 12 - an imported Persona loadout becomes Wonder’s legal move list
+  ---
+  duration_ms: 0.929961
+  type: 'test'
+  ...
+# Subtest: structured Revelation attack and HP bonuses alter initial combat state
+ok 13 - structured Revelation attack and HP bonuses alter initial combat state
+  ---
+  duration_ms: 1.672063
+  type: 'test'
+  ...
+# Subtest: hard base-stat inputs replace character defaults before Revelation bonuses
+ok 14 - hard base-stat inputs replace character defaults before Revelation bonuses
+  ---
+  duration_ms: 1.217529
+  type: 'test'
+  ...
+# Subtest: Marian Beach Basket scales from max HP and applies scaled Bewitching Blossoms
+ok 15 - Marian Beach Basket scales from max HP and applies scaled Bewitching Blossoms
+  ---
+  duration_ms: 3.602121
+  type: 'test'
+  ...
+# Subtest: Gentle Sea Breeze grants two medicines and stays unavailable for two following Marian turns
+ok 16 - Gentle Sea Breeze grants two medicines and stays unavailable for two following Marian turns
+  ---
+  duration_ms: 28.403474
+  type: 'test'
+  ...
+# Subtest: Paddle Out enters Surf and Catch a Wave follows an ally turn for free
+ok 17 - Paddle Out enters Surf and Catch a Wave follows an ally turn for free
+  ---
+  duration_ms: 5.545007
+  type: 'test'
+  ...
+# Subtest: A6 Miyu begins battle in Surf state
+ok 18 - A6 Miyu begins battle in Surf state
+  ---
+  duration_ms: 0.828841
+  type: 'test'
+  ...
+# Subtest: Jellyfish Splash can bank SP above Miyu’s normal maximum
+ok 19 - Jellyfish Splash can bank SP above Miyu’s normal maximum
+  ---
+  duration_ms: 1.813363
+  type: 'test'
+  ...
+# Subtest: Slaughter Drive Auto respects A6 Miyu starting in Surf
+ok 20 - Slaughter Drive Auto respects A6 Miyu starting in Surf
+  ---
+  duration_ms: 1.131611
+  type: 'test'
+  ...
+# Subtest: Miyu Hang Ten scales Attack from SP Recovery and caps at 280 percent
+ok 21 - Miyu Hang Ten scales Attack from SP Recovery and caps at 280 percent
+  ---
+  duration_ms: 1.351658
+  type: 'test'
+  ...
+# Subtest: Surf extends incoming status duration and rejects spiritual control ailments
+ok 22 - Surf extends incoming status duration and rejects spiritual control ailments
+  ---
+  duration_ms: 1.486809
+  type: 'test'
+  ...
+# Subtest: Marian passives grant party Attack and Summer Garden damage scales continuously with max HP up to 13,632
+ok 23 - Marian passives grant party Attack and Summer Garden damage scales continuously with max HP up to 13,632
+  ---
+  duration_ms: 5.659437
+  type: 'test'
+  ...
+# Subtest: Marian Breeze, Highlight, and Potent Medicine use A6 critical and item formulas
+ok 24 - Marian Breeze, Highlight, and Potent Medicine use A6 critical and item formulas
+  ---
+  duration_ms: 7.334555
+  type: 'test'
+  ...
+# Subtest: all J&C Oxymoron mask pairs apply their complete passive bonuses
+ok 25 - all J&C Oxymoron mask pairs apply their complete passive bonuses
+  ---
+  duration_ms: 6.216775
+  type: 'test'
+  ...
+# Subtest: J&C Service healing, reduction, and shield pair honor Oxymoron
+ok 26 - J&C Service healing, reduction, and shield pair honor Oxymoron
+  ---
+  duration_ms: 2.180379
+  type: 'test'
+  ...
+# Subtest: A6 J&C carries True Desire past opening Two Masks and spends it on the next completed pair
+ok 27 - A6 J&C carries True Desire past opening Two Masks and spends it on the next completed pair
+  ---
+  duration_ms: 12.659436
+  type: 'test'
+  ...
+# Subtest: J&C allows either opening mask, then requires the opposite mask and auto-fires Two Masks
+ok 28 - J&C allows either opening mask, then requires the opposite mask and auto-fires Two Masks
+  ---
+  duration_ms: 6.768174
+  type: 'test'
+  ...
+# Subtest: Wonder never receives Revelation effects
+ok 29 - Wonder never receives Revelation effects
+  ---
+  duration_ms: 1.705523
+  type: 'test'
+  ...
+# Subtest: Cosmic Yui appears once with current names, sourced costs, local art and explicit source provenance
+ok 30 - Cosmic Yui appears once with current names, sourced costs, local art and explicit source provenance
+  ---
+  duration_ms: 2.4708
+  type: 'test'
+  ...
+# Subtest: Cosmic source snapshot survives the catalog normalization path
+ok 31 - Cosmic source snapshot survives the catalog normalization path
+  ---
+  duration_ms: 1.024071
+  type: 'test'
+  ...
+# Subtest: all four source coefficient columns survive unchanged
+ok 32 - all four source coefficient columns survive unchanged
+  ---
+  duration_ms: 12.207114
+  type: 'test'
+  ...
+# Subtest: A0 begins with the first sourced knight only, no free opening attack or permanent harvest
+ok 33 - A0 begins with the first sourced knight only, no free opening attack or permanent harvest
+  ---
+  duration_ms: 1.572556
+  type: 'test'
+  ...
+# Subtest: summons follow Eggplant → Potato → Mushroom → Asparagus and skip capped knights
+ok 34 - summons follow Eggplant → Potato → Mushroom → Asparagus and skip capped knights
+  ---
+  duration_ms: 1.719455
+  type: 'test'
+  ...
+# Subtest: A1 grants four knight types, spends opening energy once and changes to Purple on first turn
+ok 35 - A1 grants four knight types, spends opening energy once and changes to Purple on first turn
+  ---
+  duration_ms: 23.241921
+  type: 'test'
+  ...
+# Subtest: A2 has an additional unspendable seed potato and a maximum of eight total knights
+ok 36 - A2 has an additional unspendable seed potato and a maximum of eight total knights
+  ---
+  duration_ms: 3.238951
+  type: 'test'
+  ...
+# Subtest: A6 starts in permanent Prismatic with all four color benefits
+ok 37 - A6 starts in permanent Prismatic with all four color benefits
+  ---
+  duration_ms: 1.970116
+  type: 'test'
+  ...
+# Subtest: S2 is free: no SP, actor turn, action number, Highlight or Havoc is consumed/advanced
+ok 38 - S2 is free: no SP, actor turn, action number, Highlight or Havoc is consumed/advanced
+  ---
+  duration_ms: 3.605586
+  type: 'test'
+  ...
+# Subtest: S2 cannot be used twice during the same owner turn; cooldown clears at the next owner turn
+ok 39 - S2 cannot be used twice during the same owner turn; cooldown clears at the next owner turn
+  ---
+  duration_ms: 7.64031
+  type: 'test'
+  ...
+# Subtest: A6 S2 grants an additional Potato Knight without exceeding caps
+ok 40 - A6 S2 grants an additional Potato Knight without exceeding caps
+  ---
+  duration_ms: 2.297683
+  type: 'test'
+  ...
+# Subtest: A0 S2 grants one knight, not the A6 bonus
+ok 41 - A0 S2 grants one knight, not the A6 bonus
+  ---
+  duration_ms: 1.542802
+  type: 'test'
+  ...
+# Subtest: Harvest Fest adds 3 energy plus Purple 1; S2 never gains Purple energy
+ok 42 - Harvest Fest adds 3 energy plus Purple 1; S2 never gains Purple energy
+  ---
+  duration_ms: 1.672124
+  type: 'test'
+  ...
+# Subtest: A0 Huge Harvest fires at current and next owner action end, then expires
+ok 43 - A0 Huge Harvest fires at current and next owner action end, then expires
+  ---
+  duration_ms: 6.834352
+  type: 'test'
+  ...
+# Subtest: A6 Harvest Havoc fires once per ally counted action, never recursively from itself
+ok 44 - A6 Harvest Havoc fires once per ally counted action, never recursively from itself
+  ---
+  duration_ms: 3.301824
+  type: 'test'
+  ...
+# Subtest: seven energy triggers exactly one free automatic Veg-Out with no recursive energy award
+ok 45 - seven energy triggers exactly one free automatic Veg-Out with no recursive energy award
+  ---
+  duration_ms: 0.998613
+  type: 'test'
+  ...
+# Subtest: automatic Veg-Out freezes target count and splits every coefficient evenly
+ok 46 - automatic Veg-Out freezes target count and splits every coefficient evenly
+  ---
+  duration_ms: 0.969229
+  type: 'test'
+  ...
+# Subtest: automatic Veg-Out damage is split rather than tripled across identical targets
+ok 47 - automatic Veg-Out damage is split rather than tripled across identical targets
+  ---
+  duration_ms: 1.789508
+  type: 'test'
+  ...
+# Subtest: Veg-Out all-out damage bonuses do not amplify ordinary Harvest Fest
+ok 48 - Veg-Out all-out damage bonuses do not amplify ordinary Harvest Fest
+  ---
+  duration_ms: 1.079164
+  type: 'test'
+  ...
+# Subtest: shared 1More-Up medicine applies to Cosmic All-Out damage too
+ok 49 - shared 1More-Up medicine applies to Cosmic All-Out damage too
+  ---
+  duration_ms: 1.172561
+  type: 'test'
+  ...
+# Subtest: Hachiman source formula respects Cosmic All-Out category and combined medicine bonuses
+ok 50 - Hachiman source formula respects Cosmic All-Out category and combined medicine bonuses
+  ---
+  duration_ms: 1.708899
+  type: 'test'
+  ...
+# Subtest: satellite and A1 critical buffs cap at 4 and 5 knights, respectively
+ok 51 - satellite and A1 critical buffs cap at 4 and 5 knights, respectively
+  ---
+  duration_ms: 1.457285
+  type: 'test'
+  ...
+# Subtest: Potato Power refreshes rather than stacks; A2 adds 10 percentage points once
+ok 52 - Potato Power refreshes rather than stacks; A2 adds 10 percentage points once
+  ---
+  duration_ms: 1.164099
+  type: 'test'
+  ...
+# Subtest: Prismatic Havoc applies one Shroom Spores debuff to the hit target
+ok 53 - Prismatic Havoc applies one Shroom Spores debuff to the hit target
+  ---
+  duration_ms: 1.576792
+  type: 'test'
+  ...
+# Subtest: Asparagus Havoc heals the living ally with lowest remaining HP, not a KO
+ok 54 - Asparagus Havoc heals the living ally with lowest remaining HP, not a KO
+  ---
+  duration_ms: 1.367461
+  type: 'test'
+  ...
+# Subtest: Asparagus self-heal is capped at 1000 per cast and cannot exceed max HP
+ok 55 - Asparagus self-heal is capped at 1000 per cast and cannot exceed max HP
+  ---
+  duration_ms: 1.102107
+  type: 'test'
+  ...
+# Subtest: Highlight has one same-target Havoc and A4 Attack buff, without an extra counted action
+ok 56 - Highlight has one same-target Havoc and A4 Attack buff, without an extra counted action
+  ---
+  duration_ms: 2.600173
+  type: 'test'
+  ...
+# Subtest: A0 Highlight does not gain the A4 bonus
+ok 57 - A0 Highlight does not gain the A4 bonus
+  ---
+  duration_ms: 1.836769
+  type: 'test'
+  ...
+# Subtest: signature R6 permanent summon Attack caps at 80% and static critical rate is 34.3%
+ok 58 - signature R6 permanent summon Attack caps at 80% and static critical rate is 34.3%
+  ---
+  duration_ms: 1.657712
+  type: 'test'
+  ...
+# Subtest: signature conditional critical damage applies only to Veg-Out Attack
+ok 59 - signature conditional critical damage applies only to Veg-Out Attack
+  ---
+  duration_ms: 1.253372
+  type: 'test'
+  ...
+# Subtest: equipped-static checkbox avoids double counting only the static weapon passive, not summon buffs
+ok 60 - equipped-static checkbox avoids double counting only the static weapon passive, not summon buffs
+  ---
+  duration_ms: 1.213432
+  type: 'test'
+  ...
+# Subtest: four-star weapon grants conditional Attack to Veg-Out only after a Resonance
+ok 61 - four-star weapon grants conditional Attack to Veg-Out only after a Resonance
+  ---
+  duration_ms: 0.929911
+  type: 'test'
+  ...
+# Subtest: owner-clock buffs are not ticked by unrelated shared-round status ticking
+ok 62 - owner-clock buffs are not ticked by unrelated shared-round status ticking
+  ---
+  duration_ms: 5.674539
+  type: 'test'
+  ...
+# Subtest: dead Cosmic Yui cannot perform Resonance, auto attacks or new summons on turn start
+ok 63 - dead Cosmic Yui cannot perform Resonance, auto attacks or new summons on turn start
+  ---
+  duration_ms: 1.15051
+  type: 'test'
+  ...
+# Subtest: Auto recommendation uses free assemble, then a legal normal skill, without looping
+ok 64 - Auto recommendation uses free assemble, then a legal normal skill, without looping
+  ---
+  duration_ms: 3.811361
+  type: 'test'
+  ...
+# Subtest: history snapshots preserve prior energy/knight counts rather than live object references
+ok 65 - history snapshots preserve prior energy/knight counts rather than live object references
+  ---
+  duration_ms: 2.425574
+  type: 'test'
+  ...
+# Subtest: all damage reconciles to actor contributions and damage events
+ok 66 - all damage reconciles to actor contributions and damage events
+  ---
+  duration_ms: 27.882959
+  type: 'test'
+  ...
+# Subtest: same configuration and decisions yield identical seeded Cosmic runs
+ok 67 - same configuration and decisions yield identical seeded Cosmic runs
+  ---
+  duration_ms: 113.375955
+  type: 'test'
+  ...
+# Subtest: fast mode keeps the same damage/resources as normal mode
+ok 68 - fast mode keeps the same damage/resources as normal mode
+  ---
+  duration_ms: 69.702723
+  type: 'test'
+  ...
+# Subtest: unknown timings and excluded coefficients are visible in observations
+ok 69 - unknown timings and excluded coefficients are visible in observations
+  ---
+  duration_ms: 1.590092
+  type: 'test'
+  ...
+# Subtest: invalid external loadout values are bounded and unknown weapon profiles are not applied
+ok 70 - invalid external loadout values are bounded and unknown weapon profiles are not applied
+  ---
+  duration_ms: 1.082528
+  type: 'test'
+  ...
+# Subtest: Cosmic Yui normal skills are disabled in the archived mechanics profile
+ok 71 - Cosmic Yui normal skills are disabled in the archived mechanics profile
+  ---
+  duration_ms: 0.819477
+  type: 'test'
+  ...
+# Subtest: lower awareness can choose one available avatar color for free before the normal action
+ok 72 - lower awareness can choose one available avatar color for free before the normal action
+  ---
+  duration_ms: 1.915195
+  type: 'test'
+  ...
+# Subtest: A6 has no manual avatar-color choice because all four effects are always active
+ok 73 - A6 has no manual avatar-color choice because all four effects are always active
+  ---
+  duration_ms: 1.150159
+  type: 'test'
+  ...
+# Subtest: reported step reward includes end-action Havoc and automatic Veg-Out damage
+ok 74 - reported step reward includes end-action Havoc and automatic Veg-Out damage
+  ---
+  duration_ms: 2.565161
+  type: 'test'
+  ...
+# Subtest: Concert counted actions fire A6 Havoc without a free S2 triggering it
+ok 75 - Concert counted actions fire A6 Havoc without a free S2 triggering it
+  ---
+  duration_ms: 2.664769
+  type: 'test'
+  ...
+# Subtest: source refresh fails closed when the pinned skill coefficients change
+ok 76 - source refresh fails closed when the pinned skill coefficients change
+  ---
+  duration_ms: 0.21567
+  type: 'test'
+  ...
+# Subtest: archived profile cannot invoke Cosmic Yui Highlight as a generic fallback
+ok 77 - archived profile cannot invoke Cosmic Yui Highlight as a generic fallback
+  ---
+  duration_ms: 0.670837
+  type: 'test'
+  ...
+# Subtest: Ichigo defaults match the fifteen screenshot values in display units except the instructed 180 max SP
+ok 78 - Ichigo defaults match the fifteen screenshot values in display units except the instructed 180 max SP
+  ---
+  duration_ms: 1.095337
+  type: 'test'
+  ...
+# Subtest: older Ichigo saves get the requested stats once and retain equipment and later edits
+ok 79 - older Ichigo saves get the requested stats once and retain equipment and later edits
+  ---
+  duration_ms: 0.230812
+  type: 'test'
+  ...
+# Subtest: Marian and Wonder presets apply once while characters without presets keep their saves
+ok 80 - Marian and Wonder presets apply once while characters without presets keep their saves
+  ---
+  duration_ms: 0.88219
+  type: 'test'
+  ...
+# Subtest: recorded Nightmare result uses the exact point bucket formula
+ok 81 - recorded Nightmare result uses the exact point bucket formula
+  ---
+  duration_ms: 1.062148
+  type: 'test'
+  ...
+# Subtest: Slaughter Drive is an eight turn Electric weak recorded benchmark
+ok 82 - Slaughter Drive is an eight turn Electric weak recorded benchmark
+  ---
+  duration_ms: 15.716717
+  type: 'test'
+  ...
+# Subtest: Slaughter Drive Soul Link reproduces the recorded shared HP percentage
+ok 83 - Slaughter Drive Soul Link reproduces the recorded shared HP percentage
+  ---
+  duration_ms: 1.388403
+  type: 'test'
+  ...
+# Subtest: Slaughter Drive AOE grants Highlight once while Life Sustainment preserves the linked field
+ok 84 - Slaughter Drive AOE grants Highlight once while Life Sustainment preserves the linked field
+  ---
+  duration_ms: 8.655367
+  type: 'test'
+  ...
+# Subtest: Slaughter Drive requires the seventh qualifying hit for Down and then takes 80 percent more damage
+ok 85 - Slaughter Drive requires the seventh qualifying hit for Down and then takes 80 percent more damage
+  ---
+  duration_ms: 1.144079
+  type: 'test'
+  ...
+# Subtest: recorded Miyu and MIKU rotation reproduces the Nexus score and Catch a Wave events
+ok 86 - recorded Miyu and MIKU rotation reproduces the Nexus score and Catch a Wave events
+  ---
+  duration_ms: 1257.383221
+  type: 'test'
+  ...
+# Subtest: archived Nexus auto policy preserves its score and turn-seven break
+ok 87 - archived Nexus auto policy preserves its score and turn-seven break
+  ---
+  duration_ms: 548.447487
+  type: 'test'
+  ...
+# Subtest: Nexus HP lock waits for the player-controlled break turn
+ok 88 - Nexus HP lock waits for the player-controlled break turn
+  ---
+  duration_ms: 3.441002
+  type: 'test'
+  ...
+# Subtest: Nexus forces the 1 HP floor and only scores new damage after the manual break
+ok 89 - Nexus forces the 1 HP floor and only scores new damage after the manual break
+  ---
+  duration_ms: 1.614299
+  type: 'test'
+  ...
+# Subtest: Devourer Life Sustainment toggles the linked field from a 1 HP floor into Weakened
+ok 90 - Devourer Life Sustainment toggles the linked field from a 1 HP floor into Weakened
+  ---
+  duration_ms: 1.533639
+  type: 'test'
+  ...
+# Subtest: Devourer with Life Sustainment off opens exactly two boss turns of unlimited Weakened scoring
+ok 91 - Devourer with Life Sustainment off opens exactly two boss turns of unlimited Weakened scoring
+  ---
+  duration_ms: 1.011072
+  type: 'test'
+  ...
+# Subtest: late Nexus and Devourer triggers preserve both Weakened boss action slots
+ok 92 - late Nexus and Devourer triggers preserve both Weakened boss action slots
+  ---
+  duration_ms: 1.993632
+  type: 'test'
+  ...
+# Subtest: Devourer and Multidimensional do not enter Weakened before their trigger
+ok 93 - Devourer and Multidimensional do not enter Weakened before their trigger
+  ---
+  duration_ms: 1.294773
+  type: 'test'
+  ...
+# Subtest: same seed and policy produce the same complete result
+ok 94 - same seed and policy produce the same complete result
+  ---
+  duration_ms: 207.101188
+  type: 'test'
+  ...
+# Subtest: Wonder takes one counted action before the queue advances
+ok 95 - Wonder takes one counted action before the queue advances
+  ---
+  duration_ms: 2.884224
+  type: 'test'
+  ...
+# Subtest: persona selection is free and changes Wonder move list without advancing
+ok 96 - persona selection is free and changes Wonder move list without advancing
+  ---
+  duration_ms: 2.08683
+  type: 'test'
+  ...
+# Subtest: navigator action resolves without consuming the current actor turn
+ok 97 - navigator action resolves without consuming the current actor turn
+  ---
+  duration_ms: 2.068743
+  type: 'test'
+  ...
+# Subtest: navigator cooldown advances once per counted ally action
+ok 98 - navigator cooldown advances once per counted ally action
+  ---
+  duration_ms: 3.524345
+  type: 'test'
+  ...
+# Subtest: only one navigator skill can be used in an Attack Turn
+ok 99 - only one navigator skill can be used in an Attack Turn
+  ---
+  duration_ms: 2.536878
+  type: 'test'
+  ...
+# Subtest: Vishnu thresholds grow one to three to five and anchor new clones before the triggering actor
+ok 100 - Vishnu thresholds grow one to three to five and anchor new clones before the triggering actor
+  ---
+  duration_ms: 3.393661
+  type: 'test'
+  ...
+# Subtest: each Vishnu action ticks only statuses owned by that enemy
+ok 101 - each Vishnu action ticks only statuses owned by that enemy
+  ---
+  duration_ms: 1.014026
+  type: 'test'
+  ...
+# Subtest: Weakened Vishnus skip independently without ticking statuses or resetting Down
+ok 102 - Weakened Vishnus skip independently without ticking statuses or resetting Down
+  ---
+  duration_ms: 0.861971
+  type: 'test'
+  ...
+# Subtest: Virtual Concert ticks enemy statuses while Vishnu action slots stay frozen
+ok 103 - Virtual Concert ticks enemy statuses while Vishnu action slots stay frozen
+  ---
+  duration_ms: 12.056761
+  type: 'test'
+  ...
+# Subtest: Vishnu target-count phases add actions without inferred enemy damage scaling
+ok 104 - Vishnu target-count phases add actions without inferred enemy damage scaling
+  ---
+  duration_ms: 1.012213
+  type: 'test'
+  ...
+# Subtest: MIKU follows the recorded Heaven, Spring Storm, Play-With-Fire Track sequence
+ok 105 - MIKU follows the recorded Heaven, Spring Storm, Play-With-Fire Track sequence
+  ---
+  duration_ms: 32.636342
+  type: 'test'
+  ...
+# Subtest: MIKU only grants a song effect when its matching Track is newly gained
+ok 106 - MIKU only grants a song effect when its matching Track is newly gained
+  ---
+  duration_ms: 3.127956
+  type: 'test'
+  ...
+# Subtest: Virtual Concert records two uncounted rounds and A6 repeats each target damage exactly
+ok 107 - Virtual Concert records two uncounted rounds and A6 repeats each target damage exactly
+  ---
+  duration_ms: 65.14299
+  type: 'test'
+  ...
+# Subtest: Hachiman exposes a boss and four targetable summons
+ok 108 - Hachiman exposes a boss and four targetable summons
+  ---
+  duration_ms: 1.685123
+  type: 'test'
+  ...
+# Subtest: qualifying hits remove Down points before the following hit knocks the target Down
+ok 109 - qualifying hits remove Down points before the following hit knocks the target Down
+  ---
+  duration_ms: 3.504726
+  type: 'test'
+  ...
+# Subtest: gun actions consume ammo and sourced skill effects remain identifiable
+ok 110 - gun actions consume ammo and sourced skill effects remain identifiable
+  ---
+  duration_ms: 2.742944
+  type: 'test'
+  ...
+# Subtest: Highlights interrupt without consuming the current action counter
+ok 111 - Highlights interrupt without consuming the current action counter
+  ---
+  duration_ms: 2.318173
+  type: 'test'
+  ...
+# Subtest: clearing a summon wave opens the sourced encounter damage window
+ok 112 - clearing a summon wave opens the sourced encounter damage window
+  ---
+  duration_ms: 1.286341
+  type: 'test'
+  ...
+# Subtest: unavailable SP action is rejected by the legal-action boundary
+ok 113 - unavailable SP action is rejected by the legal-action boundary
+  ---
+  duration_ms: 0.821891
+  type: 'test'
+  ...
+# Subtest: battle terminates at the configured Attack Turn limit and preserves replay frames
+ok 114 - battle terminates at the configured Attack Turn limit and preserves replay frames
+  ---
+  duration_ms: 79.297256
+  type: 'test'
+  ...
+# Subtest: the stateful SEES trio completes a deterministic Dreamscape preview through the public action boundary
+ok 115 - the stateful SEES trio completes a deterministic Dreamscape preview through the public action boundary
+  ---
+  duration_ms: 200.389078
+  type: 'test'
+  ...
+# Subtest: equipped screenshot stats are exact totals while non-overlapping Revelation effects remain
+ok 116 - equipped screenshot stats are exact totals while non-overlapping Revelation effects remain
+  ---
+  duration_ms: 19.345448
+  type: 'test'
+  ...
+# Subtest: ordinary base-stat loads add Revelation bonuses on top of every base stat
+ok 117 - ordinary base-stat loads add Revelation bonuses on top of every base stat
+  ---
+  duration_ms: 0.953646
+  type: 'test'
+  ...
+# Subtest: equipped damage bonus and pierce increase outgoing damage
+ok 118 - equipped damage bonus and pierce increase outgoing damage
+  ---
+  duration_ms: 1.887213
+  type: 'test'
+  ...
+# Subtest: equipped damage reduction lowers incoming boss and timeline-enemy damage
+ok 119 - equipped damage reduction lowers incoming boss and timeline-enemy damage
+  ---
+  duration_ms: 2.558671
+  type: 'test'
+  ...
+# Subtest: base Technical Precision uses an explicit supplied scaling rule
+ok 120 - base Technical Precision uses an explicit supplied scaling rule
+  ---
+  duration_ms: 1.247973
+  type: 'test'
+  ...
+# Subtest: an explicit zero SP Recovery does not fall back to 100 percent
+ok 121 - an explicit zero SP Recovery does not fall back to 100 percent
+  ---
+  duration_ms: 2.701844
+  type: 'test'
+  ...
+# Subtest: each live Daisoujou defeat adds one aggregate 10% boss damage-taken stack through the cap
+ok 122 - each live Daisoujou defeat adds one aggregate 10% boss damage-taken stack through the cap
+  ---
+  duration_ms: 11.587964
+  type: 'test'
+  ...
+# Subtest: Berry S1 applies the fourth defeat stack before its boss kill-reset recast
+ok 123 - Berry S1 applies the fourth defeat stack before its boss kill-reset recast
+  ---
+  duration_ms: 38.44569
+  type: 'test'
+  ...
+# Subtest: Hachiman Dreamscape Skill and Resonance use the sourced crit-rate final-damage bonus without changing crit rolls
+ok 124 - Hachiman Dreamscape Skill and Resonance use the sourced crit-rate final-damage bonus without changing crit rolls
+  ---
+  duration_ms: 11.084396
+  type: 'test'
+  ...
+# Subtest: Hachiman Dreamscape leaves Gun and basic attack on ordinary critical damage
+ok 125 - Hachiman Dreamscape leaves Gun and basic attack on ordinary critical damage
+  ---
+  duration_ms: 2.763826
+  type: 'test'
+  ...
+# Subtest: Dreamscape retains a 100% stored crit rate for its Skill formula
+ok 126 - Dreamscape retains a 100% stored crit rate for its Skill formula
+  ---
+  duration_ms: 0.607202
+  type: 'test'
+  ...
+# Subtest: Dreamscape applies the confirmed role, Curse, and continuous-damage modifiers to every foe
+ok 127 - Dreamscape applies the confirmed role, Curse, and continuous-damage modifiers to every foe
+  ---
+  duration_ms: 1.246441
+  type: 'test'
+  ...
+# Subtest: Dreamscape adds its continuous-damage bonus once to Berry’s confirmed Chain conversion
+ok 128 - Dreamscape adds its continuous-damage bonus once to Berry’s confirmed Chain conversion
+  ---
+  duration_ms: 1.597503
+  type: 'test'
+  ...
+# Subtest: Dreamscape excludes the preset Daisoujou idols from preview score while retaining combat damage
+ok 129 - Dreamscape excludes the preset Daisoujou idols from preview score while retaining combat damage
+  ---
+  duration_ms: 15.504021
+  type: 'test'
+  ...
+# Subtest: live Hachiman exposes the four observed ordinary items with bounded inventory
+ok 130 - live Hachiman exposes the four observed ordinary items with bounded inventory
+  ---
+  duration_ms: 8.192289
+  type: 'test'
+  ...
+# Subtest: Flower Basket use preserves inventory and shared Highlight while ordinary item counts one turn once
+ok 131 - Flower Basket use preserves inventory and shared Highlight while ordinary item counts one turn once
+  ---
+  duration_ms: 17.593525
+  type: 'test'
+  ...
+# Subtest: items stay manual-only and obey direct pending-action and Concert completion rules
+ok 132 - items stay manual-only and obey direct pending-action and Concert completion rules
+  ---
+  duration_ms: 3.521681
+  type: 'test'
+  ...
+# Subtest: ordinary items are unavailable outside the exact live Hachiman Dreamscape profile
+ok 133 - ordinary items are unavailable outside the exact live Hachiman Dreamscape profile
+  ---
+  duration_ms: 2.127821
+  type: 'test'
+  ...
+# Subtest: recorded Flower Basket keeps its legacy duration, A6, crit, and heal behavior
+ok 134 - recorded Flower Basket keeps its legacy duration, A6, crit, and heal behavior
+  ---
+  duration_ms: 2.279306
+  type: 'test'
+  ...
+# Subtest: Concert round two skips Berry after Power of Love expires in round one
+ok 135 - Concert round two skips Berry after Power of Love expires in round one
+  ---
+  duration_ms: 31.654923
+  type: 'test'
+  ...
+# Subtest: a stale owner selection cannot execute actions for expired Berry
+ok 136 - a stale owner selection cannot execute actions for expired Berry
+  ---
+  duration_ms: 6.80584
+  type: 'test'
+  ...
+# Subtest: Power of Love party wipe ends Concert without granting a dead actor another turn
+ok 137 - Power of Love party wipe ends Concert without granting a dead actor another turn
+  ---
+  duration_ms: 3.799033
+  type: 'test'
+  ...
+# Subtest: Concert entry and ordinary round entry skip an already defeated first owner
+ok 138 - Concert entry and ordinary round entry skip an already defeated first owner
+  ---
+  duration_ms: 7.175899
+  type: 'test'
+  ...
+# Subtest: Concert exit advances past a saved owner who expired during the extra turns
+ok 139 - Concert exit advances past a saved owner who expired during the extra turns
+  ---
+  duration_ms: 10.216637
+  type: 'test'
+  ...
+# Subtest: Concert exit resolves the ordinary round boundary when its saved last owner expired
+ok 140 - Concert exit resolves the ordinary round boundary when its saved last owner expired
+  ---
+  duration_ms: 9.623356
+  type: 'test'
+  ...
+# Subtest: ordinary healing restores living allies without reviving defeated allies
+ok 141 - ordinary healing restores living allies without reviving defeated allies
+  ---
+  duration_ms: 2.594714
+  type: 'test'
+  ...
+# Subtest: live J&C opening resolves Two Masks before the first command without spending a turn, SP, or True Desire
+ok 142 - live J&C opening resolves Two Masks before the first command without spending a turn, SP, or True Desire
+  ---
+  duration_ms: 24.788353
+  type: 'test'
+  ...
+# Subtest: live J&C automatic S3 prioritizes a valid previous mask target without an extra RNG draw
+ok 143 - live J&C automatic S3 prioritizes a valid previous mask target without an extra RNG draw
+  ---
+  duration_ms: 1.825221
+  type: 'test'
+  ...
+# Subtest: live J&C opening seeded fallback can select an idol instead of the boss
+ok 144 - live J&C opening seeded fallback can select an idol instead of the boss
+  ---
+  duration_ms: 3.357657
+  type: 'test'
+  ...
+# Subtest: live J&C opening S3 reconciles a finite-boss phase before commands become available
+ok 145 - live J&C opening S3 reconciles a finite-boss phase before commands become available
+  ---
+  duration_ms: 1.445047
+  type: 'test'
+  ...
+# Subtest: live J&C opening S3 finishes a finite boss before commands become available
+ok 146 - live J&C opening S3 finishes a finite boss before commands become available
+  ---
+  duration_ms: 1.679676
+  type: 'test'
+  ...
+# Subtest: live J&C records the second mask target before its Facade-triggered S3
+ok 147 - live J&C records the second mask target before its Facade-triggered S3
+  ---
+  duration_ms: 10.450754
+  type: 'test'
+  ...
+# Subtest: live J&C automatic S3 uses a deterministic random fallback when the previous target is dead
+ok 148 - live J&C automatic S3 uses a deterministic random fallback when the previous target is dead
+  ---
+  duration_ms: 2.489408
+  type: 'test'
+  ...
+# Subtest: live J&C automatic S3 excludes a defeated finite boss from fallback targets
+ok 149 - live J&C automatic S3 excludes a defeated finite boss from fallback targets
+  ---
+  duration_ms: 1.301864
+  type: 'test'
+  ...
+# Subtest: recorded profile retains deferred opening S3 timing for archived Nexus replays
+ok 150 - recorded profile retains deferred opening S3 timing for archived Nexus replays
+  ---
+  duration_ms: 2.561686
+  type: 'test'
+  ...
+# Subtest: live J&C skips automatic S3 without RNG or resource spend when no target remains
+ok 151 - live J&C skips automatic S3 without RNG or resource spend when no target remains
+  ---
+  duration_ms: 1.464155
+  type: 'test'
+  ...
+# Subtest: live A6 spends True Desire immediately and does not debit the stored enhancement again at S3 resolution
+ok 152 - live A6 spends True Desire immediately and does not debit the stored enhancement again at S3 resolution
+  ---
+  duration_ms: 42.771647
+  type: 'test'
+  ...
+# Subtest: live A6 recharges on every eighth counted Wonder action, skips an unspent recharge, and keeps the periodic clock after Alt
+ok 153 - live A6 recharges on every eighth counted Wonder action, skips an unspent recharge, and keeps the periodic clock after Alt
+  ---
+  duration_ms: 326.039797
+  type: 'test'
+  ...
+# Subtest: the live Hachiman A6 recharge counts J&C's own counted actions, Concert turns included, and not other members
+ok 154 - the live Hachiman A6 recharge counts J&C's own counted actions, Concert turns included, and not other members
+  ---
+  duration_ms: 44.903665
+  type: 'test'
+  ...
+# Subtest: recorded profile retains its deferred True Desire debit at S3 resolution
+ok 155 - recorded profile retains its deferred True Desire debit at S3 resolution
+  ---
+  duration_ms: 3.622522
+  type: 'test'
+  ...
+# Subtest: enhanced S3 applies every Facade effect, hits every foe, and confines Luck-Service ailments to the main target
+ok 156 - enhanced S3 applies every Facade effect, hits every foe, and confines Luck-Service ailments to the main target
+  ---
+  duration_ms: 9.452992
+  type: 'test'
+  ...
+# Subtest: live Wonder level bonus can be configured while A6 J&C is off-party without inventing coefficients
+ok 157 - live Wonder level bonus can be configured while A6 J&C is off-party without inventing coefficients
+  ---
+  duration_ms: 1.106333
+  type: 'test'
+  ...
+# Subtest: corrected mechanics are default and archived behavior requires a named profile
+ok 158 - corrected mechanics are default and archived behavior requires a named profile
+  ---
+  duration_ms: 26.390873
+  type: 'test'
+  ...
+# Subtest: J&C masks have independent Highlight clocks and same-owner-turn grace is explicit
+ok 159 - J&C masks have independent Highlight clocks and same-owner-turn grace is explicit
+  ---
+  duration_ms: 21.118952
+  type: 'test'
+  ...
+# Subtest: MIKU A1 resets every Highlight clock immediately and Concert owner actions decrement it
+ok 160 - MIKU A1 resets every Highlight clock immediately and Concert owner actions decrement it
+  ---
+  duration_ms: 9.779006
+  type: 'test'
+  ...
+# Subtest: live J&C Alt stores an irreversible enhancement without spending the action until the next automatic S3
+ok 161 - live J&C Alt stores an irreversible enhancement without spending the action until the next automatic S3
+  ---
+  duration_ms: 19.704581
+  type: 'test'
+  ...
+# Subtest: Gentle Sea Breeze follows cast, next CD2, next CD1, ready including Concert turns
+ok 162 - Gentle Sea Breeze follows cast, next CD2, next CD1, ready including Concert turns
+  ---
+  duration_ms: 19.067955
+  type: 'test'
+  ...
+# Subtest: medicine exposes observed bases, sourced A1 magnitude and A0/A6 durations without inventing 1.58
+ok 163 - medicine exposes observed bases, sourced A1 magnitude and A0/A6 durations without inventing 1.58
+  ---
+  duration_ms: 9.349939
+  type: 'test'
+  ...
+# Subtest: A0 medicine grants one prescription and two turns while A6 grants two and three turns
+ok 164 - A0 medicine grants one prescription and two turns while A6 grants two and three turns
+  ---
+  duration_ms: 3.852152
+  type: 'test'
+  ...
+# Subtest: Berry S1 high-HP bonus is a conditional per-hit bucket term and creates no permanent damage buff
+ok 165 - Berry S1 high-HP bonus is a conditional per-hit bucket term and creates no permanent damage buff
+  ---
+  duration_ms: 4.349852
+  type: 'test'
+  ...
+# Subtest: Berry S1 retriggers through living Hachiman minions after a minion defeat without a second turn or SP cost
+ok 166 - Berry S1 retriggers through living Hachiman minions after a minion defeat without a second turn or SP cost
+  ---
+  duration_ms: 5.879994
+  type: 'test'
+  ...
+# Subtest: live Berry S1 transfers five A1 Lovesick applications through Hachiman idols without a generic respawn
+ok 167 - live Berry S1 transfers five A1 Lovesick applications through Hachiman idols without a generic respawn
+  ---
+  duration_ms: 6.601706
+  type: 'test'
+  ...
+# Subtest: DOUBLE BERRY thresholds reject early casts and each repeat charges SP once without spending Chains
+ok 168 - DOUBLE BERRY thresholds reject early casts and each repeat charges SP once without spending Chains
+  ---
+  duration_ms: 11.054622
+  type: 'test'
+  ...
+# Subtest: Berry S3 scales with pre-cast Lovesick and separately hits its ten-stack bonus
+ok 169 - Berry S3 scales with pre-cast Lovesick and separately hits its ten-stack bonus
+  ---
+  duration_ms: 4.335029
+  type: 'test'
+  ...
+# Subtest: ordinary Berry Highlight gains Chains, starts cooldown and deals three sourced Lovesick activations
+ok 170 - ordinary Berry Highlight gains Chains, starts cooldown and deals three sourced Lovesick activations
+  ---
+  duration_ms: 3.813925
+  type: 'test'
+  ...
+# Subtest: fourth DOUBLE BERRY option is free, once per battle, and bypasses but preserves cooldown
+ok 171 - fourth DOUBLE BERRY option is free, once per battle, and bypasses but preserves cooldown
+  ---
+  duration_ms: 3.977749
+  type: 'test'
+  ...
+# Subtest: explicit Lovesick definition enables deterministic DoT and owner duration refresh
+ok 172 - explicit Lovesick definition enables deterministic DoT and owner duration refresh
+  ---
+  duration_ms: 2.739469
+  type: 'test'
+  ...
+# Subtest: Berry Power of Love survives fatal damage once and expires after four ally turns
+ok 173 - Berry Power of Love survives fatal damage once and expires after four ally turns
+  ---
+  duration_ms: 6.635937
+  type: 'test'
+  ...
+# Subtest: Auto uses legal DOUBLE BERRY actions and complete replay is deterministic
+ok 174 - Auto uses legal DOUBLE BERRY actions and complete replay is deterministic
+  ---
+  duration_ms: 51.761682
+  type: 'test'
+  ...
+# Subtest: Akihiko stacks the A0 and A6 opening Mettle and Flash Blow is a free optional Resonance action
+ok 175 - Akihiko stacks the A0 and A6 opening Mettle and Flash Blow is a free optional Resonance action
+  ---
+  duration_ms: 3.04288
+  type: 'test'
+  ...
+# Subtest: Akihiko builds Grit and Mettle, spends Grit on Lightning Fist, and gains one Rough Combo stack per action
+ok 176 - Akihiko builds Grit and Mettle, spends Grit on Lightning Fist, and gains one Rough Combo stack per action
+  ---
+  duration_ms: 5.787027
+  type: 'test'
+  ...
+# Subtest: Akihiko applies sourced Grit pierce and separate downed-target passive multipliers
+ok 177 - Akihiko applies sourced Grit pierce and separate downed-target passive multipliers
+  ---
+  duration_ms: 1.950247
+  type: 'test'
+  ...
+# Subtest: Yukari starts with A1 resources, applies exclusive Erosion, and triggers support once per cycle
+ok 178 - Yukari starts with A1 resources, applies exclusive Erosion, and triggers support once per cycle
+  ---
+  duration_ms: 3.174506
+  type: 'test'
+  ...
+# Subtest: Yukari transfers exclusive Erosion on defeat and Arrow preserves gauge overflow separately
+ok 179 - Yukari transfers exclusive Erosion on defeat and Arrow preserves gauge overflow separately
+  ---
+  duration_ms: 22.502117
+  type: 'test'
+  ...
+# Subtest: Yukari Tailwind uses source-scaled main-target buffs and party mitigation
+ok 180 - Yukari Tailwind uses source-scaled main-target buffs and party mitigation
+  ---
+  duration_ms: 2.522297
+  type: 'test'
+  ...
+# Subtest: Makoto gates Scarlet Hades, preserves Moon Phase duration grace, and emits one packet per spent stack
+ok 181 - Makoto gates Scarlet Hades, preserves Moon Phase duration grace, and emits one packet per spent stack
+  ---
+  duration_ms: 4.943033
+  type: 'test'
+  ...
+# Subtest: Makoto auto-casts Nocturne at four Moon Phase and Entrusted Hope stacks once per eligible receipt
+ok 182 - Makoto auto-casts Nocturne at four Moon Phase and Entrusted Hope stacks once per eligible receipt
+  ---
+  duration_ms: 5.006047
+  type: 'test'
+  ...
+# Subtest: SEES Theurgy and Assist actions remain disabled without shared activation evidence
+ok 183 - SEES Theurgy and Assist actions remain disabled without shared activation evidence
+  ---
+  duration_ms: 2.588035
+  type: 'test'
+  ...
+# Subtest: live fixes only the directly observed Dionysus, Vasuki, and Janosik Persona SP costs
+ok 184 - live fixes only the directly observed Dionysus, Vasuki, and Janosik Persona SP costs
+  ---
+  duration_ms: 21.965209
+  type: 'test'
+  ...
+# Subtest: recorded profile retains imported Persona costs without live overrides
+ok 185 - recorded profile retains imported Persona costs without live overrides
+  ---
+  duration_ms: 1.198961
+  type: 'test'
+  ...
+# Subtest: live Universal Theoria charges 24 SP, buffs party Attack, and buffs only its selected ally damage
+ok 186 - live Universal Theoria charges 24 SP, buffs party Attack, and buffs only its selected ally damage
+  ---
+  duration_ms: 5.805625
+  type: 'test'
+  ...
+# Subtest: live recommendation selects the strongest legal Universal Theoria ally and does not force a repeat
+ok 187 - live recommendation selects the strongest legal Universal Theoria ally and does not force a repeat
+  ---
+  duration_ms: 3.376385
+  type: 'test'
+  ...
+# Subtest: Dreamscape credits raw simulated damage and reports turn-weighted Foe Defense Points with an unknown survival bonus
+ok 188 - Dreamscape credits raw simulated damage and reports turn-weighted Foe Defense Points with an unknown survival bonus
+  ---
+  duration_ms: 31.331443
+  type: 'test'
+  ...
+# Subtest: Dreamscape remains playable at zero and stops at the configured six-round preview limit
+ok 189 - Dreamscape remains playable at zero and stops at the configured six-round preview limit
+  ---
+  duration_ms: 8.263465
+  type: 'test'
+  ...
+# Subtest: Dreamscape never enters a Nexus Weakened scoring window during its preview
+ok 190 - Dreamscape never enters a Nexus Weakened scoring window during its preview
+  ---
+  duration_ms: 11.181971
+  type: 'test'
+  ...
+# Subtest: Hachiman retains all four listed resistances with a Medic party
+ok 191 - Hachiman retains all four listed resistances with a Medic party
+  ---
+  duration_ms: 1.340441
+  type: 'test'
+  ...
+# Subtest: Hachiman rejects spiritual and control ailments while accepting ordinary defense debuffs
+ok 192 - Hachiman rejects spiritual and control ailments while accepting ordinary defense debuffs
+  ---
+  duration_ms: 0.952715
+  type: 'test'
+  ...
+# Subtest: Hachiman final damage dealt modifier follows the confirmed Guardian or Medic party condition
+ok 193 - Hachiman final damage dealt modifier follows the confirmed Guardian or Medic party condition
+  ---
+  duration_ms: 3.955506
+  type: 'test'
+  ...
+# Subtest: unsupported Assist and Theurgy cannot spend resources or advance an action
+ok 194 - unsupported Assist and Theurgy cannot spend resources or advance an action
+  ---
+  duration_ms: 5.090131
+  type: 'test'
+  ...
+# Subtest: observed Hachiman Dreamscape result reconciles exactly
+ok 195 - observed Hachiman Dreamscape result reconciles exactly
+  ---
+  duration_ms: 1.031572
+  type: 'test'
+  ...
+# Subtest: reconciliation reports mismatches without changing the verified formula
+ok 196 - reconciliation reports mismatches without changing the verified formula
+  ---
+  duration_ms: 0.152737
+  type: 'test'
+  ...
+# Subtest: result calculator rejects values that were not displayed non-negative integers
+ok 197 - result calculator rejects values that were not displayed non-negative integers
+  ---
+  duration_ms: 0.422648
+  type: 'test'
+  ...
+# Subtest: HUD multiplier lookup exposes observations and does not extrapolate a rule
+ok 198 - HUD multiplier lookup exposes observations and does not extrapolate a rule
+  ---
+  duration_ms: 0.235921
+  type: 'test'
+  ...
+# Subtest: Dreamscape data separates verified composition from unresolved accumulation
+ok 199 - Dreamscape data separates verified composition from unresolved accumulation
+  ---
+  duration_ms: 0.115872
+  type: 'test'
+  ...
+# Subtest: Hachiman live fields are evidence-scoped and Nexus calibration remains unchanged
+ok 200 - Hachiman live fields are evidence-scoped and Nexus calibration remains unchanged
+  ---
+  duration_ms: 0.204083
+  type: 'test'
+  ...
+# Subtest: optimizer resets its seeded PRNG for every call
+ok 201 - optimizer resets its seeded PRNG for every call
+  ---
+  duration_ms: 2646.982103
+  type: 'test'
+  ...
+# Subtest: optimizer baseline is the current seed 808 Full Auto policy
+ok 202 - optimizer baseline is the current seed 808 Full Auto policy
+  ---
+  duration_ms: 1579.937905
+  type: 'test'
+  ...
+# Subtest: candidate replay has exact fast/full parity and preserves replay context
+ok 203 - candidate replay has exact fast/full parity and preserves replay context
+  ---
+  duration_ms: 1653.282713
+  type: 'test'
+  ...
+# Subtest: True Desire plans can reserve each stack until its scheduled J&C turn
+ok 204 - True Desire plans can reserve each stack until its scheduled J&C turn
+  ---
+  duration_ms: 1525.968527
+  type: 'test'
+  ...
+# Subtest: J&C opening mask and Marian per-turn medicine plans reach the full replay
+ok 205 - J&C opening mask and Marian per-turn medicine plans reach the full replay
+  ---
+  duration_ms: 1589.054368
+  type: 'test'
+  ...
+# Subtest: the screenshot Persona loadouts resolve all transferable equipment skills
+ok 206 - the screenshot Persona loadouts resolve all transferable equipment skills
+  ---
+  duration_ms: 2.306846
+  type: 'test'
+  ...
+# Subtest: unique and Thief Tactics skills stay fixed outside the six equipment slots
+ok 207 - unique and Thief Tactics skills stay fixed outside the six equipment slots
+  ---
+  duration_ms: 0.818486
+  type: 'test'
+  ...
+# Subtest: loadout validation removes foreign unique skills, duplicate skills, and unknown IDs
+ok 208 - loadout validation removes foreign unique skills, duplicate skills, and unknown IDs
+  ---
+  duration_ms: 0.342669
+  type: 'test'
+  ...
+# Subtest: reference-only equipment is retained in the build but never becomes a battle action
+ok 209 - reference-only equipment is retained in the build but never becomes a battle action
+  ---
+  duration_ms: 0.482327
+  type: 'test'
+  ...
+# Subtest: a Persona cannot equip its own fixed unique skill through the transferable clone
+ok 210 - a Persona cannot equip its own fixed unique skill through the transferable clone
+  ---
+  duration_ms: 0.515626
+  type: 'test'
+  ...
+# Subtest: RIN Orange Blossom Blade is a free stance that replaces Attack with Yanhua Slash once
+ok 211 - RIN Orange Blossom Blade is a free stance that replaces Attack with Yanhua Slash once
+  ---
+  duration_ms: 26.847312
+  type: 'test'
+  ...
+# Subtest: RIN records sourced Year-End Flames stacks but omits ticks whose timing is not evidenced
+ok 212 - RIN records sourced Year-End Flames stacks but omits ticks whose timing is not evidenced
+  ---
+  duration_ms: 3.395203
+  type: 'test'
+  ...
+# Subtest: MATOI gates Guidance with Extinguish and converts a recorded Burn state to Scald
+ok 213 - MATOI gates Guidance with Extinguish and converts a recorded Burn state to Scald
+  ---
+  duration_ms: 4.213008
+  type: 'test'
+  ...
+# Subtest: MATOI Technical branches report missing evidence instead of creating a result tier
+ok 214 - MATOI Technical branches report missing evidence instead of creating a result tier
+  ---
+  duration_ms: 1.420229
+  type: 'test'
+  ...
+# Subtest: owned DoTs stack, refresh, expire and retain independent sources
+ok 215 - owned DoTs stack, refresh, expire and retain independent sources
+  ---
+  duration_ms: 32.001509
+  type: 'test'
+  ...
+# Subtest: skill DoT application uses the same owned runtime and medicine damage category
+ok 216 - skill DoT application uses the same owned runtime and medicine damage category
+  ---
+  duration_ms: 3.049991
+  type: 'test'
+  ...
+# Subtest: missing DoT fields produce a deduplicated limitation without damage or guessed status
+ok 217 - missing DoT fields produce a deduplicated limitation without damage or guessed status
+  ---
+  duration_ms: 1.558285
+  type: 'test'
+  ...
+# Subtest: a supplied target-turn DoT waits while Concert freezes the target turns
+ok 218 - a supplied target-turn DoT waits while Concert freezes the target turns
+  ---
+  duration_ms: 8.726964
+  type: 'test'
+  ...
+# Subtest: ONE MORE and All-Out Attack defer turn completion and use their damage category
+ok 219 - ONE MORE and All-Out Attack defer turn completion and use their damage category
+  ---
+  duration_ms: 4.953508
+  type: 'test'
+  ...
+# Subtest: extra actions obey explicit Down consumption and can be skipped without stalling
+ok 220 - extra actions obey explicit Down consumption and can be skipped without stalling
+  ---
+  duration_ms: 4.463711
+  type: 'test'
+  ...
+# Subtest: missing extra-action rules report limitations and preserve ordinary turn completion
+ok 221 - missing extra-action rules report limitations and preserve ordinary turn completion
+  ---
+  duration_ms: 1.747205
+  type: 'test'
+  ...
+# Subtest: Technical needs a compatible ailment and applies explicit damage and consumption rules
+ok 222 - Technical needs a compatible ailment and applies explicit damage and consumption rules
+  ---
+  duration_ms: 1.222275
+  type: 'test'
+  ...
+# Subtest: Technical Precision without a supplied scaling rule is reported instead of guessed
+ok 223 - Technical Precision without a supplied scaling rule is reported instead of guessed
+  ---
+  duration_ms: 1.060375
+  type: 'test'
+  ...
+# Subtest: source-defined shared systems retain seeded fast/full damage and resource parity
+ok 224 - source-defined shared systems retain seeded fast/full damage and resource parity
+  ---
+  duration_ms: 9.440104
+  type: 'test'
+  ...
+# Subtest: live Highlight is one party meter with an explicit observed-replay override
+ok 225 - live Highlight is one party meter with an explicit observed-replay override
+  ---
+  duration_ms: 26.946439
+  type: 'test'
+  ...
+# Subtest: confirmed ordinary action charge is 17, or 21 on weakness, including fast mode
+ok 226 - confirmed ordinary action charge is 17, or 21 on weakness, including fast mode
+  ---
+  duration_ms: 9.515305
+  type: 'test'
+  ...
+# Subtest: live shared Highlight makes every living normal Highlight available and resets once
+ok 227 - live shared Highlight makes every living normal Highlight available and resets once
+  ---
+  duration_ms: 3.450756
+  type: 'test'
+  ...
+# Subtest: Miku navigation does not charge the live meter and Showstopper preserves it while resetting Highlight cooldowns
+ok 228 - Miku navigation does not charge the live meter and Showstopper preserves it while resetting Highlight cooldowns
+  ---
+  duration_ms: 6.03179
+  type: 'test'
+  ...
+# Subtest: recorded profile retains personal Highlight meters
+ok 229 - recorded profile retains personal Highlight meters
+  ---
+  duration_ms: 2.253407
+  type: 'test'
+  ...
+# Subtest: fast-mode live counted actions update shared Highlight without writing an event array
+ok 230 - fast-mode live counted actions update shared Highlight without writing an event array
+  ---
+  duration_ms: 1.694778
+  type: 'test'
+  ...
+# Subtest: replay frames snapshot the shared Highlight state at their own action boundary
+ok 231 - replay frames snapshot the shared Highlight state at their own action boundary
+  ---
+  duration_ms: 2.730747
+  type: 'test'
+  ...
+1..231
+# tests 231
+# suites 0
+# pass 231
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10312.557964
