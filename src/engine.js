@@ -186,6 +186,12 @@ export class BattleEngine {
       if (bossData.dodRules) bossData.dodRules.turnLimit = 110;
     } else if (this.usesLiveMechanics() && modeId === 'nexus') {
       bossData.turnLimit = 6;
+    } else if (this.usesLiveMechanics() && modeId === 'multidimensional') {
+      // Multidimensional Dreamscape stops after 6 Attack Turns on every boss.
+      // turnLimit stays the HUD turns-left count (5 at Turn 1) used by the
+      // observed survival multiplier, as on Hachiman and Surt.
+      bossData.previewAttackTurns = 6;
+      bossData.turnLimit = 5;
     }
     if (liveHachimanDreamscape && this.config.hachimanBaseDefense) {
       // Explicit base Defense override for what-if comparisons; the boss

@@ -827,7 +827,7 @@ function renderSetup() {
               <div class="boss-stats">
                 <span><small>HP</small><b>${boss.finiteHp ? format(boss.maxHp) : boss.scoreAttack ? '∞ SCORE' : format(boss.maxHp)}</b></span>
                 <span><small>DEF</small><b>${boss.defense}</b></span>
-                <span><small>LIMIT</small><b>${ui.selectedMode === 'devourer' ? '110 + 2 WEAKENED' : ui.selectedMode === 'nexus' ? 6 : boss.previewAttackTurns || boss.turnLimit} ATK TURNS</b></span>
+                <span><small>LIMIT</small><b>${ui.selectedMode === 'devourer' ? '110 + 2 WEAKENED' : ['nexus', 'multidimensional'].includes(ui.selectedMode) ? 6 : boss.previewAttackTurns || boss.turnLimit} ATK TURNS</b></span>
               </div>
               <div class="affinity-row"><span>WEAK ${iconFor(boss.weakness)} ${elementMeta[boss.weakness].label}</span><span>RESIST ${resistanceMarkup(boss)}</span></div>
               <ol>${setupPhases.map(phase => `<li><i></i><span>${escapeHtml(phase.name)}</span><b>${Number.isFinite(phase.threshold) ? `${Math.round(phase.threshold * 100)}%` : escapeHtml(phase.thresholdLabel || 'SCRIPTED')}</b></li>`).join('')}</ol>
