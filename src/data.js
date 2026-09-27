@@ -149,6 +149,15 @@ export const bosses = [
     hpLockDamage: 827135,
     basePointScale: 1, weakenedPointScale: 3.67084627298469,
     downedDamageTaken: 0.8,
+    // In-game Special Effect tooltips, Nightmare Devourer of Dreams, 2026-09-27.
+    // Down +80% final damage is downedDamageTaken above.
+    modeEffects: {
+      devourer: {
+        source: 'In-game Special Effect tooltips, 2026-09-27',
+        elementDamage: { electric: 0.2 },
+        roleDamage: { Sweeper: 0.2 }
+      }
+    },
     encounter: {
       kind: 'fixed_five_targets',
       soulLink: true,
@@ -317,25 +326,6 @@ export const bosses = [
       unknown: ['numeric HP', 'Berserk damage amount', 'Ragnarok HP loss', 'ammo reload clock ownership', 'NOD and DOD score and ending rules', 'exact per-packet game rounding']
     },
     phases: [{ threshold: 1, name: "Surt and Jack-o'-Lantern · Escalating Shadows", defense: 2121.464, baseDefense: 821 }]
-  },
-  {
-    id: 'shadow_ruin', name: 'Shadow of Ruin', subtitle: 'Nexus of Dreams · Nightmare IV', level: 90,
-    artwork: '/assets/bosses/shadow-ruin.png',
-    maxHp: 3250000, defense: 385, weakness: 'curse', resistance: 'physical', turnLimit: 8, scoreMultiplier: 1.12,
-    phases: [
-      { threshold: 1, name: 'Phase I · Iron Will', defense: 385 },
-      { threshold: 0.65, name: 'Phase II · Fracture', defense: 340 },
-      { threshold: 0.3, name: 'Phase III · Desperation', defense: 300 }
-    ]
-  },
-  {
-    id: 'abyssal_warden', name: 'Abyssal Warden', subtitle: 'Multi-Dimensional · Depth 7', level: 92,
-    artwork: '/assets/bosses/abyssal-warden.png',
-    maxHp: 2900000, defense: 360, weakness: 'psychic', resistance: 'curse', turnLimit: 8, scoreMultiplier: 1.18,
-    phases: [
-      { threshold: 1, name: 'Phase I · Watchful', defense: 360 },
-      { threshold: 0.5, name: 'Phase II · Open Core', defense: 290 }
-    ]
   }
 ];
 

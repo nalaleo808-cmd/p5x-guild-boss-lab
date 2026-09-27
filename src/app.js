@@ -12,7 +12,7 @@ import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
 import { adaptRegisteredCharacter, characterModuleFor } from './characters/registry.js';
 import { bosses, elementMeta, navigator as baseNavigator, nightmareModes, recordedNightmareBenchmark, roster as baseRoster } from './data.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
-import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset } from './default-presets.js';
+import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresetFields, wonderStatsPreset } from './default-presets.js';
 import {
   getDefaultWonderWeaponProfileId,
   getWonderWeaponDefinition,
@@ -262,8 +262,8 @@ function defaultPersonaSlot(name) {
 }
 
 function defaultBuildContentsFor(characterId) {
-  if (characterId === KOTONE_SHIOMI_ID) return { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } };
-  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: [defaultPersonaSlot('Alice'), defaultPersonaSlot('Yoshitsune'), defaultPersonaSlot('Trumpeter')] });
+  if (characterId === KOTONE_SHIOMI_ID) return applyRecordedDefaultStats(characterId, { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } });
+  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: wonderStatsPreset.personaNames.map(name => defaultPersonaSlot(name)), personaPresetId: wonderStatsPreset.id });
   if (characterId === 'joker') return { revelationMain: 'Nativity', revelationSet: 'Power' };
   if (characterId === 'rin') return { revelationMain: 'Resolve', revelationSet: 'Virtue' };
   if (characterId === 'mona') return { revelationMain: 'Faith', revelationSet: 'Peace' };
@@ -277,7 +277,7 @@ function defaultBuildContentsFor(characterId) {
 function defaultLoadoutFor(characterId) {
   const unit = buildableCharacters.find(item => item.id === characterId) || { id: characterId };
   const contents = isNavigatorBuild(unit) ? {} : defaultBuildContentsFor(characterId);
-  return { ...contents, awareness: resolveAwareness(unit) };
+  return { ...contents, awareness: resolveAwareness(unit, contents) };
 }
 
 function defaultLoadouts() {
@@ -425,8 +425,16 @@ function loadLoadouts() {
       const id = unit.id;
       const prior = saved[id] || (unit.sourceCharacterId && saved[unit.sourceCharacterId]) || {};
       merged[id] = migrateAwarenessLoadout(unit, defaults[id], prior, applyRecordedDefaultStats(id, prior));
+      // Live screenshot presets replace saved stats and awareness once.
+      const live = liveStatsPresetFields(id, prior);
+      if (live) merged[id] = { ...merged[id], ...live };
     }
     if (!Array.isArray(merged.wonder.personas) || merged.wonder.personas.length !== 3) merged.wonder.personas = defaults.wonder.personas;
+    // Apply the live Persona trio once; later deliberate changes survive.
+    if (saved.wonder?.personaPresetId !== wonderStatsPreset.id) {
+      merged.wonder.personas = defaults.wonder.personas;
+      merged.wonder.personaPresetId = wonderStatsPreset.id;
+    }
     merged.wonder.personas = merged.wonder.personas.map((slot, index) => {
       const personaId = importedPersonas.some(persona => persona.id === slot?.personaId) ? slot.personaId : defaults.wonder.personas[index].personaId;
       const persona = importedPersonas.find(item => item.id === personaId);
@@ -819,7 +827,7 @@ function renderSetup() {
               <div class="boss-stats">
                 <span><small>HP</small><b>${boss.finiteHp ? format(boss.maxHp) : boss.scoreAttack ? '∞ SCORE' : format(boss.maxHp)}</b></span>
                 <span><small>DEF</small><b>${boss.defense}</b></span>
-                <span><small>LIMIT</small><b>${boss.turnLimit} ATK TURNS</b></span>
+                <span><small>LIMIT</small><b>${ui.selectedMode === 'devourer' ? '110 + 2 WEAKENED' : ui.selectedMode === 'nexus' ? `${6 + (selectedNavigator()?.codename === 'MIKU' ? 2 : 0)}` : boss.previewAttackTurns || boss.turnLimit} ATK TURNS</b></span>
               </div>
               <div class="affinity-row"><span>WEAK ${iconFor(boss.weakness)} ${elementMeta[boss.weakness].label}</span><span>RESIST ${resistanceMarkup(boss)}</span></div>
               <ol>${setupPhases.map(phase => `<li><i></i><span>${escapeHtml(phase.name)}</span><b>${Number.isFinite(phase.threshold) ? `${Math.round(phase.threshold * 100)}%` : escapeHtml(phase.thresholdLabel || 'SCRIPTED')}</b></li>`).join('')}</ol>
@@ -1059,28 +1067,40 @@ function characterStatsControl(unit, key, label) {
   const safeKey = String(key).replace(/[^A-Za-z0-9_-]/g, '-');
   const popoverId = `stats-${safeKey}`;
   const titleId = `${popoverId}-title`;
+  // In-battle values use the same buff sums as the engine's damage formula:
+  // Attack x (1 + Attack buffs) + flat Attack; rates add their buff stats.
+  const buffSum = stat => (unit.buffs || []).filter(effect => effect.stat === stat).reduce((sum, effect) => sum + (Number(effect.value) || 0), 0);
+  const damageSum = (unit.buffs || []).filter(effect => !effect.stat || effect.stat === 'damage').reduce((sum, effect) => sum + (Number(effect.value) || 0), 0);
+  const finalDamage = (unit.buffs || []).filter(effect => effect.stat === 'finalDamage').reduce((product, effect) => product * (1 + (Number(effect.value) || 0)), 1) - 1;
+  const row = (name, base, current, suffix = '', multiplier = 1) => {
+    const shown = formatBattleStat(current, suffix, multiplier);
+    const start = formatBattleStat(base, suffix, multiplier);
+    return [name, shown === start ? shown : `${shown} <small>base ${start}</small>`];
+  };
   const stats = [
-    ['MAX HP', formatBattleStat(unit.maxHp)],
-    ['MAX SP', formatBattleStat(unit.maxSp)],
-    ['ATTACK', formatBattleStat(unit.attack)],
-    ['DEFENSE', formatBattleStat(unit.defense)],
-    ['SPEED', formatBattleStat(unit.speed)],
-    ['CRIT RATE', formatBattleStat(unit.crit, '%', 100)],
-    ['CRIT MULT.', formatBattleStat(unit.critMult, '%', 100)],
-    ['SP RECOVERY', formatBattleStat(unit.spRecovery, '%')],
-    ['TECHNICAL PRECISION', formatBattleStat(unit.technicalPrecision ?? 0)],
-    ['PIERCE RATE', formatBattleStat(unit.pierceRate ?? 0, '%', 100)],
-    ['DOWN POINTS', formatBattleStat(unit.downPoints ?? 0)],
-    ['AILMENT ACC.', formatBattleStat(unit.ailmentAccuracy ?? 0, '%', 100)],
-    ['AILMENT RESIST.', formatBattleStat(unit.ailmentResistance ?? 0, '%', 100)],
-    ['DAMAGE MULT. +', formatBattleStat(unit.damageBonus ?? 0, '%', 100)],
-    ['DAMAGE DOWN', formatBattleStat(unit.damageReduction ?? 0, '%', 100)]
+    row('MAX HP', unit.maxHp, unit.maxHp),
+    row('MAX SP', unit.maxSp, unit.maxSp),
+    row('ATTACK', unit.attack, Number(unit.attack) * (1 + buffSum('attack')) + buffSum('flatAttack')),
+    row('DEFENSE', unit.defense, Number(unit.defense) * (1 + buffSum('defense'))),
+    row('SPEED', unit.speed, Number(unit.speed) + buffSum('speed')),
+    row('CRIT RATE', unit.crit, Number(unit.crit) + buffSum('critRate'), '%', 100),
+    row('CRIT MULT.', unit.critMult, Number(unit.critMult ?? 1.5) + buffSum('critDamage'), '%', 100),
+    row('SP RECOVERY', unit.spRecovery, unit.spRecovery, '%'),
+    row('TECHNICAL PRECISION', unit.technicalPrecision ?? 0, unit.technicalPrecision ?? 0),
+    row('PIERCE RATE', unit.pierceRate ?? 0, Number(unit.pierceRate ?? 0) + buffSum('pierce'), '%', 100),
+    row('DOWN POINTS', unit.downPoints ?? 0, unit.downPoints ?? 0),
+    row('AILMENT ACC.', unit.ailmentAccuracy ?? 0, unit.ailmentAccuracy ?? 0, '%', 100),
+    row('AILMENT RESIST.', unit.ailmentResistance ?? 0, unit.ailmentResistance ?? 0, '%', 100),
+    row('DAMAGE MULT. +', unit.damageBonus ?? 0, Number(unit.damageBonus ?? 0) + damageSum, '%', 100),
+    row('DAMAGE DOWN', unit.damageReduction ?? 0, Number(unit.damageReduction ?? 0) + buffSum('damageReduction'), '%', 100),
+    row('SKILL AMPLIFICATION', 0, buffSum('skillAmplification'), '%', 100),
+    row('FINAL DAMAGE +', 0, finalDamage, '%', 100)
   ];
   return `<button type="button" class="status-summary-button stats-summary-button" popovertarget="${popoverId}" aria-haspopup="dialog" aria-label="Open ${escapeHtml(label)} stats">
       <span>STATS</span><em>OPEN</em>
     </button>
     <div id="${popoverId}" class="status-popover stats-popover" popover="auto" role="dialog" aria-labelledby="${titleId}">
-      <div class="status-popover-header stats-popover-header"><div><small>BATTLE START STATS</small><b id="${titleId}">${escapeHtml(label)}</b></div><span>${stats.length} VALUES</span><button type="button" popovertarget="${popoverId}" popovertargetaction="hide" aria-label="Close ${escapeHtml(label)} stats">X</button></div>
+      <div class="status-popover-header stats-popover-header"><div><small>IN-BATTLE STATS · WITH CURRENT BUFFS</small><b id="${titleId}">${escapeHtml(label)}</b></div><span>${stats.length} VALUES</span><button type="button" popovertarget="${popoverId}" popovertargetaction="hide" aria-label="Close ${escapeHtml(label)} stats">X</button></div>
       <dl class="stats-grid">${stats.map(([name, value]) => `<div class="stat-row"><dt>${name}</dt><dd>${value}</dd></div>`).join('')}</dl>
     </div>`;
 }

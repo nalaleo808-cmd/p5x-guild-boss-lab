@@ -175,6 +175,17 @@ export class BattleEngine {
       bossData.scoreModel = 'hachiman_devourer_observed_rules';
       bossData.dodRules = { preBreakHpCap: 405499, lockFloor: 4054, breakPointMultiplier: 3, turnLimit: 120, hpLock: 'holds HP at 1% of max (4,054)', shields: 'normal', evidence: 'two_runs_401445_locked_405499_base_2026-09-10' };
     }
+    // User-confirmed turn limits (2026-09-27), live profile only. Devourer of
+    // Dreams allows 110 Attack Turns before the break, then its 2-turn
+    // Weakened window. Nexus of Dreams allows 6, plus 2 with Miku navigating.
+    // Supersedes the 120-turn Hachiman DOD rule of 2026-09-09.
+    if (this.usesLiveMechanics() && modeId === 'devourer') {
+      bossData.turnLimit = 110;
+      bossData.previewAttackTurns = 110;
+      if (bossData.dodRules) bossData.dodRules.turnLimit = 110;
+    } else if (this.usesLiveMechanics() && modeId === 'nexus') {
+      bossData.turnLimit = 6 + (this.navigatorDefinition?.codename === 'MIKU' ? 2 : 0);
+    }
     if (liveHachimanDreamscape && this.config.hachimanBaseDefense) {
       // Explicit base Defense override for what-if comparisons; the boss
       // coefficient from the encounter data is retained.
@@ -778,13 +789,27 @@ export class BattleEngine {
     });
   }
 
+  // Mode Special Effects that raise damage dealt, from boss modeEffects.
+  stageDamageBonuses(unit, element) {
+    if (!this.usesLiveMechanics()) return [];
+    const effects = this.state.boss.modeEffects?.[this.state.boss.modeId];
+    if (!effects) return [];
+    const bonuses = [];
+    if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
+    if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
+    return bonuses;
+  }
+
   isDreamscapeScoreEligibleTarget(target) {
     return !this.isHachimanLive()
       || (target?.species !== 'daisoujou' && target?.id !== 'daisoujou');
   }
 
+  // Skill/Resonance crit conversion: final damage x (1 + min(crit, 100%) x
+  // (crit damage - 100%)) with no crit roll. User-confirmed for every boss in
+  // the live profile (2026-09-27); recorded replays keep ordinary crit rolls.
   usesStableDomainCritConversion(actor, sourceType) {
-    return this.isDreamscapeTurnWeightedMode()
+    return this.usesLiveMechanics()
       && (['character_skill', 'persona_skill', 'berry_repeat', 'resonance_follow_up'].includes(sourceType)
         || (sourceType === 'awareness_follow_up' && this.isJc(actor)));
   }
@@ -872,7 +897,11 @@ export class BattleEngine {
     const weaponId = holder.wonderWeapon.weaponId;
     const effectState = holder.wonderWeapon.effectState;
     this.clearWonderWeaponPersistentEffects(weaponId);
-    const holderBuff = (id, stat, value, extra) => this.applyWonderWeaponPersistentBuff(holder, weaponId, id, stat, value, extra);
+    // Equipped character-detail totals already include the weapon's static
+    // Attack passive, as for the J&C and Wavecatcher signature weapons.
+    const holderBuff = (id, stat, value, extra) => (id === 'attack' && stat === 'attack' && holder.statsMode === 'equipped')
+      ? null
+      : this.applyWonderWeaponPersistentBuff(holder, weaponId, id, stat, value, extra);
     const partyBuff = (id, stat, value, extra) => {
       for (const unit of this.state.party) this.applyWonderWeaponPersistentBuff(unit, weaponId, id, stat, value, extra);
     };
@@ -2116,6 +2145,7 @@ export class BattleEngine {
       add('surt_gun_damage', this.state.boss.encounter?.gunDamageBonus);
     }
     add('action_damage_bonus', actionDamageBonus);
+    for (const [id, value] of this.stageDamageBonuses(unit, element)) add(id, value);
     if (target.downed) add('downed_damage_taken', target.downedDamageTaken ?? 0.1);
     const elementalExposure = target.debuffs.find(effect => effect.id === `${element}_vuln`);
     if (elementalExposure) add(elementalExposure.id, elementalExposure.value);
@@ -2169,6 +2199,7 @@ export class BattleEngine {
     if (this.isWavecatcher(unit) && unit.surfActive) multiplier *= 1.3;
     if (unit.elementBonus?.element === element) multiplier *= 1 + unit.elementBonus.value;
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) multiplier *= 1 + (buff.value || 0);
+    multiplier *= 1 + this.stageDamageBonuses(unit, element).reduce((sum, [, value]) => sum + value, 0);
     for (const buff of unit.buffs.filter(effect => effect.stat === 'elementDamage' && effect.element === element)) multiplier *= 1 + (buff.value || 0);
     if (isWeakTo(target, element)) multiplier *= 1.25;
     if (isWeakTo(target, element)) {

@@ -56,7 +56,76 @@ export const wonderWeaponPreset = Object.freeze({
   source: 'Cursed Ties level 80 Forge Details read directly in the game, 2026-09-05'
 });
 
+// Equipped character-detail totals from the user's live screenshots, 2026-09-27.
+// Totals already include weapon, Revelation and static passives. Applied once;
+// later edits in Builds survive.
+const signatureR6 = Object.freeze({ weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true });
+
+export const kotoneStatsPreset = Object.freeze({
+  id: 'kotone-a5-vetri-2-character-details-2026-09-27',
+  characterId: 'kotone-shiomi',
+  awareness: 5,
+  kotone: Object.freeze({ weaponId: 'vetri-vel-muruga', enhancement: 2 }),
+  baseStats: Object.freeze({ attack: 5596, defense: 1745, maxHp: 7989, maxSp: 100, speed: 106.8, critRate: 35.4, critMult: 163.4, spRecovery: 47, technicalPrecision: 0, pierceRate: 2.2, downPoints: 0, ailmentAccuracy: 23.2, ailmentResistance: 0, damageBonus: 8.2, damageReduction: 16 })
+});
+
+export const wavecatcherStatsPreset = Object.freeze({
+  id: 'wavecatcher-a6-mermaid-dreamer-6-character-details-2026-09-27',
+  characterId: 'lufel-recent-puppet-wavecatcher',
+  awareness: 6,
+  // Mermaid Dreamer: 779 Attack, 2259 HP, 391 Defense, +69% crit damage (in totals).
+  characterResearch: signatureR6,
+  baseStats: Object.freeze({ attack: 4633, defense: 1629, maxHp: 8181, maxSp: 200, speed: 96, critRate: 26.7, critMult: 308.5, spRecovery: 247.5, technicalPrecision: 0, pierceRate: 9.9, downPoints: 0, ailmentAccuracy: 0, ailmentResistance: 0, damageBonus: 19.3, damageReduction: 0 })
+});
+
+export const mikuStatsPreset = Object.freeze({
+  id: 'miku-character-details-2026-09-27',
+  characterId: 'lufel-recent-miku',
+  // Displayed Crit Mult 84.2% is below the 150% base, so it is not taken as a
+  // total multiplier until confirmed. Unshown fields keep their prior values.
+  unconfirmed: Object.freeze({ critMult: 84.2 }),
+  baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7 })
+});
+
+export const jcStatsPreset = Object.freeze({
+  id: 'jc-a6-wardens-judgement-6-character-details-2026-09-27',
+  characterId: 'lufel-recent-j-c',
+  awareness: 6,
+  // Warden's Judgement: Attack +57% is in totals.
+  characterResearch: signatureR6,
+  baseStats: Object.freeze({ attack: 4506, defense: 1877, maxHp: 8808, maxSp: 100, speed: 114, critRate: 42.7, critMult: 197.8, spRecovery: 0, technicalPrecision: 0, pierceRate: 20.7, downPoints: 0, ailmentAccuracy: 9.6, ailmentResistance: 0, damageBonus: 51.2, damageReduction: 0 })
+});
+
+export const wonderStatsPreset = Object.freeze({
+  id: 'wonder-dionysus-janosik-vasuki-character-details-2026-09-27',
+  characterId: 'wonder',
+  personaNames: Object.freeze(['Dionysus', 'Janosik', 'Vasuki']),
+  // Ice Age: its +56% Attack is in the totals; Ancient Frost is modeled.
+  wonderWeapon: Object.freeze({ weaponId: 'ice-age', weaponProfileId: null, weaponProcGranularity: null }),
+  baseStats: Object.freeze({ attack: 3628, defense: 2365, maxHp: 11200, maxSp: 100, speed: 109, critRate: 39.8, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 0, damageReduction: 0 })
+});
+
+export const liveStatsPresets = Object.freeze([kotoneStatsPreset, wavecatcherStatsPreset, mikuStatsPreset, jcStatsPreset, wonderStatsPreset]);
+
+// Fields a live preset sets the first time it is applied. Returns null when
+// the loadout already carries this preset.
+export function liveStatsPresetFields(characterId, loadout = {}) {
+  const preset = liveStatsPresets.find(item => item.characterId === characterId);
+  if (!preset || loadout.statsPresetId === preset.id) return null;
+  return {
+    baseStats: { ...(loadout.baseStats || {}), ...preset.baseStats },
+    statsMode: 'equipped',
+    statsPresetId: preset.id,
+    ...(preset.awareness != null ? { awareness: preset.awareness } : {}),
+    ...(preset.characterResearch ? { characterResearch: { ...(loadout.characterResearch || {}), ...preset.characterResearch } } : {}),
+    ...(preset.wonderWeapon ? { ...preset.wonderWeapon, weaponPresetId: wonderWeaponPreset.id } : {}),
+    ...(preset.kotone ? { ...preset.kotone, equippedTotalsFor: `${preset.kotone.weaponId}+${preset.kotone.enhancement}` } : {})
+  };
+}
+
 export function applyRecordedDefaultStats(characterId, loadout = {}) {
+  const live = liveStatsPresetFields(characterId, loadout);
+  if (live) loadout = { ...loadout, ...live };
   if (characterId === marianSpPreset.characterId && loadout.spPresetId !== marianSpPreset.id) {
     loadout = {
       ...loadout,

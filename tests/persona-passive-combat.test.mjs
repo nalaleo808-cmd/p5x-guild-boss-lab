@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { BattleEngine, CURRENT_MECHANICS_PROFILE } from '../src/engine.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
 import { highestRankPersonaPassive } from '../src/persona-loadout.js';
+import { shadowRuinTestBoss } from './fixtures/test-bosses.mjs';
 
 const skill = {
   id: 'passive-test-strike', slot: 'S1', name: 'Passive Test Strike',
@@ -16,7 +17,7 @@ function runtimePersona(id, passive = null) {
 function engineFor(personas) {
   return new BattleEngine({
     mechanicsProfile: CURRENT_MECHANICS_PROFILE,
-    bossId: 'shadow_ruin', seed: 417, teamIds: ['wonder'],
+    bossId: 'shadow_ruin', bossDefinitions: [shadowRuinTestBoss], seed: 417, teamIds: ['wonder'],
     personaDefinitions: personas, personaIds: personas.map(persona => persona.id)
   });
 }

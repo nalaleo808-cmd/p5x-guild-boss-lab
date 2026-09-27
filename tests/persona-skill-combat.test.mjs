@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { BattleEngine, CURRENT_MECHANICS_PROFILE } from '../src/engine.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
+import { shadowRuinTestBoss } from './fixtures/test-bosses.mjs';
 
 const approx = (actual, expected, tolerance = 1e-9) => {
   assert.ok(Math.abs(actual - expected) <= tolerance, `expected ${actual} to be within ${tolerance} of ${expected}`);
@@ -40,7 +41,7 @@ function engineForSkill(source, override = {}, seed = 113) {
   const skill = combatSkill(source, override);
   const persona = { id: `test-${source.id}`, name: 'Test Persona', element: source.element, skills: [skill] };
   return new BattleEngine({
-    mechanicsProfile: CURRENT_MECHANICS_PROFILE, bossId: 'shadow_ruin', seed,
+    mechanicsProfile: CURRENT_MECHANICS_PROFILE, bossId: 'shadow_ruin', bossDefinitions: [shadowRuinTestBoss], seed,
     teamIds: ['wonder'], personaDefinitions: [persona], personaIds: [persona.id]
   });
 }
