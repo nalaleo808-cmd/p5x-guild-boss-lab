@@ -303,6 +303,10 @@ export class BattleEngine {
         highlight: this.usesLiveMechanics() ? 0 : clamp(35 + (revelation.highlightStart || 0), 0, 100),
         highlightStart: Number.isFinite(Number(revelation.highlightStart)) ? Number(revelation.highlightStart) : 0, actionLimit: unit.actionLimit || 1,
         statsMode: equippedStats ? 'equipped' : null,
+        // Character level-80 base plus weapon stats. Attack % buffs scale this,
+        // not the panel total (live Miyu 2026-09-27: -30% Attack = -626 = 30% of
+        // 1,307.17 + 779.61). Only set for equipped totals with a known weapon.
+        statBase: this.usesLiveMechanics() && equippedStats && Number(loadout.statBase?.attack) > 0 ? { ...loadout.statBase } : null,
         damageBonus, elementBonus: revelation.elementBonus || null,
         ...(revelation.weakElementAttack ? { revelationWeakElementAttack: revelation.weakElementAttack } : {}),
         revelationName: unit.id === 'wonder' ? null : (loadout.revelationName || null),
@@ -539,6 +543,8 @@ export class BattleEngine {
     this.kotoneMechanics = createCharacterMechanics(KOTONE_SHIOMI_ID, this);
     this.kotoneMechanics.initialize();
     if (this.config.kotoneOwned === true) this.kotoneMechanics.refreshAuras();
+    // After Kotone's setup, which rebuilds her Attack from her entered stats.
+    this.applyMikuNavigatorShare();
     for (const unit of this.state.party) this.triggerNativityStrife(unit, 'battle start');
     this.emit('battle_start', `${this.state.boss.name} enters the score-attack field.`, { tone: 'system' });
     if (this.state.boss.encounter?.soulLink) {
@@ -843,6 +849,55 @@ export class BattleEngine {
     const message = `${system} is not resolved: missing ${missing.join(', ')}. No effect is invented.`;
     this.state.mechanicsLimitations.push(message);
     this.emit('unmodeled_mechanic', message, { ...limitation, tone: 'system' });
+  }
+
+  // Miku navigating shares 20% of her panel stats with every ally, and her
+  // Integrity & Labor 4-set then multiplies party HP, Attack and Defense by
+  // 1.08: (panel + share) x 1.08 reconciled Berry's in-battle HP and Defense
+  // within 1% on 2026-09-06. Recorded Hachiman routes add their own share.
+  applyMikuNavigatorShare() {
+    if (!this.usesLiveMechanics() || this.navigatorDefinition?.codename !== 'MIKU') return;
+    const loadouts = Object.values(this.config.loadouts || {});
+    if (loadouts.some(loadout => loadout?.navigatorShareApplied || loadout?.panelIncludesShareAndSetEffects)) return;
+    const navigatorLoadout = loadoutForUnit(this.config.loadouts, this.navigatorDefinition) || {};
+    const stats = navigatorLoadout.baseStats || {};
+    const value = key => Number.isFinite(Number(stats[key])) ? Number(stats[key]) : 0;
+    const share = {
+      maxHp: Math.round(value('maxHp') * 0.2), attack: value('attack') * 0.2, defense: value('defense') * 0.2,
+      crit: value('critRate') * 0.002, critMult: value('critMult') * 0.002,
+      pierceRate: value('pierceRate') * 0.002, damageBonus: value('damageBonus') * 0.002
+    };
+    const labor = Number(navigatorLoadout.partyStatMultiplier || 0);
+    if (!share.maxHp && !share.attack && !share.defense && !labor) return;
+    for (const ally of this.state.party) {
+      // Labor scales the level-80 base plus weapon when known, like other
+      // % buffs; otherwise it multiplies the stat (2026-09-06 reading).
+      const base = ally.statBase;
+      const scaled = (value, add, key) => base?.[key] > 0
+        ? Number(value || 0) + add + base[key] * labor
+        : (Number(value || 0) + add) * (1 + labor);
+      ally.maxHp = Math.round(scaled(ally.maxHp, share.maxHp, 'maxHp'));
+      ally.hp = ally.maxHp;
+      if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(ally.mechanicMaxHp, share.maxHp, 'maxHp'));
+      ally.attack = scaled(ally.attack, share.attack, 'attack');
+      if (Number.isFinite(Number(ally.mechanicAttack))) ally.mechanicAttack = scaled(ally.mechanicAttack, share.attack, 'attack');
+      ally.defense = scaled(ally.defense, share.defense, 'defense');
+      ally.crit = Number(ally.crit || 0) + share.crit;
+      ally.critMult = Number(ally.critMult ?? 1.5) + share.critMult;
+      ally.pierceRate = Number(ally.pierceRate || 0) + share.pierceRate;
+      ally.damageBonus = Number(ally.damageBonus || 0) + share.damageBonus;
+      ally.navigatorShare = { ...share, labor };
+    }
+    this.emit('mechanic', `MIKU navigator share: +${share.maxHp} HP, +${Math.round(share.attack)} Attack, +${Math.round(share.defense)} Defense, +${(share.crit * 100).toFixed(1)}% crit, +${(share.critMult * 100).toFixed(1)}% crit mult${labor ? `, then Labor +${Math.round(labor * 100)}% HP/Attack/Defense` : ''}.`, { sourceType: 'navigator', tone: 'buff' });
+  }
+
+  // Attack with Attack % buffs: on the level-80 base plus weapon when known,
+  // otherwise on the whole Attack value (older model).
+  buffedAttack(actor, attackBuff = 0, flatAttack = 0) {
+    const base = Number(actor?.statBase?.attack);
+    return base > 0
+      ? Number(actor.attack || 0) + base * attackBuff + flatAttack
+      : Number(actor?.attack || 0) * (1 + attackBuff) + flatAttack;
   }
 
   wonderWeaponHolder() {
@@ -2317,7 +2372,7 @@ export class BattleEngine {
     const critDamageBuff = actor.buffs.filter(effect => effect.stat === 'critDamage'
       || (effect.stat === 'elementCritDamage' && effect.element === skill.element)).reduce((sum, effect) => sum + (effect.value || 0), 0);
     const skillAmplification = skill.lovesickSnapshotCapture ? 0 : actor.buffs.filter(effect => effect.stat === 'skillAmplification').reduce((sum, effect) => sum + (effect.value || 0), 0);
-    const scalingValue = skill.scalingStat === 'maxHp' ? actor.maxHp : actor.attack * (1 + attackBuff) + flatAttack;
+    const scalingValue = skill.scalingStat === 'maxHp' ? actor.maxHp : this.buffedAttack(actor, attackBuff, flatAttack);
     let power = skill.power;
     const hachimanAdditionalBonuses = [];
     // An infinite-HP score target always counts as above 70% HP (Joker confirmed the

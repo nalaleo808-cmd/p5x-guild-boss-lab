@@ -79,12 +79,13 @@ export const wavecatcherStatsPreset = Object.freeze({
 });
 
 export const mikuStatsPreset = Object.freeze({
-  id: 'miku-character-details-2026-09-27',
-  characterId: 'lufel-recent-miku',
-  // Displayed Crit Mult 84.2% is below the 150% base, so it is not taken as a
-  // total multiplier until confirmed. Unshown fields keep their prior values.
-  unconfirmed: Object.freeze({ critMult: 84.2 }),
-  baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7 })
+  id: 'miku-navigator-character-details-2026-09-27',
+  characterId: 'navigator-miku',
+  // Navigator panel: 20% of these is shared with every ally in battle. Damage
+  // 42.5% is from the 2026-09-06 Pt Effect share (+8.5%); today's panel was cut.
+  // Integrity & Labor 4-set: party HP, Attack and Defense x1.08.
+  extraFields: Object.freeze({ partyStatMultiplier: 0.08 }),
+  baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, critMult: 84.2, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7, damageBonus: 42.5 })
 });
 
 export const jcStatsPreset = Object.freeze({
@@ -118,6 +119,7 @@ export function liveStatsPresetFields(characterId, loadout = {}) {
     statsPresetId: preset.id,
     ...(preset.awareness != null ? { awareness: preset.awareness } : {}),
     ...(preset.characterResearch ? { characterResearch: { ...(loadout.characterResearch || {}), ...preset.characterResearch } } : {}),
+    ...(preset.extraFields || {}),
     ...(preset.wonderWeapon ? { ...preset.wonderWeapon, weaponPresetId: wonderWeaponPreset.id } : {}),
     ...(preset.kotone ? { ...preset.kotone, equippedTotalsFor: `${preset.kotone.weaponId}+${preset.kotone.enhancement}` } : {})
   };

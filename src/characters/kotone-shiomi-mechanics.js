@@ -149,8 +149,9 @@ export class KotoneShiomiMechanics {
   }
   currentAttack(unit = this.unit) {
     if (!unit) return 0;
-    return unit.attack * (1 + (unit.buffs || []).filter(b => b.stat === 'attack').reduce((n, b) => n + b.value, 0))
-      + (unit.buffs || []).filter(b => b.stat === 'flatAttack').reduce((n, b) => n + b.value, 0);
+    const attackBuff = (unit.buffs || []).filter(b => b.stat === 'attack').reduce((n, b) => n + b.value, 0);
+    const flatAttack = (unit.buffs || []).filter(b => b.stat === 'flatAttack').reduce((n, b) => n + b.value, 0);
+    return this.engine?.buffedAttack ? this.engine.buffedAttack(unit, attackBuff, flatAttack) : unit.attack * (1 + attackBuff) + flatAttack;
   }
   // Each skill scales to the Attack cap published for its own skill level.
   scale(slot = 'S1') { return clamp(this.currentAttack() / this.C.attackCaps[slot], 0, 1); }

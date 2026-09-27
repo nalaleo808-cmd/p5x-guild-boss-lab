@@ -4,7 +4,7 @@ import { withRevelationMainOverlay, withRevelationSetOverlay } from './revelatio
 import { AWARENESS_LEVELS, awarenessCoverage, awarenessStatDefaults, migrateAwarenessLoadout, resolveAwareness, setLoadoutAwareness } from './awareness.js';
 import { COSMIC_YUI_AWARENESS, COSMIC_YUI_COEFFICIENTS, COSMIC_YUI_LIMITATIONS, COSMIC_YUI_WEAPONS } from './cosmic-yui-data.js';
 import { renderKotonePreview } from './kotone-preview.js';
-import { kotoneShiomi, KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
+import { kotoneShiomi, KOTONE_SHIOMI_ID, kotoneLevel80BaseStats, kotoneWeaponProfile } from './characters/kotone-shiomi-data.js';
 import { withLocalCharacters } from './characters/kotone-overlay.js';
 import { normalizeKotoneLoadout, normalizeKotoneDraft } from './characters/kotone-shiomi-mechanics.js';
 import { kotoneBuildEditor, bindKotoneBuild, kotoneStatusMarkup, kotoneSkillSummary } from './characters/kotone-shiomi-ui.js';
@@ -274,9 +274,34 @@ function defaultBuildContentsFor(characterId) {
   return applyRecordedDefaultStats(characterId, { revelationMain: main?.name || '', revelationSet: preferredSet || main?.compatibleSubs?.[0] || revelationSets[0]?.name || '', ...(character?.slug === 'j-c' ? { jcMasks: ['mischief', 'absurdity'] } : {}) });
 }
 
+// Character level-80 base plus weapon component stats. Attack % buffs scale
+// this in battle (live Miyu 2026-09-27). Only for equipped totals where the
+// weapon is known; otherwise the engine keeps its older whole-stat model.
+function statScalingBase(unit, loadout = {}) {
+  if (loadout.statsMode !== 'equipped') return null;
+  const awareness = resolveAwareness(unit, loadout);
+  if (unit.id === KOTONE_SHIOMI_ID) {
+    const natural = kotoneLevel80BaseStats[awareness];
+    let weapon;
+    try { weapon = kotoneWeaponProfile(loadout.weaponId || 'none', loadout.enhancement || 0).component; } catch { return null; }
+    if (!natural || !loadout.weaponId || loadout.weaponId === 'none') return null;
+    return { attack: natural.attack + weapon.attack, maxHp: natural.maxHp + weapon.maxHp, defense: natural.defense + weapon.defense };
+  }
+  const source = unit.sourceStats?.[`a${awareness}_lv80`];
+  const weaponKind = loadout.characterResearch?.weapon;
+  if (!source || !weaponKind || weaponKind === 'none') return null;
+  const weapon = importedWeapons.find(item => item.characterSlug === unit.slug && item.category === weaponKind && item.sourceKey.endsWith('-1'));
+  if (!weapon?.stats) return null;
+  return {
+    attack: Number(source.attack) + Number(weapon.stats.attack || 0),
+    maxHp: Number(source.HP ?? source.maxHp) + Number(weapon.stats.maxHp || 0),
+    defense: Number(source.defense) + Number(weapon.stats.defense || 0)
+  };
+}
+
 function defaultLoadoutFor(characterId) {
   const unit = buildableCharacters.find(item => item.id === characterId) || { id: characterId };
-  const contents = isNavigatorBuild(unit) ? {} : defaultBuildContentsFor(characterId);
+  const contents = isNavigatorBuild(unit) ? (liveStatsPresetFields(characterId, {}) || {}) : defaultBuildContentsFor(characterId);
   return { ...contents, awareness: resolveAwareness(unit, contents) };
 }
 
@@ -616,11 +641,11 @@ function buildEngineConfig() {
     loadouts: Object.fromEntries([...team, navigatorUnit].map(unit => {
       const loadout = ensureLoadout(unit.id);
       const researchOptions = { characterResearch: structuredClone(loadout.characterResearch || {}), sourceTier: loadout.characterResearch?.sourceTier ?? loadout.sourceTier };
-      if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}) }];
+      if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), partyStatMultiplier: loadout.partyStatMultiplier }];
       if (unit.id === 'wonder') return [unit.id, { awareness: awarenessFor(unit), baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
-      if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), revelationCombat: structuredClone(set?.combat || {}) }];
-      return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), cosmicYui: structuredClone(loadout.cosmicYui || {}) }];
+      if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), statBase: statScalingBase(unit, loadout), revelationCombat: structuredClone(set?.combat || {}) }];
+      return [unit.id, { statBase: statScalingBase(unit, loadout), awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), cosmicYui: structuredClone(loadout.cosmicYui || {}) }];
     }))
   };
 }
@@ -1080,7 +1105,7 @@ function characterStatsControl(unit, key, label) {
   const stats = [
     row('MAX HP', unit.maxHp, unit.maxHp),
     row('MAX SP', unit.maxSp, unit.maxSp),
-    row('ATTACK', unit.attack, Number(unit.attack) * (1 + buffSum('attack')) + buffSum('flatAttack')),
+    row('ATTACK', unit.attack, Number(unit.attack) + (Number(unit.statBase?.attack) > 0 ? Number(unit.statBase.attack) : Number(unit.attack)) * buffSum('attack') + buffSum('flatAttack')),
     row('DEFENSE', unit.defense, Number(unit.defense) * (1 + buffSum('defense'))),
     row('SPEED', unit.speed, Number(unit.speed) + buffSum('speed')),
     row('CRIT RATE', unit.crit, Number(unit.crit) + buffSum('critRate'), '%', 100),
