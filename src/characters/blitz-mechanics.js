@@ -10,16 +10,24 @@ function reduceDown(engine, actor, target, amount, sourceType) {
   engine.queueDownActions?.(actor, target, sourceType);
   return true;
 }
-function hardKnocks(engine, actor, target, duration, sourceType) {
-  const bonus = (actor.buffs || []).find(effect => effect.stat === 'blitzHardKnocksDefense')?.value || 0;
-  engine.applyEnemyStatus(target, 'debuffs', { id: `blitz_hard_knocks_${actor.id}`, name: 'HARD KNOCKS DEF', stat: 'defenseDown',
-    value: Math.min(value(actor, C.hardKnocksDefense), bonus + value(actor, C.hardKnocksDefenseBase) + scaled(actor, .0222, C.hardKnocksDefense)), duration }, sourceType, actor.id);
-  engine.applyEnemyStatus(target, 'debuffs', { id: `blitz_hard_knocks_taken_${actor.id}`, name: 'HARD KNOCKS DAMAGE TAKEN', damageTaken: true,
-    value: Math.min(value(actor, C.hardKnocksTaken), value(actor, C.hardKnocksTakenBase) + scaled(actor, .0178, C.hardKnocksTaken)), duration }, sourceType, actor.id);
+// In the guild boss guide, S2 does not replace an active S1 Hard Knocks,
+// even when its skill rank would give a stronger value. Same-skill recasts
+// retain the normal refresh behavior. See https://www.youtube.com/watch?v=PqC0C_0F5-k&t=345s
+function applySharedDebuff(engine, actor, target, status, sourceType, skillSlot) {
+  const existing = (target.debuffs || []).find(effect => effect.id === status.id);
+  if (existing?.blitzSkillSlot && existing.blitzSkillSlot !== skillSlot) return existing;
+  return engine.applyEnemyStatus(target, 'debuffs', { ...status, blitzSkillSlot: skillSlot }, sourceType, actor.id);
 }
-function detention(engine, actor, target, sourceType) {
-  engine.applyEnemyStatus(target, 'debuffs', { id: `blitz_detention_${actor.id}`, name: 'DETENTION', blitzDetention: true,
-    value: Math.min(value(actor, C.detentionTaken), value(actor, C.detentionTakenBase) + scaled(actor, .0155, C.detentionTaken)), duration: 1 }, sourceType, actor.id);
+function hardKnocks(engine, actor, target, duration, sourceType, skillSlot) {
+  const bonus = (actor.buffs || []).find(effect => effect.stat === 'blitzHardKnocksDefense')?.value || 0;
+  applySharedDebuff(engine, actor, target, { id: `blitz_hard_knocks_${actor.id}`, name: 'HARD KNOCKS DEF', stat: 'defenseDown',
+    value: Math.min(value(actor, C.hardKnocksDefense), bonus + value(actor, C.hardKnocksDefenseBase) + scaled(actor, .0222, C.hardKnocksDefense)), duration }, sourceType, skillSlot);
+  applySharedDebuff(engine, actor, target, { id: `blitz_hard_knocks_taken_${actor.id}`, name: 'HARD KNOCKS DAMAGE TAKEN', damageTaken: true,
+    value: Math.min(value(actor, C.hardKnocksTaken), value(actor, C.hardKnocksTakenBase) + scaled(actor, .0178, C.hardKnocksTaken)), duration }, sourceType, skillSlot);
+}
+function detention(engine, actor, target, sourceType, skillSlot) {
+  applySharedDebuff(engine, actor, target, { id: `blitz_detention_${actor.id}`, name: 'DETENTION', blitzDetention: true,
+    value: Math.min(value(actor, C.detentionTaken), value(actor, C.detentionTakenBase) + scaled(actor, .0155, C.detentionTaken)), duration: 1 }, sourceType, skillSlot);
 }
 function knockdown(engine, owner, packet) {
   const { actor, target, skill, sourceType } = packet;
@@ -70,14 +78,14 @@ export const characterMechanics = {
   onDamage(engine, owner, packet) {
     if (!owns(owner) || !owner.blitz || packet.actor !== owner || packet.actualDamage <= 0) return;
     const { skill, target, sourceType } = packet;
-    if (sourceType === 'character_skill' && skill.slot === 'S2') { reduceDown(engine, owner, target, skill.blitzLightningLegs ? 4 : 1, sourceType); if (skill.blitzLightningLegs) detention(engine, owner, target, sourceType); }
-    if (sourceType === 'character_skill' && skill.slot === 'S3') { reduceDown(engine, owner, target, 5, sourceType); detention(engine, owner, target, sourceType); if (!skill.blitzWasDown && target.downed) owner.blitz.s3Knocked = true; }
+    if (sourceType === 'character_skill' && skill.slot === 'S2') { reduceDown(engine, owner, target, skill.blitzLightningLegs ? 4 : 1, sourceType); if (skill.blitzLightningLegs) detention(engine, owner, target, sourceType, 'S2'); }
+    if (sourceType === 'character_skill' && skill.slot === 'S3') { reduceDown(engine, owner, target, 5, sourceType); detention(engine, owner, target, sourceType, 'S3'); if (!skill.blitzWasDown && target.downed) owner.blitz.s3Knocked = true; }
     knockdown(engine, owner, packet);
   },
   afterSkill(engine, actor, skill, targetId, sourceType, context = {}) {
     if (!owns(actor) || skill.characterPrepared !== 'blitz') return;
-    if (sourceType === 'character_skill' && skill.slot === 'S1') { actor.blitz.lightningLegsAvailable = true; for (const enemy of engine.enemies.filter(enemy => enemy.alive !== false)) hardKnocks(engine, actor, enemy, 3, sourceType); }
-    if (sourceType === 'character_skill' && skill.slot === 'S2') for (const enemy of engine.enemies.filter(enemy => enemy.alive !== false)) hardKnocks(engine, actor, enemy, 1, sourceType);
+    if (sourceType === 'character_skill' && skill.slot === 'S1') { actor.blitz.lightningLegsAvailable = true; for (const enemy of engine.enemies.filter(enemy => enemy.alive !== false)) hardKnocks(engine, actor, enemy, 3, sourceType, 'S1'); }
+    if (sourceType === 'character_skill' && skill.slot === 'S2') for (const enemy of engine.enemies.filter(enemy => enemy.alive !== false)) hardKnocks(engine, actor, enemy, 1, sourceType, 'S2');
     if (sourceType === 'character_skill' && skill.slot === 'S3') { actor.blitz.lightningLegsAvailable = false; if (actor.blitz.s3Knocked) { actor.blitz.lightningLegsTurns = 2; actor.blitz.lightningLegsExpiresAt = Number(actor.characterTurnsStarted || 0) + 3; } actor.blitz.s3Knocked = false; if (context.packets?.some(packet => packet.actualDamage > 0)) buff(engine, actor, 'hard_knocks_a0', 'blitzHardKnocksDefense', .1, 2, 'passive'); if (actor.blitz.weapon === 'signature') buff(engine, actor, 'weapon_legs_crit', 'critRate', C.weaponLegsCrit[actor.blitz.refinement], 2, 'equipment'); }
     if (sourceType !== 'highlight' || skill.slot !== 'HL') return;
     actor.blitz.highlightKnockdownPrimed = actor.awareness >= 4;

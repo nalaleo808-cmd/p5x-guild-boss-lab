@@ -34,6 +34,45 @@ test('Blitz S1 creates the reviewed speed-scaled Hard Knocks statuses', () => {
   assert.equal(e.state.boss.debuffs.find(effect => effect.id === 'blitz_hard_knocks_blitz').value, .336);
 });
 
+test('Blitz S1 and S2 share Hard Knocks without replacing an active cast from the other skill', () => {
+  const e = engine({ awareness: 0 }); const u = e.state.party[0]; characterMechanics.initialize(e, u);
+  const cast = slot => characterMechanics.afterSkill(e, u,
+    characterMechanics.beforeSkill(e, u, { id: slot.toLowerCase(), slot }, 'boss', 'character_skill'),
+    'boss', 'character_skill');
+  cast('S1');
+  const first = e.state.boss.debuffs.map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration }));
+  u.speed = 140;
+  cast('S2');
+  assert.deepEqual(e.state.boss.debuffs.map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration })), first);
+  cast('S1');
+  assert.ok(e.state.boss.debuffs.find(effect => effect.id === 'blitz_hard_knocks_blitz').value > first[0].value);
+  e.state.boss.debuffs.length = 0;
+  cast('S2');
+  const second = e.state.boss.debuffs.map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration }));
+  cast('S1');
+  assert.deepEqual(e.state.boss.debuffs.map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration })), second);
+});
+
+test('Blitz S2 and S3 share Detention without changing its first active value', () => {
+  const e = engine({ awareness: 0 }); const u = e.state.party[0]; characterMechanics.initialize(e, u);
+  u.blitz.lightningLegsTurns = 1;
+  const hit = slot => characterMechanics.onDamage(e, u, {
+    actor: u, target: e.state.boss, actualDamage: 1, sourceType: 'character_skill',
+    skill: { slot, blitzLightningLegs: slot === 'S2', blitzWasDown: false }
+  });
+  hit('S2');
+  const first = { ...e.state.boss.debuffs.find(effect => effect.blitzDetention) };
+  u.speed = 140;
+  hit('S3');
+  const current = e.state.boss.debuffs.find(effect => effect.blitzDetention);
+  assert.equal(current.value, first.value);
+  assert.equal(current.duration, first.duration);
+  assert.equal(current.blitzSkillSlot, 'S2');
+  e.state.boss.debuffs.length = 0;
+  hit('S3');
+  assert.ok(e.state.boss.debuffs.find(effect => effect.blitzDetention).value > first.value);
+});
+
 test('Blitz base A0 applies after S3 damage at higher awareness too', () => {
   const e = engine({ awareness: 6 }); const u = e.state.party[0]; characterMechanics.initialize(e, u);
   characterMechanics.afterSkill(e, u, { characterPrepared: 'blitz', slot: 'S3' }, 'boss', 'character_skill', { packets: [{ actualDamage: 1 }] });
@@ -59,6 +98,18 @@ test('registered Blitz S2/S3 replace, rather than add to, normal weakness Down r
   const s3 = s3Engine.actor.skills.find(skill => skill.slot === 'S3');
   s3Engine.resolveSkill(s3Engine.actor, s3, s3Engine.state.boss.id, 'character_skill');
   assert.equal(s3Engine.state.boss.downPoints, 1, 'S3 applied its sourced five points exactly once');
+});
+
+test('registered Blitz retains S1 Hard Knocks through a later S2 cast', () => {
+  const e = registeredEngine(6);
+  const s1 = e.actor.skills.find(skill => skill.slot === 'S1');
+  const s2 = e.actor.skills.find(skill => skill.slot === 'S2');
+  e.resolveSkill(e.actor, s1, e.state.boss.id, 'character_skill');
+  const before = e.state.boss.debuffs.filter(effect => effect.id.startsWith('blitz_hard_knocks_'))
+    .map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration }));
+  e.resolveSkill(e.actor, s2, e.state.boss.id, 'character_skill');
+  assert.deepEqual(e.state.boss.debuffs.filter(effect => effect.id.startsWith('blitz_hard_knocks_'))
+    .map(effect => ({ id: effect.id, value: effect.value, duration: effect.duration })), before);
 });
 
 test('registered Blitz does not re-trigger knockdown effects on an already Down target', () => {
