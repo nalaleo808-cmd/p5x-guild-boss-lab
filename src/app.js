@@ -641,7 +641,7 @@ function buildEngineConfig() {
     loadouts: Object.fromEntries([...team, navigatorUnit].map(unit => {
       const loadout = ensureLoadout(unit.id);
       const researchOptions = { characterResearch: structuredClone(loadout.characterResearch || {}), sourceTier: loadout.characterResearch?.sourceTier ?? loadout.sourceTier };
-      if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet }];
+      if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, navigatorShare: structuredClone(loadout.navigatorShare || null) }];
       if (unit.id === 'wonder') return [unit.id, { awareness: awarenessFor(unit), baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
       if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), statBase: statScalingBase(unit, loadout), revelationCombat: structuredClone(set?.combat || {}) }];

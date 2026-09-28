@@ -871,10 +871,13 @@ export class BattleEngine {
     const stats = navigatorLoadout.baseStats || {};
     const value = key => Number.isFinite(Number(stats[key])) ? Number(stats[key]) : 0;
     const shareRatio = sharesStats ? 0.2 : 0;
+    // The navigator's Pt Effect screen, when entered, gives the exact share.
+    const listed = sharesStats ? navigatorLoadout.navigatorShare : null;
+    const shareValue = (key, fallback) => Number.isFinite(Number(listed?.[key])) ? Number(listed[key]) : fallback;
     const share = {
-      maxHp: Math.round(value('maxHp') * shareRatio), attack: value('attack') * shareRatio, defense: value('defense') * shareRatio,
-      crit: value('critRate') * shareRatio / 100, critMult: value('critMult') * shareRatio / 100,
-      pierceRate: value('pierceRate') * shareRatio / 100, damageBonus: value('damageBonus') * shareRatio / 100
+      maxHp: Math.round(shareValue('maxHp', value('maxHp') * shareRatio)), attack: shareValue('attack', value('attack') * shareRatio), defense: shareValue('defense', value('defense') * shareRatio),
+      crit: shareValue('critRate', value('critRate') * shareRatio) / 100, critMult: shareValue('critMult', value('critMult') * shareRatio) / 100,
+      pierceRate: shareValue('pierceRate', value('pierceRate') * shareRatio) / 100, damageBonus: shareValue('damageBonus', value('damageBonus') * shareRatio) / 100
     };
     const laborSet = navigatorLoadout.revelationSet === 'Labor';
     const labor = laborSet ? navigatorRevelationEffects.laborSet : 0;

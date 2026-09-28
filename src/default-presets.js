@@ -79,13 +79,16 @@ export const wavecatcherStatsPreset = Object.freeze({
 });
 
 export const mikuStatsPreset = Object.freeze({
-  id: 'miku-navigator-integrity-labor-revelation-2026-09-27',
+  id: 'miku-navigator-pt-effect-2026-09-27',
   characterId: 'navigator-miku',
-  // Navigator panel: 20% of these is shared with every ally in battle. Damage
-  // 42.5% is from the 2026-09-06 Pt Effect share (+8.5%); today's panel was cut.
+  // Navigator panel. Her Pt Effect screen lists the exact party share, used
+  // in place of 20% of the panel.
   // Revelation Integrity + Labor: the engine applies Labor's navigator 4-set and the Integrity + Labor per-attribute bonus.
-  extraFields: Object.freeze({ revelationMain: 'Integrity', revelationSet: 'Labor' }),
-  baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, critMult: 84.2, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7, damageBonus: 42.5 })
+  extraFields: Object.freeze({
+    revelationMain: 'Integrity', revelationSet: 'Labor',
+    navigatorShare: Object.freeze({ maxHp: 1808, attack: 1127, defense: 343, damageBonus: 7.5, critRate: 6.1, critMult: 16.8, pierceRate: 1.5 })
+  }),
+  baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, critMult: 84.2, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7 })
 });
 
 export const jcStatsPreset = Object.freeze({
