@@ -256,6 +256,20 @@ function executableSkills(persona) {
   return persona?.skills.filter(skill => skill.combat.executable) || [];
 }
 
+// A Persona slot with skills named as they appear in game; Warrior's Unity
+// resolves to the catalog's Spirit Harmony.
+function presetPersonaSlot(name, skillNames = []) {
+  const slot = defaultPersonaSlot(name);
+  const persona = importedPersonas.find(item => item.name === name);
+  if (!persona || !skillNames?.length) return slot;
+  const aliases = { "Warrior's Unity": 'Spirit Harmony' };
+  const ids = skillNames.map(skillName => {
+    const target = aliases[skillName] || skillName;
+    return transferablePersonaSkills.find(skill => skill.name === target || skill.sourceName === target)?.id || '';
+  });
+  return { ...slot, skillIds: sanitizePersonaSkillIds(persona, ids, transferablePersonaSkills) };
+}
+
 function defaultPersonaSlot(name) {
   const persona = importedPersonas.find(item => item.name === name) || importedPersonas[0];
   return { personaId: persona.id, skillIds: defaultPersonaSkillIds(persona, transferablePersonaSkills) };
@@ -263,7 +277,7 @@ function defaultPersonaSlot(name) {
 
 function defaultBuildContentsFor(characterId) {
   if (characterId === KOTONE_SHIOMI_ID) return applyRecordedDefaultStats(characterId, { ...normalizeKotoneDraft(), revelationMain: 'Trust', revelationSet: 'Prosperity', baseStats: { attack: 2500, maxHp: 3200, defense: 300, maxSp: 240 } });
-  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: wonderStatsPreset.personaNames.map(name => defaultPersonaSlot(name)), personaPresetId: wonderStatsPreset.id });
+  if (characterId === 'wonder') return applyRecordedDefaultStats(characterId, { personas: wonderStatsPreset.personaNames.map(name => presetPersonaSlot(name, wonderStatsPreset.personaSkills?.[name])), personaPresetId: wonderStatsPreset.id });
   if (characterId === 'joker') return { revelationMain: 'Nativity', revelationSet: 'Power' };
   if (characterId === 'rin') return { revelationMain: 'Resolve', revelationSet: 'Virtue' };
   if (characterId === 'mona') return { revelationMain: 'Faith', revelationSet: 'Peace' };

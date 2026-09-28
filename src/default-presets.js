@@ -101,10 +101,16 @@ export const jcStatsPreset = Object.freeze({
 });
 
 export const wonderStatsPreset = Object.freeze({
-  id: 'wonder-sahimochi-dionysus-yurlungur-2026-09-27',
+  id: 'wonder-sahimochi-dionysus-yurlungur-skills-2026-09-27',
   characterId: 'wonder',
   // Battle trio from the live in-battle panel; Ice first sets Wonder's attribute.
   personaNames: Object.freeze(['Sahimochi-no-kami', 'Dionysus', 'Yurlungur']),
+  // Equipped skills from the live Persona screens (2026-09-27), slot order.
+  personaSkills: Object.freeze({
+    'Sahimochi-no-kami': Object.freeze(['Ice Boost IV', 'Rebellion', 'Sonic Interference', 'Battle Acumen III', 'Agility Master II', "Warrior's Unity"]),
+    Dionysus: Object.freeze(['Auto-Mataru IV', 'Rebellion', 'Universal Theoria', 'Auto-Maraku III', 'Agility Master II', "Warrior's Unity"]),
+    Yurlungur: Object.freeze(['Elec Boost III', 'Shock Boost IV', 'Apt Pupil IV', 'Wild Thunder', 'Tarukaja'])
+  }),
   // Ice Age: its +56% Attack is in the totals; Ancient Frost is modeled.
   wonderWeapon: Object.freeze({ weaponId: 'ice-age', weaponProfileId: null, weaponProcGranularity: null }),
   baseStats: Object.freeze({ attack: 3628, defense: 2365, maxHp: 11200, maxSp: 100, speed: 109, critRate: 39.8, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 0, damageReduction: 0 })
