@@ -88,7 +88,7 @@ export class KotoneShiomiMechanics {
     actor.awareness = loadout.awareness;
     actor.kotone = {
       profileId: KOTONE_PROFILE_ID, build: loadout, linkedId: null, lunarBond: 0, powerfulBonds: {},
-      fortune: false, fortuneActionsLeft: 0, cold: 0, linkWindow: false, actionWindow: false,
+      fortune: false, fortuneActionsLeft: 0, fortuneChained: false, cold: 0, linkWindow: false, actionWindow: false,
       goForBroke: createGoForBrokeBudget(actor.awareness), weaponStacks: [],
       grantCastIds: [], ultimateActivationIds: [], sequence: 0,
       normalTurnsCompleted: 0, normalActions: 0, extraActions: 0,
@@ -394,17 +394,23 @@ export class KotoneShiomiMechanics {
     const controls = [];
     if (this.state.linkWindow) controls.push({ type: 'kotone_link', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-link', name: 'Select / reselect Arcana Link', target: 'ally', enabled: true, cost: 0, statusLabel: 'FREE' });
     const remaining = this.state.goForBroke.limit - this.state.goForBroke.used;
-    if (!this.state.fortune) controls.push({ type: 'kotone_assist', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-go-for-broke', name: `Go for Broke (${remaining} left)`, target: 'self', enabled: remaining > 0 && this.state.actionWindow && this.linked?.hp > 0, cost: 0, statusLabel: remaining ? 'FREE' : 'SPENT' });
+    // During Fortune, a second Go for Broke can replace the next Fortune action.
+    const chainable = this.state.fortune && this.state.fortuneActionsLeft > 0;
+    controls.push({ type: 'kotone_assist', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-go-for-broke', name: `Go for Broke (${remaining} left)`, target: 'self', enabled: remaining > 0 && (this.state.actionWindow || chainable) && this.linked?.hp > 0, cost: 0, statusLabel: remaining ? 'FREE' : 'SPENT' });
     return [...controls, ...actions];
   }
   activateGoForBroke() {
-    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !this.state.actionWindow || this.state.fortune
-      || (this.state.cold && !this.engine.isVirtualConcertActive()) || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn and a living linked ally');
+    // A second use during Fortune replaces the remaining Fortune action with a
+    // fresh three (user, 2026-09-28: Go for Broke, two actions, Go for Broke,
+    // three actions = five actions in one turn).
+    const chained = this.state.fortune && this.state.fortuneActionsLeft > 0;
+    const opening = this.state.actionWindow && !this.state.fortune && (!this.state.cold || this.engine.isVirtualConcertActive());
+    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !(opening || chained) || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn, or a remaining Fortune action, and a living linked ally');
     const activationId = `gfb-${this.state.goForBroke.used + 1}`;
     const result = spendGoForBrokeUse(this.state.goForBroke, activationId);
     if (!result.ok) throw new Error(`Go for Broke unavailable: ${result.reason}`);
     this.state.fortune = true; this.state.fortuneActionsLeft = 3; this.state.linkWindow = false; this.state.actionWindow = false;
-    this.state.activeFortuneId = activationId;
+    this.state.activeFortuneId = activationId; this.state.fortuneChained = chained;
     this.event('fortune', `Go for Broke ${this.state.goForBroke.used}/${this.state.goForBroke.limit}: Fortune, one normal action + two extra actions.`, { activationId, actionsLeft: 3, remainingUses: result.remaining, tone: 'phase' });
     if (this.unit.awareness >= 1) this.automaticUltimate(this.unit, `${activationId}-own`);
   }
@@ -446,17 +452,18 @@ export class KotoneShiomiMechanics {
     if (this.engine.isVirtualConcertActive() && !this.state.fortune) { this.state.extraActions++; return false; }
     if (!this.state.fortune) { this.state.normalActions++; return false; }
     const before = this.state.fortuneActionsLeft;
-    if (before === 3) this.state.normalActions++;
+    // After a chained Go for Broke, every remaining action in the turn is extra.
+    if (before === 3 && !this.state.fortuneChained) this.state.normalActions++;
     else { this.state.extraActions++; this.engine.advanceSupportTiming(KOTONE_SHIOMI_ID, 'extra_action'); }
     this.state.fortuneActionsLeft--;
-    this.event('fortune_action', `Fortune actions left: ${this.state.fortuneActionsLeft}.`, { actionsLeft: this.state.fortuneActionsLeft, actionKind: before === 3 ? 'normal' : 'extra' });
+    this.event('fortune_action', `Fortune actions left: ${this.state.fortuneActionsLeft}.`, { actionsLeft: this.state.fortuneActionsLeft, actionKind: before === 3 && !this.state.fortuneChained ? 'normal' : 'extra' });
     if (this.state.fortuneActionsLeft > 0) {
       // The next Fortune action is an extra action.
       this.engine.notifyExtraActionStart?.(this.unit, 'Fortune extra action');
       return true;
     }
     this.automaticUltimate(this.linked, `${this.state.activeFortuneId}-linked`);
-    this.state.fortune = false; this.state.cold = 2;
+    this.state.fortune = false; this.state.fortuneChained = false; this.state.cold = 2;
     this.event('cold', 'Fortune ended. Cold: Kotone skips her next two normal turns.', { cold: 2, tone: 'phase' });
     return false;
   }

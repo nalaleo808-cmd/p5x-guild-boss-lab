@@ -289,6 +289,19 @@ test('Cold neither blocks nor counts down on Concert turns',()=>{
  e.isVirtualConcertActive=original;
 });
 
+// User, 2026-09-28: Go for Broke, two actions, Go for Broke again before the
+// third action, then three more actions = five actions in one turn.
+test('A6 Go for Broke can be chained during Fortune for five actions in one turn',()=>{
+ const e=engine({awareness:6}),k=get(e),m=e.kotoneMechanics;k.sp=1000;
+ act(e,'kotone_assist');
+ for(let i=0;i<2;i++){assert.equal(e.actor.id,K);act(e,'S2');}
+ assert.equal(m.state.fortuneActionsLeft,1);
+ act(e,'kotone_assist');assert.equal(m.state.goForBroke.used,2);assert.equal(m.state.fortuneActionsLeft,3);
+ for(let i=0;i<3;i++){assert.equal(e.actor.id,K);act(e,'S2');}
+ assert.equal(m.state.fortune,false);assert.equal(m.state.cold,2);assert.notEqual(e.actor.id,K);
+ assert.equal(m.state.normalActions,1);assert.equal(m.state.extraActions,4);
+});
+
 test('Owned Strategist aura counts the selected main Wonder Persona, including imported Korean role metadata',()=>{
  for(const metadata of [{role:'Strategist'},{position:'우월'}]) {
   const e=engine({}, {personaIds:['test-main'],personaDefinitions:[{id:'test-main',name:'Role fixture',skills:[],...metadata}]});
