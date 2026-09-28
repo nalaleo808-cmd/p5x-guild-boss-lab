@@ -101,7 +101,7 @@ export const jcStatsPreset = Object.freeze({
 });
 
 export const wonderStatsPreset = Object.freeze({
-  id: 'wonder-sahimochi-dionysus-yurlungur-skills-2026-09-27',
+  id: 'wonder-sahimochi-dionysus-yurlungur-panel-2026-09-27',
   characterId: 'wonder',
   // Battle trio from the live in-battle panel; Ice first sets Wonder's attribute.
   personaNames: Object.freeze(['Sahimochi-no-kami', 'Dionysus', 'Yurlungur']),
@@ -113,7 +113,10 @@ export const wonderStatsPreset = Object.freeze({
   }),
   // Ice Age: its +56% Attack is in the totals; Ancient Frost is modeled.
   wonderWeapon: Object.freeze({ weaponId: 'ice-age', weaponProfileId: null, weaponProcGranularity: null }),
-  baseStats: Object.freeze({ attack: 3628, defense: 2365, maxHp: 11200, maxSp: 100, speed: 109, critRate: 39.8, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 0, damageReduction: 0 })
+  // Team-menu panel with Sahimochi-no-kami first (2026-09-27). Damage 8.7% is
+  // Battle Acumen III and Ice 10.8% is Ice Boost IV, both in the panel.
+  elementBonus: Object.freeze({ element: 'ice', value: 0.108 }),
+  baseStats: Object.freeze({ attack: 3913, defense: 2176, maxHp: 10234, maxSp: 100, speed: 109, critRate: 25, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 8.7, damageReduction: 0 })
 });
 
 export const liveStatsPresets = Object.freeze([kotoneStatsPreset, wavecatcherStatsPreset, mikuStatsPreset, jcStatsPreset, wonderStatsPreset]);
@@ -130,6 +133,7 @@ export function liveStatsPresetFields(characterId, loadout = {}) {
     ...(preset.awareness != null ? { awareness: preset.awareness } : {}),
     ...(preset.characterResearch ? { characterResearch: { ...(loadout.characterResearch || {}), ...preset.characterResearch } } : {}),
     ...(preset.extraFields || {}),
+    ...(preset.elementBonus ? { elementBonus: { ...preset.elementBonus } } : {}),
     ...(preset.wonderWeapon ? { ...preset.wonderWeapon, weaponPresetId: wonderWeaponPreset.id } : {}),
     ...(preset.kotone ? { ...preset.kotone, equippedTotalsFor: `${preset.kotone.weaponId}+${preset.kotone.enhancement}` } : {})
   };

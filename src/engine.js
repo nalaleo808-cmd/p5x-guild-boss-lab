@@ -314,7 +314,7 @@ export class BattleEngine {
         // not the panel total (live Miyu 2026-09-27: -30% Attack = -626 = 30% of
         // 1,307.17 + 779.61). Only set for equipped totals with a known weapon.
         statBase: this.usesLiveMechanics() && equippedStats && Number(loadout.statBase?.attack) > 0 ? { ...loadout.statBase } : null,
-        damageBonus, elementBonus: revelation.elementBonus || null,
+        damageBonus, elementBonus: revelation.elementBonus || (loadout.elementBonus?.element ? { ...loadout.elementBonus } : null),
         ...(revelation.weakElementAttack ? { revelationWeakElementAttack: revelation.weakElementAttack } : {}),
         revelationName: unit.id === 'wonder' ? null : (loadout.revelationName || null),
         revelationMain: unit.id === 'wonder' ? null : (loadout.revelationMain || null),
@@ -621,8 +621,7 @@ export class BattleEngine {
   get activePersona() { return byId(this.personaDefinitions, this.state.activePersonaId) || this.personaDefinitions[0]; }
   get enemies() { return [this.state.boss, ...this.state.boss.summons.filter(enemy => enemy.alive)]; }
 
-  activePersonaPassive() {
-    const persona = this.activePersona;
+  activePersonaPassive(persona = this.activePersona) {
     if (!persona) return null;
     if (!Array.isArray(persona.passive)) return persona.passive || persona.maxRankPassive || null;
     return persona.maxRankPassive || [...persona.passive].sort((left, right) => Number(right.rankValue || 0) - Number(left.rankValue || 0)
@@ -639,20 +638,41 @@ export class BattleEngine {
     this.clearPersonaPassiveEffects();
     const wonder = this.state.party.find(unit => unit.id === 'wonder');
     const persona = this.activePersona;
-    const passive = this.activePersonaPassive();
-    if (!wonder || !persona || !passive) return;
-    const supportedStats = new Set(['attack', 'defense', 'critRate', 'critDamage', 'healing', 'elementDamage']);
-    for (const [index, effect] of (passive.combat?.effects || []).entries()) {
-      if (effect.runtimeSupported !== true || effect.scope !== 'self' || effect.timing !== 'while_active'
-        || !supportedStats.has(effect.stat) || !Number.isFinite(Number(effect.value))) continue;
-      this.applyUnitBuff(wonder, {
-        id: `persona_passive_${persona.id}_${effect.id || index}`,
-        name: passive.name, stat: effect.stat, value: Number(effect.value), duration: null,
-        ...(effect.element ? { element: effect.element } : {}),
-        personaPassivePersistent: true, sourcePersonaId: persona.id, sourcePassiveName: passive.name
-      }, 'persona_passive');
+    if (!wonder || !persona) return;
+    const supportedStats = new Set(['attack', 'defense', 'critRate', 'critDamage', 'healing', 'elementDamage', 'damage', 'speed']);
+    // A Persona's static passives while it is active: its own passive plus
+    // stat passives from its equipped skills (Boosts, Battle Acumen, Apt
+    // Pupil, Agility Master). Only the active Persona's count: Wonder's panel
+    // shows Sahimochi-no-kami's Battle Acumen III and Ice Boost IV but not
+    // Yurlungur's Elec Boost or Apt Pupil (live 2026-09-27).
+    const staticEffects = sourcePersona => {
+      const passive = this.activePersonaPassive(sourcePersona);
+      const own = (passive?.combat?.effects || []).map((effect, index) => ({ ...effect, key: effect.id || index, label: passive.name }))
+        .filter(effect => effect.runtimeSupported === true && effect.scope === 'self' && effect.timing === 'while_active');
+      const equipped = (sourcePersona?.staticPassives || []).map((effect, index) => ({ ...effect, key: `equipped_${index}`, label: effect.skillName }));
+      return [...own, ...equipped].filter(effect => supportedStats.has(effect.stat) && Number.isFinite(Number(effect.value)));
+    };
+    // Equipped character-detail totals already carry the starting Persona's
+    // static passives (Wonder crit 39.8% with Dionysus first, 25% with
+    // Sahimochi-no-kami first, live 2026-09-27). Only the difference applies.
+    const panelPersona = wonder.statsMode === 'equipped' && this.usesLiveMechanics()
+      ? byId(this.personaDefinitions, this.config.personaIds?.[0]) : null;
+    const apply = (sourcePersona, sign) => {
+      for (const effect of staticEffects(sourcePersona)) {
+        this.applyUnitBuff(wonder, {
+          id: `persona_passive_${sourcePersona.id}_${effect.key}${sign < 0 ? '_panel_offset' : ''}`,
+          name: sign < 0 ? `${effect.label} (swapped out)` : effect.label, stat: effect.stat, value: sign * Number(effect.value), duration: null,
+          ...(effect.element ? { element: effect.element } : {}),
+          personaPassivePersistent: true, sourcePersonaId: sourcePersona.id, sourcePassiveName: effect.label
+        }, 'persona_passive');
+      }
+    };
+    if (panelPersona?.id !== persona.id) {
+      apply(persona, 1);
+      if (panelPersona) apply(panelPersona, -1);
     }
-    for (const limitation of passive.combat?.limitations || []) {
+    const passive = this.activePersonaPassive();
+    for (const limitation of passive?.combat?.limitations || []) {
       const message = `${persona.name} passive ${passive.name}: ${limitation}`;
       if (!this.state.mechanicsLimitations.includes(message)) this.state.mechanicsLimitations.push(message);
     }

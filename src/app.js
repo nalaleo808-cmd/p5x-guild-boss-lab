@@ -31,7 +31,8 @@ import {
   fixedPersonaSkills,
   highestRankPersonaPassive,
   legalTransferableSkillsForPersona,
-  sanitizePersonaSkillIds
+  sanitizePersonaSkillIds,
+  staticPassiveEffectsFromSkill
 } from './persona-loadout.js';
 
 const root = document.querySelector('#app');
@@ -590,6 +591,8 @@ function personaDefinitionsFromLoadout() {
       role: source.role || (source.position === '우월' ? 'Strategist' : source.position),
       trait: passive?.name || source.description || 'Imported Persona', source: 'Lufelnet',
       passive: passive ? structuredClone(passive) : null,
+      // Equipped stat passives (Boosts, Battle Acumen, Apt Pupil, Agility Master).
+      staticPassives: (slot.skillIds || []).map(id => personaLoadoutCatalog.transferableSkillById.get(id)).flatMap(staticPassiveEffectsFromSkill),
       skills: selected.map((skill, index) => {
         const combat = skill.combat || {};
         const chillingDepth = source.name === 'Sahimochi-no-kami' && skill.name === 'Chilling Depth';
@@ -656,7 +659,7 @@ function buildEngineConfig() {
       const loadout = ensureLoadout(unit.id);
       const researchOptions = { characterResearch: structuredClone(loadout.characterResearch || {}), sourceTier: loadout.characterResearch?.sourceTier ?? loadout.sourceTier };
       if (isNavigatorBuild(unit)) return [unit.id, { awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, navigatorShare: structuredClone(loadout.navigatorShare || null) }];
-      if (unit.id === 'wonder') return [unit.id, { awareness: awarenessFor(unit), baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
+      if (unit.id === 'wonder') return [unit.id, { awareness: awarenessFor(unit), baseStats: structuredClone(loadout.baseStats || {}), elementBonus: loadout.elementBonus, statsMode: loadout.statsMode, weaponId: loadout.weaponId, weaponProfileId: loadout.weaponProfileId, weaponProcGranularity: loadout.weaponProcGranularity, revelationName: null, revelationCombat: {} }];
       const set = revelationFor(unit.id);
       if (unit.id === KOTONE_SHIOMI_ID) return [unit.id, { ...normalizeKotoneLoadout(loadout), statBase: statScalingBase(unit, loadout), revelationCombat: structuredClone(set?.combat || {}) }];
       return [unit.id, { statBase: statScalingBase(unit, loadout), awareness: awarenessFor(unit), ...researchOptions, baseStats: structuredClone(loadout.baseStats || {}), statsMode: loadout.statsMode, statsPresetId: loadout.statsPresetId, revelationMain: loadout.revelationMain, revelationSet: loadout.revelationSet, revelationName: [loadout.revelationMain, loadout.revelationSet].filter(Boolean).join(' / '), revelationCombat: structuredClone(set?.combat || {}), jcMasks: structuredClone(loadout.jcMasks || []), cosmicYui: structuredClone(loadout.cosmicYui || {}) }];

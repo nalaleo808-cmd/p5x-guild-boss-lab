@@ -100,3 +100,32 @@ export function battleSkillsForPersona(persona, skillIds, skillById, transferabl
     return true;
   });
 }
+
+const passiveElementWords = Object.freeze({
+  physical: 'physical', gun: 'gun', fire: 'fire', ice: 'ice', electric: 'electric', wind: 'wind',
+  nuclear: 'nuclear', psychokinesis: 'psychic', psy: 'psychic', bless: 'bless', curse: 'curse'
+});
+
+// Static stat passives read from a single-tier skill description, e.g.
+// "Increase Ice damage by 10.8%." or "Increase Speed by 9. Decrease Defense
+// by 4%." Conditional or timed text (start of battle, turns, when, after, if)
+// and multi-tier summaries ("4.7%/6.7%") are skipped.
+export function staticPassiveEffectsFromSkill(skill) {
+  const text = String(skill?.description || '').trim();
+  if (!text || text.includes('/') || /start of battle|\bturns?\b|\bwhen\b|\bafter\b|\bif\b|taken/i.test(text)) return [];
+  const effects = [];
+  const element = text.match(/^Increases? (\w+) damage by ([\d.]+)%/i);
+  if (element && passiveElementWords[element[1].toLowerCase()]) {
+    effects.push({ stat: 'elementDamage', element: passiveElementWords[element[1].toLowerCase()], value: Number(element[2]) / 100 });
+  } else {
+    const damage = text.match(/^Increases? damage by ([\d.]+)%/i);
+    if (damage) effects.push({ stat: 'damage', value: Number(damage[1]) / 100 });
+  }
+  const crit = text.match(/Increases? critical rate by ([\d.]+)%/i);
+  if (crit) effects.push({ stat: 'critRate', value: Number(crit[1]) / 100 });
+  const speed = text.match(/Increases? Speed by (\d+(?:\.\d+)?)(?![\d.]*%)/i);
+  if (speed) effects.push({ stat: 'speed', value: Number(speed[1]) });
+  const defense = text.match(/Decreases? Defense by ([\d.]+)%/i);
+  if (defense) effects.push({ stat: 'defense', value: -Number(defense[1]) / 100 });
+  return effects.map(effect => ({ ...effect, skillName: skill.name }));
+}
