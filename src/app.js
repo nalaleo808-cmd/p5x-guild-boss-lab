@@ -12,7 +12,7 @@ import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
 import { adaptRegisteredCharacter, characterModuleFor } from './characters/registry.js';
 import { bosses, elementMeta, navigator as baseNavigator, nightmareModes, recordedNightmareBenchmark, roster as baseRoster } from './data.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
-import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresetFields, wonderStatsPreset } from './default-presets.js';
+import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresetFields, wonderStatsPreset, qualiaPassivePreset } from './default-presets.js';
 import {
   getDefaultWonderWeaponProfileId,
   getWonderWeaponDefinition,
@@ -647,7 +647,7 @@ function buildEngineConfig() {
   const team = selectedTeam();
   const navigatorUnit = selectedNavigator();
   return {
-    bossId: ui.selectedBoss, modeId: ui.selectedMode, seed: ui.seed, mechanicsProfile: 'live-2026-09-04', navigatorDefinition: selectedNavigator(),
+    bossId: ui.selectedBoss, modeId: ui.selectedMode, qualia: qualiaPassivePreset, seed: ui.seed, mechanicsProfile: 'live-2026-09-04', navigatorDefinition: selectedNavigator(),
     lifeSustainment: ui.selectedMode === 'nexus' || (ui.selectedMode === 'devourer' && ui.modeOptions.devourer.lifeSustainment),
     encounterThresholds: ui.selectedBoss === 'vishnu' ? structuredClone(ui.vishnuThresholds) : null,
     personaDefinitions, personaIds: personaDefinitions.map(persona => persona.id),

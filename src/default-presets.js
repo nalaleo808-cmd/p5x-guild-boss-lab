@@ -62,10 +62,11 @@ export const wonderWeaponPreset = Object.freeze({
 const signatureR6 = Object.freeze({ weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true });
 
 export const kotoneStatsPreset = Object.freeze({
-  id: 'kotone-a5-vetri-2-character-details-2026-09-27',
+  id: 'kotone-a5-vetri-2-nativity-strife-2026-09-27',
   characterId: 'kotone-shiomi',
   awareness: 5,
   kotone: Object.freeze({ weaponId: 'vetri-vel-muruga', enhancement: 2 }),
+  extraFields: Object.freeze({ revelationMain: 'Nativity', revelationSet: 'Strife' }),
   baseStats: Object.freeze({ attack: 5596, defense: 1745, maxHp: 7989, maxSp: 100, speed: 106.8, critRate: 35.4, critMult: 163.4, spRecovery: 47, technicalPrecision: 0, pierceRate: 2.2, downPoints: 0, ailmentAccuracy: 23.2, ailmentResistance: 0, damageBonus: 8.2, damageReduction: 16 })
 });
 
@@ -92,11 +93,12 @@ export const mikuStatsPreset = Object.freeze({
 });
 
 export const jcStatsPreset = Object.freeze({
-  id: 'jc-a6-wardens-judgement-6-character-details-2026-09-27',
+  id: 'jc-a6-wardens-judgement-6-creation-reconciliation-2026-09-27',
   characterId: 'lufel-recent-j-c',
   awareness: 6,
   // Warden's Judgement: Attack +57% is in totals.
   characterResearch: signatureR6,
+  extraFields: Object.freeze({ revelationMain: 'Creation', revelationSet: 'Reconcilation' }),
   baseStats: Object.freeze({ attack: 4506, defense: 1877, maxHp: 8808, maxSp: 100, speed: 114, critRate: 42.7, critMult: 197.8, spRecovery: 0, technicalPrecision: 0, pierceRate: 20.7, downPoints: 0, ailmentAccuracy: 9.6, ailmentResistance: 0, damageBonus: 51.2, damageReduction: 0 })
 });
 
@@ -117,6 +119,18 @@ export const wonderStatsPreset = Object.freeze({
   // Battle Acumen III and Ice 10.8% is Ice Boost IV, both in the panel.
   elementBonus: Object.freeze({ element: 'ice', value: 0.108 }),
   baseStats: Object.freeze({ attack: 3913, defense: 2176, maxHp: 10234, maxSp: 100, speed: 109, critRate: 25, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 8.7, damageReduction: 0 })
+});
+
+// Thieves Den Qualia Level party passives for the user's account (in-game
+// "takes effect in battle" list, 2026-09-27). Mode-specific entries (Realm
+// of Repression, Sea of Souls, Nightmare Catcher gates) do not apply here.
+export const qualiaPassivePreset = Object.freeze({
+  id: 'qualia-level-user-2026-09-27',
+  maxHp: 152, attack: 36, defense: 36, speed: 1.8,
+  hpRecovery: 0.019, ailmentAccuracy: 0.019,
+  elementDamage: 0.038,
+  elements: Object.freeze(['physical', 'gun', 'fire', 'psychic', 'ice', 'nuclear', 'electric', 'bless', 'wind', 'curse']),
+  personaDamage: 0.038, protagonistDamage: 0.038
 });
 
 export const liveStatsPresets = Object.freeze([kotoneStatsPreset, wavecatcherStatsPreset, mikuStatsPreset, jcStatsPreset, wonderStatsPreset]);

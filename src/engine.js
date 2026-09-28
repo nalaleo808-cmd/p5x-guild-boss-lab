@@ -86,6 +86,8 @@ export class BattleEngine {
     this.navigatorDefinition = clone(config.navigatorDefinition || navigator);
     this.config = {
       mechanicsProfile: config.mechanicsProfile || CURRENT_MECHANICS_PROFILE,
+      // Player-account Thieves Den Qualia Level party passives (battle only).
+      qualia: config.qualia && typeof config.qualia === 'object' ? clone(config.qualia) : null,
       seed: Number(config.seed ?? 808),
       bossId: config.bossId || bosses[0].id,
       modeId: config.modeId || null,
@@ -552,6 +554,7 @@ export class BattleEngine {
     if (this.config.kotoneOwned === true) this.kotoneMechanics.refreshAuras();
     // After Kotone's setup, which rebuilds her Attack from her entered stats.
     this.applyMikuNavigatorShare();
+    this.applyCreationReconciliation();
     for (const unit of this.state.party) this.triggerNativityStrife(unit, 'battle start');
     this.emit('battle_start', `${this.state.boss.name} enters the score-attack field.`, { tone: 'system' });
     if (this.state.boss.encounter?.soulLink) {
@@ -830,11 +833,16 @@ export class BattleEngine {
   }
 
   // Mode Special Effects that raise damage dealt, from boss modeEffects.
-  stageDamageBonuses(unit, element) {
+  stageDamageBonuses(unit, element, sourceType = null) {
     if (!this.usesLiveMechanics()) return [];
-    const effects = this.state.boss.modeEffects?.[this.state.boss.modeId];
-    if (!effects) return [];
+    const effects = this.state.boss.modeEffects?.[this.state.boss.modeId] || {};
     const bonuses = [];
+    const qualia = this.config.qualia;
+    if (qualia) {
+      if (Number(qualia.elementDamage) && (qualia.elements || []).includes(element)) bonuses.push(['qualia_element_damage', Number(qualia.elementDamage)]);
+      if (unit.id === 'wonder' && Number(qualia.protagonistDamage)) bonuses.push(['qualia_protagonist_damage', Number(qualia.protagonistDamage)]);
+      if (unit.id === 'wonder' && sourceType === 'persona_skill' && Number(qualia.personaDamage)) bonuses.push(['qualia_persona_damage', Number(qualia.personaDamage)]);
+    }
     if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
     if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
     return bonuses;
@@ -908,21 +916,29 @@ export class BattleEngine {
     const attributeOf = unit => unit.id === 'wonder'
       ? byId(this.personaDefinitions, this.config.personaIds?.[0])?.element || unit.element
       : unit.element;
-    if (!share.maxHp && !share.attack && !share.defense && !labor && !integrityPerAlly) return;
+    // Qualia flat stats join the share; Reconciliation's in-battle 4-set
+    // ("During combat your HP, ATK, DEF increase by 15%") joins the multiplier.
+    const qualia = this.config.qualia || {};
+    const flat = key => Number(qualia[key]) || 0;
+    const reconciliation = unit => unit.revelationSet === 'Reconcilation' ? 0.15 : 0;
+    if (!share.maxHp && !share.attack && !share.defense && !labor && !integrityPerAlly
+      && !flat('maxHp') && !flat('attack') && !flat('defense') && !flat('speed')
+      && !this.state.party.some(reconciliation)) return;
     for (const ally of this.state.party) {
       const attribute = attributeOf(ally);
       const integrity = integrityPerAlly * this.state.party.filter(member => attribute && attributeOf(member) === attribute).length;
-      const bonus = labor + integrity;
+      const bonus = labor + integrity + reconciliation(ally);
       // Labor and Integrity multiply panel plus share: live Miyu Defense
       // (1,629 + 343) x 1.12 = 2,209 vs 2,207, HP within 1% (2026-09-27), as
       // Berry's HP and Defense did on 2026-09-06.
       const scaled = value => value * (1 + bonus);
-      ally.maxHp = Math.round(scaled(Number(ally.maxHp || 0) + share.maxHp));
+      ally.maxHp = Math.round(scaled(Number(ally.maxHp || 0) + share.maxHp + flat('maxHp')));
       ally.hp = ally.maxHp;
-      if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(Number(ally.mechanicMaxHp) + share.maxHp));
-      ally.attack = scaled(Number(ally.attack || 0) + share.attack);
-      if (Number.isFinite(Number(ally.mechanicAttack))) ally.mechanicAttack = scaled(Number(ally.mechanicAttack) + share.attack);
-      ally.defense = scaled(Number(ally.defense || 0) + share.defense);
+      if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(Number(ally.mechanicMaxHp) + share.maxHp + flat('maxHp')));
+      ally.attack = scaled(Number(ally.attack || 0) + share.attack + flat('attack'));
+      if (Number.isFinite(Number(ally.mechanicAttack))) ally.mechanicAttack = scaled(Number(ally.mechanicAttack) + share.attack + flat('attack'));
+      ally.defense = scaled(Number(ally.defense || 0) + share.defense + flat('defense'));
+      ally.speed = Number(ally.speed || 0) + flat('speed');
       ally.crit = Number(ally.crit || 0) + share.crit;
       ally.critMult = Number(ally.critMult ?? 1.5) + share.critMult;
       ally.pierceRate = Number(ally.pierceRate || 0) + share.pierceRate;
@@ -939,6 +955,17 @@ export class BattleEngine {
     return base > 0
       ? Number(actor.attack || 0) + base * attackBuff + flatAttack
       : Number(actor?.attack || 0) * (1 + attackBuff) + flatAttack;
+  }
+
+  // Creation main + Reconciliation: party damage +12% for the battle (live
+  // Miyu effect list, 2026-09-27). One buff per wearer.
+  applyCreationReconciliation() {
+    if (!this.usesLiveMechanics()) return;
+    for (const wearer of this.state.party.filter(unit => unit.revelationMain === 'Creation' && unit.revelationSet === 'Reconcilation')) {
+      const buff = { id: `revelation_creation_reconciliation_${wearer.id}`, name: 'CREATION & RECONCILIATION', stat: 'damage', value: 0.12, duration: null };
+      for (const ally of this.state.party) this.applyUnitBuff(ally, buff, 'revelation');
+      this.emit('buff', `Creation & Reconciliation (${wearer.codename}): party damage +12%.`, { actorId: wearer.id, targetId: 'party', sourceType: 'revelation', tone: 'buff' });
+    }
   }
 
   wonderWeaponHolder() {
@@ -2248,7 +2275,7 @@ export class BattleEngine {
       add('surt_gun_damage', this.state.boss.encounter?.gunDamageBonus);
     }
     add('action_damage_bonus', actionDamageBonus);
-    for (const [id, value] of this.stageDamageBonuses(unit, element)) add(id, value);
+    for (const [id, value] of this.stageDamageBonuses(unit, element, sourceType)) add(id, value);
     if (target.downed) add('downed_damage_taken', target.downedDamageTaken ?? 0.1);
     const elementalExposure = target.debuffs.find(effect => effect.id === `${element}_vuln`);
     if (elementalExposure) add(elementalExposure.id, elementalExposure.value);
@@ -2302,7 +2329,7 @@ export class BattleEngine {
     if (this.isWavecatcher(unit) && unit.surfActive) multiplier *= 1.3;
     if (unit.elementBonus?.element === element) multiplier *= 1 + unit.elementBonus.value;
     for (const buff of unit.buffs.filter(effect => !effect.stat || effect.stat === 'damage')) multiplier *= 1 + (buff.value || 0);
-    multiplier *= 1 + this.stageDamageBonuses(unit, element).reduce((sum, [, value]) => sum + value, 0);
+    multiplier *= 1 + this.stageDamageBonuses(unit, element, sourceType).reduce((sum, [, value]) => sum + value, 0);
     for (const buff of unit.buffs.filter(effect => effect.stat === 'elementDamage' && effect.element === element)) multiplier *= 1 + (buff.value || 0);
     if (isWeakTo(target, element)) multiplier *= 1.25;
     if (isWeakTo(target, element)) {
