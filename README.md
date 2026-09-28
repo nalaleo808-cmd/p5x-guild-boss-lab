@@ -2,6 +2,8 @@
 
 ## v2.3 — Live stat sync
 
+Sleepy's 51-entry Guild Boss Guides playlist is indexed by game version, boss, and mode. Team Preview links the latest matching routes for a selected encounter. See `MD/SLEEPY-GUILD-GUIDES-2026-09-27.md` for evidence boundaries; the guide index does not change combat calculations.
+
 Battle-start stats now follow in-game readings from a live Slaughter Drive Devourer of Dreams run.
 
 - Attack % buffs scale the level-80 base plus weapon Attack, not the panel total.
