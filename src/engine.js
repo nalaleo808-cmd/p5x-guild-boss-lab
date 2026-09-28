@@ -266,8 +266,10 @@ export class BattleEngine {
       for (const key of ['maxHp', 'maxSp', 'attack', 'defense', 'speed']) {
         if (hasStat(key)) unit[key] = Number(stats[key]);
       }
+      // A6 Summer Sea Mermaid: +250 max SP on top of her 200. The character
+      // panel shows 200; live in battle shows 450 (2026-09-27).
       if (this.config.wavecatcherSourceMechanics && unit.slug === 'puppet-wavecatcher'
-        && awareness >= 6 && !hasStat('maxSp')) unit.maxSp = 450;
+        && awareness >= 6 && (!hasStat('maxSp') || Number(stats.maxSp) <= 200)) unit.maxSp = 450;
       if (weaponComponentStatsApplied) {
         unit.maxHp = Number(unit.maxHp || 0) + weaponComponentStat('maxHp');
         unit.attack = Number(unit.attack || 0) + weaponComponentStat('attack');
@@ -888,18 +890,16 @@ export class BattleEngine {
       const attribute = attributeOf(ally);
       const integrity = integrityPerAlly * this.state.party.filter(member => attribute && attributeOf(member) === attribute).length;
       const bonus = labor + integrity;
-      // Labor scales the level-80 base plus weapon when known, like other
-      // % buffs; otherwise it multiplies the stat (2026-09-06 reading).
-      const base = ally.statBase;
-      const scaled = (value, add, key) => base?.[key] > 0
-        ? Number(value || 0) + add + base[key] * bonus
-        : (Number(value || 0) + add) * (1 + bonus);
-      ally.maxHp = Math.round(scaled(ally.maxHp, share.maxHp, 'maxHp'));
+      // Labor and Integrity multiply panel plus share: live Miyu Defense
+      // (1,629 + 343) x 1.12 = 2,209 vs 2,207, HP within 1% (2026-09-27), as
+      // Berry's HP and Defense did on 2026-09-06.
+      const scaled = value => value * (1 + bonus);
+      ally.maxHp = Math.round(scaled(Number(ally.maxHp || 0) + share.maxHp));
       ally.hp = ally.maxHp;
-      if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(ally.mechanicMaxHp, share.maxHp, 'maxHp'));
-      ally.attack = scaled(ally.attack, share.attack, 'attack');
-      if (Number.isFinite(Number(ally.mechanicAttack))) ally.mechanicAttack = scaled(ally.mechanicAttack, share.attack, 'attack');
-      ally.defense = scaled(ally.defense, share.defense, 'defense');
+      if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(Number(ally.mechanicMaxHp) + share.maxHp));
+      ally.attack = scaled(Number(ally.attack || 0) + share.attack);
+      if (Number.isFinite(Number(ally.mechanicAttack))) ally.mechanicAttack = scaled(Number(ally.mechanicAttack) + share.attack);
+      ally.defense = scaled(Number(ally.defense || 0) + share.defense);
       ally.crit = Number(ally.crit || 0) + share.crit;
       ally.critMult = Number(ally.critMult ?? 1.5) + share.critMult;
       ally.pierceRate = Number(ally.pierceRate || 0) + share.pierceRate;
