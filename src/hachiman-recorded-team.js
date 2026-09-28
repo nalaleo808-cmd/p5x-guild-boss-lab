@@ -125,18 +125,18 @@ export const PERSONA_SKILL_ADAPTERS = Object.freeze({
     debuff: { id: 'def_down', name: 'DEF DOWN', value: 0.427, duration: 3 },
     sourceConfidence: 'runner-adapted-source-tooltip'
   },
-  // Source: "Remove Electric/Fire resistance from 1 target for 2 turns." The SP
-  // cost is missing from the source data (catalog costType "missing"), so the
-  // catalog's 0 is kept until an in-game cost is confirmed.
+  // Source: "Remove Electric/Fire resistance from 1 target for 2 turns." Lufel
+  // lists no SP cost; 20 SP is read from the in-game skill menu (Elec Break on
+  // Yurlungur, user screenshot 2026-09-28; user confirmed Fire Break is the same).
   'Elec Break': {
+    cost: 20,
     debuff: { id: 'electric_break', name: 'ELEC BREAK', resistanceBreak: 'electric', duration: 2 },
-    sourceConfidence: 'source-tooltip-sp-cost-missing',
-    omitted: 'SP cost is missing from the source data; 0 SP is used until confirmed.'
+    sourceConfidence: 'in-game-sp-cost-2026-09-28'
   },
   'Fire Break': {
+    cost: 20,
     debuff: { id: 'fire_break', name: 'FIRE BREAK', resistanceBreak: 'fire', duration: 2 },
-    sourceConfidence: 'source-tooltip-sp-cost-missing',
-    omitted: 'SP cost is missing from the source data; 0 SP is used until confirmed.'
+    sourceConfidence: 'in-game-sp-cost-2026-09-28'
   },
   Tarukaja: {
     cost: 22,

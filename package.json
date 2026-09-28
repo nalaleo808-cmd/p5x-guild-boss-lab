@@ -11,6 +11,7 @@
     "sync:lufel-live": "node scripts/sync-lufel-recent.mjs && node scripts/import-lufelnet.mjs",
     "verify:characters": "node scripts/verify-character-integrations.mjs",
     "example:kotone": "node scripts/kotone-battle-example.mjs",
-    "capture:baseline": "node scripts/capture-release-baseline.mjs"
+    "capture:baseline": "node scripts/capture-release-baseline.mjs",
+    "sync:lufel-awareness": "node scripts/sync-lufel-awareness.mjs"
   }
 }

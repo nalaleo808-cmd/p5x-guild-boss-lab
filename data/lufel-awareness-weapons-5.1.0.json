@@ -1,0 +1,2349 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-09-28T01:21:29.123Z",
+  "source": {
+    "name": "Lufelnet",
+    "url": "https://lufel.net/en/character/",
+    "version": "5.1.0",
+    "note": "Tooltip text only. Numbers here are sourced; timing and trigger order are not combat-script verified."
+  },
+  "characters": [
+    {
+      "slug": "blitz",
+      "sourceKey": "카타야마",
+      "codename": "BLITZ",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%B9%B4%ED%83%80%EC%95%BC%EB%A7%88/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Kumi Katayama",
+        "r0": "Tenacious Teacher",
+        "r0_detail": "When Katayama uses Discharge Sprocket, Secret Technique: Lightning Legs is unlocked and becomes usable 1 time.\nWhen Secret Technique: Lightning Legs deals damage, greatly decrease the target's Down Points regardless of Electric affinity. Also, increase the Defense decrease effect of Hard Knocks by 10% for 2 turns (for every 10 points of Speed, increase by 2.22% more, up to a maximum bonus of 40%).",
+        "r1": "Lightning Lecturer",
+        "r1_detail": "When Katayama knocks down a foe, permanently decrease the target's Down Point maximum by 1.\nWhen a target is inflicted with Detention, increase critical damage taken by 30% more for 1 turn.\nWhen Katayama deals Electric damage, inflict Shock on the target.",
+        "r2": "Role Model",
+        "r2_detail": "When Katayama knocks down a foe with a skill, increase the target's damage taken while downed by 10% more for 1 turn. Also, permanently increase party's Attack by 10% (stacks up to 3 times).",
+        "r3": "Electric Cycle",
+        "r3_detail": "Increase the skill levels of Discharge Sprocket and Thunderbolt Outrage by 3.",
+        "r4": "Class in Session",
+        "r4_detail": "Highlight Enhanced: After activating a Highlight, the next time Katayama knocks down a foe, permanently increase the target's damage taken by 20% more. This effect does not stack.",
+        "r5": "Unstoppable Light",
+        "r5_detail": "Increase the skill levels of Secret Technique: Lightning Legs and Thief Tactics by 3.",
+        "r6": "Unconditional Love",
+        "r6_detail": "At the start of battle, gain 2 Wings of Guidance stacks. Gain 1 Wings of Guidance stack after every 2 skills used. Wings of Guidance stacks up to 3 times.\nAt the start of Katayama's turn, spend 1 Wings of Guidance stack to gain the following buffs for 1 turn. Increase Katayama's Attack by 50%, critical rate by 10%, critical damage by 30%, and allow her Highlight to activate critical hits. Also, increase damage taken by foes with Hard Knocks by 30% more, and increase damage taken by downed foes with Detention by 20% more.\nWhen Katayama takes fatal damage, if she has Wings of Guidance, spend 1 Wings of Guidance stack to evade that damage (this effect activates once per battle, and is not effective against certain skills)."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Kumi Katayama",
+        "weapon3-1": {
+          "name": "Combat Boots",
+          "health": 1343,
+          "attack": 424,
+          "defense": 237,
+          "skill_name": "Endless Rush",
+          "description": "When user has [Super Limit], increase Speed by 7.4/8.5/9.6/10.7/11.8/12.9/14.0."
+        },
+        "weapon4-1": {
+          "name": "Blitzkrieg Bangs",
+          "health": 1791.59,
+          "attack": 565.81,
+          "defense": 317.1,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Katayama knocks down foes, increase Attack by 7.5%/9.8%/9.8%/12.0%/12.0%/14.2%/14.2% for each foe knocked down (up to a maximum of 22.5%/29.2%/29.2%/36.0%/36.0%/42.7%/42.7%). Lasts for 1 turn."
+        },
+        "weapon5-1": {
+          "name": "Lightning Riders",
+          "health": 2239.65,
+          "attack": 706.91,
+          "defense": 396.41,
+          "skill_name": "",
+          "description": "Increase Speed by 15.0/15.0/20.0/20.0/25.0/25.0/30.0.\nAfter using Secret Technique: Lightning Legs, increase Katayama's critical rate by 9.0%/11.7%/11.7%/14.3%/14.3%/17.0%/17.0% for 2 turns.\nIf any foes are knocked down when Katayama is present, increase the target's critical damage taken by 30.6%/39.8%/39.8%/49.0%/49.0%/58.2%/58.2% for 1 turn."
+        }
+      },
+      "weaponsKr": {
+        "name": "카타야마 쿠미",
+        "weapon3-1": {
+          "name": "작전 부츠",
+          "health": 1343,
+          "attack": 424,
+          "defense": 237,
+          "skill_name": "",
+          "description": "자신이『초극한』 보유 시 속도가 7.4/8.5/9.6/10.7/11.8/12.9/14.0 증가한다."
+        },
+        "weapon4-1": {
+          "name": "볼트 하트",
+          "health": 1791.59,
+          "attack": 565.81,
+          "defense": 317.1,
+          "skill_name": "",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 적을 다운시키면, 적을 1명 다운시킬 때마다 자신의 공격력이 1턴 동안 7.5%/9.8%/9.8%/12.0%/12.0%/14.2%/14.2% 증가하며, 최대 22.5%/29.2%/29.2%/36.0%/36.0%/42.7%/42.7% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "아이언 울프",
+          "health": 2239.65,
+          "attack": 706.91,
+          "defense": 396.41,
+          "skill_name": "",
+          "description": "속도가 15.0/15.0/20.0/20.0/25.0/25.0/30.0 증가한다.\n자신이 『오의·섬광 다리』를 시전하면 2턴 동안 크리티컬 확률이 9.0%/11.7%/11.7%/14.3%/14.3%/17.0%/17.0% 증가한다.\n카타야마 쿠미가 필드에 있을 때 임의의 적이 다운되면 1턴 동안 받는 크리티컬 효과가 30.6%/39.8%/39.8%/49.0%/49.0%/58.2%/58.2% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Kumi Katayama",
+        "skill1": {
+          "name": "Discharge Sprocket",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 101.7%/112.1%/108.0%/118.4% of Attack, and inflict Hard Knocks for 3 turns. When in Lightning Legs state, also increase this skill's damage by 35%.\nAlso, Secret Technique: Lightning Legs can be used 1 time.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%)."
+        },
+        "skill2": {
+          "name": "Thunderbolt Outrage",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 135.5%/149.3%/143.8%/157.7% of Attack. Decrease Down Points of all targets that take damage by 1 regardless of Electric affinity, and inflict Hard Knocks for 1 turn. When in Lightning Legs state, decrease Down Points of all targets that take damage by 3 more and inflict Detention for 1 turn.\nHard Knocks: Decrease Defense by 9.8%/10.8%/10.4%/11.4% (for every 10 points of Katayama's Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%). Also, increase damage taken by 7.8%/8.6%/8.3%/9.1% (for every 10 points of Katayama's Speed, increase by 1.78% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%).\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Katayama's Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%)."
+        },
+        "skill3": {
+          "name": "Secret Technique: Lightning Legs",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 25,
+          "cool": 0,
+          "description": "Deal Electric damage to all foes equal to 141.9%/156.5%/150.6%/165.2% of Attack. When targets take damage, decrease Down Points by 5 regardless of Electric affinity, and inflict Detention for 1 turn.\nWhen this skill knocks down any target, gain Lightning Legs for 2 turns.\nDetention: Increase damage taken while knocked down by 0.56% for every 10 points of Katayama's Speed (up to a maximum of 9.8%/10.8%/10.4%/11.4%). Also, increase damage taken by 6.8%/7.5%/7.3%/8.0% (for every 10 points of Speed, increase by 1.55% more, up to a maximum of 27.3%/30.1%/29.0%/31.8%).\nLightning Legs: Enhance the skill effects of the next Discharge Sprocket or Thunderbolt Outrage used."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "전격광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 4,
+          "description": "Deal Electric damage to all foes equal to 317.6%/350.1%/337.1%/369.7% of Attack, and 50% chance to inflict Dizzy on foes for 1 turn. Also, permanently decrease the target's Defense by 29.3%/32.3%/31.1%/34.1% (this effect does not stack). Also, increase damage taken by 19.5%/21.5%/20.7%/22.7% for 3 turns."
+        },
+        "passive1": {
+          "name": "Answer the Call",
+          "element": "패시브",
+          "description": "When an ally attacks a knocked down foe, increase Attack by 36.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "High-Speed Vector",
+          "element": "패시브",
+          "description": "During battle, when Katayama's Speed is above 100, increase Attack by 24 for every 1 point of Speed above 100 (up to 1920).",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "berry",
+      "sourceKey": "이치고",
+      "codename": "BERRY",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%9D%B4%EC%B9%98%EA%B3%A0/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%9D%B4%EC%B9%98%EA%B3%A0/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%9D%B4%EC%B9%98%EA%B3%A0/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Ichigo Shikano",
+        "r0": "Mine Alone",
+        "r0_detail": "The first time Ichigo activates Vorpal Butterfly, gain 1 Chains of Love stack. Also, each time she activates a Highlight, gain 1 Chains of Love stack. Chains of Love stacks up to 3 times.\nGain the following effects based on the number of Chains of Love stacks.\n1: For each Lovesick stack inflicted, increase target's damage taken by 4%.\n2: Increase critical rate by 15%. Also, all of Ichigo's skill damage is counted as continuous damage.\n3: Increase continuous damage by 25%.",
+        "r1": "Pounding Heartbeat",
+        "r1_detail": "For each Lovesick stack inflicted, decrease target's Defense by 3%.\nAlso, each time a skill is used, inflict 1 more Lovesick stack on the target.",
+        "r2": "Power of Love",
+        "r2_detail": "At the start of battle, gain 1 Chains of Love stack.\nChains of Love now stacks up to 5 times, and gain the following effects based on the number of stacks.\n4: Increase critical damage by 36%.\n5: The first time Ichigo takes fatal damage, survive with 1 HP and enter a special near-death state, and gain 4 Power of Love stacks. At the end each ally's turn, spend 1 Power of Love stack, and after all Power of Love stacks have been spent, Ichigo will be KO'd.",
+        "r3": "Forever My Prince",
+        "r3_detail": "Increase the skill levels of My Beloved Prince and Thief Tactics by 3.",
+        "r4": "Maiden's True Strength",
+        "r4_detail": "Highlight Enhanced: Each time her Highlight is activated, permanently increase Ichigo's Attack by 6%. Stacks up to 5 times.",
+        "r5": "Garden of Devotion",
+        "r5_detail": "Increase the skill levels of Vorpal Butterfly and Obsessive Rose by 3.",
+        "r6": "A World of Our Own",
+        "r6_detail": "Lovesick now stacks up to 15 times.\nBased on the total number of Chains of Love stacks, the following effects can be activated. \n1: After activating Vorpal Butterfly, activate Vorpal Butterfly 1 more time on the selected target.\n2: After activating Obsessive Rose, activate Obsessive Rose 1 more time on the selected target.\n3: After activating My Beloved Prince, activate My Beloved Prince 1 more time on the selected target.\n4: During Ichigo's turn, can activate Highlight 1 time on the selected target without spending the Highlight gauge (not affected by Highlight cooldown time).\n(Each effect can activate only once during battle. If a target is defeated or the skill is nullified, reflected, or absorbed, a different target is selected for the skill effect.)"
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Ichigo Shikano",
+        "weapon4-1": {
+          "name": "Love Letter",
+          "health": 1902.74,
+          "attack": 618.71,
+          "defense": 288.61,
+          "skill_name": "Love Dependence",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen activating a Highlight, increase Ichigo's damage by 17.6%/23.2%/23.2%/28.8%/28.8%/34.4%/34.4% for 2 turns."
+        },
+        "weapon5-1": {
+          "name": "My Destiny",
+          "health": 2378.39,
+          "attack": 773.01,
+          "defense": 361.15,
+          "skill_name": "Possessive Desire",
+          "description": "Increase critical rate by 18.1%/18.1%/23.5%/23.5%/28.9%/28.9%/34.3%.\nWhen Chains of Love is at 1/2/3 stacks, increase Ichigo's damage by 11.0%/14.2%/14.2%/17.4%/17.4%/20.6%/20.6%/22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5%/34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%, respectively.\nWhen activating My Beloved Prince, increase critical damage by 32.8%/42.8%/42.8%/52.8%/52.8%/62.8%/62.8%."
+        }
+      },
+      "weaponsKr": {
+        "name": "시카노 이치고",
+        "weapon4-1": {
+          "name": "붉은 서약",
+          "health": 1902.74,
+          "attack": 618.71,
+          "defense": 288.61,
+          "skill_name": "연애 의존",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\nHIGHLIGHT를 시전할 때마다 2턴 동안 자신의 대미지가 17.6%/23.2%/23.2%/28.8%/28.8%/34.4%/34.4% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "죽음의 인형극",
+          "health": 2378.39,
+          "attack": 773.01,
+          "defense": 361.15,
+          "highlight": true,
+          "skill_name": "독점욕",
+          "description": "크리티컬 확률이 18.1%/18.1%/23.5%/23.5%/28.9%/28.9%/34.3% 증가한다.\n『집착』이 1/2/3중첩 도달 시 자신이 주는 대미지가 11.0%/14.2%/14.2%/17.4%/17.4%/20.6%/20.6%/22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5%/34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0% 증가한다. 『쉿! 처형 시간』 시전 시 크리티컬 효과가 32.8%/42.8%/42.8%/52.8%/52.8%/62.8%/62.8% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Ichigo Shikano",
+        "skill1": {
+          "name": "Vorpal Butterfly",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 1,
+          "description": "Deal Curse damage to 1 foe equal to 129.0%/142.2%/137.0%/150.2% of Attack, and inflict 2 Lovesick stacks. When the target has over 70% HP remaining, increase skill damage by 200%. If this skill defeats a target, activate this skill again (can be activated consecutively)."
+        },
+        "skill2": {
+          "name": "Obsessive Rose",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Curse damage to 1 foe equal to 106.9%/117.8%/113.4%/124.4% of Attack, and inflict 4 Lovesick stacks."
+        },
+        "skill3": {
+          "name": "My Beloved Prince",
+          "element": "주원",
+          "type": "단일피해",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Curse damage to 1 foe equal to 254.8%/280.9%/270.4%/296.6% of Attack + 11.7%/12.9%/12.4%/13.6% for each Lovesick stack. Also, when targets have 10 or more Lovesick stacks, deal bonus Curse damage equal to 118.7%/130.9%/126.1%/138.2% of Attack. After activating this skill, reset the duration of Lovesick stacks."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "주원",
+          "type": "단일피해",
+          "cool": 4,
+          "description": "Deal Curse damage to 1 foe equal to 457.1%/503.9%/485.2%/532.0% of Attack, and Lovesick can activate critical hits for 3 turns.\nAlso, activate all continuous damage effects on the target 1 time, and activate Lovesick effect 2 more times."
+        },
+        "passive1": {
+          "name": "Overflowing Love",
+          "element": "패시브",
+          "description": "For each Chains of Love stack, increase Ichigo's Attack by 15.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Melting Ichi-Go Butter",
+          "element": "패시브",
+          "description": "When Ichigo is present, increase party's continuous damage by 15.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "puppet-wavecatcher",
+      "sourceKey": "미유·여름",
+      "codename": "PUPPET·Wavecatcher",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%AF%B8%EC%9C%A0%C2%B7%EC%97%AC%EB%A6%84/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%AF%B8%EC%9C%A0%C2%B7%EC%97%AC%EB%A6%84/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%AF%B8%EC%9C%A0%C2%B7%EC%97%AC%EB%A6%84/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Wavecatcher Miyu",
+        "r0": "Surfing Mermaid",
+        "r0_detail": "Wavecatcher Miyu can enter Surf state, spending SP to automatically attack foes.\nIncrease Wavecatcher Miyu's max SP to 200, and at the start of battle, set her SP to 0. At the start of other allies' turns, restore 15 SP to Wavecatcher Miyu (affected by SP Recovery).\nDuring battle, based on the total of her recovered SP (including SP above the maximum), gain the following effects.\n100: Increase Attack by 25%.\n200: Increase damage by 25%.\n300: Increase critical rate by 12%.\n400: Increase critical damage by 24%.",
+        "r1": "Offshore Paradise",
+        "r1_detail": "Decrease SP cost of Catch a Wave by 40%, and increase max Offshore stacks by 2.\nWhen entering Surf state, extend duration of all buffs/debuffs applied by 1 turn.",
+        "r2": "Roaring Surf Line",
+        "r2_detail": "While Surf is active, increase Wavecatcher Miyu's critical damage by 20%.\nEvery 4 times Catch a Wave is activated, activate a special Catch a Wave 1 more time without spending SP. This Catch a Wave does not count toward skill activation counts, and cannot grant Offshore stacks.",
+        "r3": "Sea Breeze Paddling",
+        "r3_detail": "Increase the skill levels of Paddle Out and Thief Tactics by 3.",
+        "r4": "Refreshing Beach Resort",
+        "r4_detail": "Highlight Enhanced: Increase Wavecatcher Miyu's Resonance damage by 30% for 2 turns.",
+        "r5": "Southern High Tide",
+        "r5_detail": "Increase the skill levels of Jellyfish Splash and Aerial Tide by 3.",
+        "r6": "Summer Sea Mermaid",
+        "r6_detail": "Increase Wavecatcher Miyu's max SP by 250 more.\nAt the start of battle, recover max SP, and enter Surf state. Also increase max Offshore stacks by 2.\nAdditional effects are added to the following skills.\nJellyfish Splash: Increase SP recovered when used by 50%.\nAerial Tide: Surf state is not removed after using this skill, and Offshore stacks are lost after the turn ends. When stacks are lost, recover max SP."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Wavecatcher Miyu",
+        "weapon4-1": {
+          "name": "Jellie Voyager",
+          "health": 1807.87,
+          "attack": 623.35,
+          "defense": 313.75,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Surf is active, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+        },
+        "weapon5-1": {
+          "name": "Mermaid Dreamer",
+          "health": 2259.46,
+          "attack": 779.61,
+          "defense": 391.98,
+          "skill_name": "",
+          "description": "Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0% and Resonance critical rate by 16.4%/21.4%/21.4%/26.4%/26.4%/31.4%/31.4%.\nWhen spending SP to activate a skill or Resonance, increase Wavecatcher Miyu's damage by 6.8%/8.8%/8.8%/10.8%/10.8%/12.8%/12.8%. This effect is permanent and stacks up to 5 times."
+        }
+      },
+      "weaponsKr": {
+        "name": "사하라 미유",
+        "weapon4-1": {
+          "name": "바다 위 달",
+          "health": 1807.87,
+          "attack": 623.35,
+          "defense": 313.75,
+          "skill_name": "",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『바다의 영역』에서 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "꿈꾸는 인어",
+          "highlight": true,
+          "health": 2259.46,
+          "attack": 779.61,
+          "defense": 391.98,
+          "skill_name": "",
+          "description": "크리티컬 효과가 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0% 증가한다. 추가 효과의 크리티컬 확률이 16.4%/21.4%/21.4%/26.4%/26.4%/31.4%/31.4% 증가한다. 스킬을 시전해 SP 소모 시 자신의 대미지가 6.8%/8.8%/8.8%/10.8%/10.8%/12.8%/12.8% 증가한다(5회 중첩 가능, 해당 전투에서 영구 적용)."
+        }
+      },
+      "skills": {
+        "name": "Wavecatcher Miyu",
+        "skill1": {
+          "name": "Jellyfish Splash",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 0,
+          "description": "Deal Ice damage to all foes equal to 100.7%/111.0%/106.9%/117.2% of Attack, and inflict Freeze for 2 turns.\nRestore Wavecatcher Miyu's SP by 40 (this is affected by SP Recovery). This skill can restore SP above max SP (up to the value of max SP)."
+        },
+        "skill2": {
+          "name": "Aerial Tide",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 0,
+          "description": "Deal Ice damage to all foes equal to 178.7%/197.0%/189.7%/208.0% of Attack. When Surf is active, for each Offshore stack, increase this skill's damage by 10%. After activating this skill, remove Surf, and remove all Offshore stacks. This skill is counted as a Resonance."
+        },
+        "skill3": {
+          "name": "Paddle Out",
+          "element": "버프",
+          "type": "Enhance",
+          "sp": 60,
+          "cool": 0,
+          "description": "Remove spiritual ailments from Wavecatcher Miyu, and enter Surf state. When this skill is used again while Surf is active, remove Surf and all Offshore stacks. On the turn when Surf is removed, other skills can be used, but Surf cannot be re-entered.\nSurf: While this state is active, nullify Down, spiritual ailments, and certain unable to act effects, and Wavecatcher Miyu cannot use melee attacks, ranged attacks, or items. Also, extend the duration of buffs and debuffs applied by 1 turn. At the end of an ally's turn, if Wavecatcher Miyu has enough SP to activate Catch a Wave, automatically spend SP and activate Catch a Wave.\nCatch a Wave: Spend 30 SP to deal Ice damage to all foes equal to 50.2%/55.3%/53.3%/58.4% of Attack, and gain 1 Offshore stack. For each Offshore stack, increase the skill damage of Catch a Wave by 5%, and increase the SP cost by 30. Stacks up to 4 times. Catch a Wave is counted as a Resonance, and cannot decrease foes' Down Points."
+        },
+        "skill_highlight": {
+          "name": "Highlight",
+          "element": "빙결광역",
+          "type": "AoE DMG",
+          "sp": 0,
+          "cool": 4,
+          "description": "Deal Ice damage to all foes equal to 329.4%/363.2%/349.7%/383.4% of Attack. When in Surf state, deal bonus Ice damage equal to 164.7%/181.6%/174.8%/191.7% of Attack 1 time."
+        },
+        "passive1": {
+          "name": "Hang Ten!",
+          "element": "패시브",
+          "description": "During battle, increase Wavecatcher Miyu's Attack based on SP Recovery. At a maximum of 280.0% SP Recovery, increase Attack up to 98.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Ride it Out!",
+          "element": "패시브",
+          "description": "When Surf is active, increase damage by 30.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "marian-beachflower",
+      "sourceKey": "미나미·여름",
+      "codename": "MARIAN·Beachflower",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%AF%B8%EB%82%98%EB%AF%B8%C2%B7%EC%97%AC%EB%A6%84/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%AF%B8%EB%82%98%EB%AF%B8%C2%B7%EC%97%AC%EB%A6%84/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%AF%B8%EB%82%98%EB%AF%B8%C2%B7%EC%97%AC%EB%A6%84/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Beachflower Minami",
+        "r0": "Seaside First Aid",
+        "r0_detail": "Beachflower Minami has 3 kinds of Everyday Medicine.\nWhen using medicine on allies, restore HP to the main target equal to 8% of Beachflower Minami's max HP.\nWhen using Gentle Sea Breeze, grant 1 Midsummer Prescription stack (stacks up to 1 time). At the start of Beachflower Minami's turn, she can spend 1 Midsummer Prescription stack to gain Flower Basket Pharmacy.\nFlower Basket Pharmacy: Use medicine without spending a turn, and extend the duration of Potent Medicine used by 1 turn. After using medicine 1 time, lose this effect.",
+        "r1": "Summertime Cure-all",
+        "r1_detail": "When using Gentle Sea Breeze, gain 1 more Midsummer Prescription stack. Midsummer Prescription now stacks up to 2 times (only 1 Midsummer Prescription stack can be used in a turn).\nIncrease the effects of medicine used by Beachflower Minami by 20%.",
+        "r2": "Spellbinding Summer Scents",
+        "r2_detail": "When using Beach Basket, inflict Perplexing Petals on the target.\nPerplexing Petals: Decrease the target's Defense by 30%, and increase critical damage taken by 30% for 3 turns.",
+        "r3": "Relaxing Breeze",
+        "r3_detail": "Increase the skill levels of Beach Basket and Gentle Sea Breeze by 3.",
+        "r4": "Lingering Ripples of Summer",
+        "r4_detail": "Highlight Enhanced: Extend the duration of all buffs granted by Highlight to 3 turns. Also, when using medicine, increase medicine effects by 5%.",
+        "r5": "White Flowers Swaying",
+        "r5_detail": "Increase the skill levels of Summer Garden and Thief Tactics by 3.",
+        "r6": "Angel in White",
+        "r6_detail": "When using any medicine, items are not spent upon use.\nExtend the duration of Potent Medicine effects by 1 turn. Also, when using medicine on allies with Flower Basket Pharmacy, also grant Summertime Refresh to the main target.\nSummertime Refresh: Increase final damage amplification by 15% for 1 turn."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Beachflower Minami",
+        "weapon4-1": {
+          "name": "Tea Time Delight",
+          "health": 2125.04,
+          "attack": 475.65,
+          "defense": 320.45,
+          "skill_name": "Sweet Feast",
+          "description": "Increase max HP by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. When using a skill on an ally, increase Beachflower Minami's critical multiplier by 17.4%/22.6%/22.6%/27.8%/27.8%/33.0%/33.0%."
+        },
+        "weapon5-1": {
+          "name": "Everlasting Garden",
+          "health": 2655.87,
+          "attack": 594.58,
+          "defense": 400.84,
+          "skill_name": "Summer Breeze",
+          "description": "Increase medicine effects by 20.0%/20.0%/26.0%/26.0%/32.0%/32.0%/38.0%. Also, when using medicine on an ally, also increase the main target's critical damage by 15.3%/19.9%/19.9%/24.5%/24.5%/29.1%/29.1% for 3 turns.\nWhen using a skill on an ally, increase the main target's Attack by 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% for 2 turns."
+        }
+      },
+      "weaponsKr": {
+        "name": "미야시타 미나미·여름",
+        "weapon4-1": {
+          "name": "오후의 차담",
+          "health": 2125.04,
+          "attack": 475.65,
+          "defense": 320.45,
+          "skill_name": "달콤한 향연",
+          "description": "최대 생명이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 아군을 목표로 페르소나 스킬 사용 시, 자신의 크리티컬 효과가 17.4%/22.6%/22.6%/27.8%/27.8%/33.0%/33.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "시들지 않는 정원",
+          "health": 2655.87,
+          "attack": 594.58,
+          "defense": 400.84,
+          "highlight": true,
+          "skill_name": "산들바람 스치는 여름",
+          "description": "약품 효과가 20.0%/20.0%/26.0%/26.0%/32.0%/32.0%/38.0% 증가한다. 아군을 목표로 약품 사용 시, 메인 목표의 크리티컬 효과가 15.3%/19.9%/19.9%/24.5%/24.5%/29.1%/29.1% 추가 증가하며 3턴 동안 지속된다. 아군을 목표로 페르소나 스킬 사용 시, 메인 목표의 공격력이 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% 추가 증가하며 2턴 동안 지속된다."
+        }
+      },
+      "skills": {
+        "name": "Beachflower Minami",
+        "skill1": {
+          "name": "Beach Basket",
+          "element": "축복광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to all foes equal to 64.4%/71.0%/68.4%/75.0% of Beachflower Minami's max HP, and inflict Bewitching Blossoms for 3 turns.\nBewitching Blossoms: When taking an attack, increase that damage's Attack by 9.8%/10.8%/10.4%/11.4% + 4% more for every 1200 of Beachflower Minami's max HP (up to 11712/12912/12432/13632 of max HP)."
+        },
+        "skill2": {
+          "name": "Summer Garden",
+          "element": "버프",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Increase party's damage by 7.8%/8.6%/8.3%/9.1% + 3.2% more for every 1200 of Beachflower Minami's max HP (up to 11712/12912/12432/13632 of max HP) for 3 turns. Also, grant all allies 1 Blessing stack, and remove 1 debuff."
+        },
+        "skill3": {
+          "name": "Gentle Sea Breeze",
+          "element": "버프",
+          "type": "버프",
+          "sp": 25,
+          "cool": 2,
+          "description": "Increase 1 other ally's critical rate by 15.6%/17.2%/16.6%/18.2%, and increase critical damage by 33.33% of the portion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier). Lasts for 3 turns.\nPassive: When using medicine on an ally, increase the main target's critical damage for 1 turn. This increase is equal to 16.66% of the portion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier)."
+        },
+        "skill_highlight": {
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 4,
+          "description": "Increase 1 other ally's damage by 24.4%/26.9%/25.9%/28.4%, and increase critical damage by 16.66% of the potion of Beachflower Minami's critical multiplier over 100% (up to 213.4%/229.9%/229.9%/246.4% of critical multiplier). Lasts for 2 turns. Also, when Beachflower Minami uses medicine, increase medicine effects by 9.8%/10.8%/10.4%/11.4%."
+        },
+        "passive1": {
+          "name": "Soothing Sunlight",
+          "element": "패시브",
+          "description": "Each time a skill is used on allies, grant 1 Blessing stack to targets.\nWhen Beachflower Minami is present, for each Blessing stack on allies, increase their damage by 6.0% (up to 36.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Blossoms by the Beach",
+          "element": "패시브",
+          "description": "When Beachflower Minami is present, increase allies' Attack by 12.0%, and for each type of buff granted by Potent Medicine, increase Attack by 15.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "miku",
+      "sourceKey": "미쿠",
+      "codename": "MIKU",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%AF%B8%EC%BF%A0/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Hatsune Miku",
+        "r0": "Virtual Stage",
+        "r0_detail": "During battle, Miku can change the battle scenery and song playing during her allies' turns, and her skill effects are enhanced based on the current song playing. When Miku's skills become available, the current song will automatically switch.\nWhen using Feel the Beat or Clear Sound on songs where Miku has already gained the corresponding Track, reapply the same additional effect.",
+        "r1": "Hologram Screen",
+        "r1_detail": "Gain Skill Amplification equal to 15%.\nWhen Virtual Concert is activated, reset all allies' Highlight cooldowns.\nWhile Virtual Concert is active, increase Highlight and Theurgy Final Damage Amplification by 10%, and double the rate at which the Highlight and Theurgy gauges are filled.",
+        "r2": "Blue-Green Sea",
+        "r2_detail": "When Virtual Concert is activated, grant all effects of Feel the Beat and Clear Sound for 2 turns.\nWhile Virtual Concert is active, increase party's Final Damage Amplification by 8%.",
+        "r3": "Echoing in your Heart",
+        "r3_detail": "Increase the skill levels of Feel the Beat and Showstopper by 3.",
+        "r4": "Let's Sing Together",
+        "r4_detail": "When an ally activates a Highlight or Theurgy, increase that ally's Attack by 25% for 2 turns.",
+        "r5": "Reaching your Heart",
+        "r5_detail": "Increase the skill level of Clear Sound by 3.",
+        "r6": "Neverending Song",
+        "r6_detail": "When Virtual Concert ends, all foes take a fixed amount of Almighty damage equal to 100% of each target's total damage taken during Virtual Concert."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Hatsune Miku",
+        "weapon4-1": {
+          "name": "Trendsetter",
+          "health": 1870.83,
+          "attack": 581.37,
+          "defense": 317.1,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen gaining a Track, increase Miku's Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+        },
+        "weapon5-1": {
+          "name": "Light Up Your World",
+          "health": 2338.77,
+          "attack": 726.72,
+          "defense": 396.41,
+          "skill_name": "",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nIncrease party's critical damage by 18.1%/23.5%/23.5%/28.9%/28.9%/34.3%/34.3%. For each Track gained, increase party's critical damage by 3.0%/3.9%/3.9%/4.8%/4.8%/5.7%/5.7% more for 3 turns. Stacks up to 3 times.\nWhen Virtual Concert is active, gain Skill Amplification equal to 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0%."
+        }
+      },
+      "weaponsKr": {
+        "name": "하츠네 미쿠",
+        "weapon4-1": {
+          "name": "트렌드 월드",
+          "health": 1870.83,
+          "attack": 581.37,
+          "defense": 317.1,
+          "skill_name": "",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 『멜로디』 보유 시, 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "서라운드 더 월드",
+          "health": 2338.77,
+          "attack": 726.72,
+          "defense": 396.41,
+          "highlight": true,
+          "skill_name": "",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n모든 동료의 크리티컬 효과가 18.1%/23.5%/23.5%/28.9%/28.9%/34.3%/34.3% 증가한다. 또한 자신이 『멜로디』를 획득할 때마다 모든 동료의 크리티컬 효과가 추가로 3.0%/3.9%/3.9%/4.8%/4.8%/5.7%/5.7% 증가하며 3턴 동안 지속된다(최대 3중첩).\n『버추얼 콘서트』 상태일 때, 자신의 스킬 효과 증폭이 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Hatsune Miku",
+        "skill1": {
+          "name": "Feel the Beat",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "description": "Increase party's Attack by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, increase party's pierce rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical damage by 0.41% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 18.0%/19.8%/20.2%/22.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+          "sync_description": "Increase party's Attack by 2.27% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 100.0%/110.0%/112.0%/122.0%). Lasts 3 turns. Also grant effects to party based on the current song playing.\nHeaven: Increase party's pierce rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's damage by 0.57% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 25.0%/27.5%/28.0%/30.5%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical damage by 0.68% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 30.0%/33.0%/33.6%/36.6%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+          "sync_highlight_values": [
+            "2.27%",
+            "100.0%/110.0%/112.0%/122.0%",
+            "0.34%",
+            "15.0%/16.5%/16.8%/18.3%",
+            "0.57%",
+            "25.0%/27.5%/28.0%/30.5%",
+            "0.68%",
+            "30.0%/33.0%/33.6%/36.6%"
+          ]
+        },
+        "skill2": {
+          "name": "Clear Sound",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "description": "Increase party's damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 3 turns. Also grant effects to party based on the current song playing.\nHeaven: If Miku does not have Break Track, restore HP to party based on 30% of their max HP. Also, gain Break Track.\nSpring Storm: If Miku does not have Critical Track, increase party's weakness damage by 0.11% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 4.8%/5.3%/5.4%/5.9%). Lasts 3 turns. Also, gain Critical Track.\nPlay-With-Fire: If Miku does not have Expert Track, increase party's critical rate by 0.2% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 9.0%/9.9%/10.1%/11.0%). Lasts 3 turns. Also, gain Expert Track.\nCooldown Time: 4 ally actions",
+          "sync_description": "Increase party's damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 3 turns. Also grant efects to party based on the current song playing.\nHeaven: Restore HP to party based on 30% of their max HP. Gain Break Track, if Miku does not have it already.\nSpring Storm: Increase party's weakness damage by 0.18% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 8.0%/8.8%/9.0%/9.8%). Lasts 3 turns. Gain Critical Track, if Miku does not have it already.\nPlay-With-Fire: Increase party's critical rate by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts 3 turns. Gain Expert Track, if Miku does not have it already.\nCooldown Time: 4 ally actions",
+          "sync_highlight_values": [
+            "1.82%",
+            "80.0%/88.0%/89.6%/97.6%",
+            "0.18%",
+            "8.0%/8.8%/9.0%/9.8%",
+            "0.34%",
+            "15.0%/16.5%/16.8%/18.3%"
+          ]
+        },
+        "skill3": {
+          "name": "Showstopper",
+          "element": "버프",
+          "type": "버프",
+          "sp": 0,
+          "cool": 0,
+          "unlock": "Requires 3 different types of Track.",
+          "description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (these turns are not counted as extra actions and do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 0.34% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 15.0%/16.5%/16.8%/18.3%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra turns, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+          "sync_description": "Requires 3 different types of Track.\nSpend all Tracks to activate Virtual Concert, and change the current song playing to Ghost Rule. At this time, stop foes' turn, and grant allies extra turns for 2 turns (extra turns do not count towards the total number of actions taken, but reduce the countdowns of buffs, debuffs, and continuous damage effects).\nWhen Virtual Concert is activated, all buff effects on allies granted by Miku's skills, weapon or Talents are extended by 2 turns. Effects granted when Tracks were gained are reactivated and last for 2 turns. Increase party's critical damage by 1.82% for every 100 points of Miku's Attack (counts up to 4400/4840/4928/5368 of Miku's Attack, up to a maximum of 80.0%/88.0%/89.6%/97.6%). Lasts for 2 turns. Also, restore 35 SP to all allies.\nDuring Virtual Concert, support skills cannot be used, and their cooldown time does not decrease.\nAt the end of allies' extra actions, Virtual Concert is removed.\nCooldown Time: 6 Wonder actions (does not count extra actions)",
+          "sync_highlight_values": [
+            "1.82%",
+            "80.0%/88.0%/89.6%/97.6%"
+          ]
+        },
+        "skill_highlight": {
+          "name": "Stat Buff",
+          "element": "패시브",
+          "description": "Increase party's stats by 20% of Miku's stats."
+        },
+        "passive1": {
+          "name": "Setlist",
+          "element": "패시브",
+          "description": "When gaining a Track, increase party's Attack by 12.0% for 3 turns. Stacks up to 3 times.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Fan Favorite",
+          "element": "패시브",
+          "description": "When Virtual Concert is active, increase party's damage by 24.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "akihiko",
+      "sourceKey": "사나다",
+      "codename": "AKIHIKO",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%82%AC%EB%82%98%EB%8B%A4/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%82%AC%EB%82%98%EB%8B%A4/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%82%AC%EB%82%98%EB%8B%A4/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Akihiko Sanada",
+        "r0": "Reason to Fight",
+        "r0_detail": "At the start of battle, gain 2 Mettle stacks. Also, when dealing Electric damage with a skill or Theurgy, gain 1 Mettle stack. Stacks up to 12 times.\nAt the start of Sanada's turn, he can spend 6 Mettle stacks to activate Flash Blow 1 time.\nFlash Blow: Deal Physical damage to all foes equal to 55.9% of Attack, and increase downed foes' damage taken by 8% for 1 turn. This skill is counted as a Resonance. Also, gain 1 Grit stack.\nGrit: Increase pierce rate by 4%. Stacks up to 3 times.",
+        "r1": "Boxing Team Captain",
+        "r1_detail": "At the start of battle, increase the Theurgy gauge by 70.\nWhen gaining Grit stacks, increase critical rate by 20%.",
+        "r2": "Guardian Fist",
+        "r2_detail": "When dealing damage to downed foes, increase Down Bonus by 10%.\nAfter spending Mettle stacks to activate Flash Blow, increase Sanada's damage by 30% for 3 turns.",
+        "r3": "Stoic Heart",
+        "r3_detail": "Increase the skill levels of Spark Impact and Lightning Fist by 3.",
+        "r4": "Results of Training",
+        "r4_detail": "When activating a Theurgy, increase critical damage by 50% (between a minimum of 300% and maximum of 400%).",
+        "r5": "Buried Emotions",
+        "r5_detail": "Increase the skill levels of Blitzkrieg and Combat Tactics by 3.",
+        "r6": "Striving for Power",
+        "r6_detail": "At the start of battle, gain 6 Mettle stacks. The maximum number of Mettle stacks is increased to 18. Also, for each Grit stack gained, increase Sanada's damage by 8%. The maximum number of Grit stacks is increased to 4.\nWhen spending Grit to use Lightning Fist, also activate Finishing Blow 1 time.\nFinishing Blow: Based on the number of Grit stacks spent during Sanada's turn, deal Electric damage to all foes equal to 13.5% of Attack for each stack, with Ignore Defense. This skill is counted as a Resonance, and is guaranteed to activate a critical. Also, gain 1 Grit stack."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Akihiko Sanada",
+        "weapon4-1": {
+          "name": "Wicked Cestus",
+          "health": 1823.43,
+          "attack": 618.71,
+          "defense": 313.75,
+          "skill_name": "Explosiveness",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nAlso, when Grit is at 2 or more stacks, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+        },
+        "weapon5-1": {
+          "name": "Sabazios",
+          "health": 2279.27,
+          "attack": 773.01,
+          "defense": 391.98,
+          "skill_name": "Lethality",
+          "description": "Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0%.\nWhen gaining Mettle stacks, increase critical rate by 8.2%/10.7%/10.7%/13.2%/13.2%/15.7%/15.7% for 2 turns. This effect stacks up to 2 times.\nWhen Sanada activates a critical with a skill, Theurgy, or Resonance, increase that damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%."
+        }
+      },
+      "weaponsKr": {
+        "name": "사나다 아키히코",
+        "weapon4-1": {
+          "name": "헬 세스타스",
+          "health": 1823.43,
+          "attack": 618.71,
+          "defense": 313.75,
+          "skill_name": "폭발력",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 『투지』를 2중첩 이상 보유할 시, 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "사바지오스",
+          "health": 2279.27,
+          "attack": 773.01,
+          "defense": 391.98,
+          "highlight": true,
+          "skill_name": "필살력",
+          "description": "크리티컬 효과가 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0% 증가한다.\n자신이 집념을 획득하면 2턴 동안 크리티컬 확률이 8.2%/10.7%/10.7%/13.2%/13.2%/15.7%/15.7% 증가한다(2회 중첩 가능). 자신의 페르소나 스킬/테우르기아/추가 효과로 크리티컬을 줄 시, 대미지가 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0% 추가로 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Akihiko Sanada",
+        "skill1": {
+          "name": "Blitzkrieg",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Gain 1 Grit stack. Deal Electric damage to all foes equal to 122.8%/135.4%/130.3%/142.9% of Attack.\nAlso, increase Sanada's critical damage by 23.4%/25.8%/24.9%/27.3% for 3 turns."
+        },
+        "skill2": {
+          "name": "Spark Impact",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Gain 1 Grit stack. Deal Electric damage to all foes equal to 92.1%/101.6%/97.8%/107.2% of Attack. Also, gain 2 Mettle stacks."
+        },
+        "skill3": {
+          "name": "Lightning Fist",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 24,
+          "cool": 2,
+          "description": "Deal Electric damage to all foes equal to 136.4%/150.4%/144.8%/158.8% of Attack.\nIf Grit is at 2 stacks or higher, spend all Grit stacks, and increase this skill's multiplier by 48.8%/53.8%/51.8%/56.8% for each stack."
+        },
+        "skill_highlight": {
+          "name": "Lightning Spike",
+          "element": "전격광역",
+          "type": "광역피해",
+          "sp": 0,
+          "cool": 0,
+          "description": "Can be activated when Theurgy gauge is at 140. Deal Electric damage to all foes equal to 255.4%/281.6%/271.1%/297.3% of Attack.\nThis Theurgy is guaranteed to activate a critical hit. Also, critical damage will be between a minimum of 250% and maximum of 350%."
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 ally's critical damage by 20% for 1 turn.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "No Rules",
+          "element": "패시브",
+          "description": "When dealing damage to downed foes, increase damage by 30.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Rough Combo",
+          "element": "패시브",
+          "description": "When Sanada activates a critical, increase Attack by 13.5% for 3 turns. Stacks up to 3 times.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "yukari",
+      "sourceKey": "유카리",
+      "codename": "YUKARI",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%9C%A0%EC%B9%B4%EB%A6%AC/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Yukari Takeba",
+        "r0": "Unforgettable Feeling",
+        "r0_detail": "Yukari can inflict Erosion on foes.\nWhen other allies deal skill damage to a foe inflicted with Erosion, restore HP to all allies equal to 24.5% of Yukari's Attack + 800/1600/2400 (effect changes at Lv. 1/50/70, respectively), and gain 1 Whisperwind stack (stacks up to 2 times). This effect can only activate once between the start of Yukari's turn and the start of her next turn.",
+        "r1": "Pull the Trigger",
+        "r1_detail": "At the start of battle, gain up to the maximum number of Whisperwind stacks, and fill Theurgy gauge by 70. If the Theurgy gauge is increased above the maximum on the first turn, up to 35 above the maximum can be reserved.\nAlso, when using a skill on an ally, increase the main target's pierce rate by 20% more for 2 turns. If using Tailwind's Breath, restore 1200 more HP to all allies, and restore 30% more HP to the main target.",
+        "r2": "Sign of the Lovers",
+        "r2_detail": "When activating a Theurgy, nullify spiritual ailments on Yukari, and also increase party's critical damage by 30%. Lasts for 2 turns.",
+        "r3": "Girl Clad in Pink",
+        "r3_detail": "Increase the skill levels of Gale Burst and Arrow of Life by 3.",
+        "r4": "Healing Mastery",
+        "r4_detail": "When using a Theurgy, also restore HP to the ally with the lowest HP by 5% of Yukari's Attack + 500, and also increase party's damage by 10% for 2 turns.",
+        "r5": "Pursuit of Doubt",
+        "r5_detail": "Increase the skill levels of Tailwind's Breath and Combat Tactics by 3.",
+        "r6": "Spring Day's Meeting",
+        "r6_detail": "Double the Theurgy gauge increase from Arrow of Life.\nAlso, when an ally uses a Theurgy, increase critical damage by 30% for 2 turns."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Yukari Takeba",
+        "weapon4-1": {
+          "name": "Kishin Bow",
+          "health": 1823.43,
+          "attack": 565.81,
+          "defense": 328.02,
+          "skill_name": "Effortless Arrow",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Arrow of Life is used, increase HP Recovery by 13.0%/16.9%/16.9%/20.9%/20.9%/24.8%/24.8%."
+        },
+        "weapon5-1": {
+          "name": "Sarnga",
+          "health": 2279.27,
+          "attack": 706.91,
+          "defense": 409.62,
+          "skill_name": "Verdant Arrow",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen an ally attacks a foe inflicted with Erosion and has their HP recovered, increase HP Recovery by 15.7%/20.3%/20.3%/24.9%/24.9%/29.5%/29.5% + 600/800/800/1000/1000/1200/1200.\nWhen Arrow of Life is used, for every Whisperwind stack spent, increase all allies' damage by 18.0%/23.5%/23.5%/29.0%/29.0%/34.5%/34.5% for 2 turns. Stacks up to 2 times."
+        }
+      },
+      "weaponsKr": {
+        "name": "타케바 유카리",
+        "weapon4-1": {
+          "name": "귀신의 활",
+          "health": 1823.43,
+          "attack": 565.81,
+          "defense": 328.02,
+          "skill_name": "유인 화살",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n『리바이브 애로』 시전 시 치료 효과가 13.0%/16.9%/16.9%/20.9%/20.9%/24.8%/24.8% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "사릉가",
+          "health": 2279.27,
+          "attack": 706.91,
+          "defense": 409.62,
+          "skill_name": "청람 화살",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n아군 동료가 『바람의 흔적』을 지닌 적을 공격해 생명 회복 시 치료량이 15.7%/20.3%/20.3%/24.9%/24.9%/29.5%/29.5%+600/800/800/1000/1000/1200/1200 추가 증가한다. 『회생의 화살』 시전 시, 『바람의 언어』를 1중첩 소모할 때마다 2턴 동안 아군 전체의 주는 대미지가 18.0%/23.5%/23.5%/29.0%/29.0%/34.5%/34.5%증가한다(2회 중첩 가능)."
+        }
+      },
+      "skills": {
+        "name": "Yukari Takeba",
+        "skill1": {
+          "name": "Gale Burst",
+          "element": "질풍",
+          "type": "단일 피해",
+          "sp": 23,
+          "cool": 0,
+          "description": "Deal Wind damage to 1 foe equal to 200.1%/220.6%/212.4%/232.9% of Attack. Also, inflict Windswept and Erosion for 2 turns. Multiple foes cannot be inflicted with Erosion at the same time. If a foe with Erosion is defeated, Erosion is transferred to the foe with the highest HP.\nPassive: When an ally attacks a foe with a skill, if any target is inflicted with Erosion, increase that skill's Attack by 8.8%/9.7%/9.3%/10.2% + 0.72% for every 100 points of Yukari's Attack (up to a maximum of 29.3%/32.3%/31.1%/34.1%)."
+        },
+        "skill2": {
+          "name": "Tailwind's Breath",
+          "element": "버프광역",
+          "type": "",
+          "sp": 25,
+          "cool": 0,
+          "description": "Decrease party's damage taken by 29.3%/32.3%/31.1%/34.1% for 3 turns.\nAlso, increase the main target's Attack by 7.8%/8.6%/8.3%/9.1% + 0.78% for every 100 points of Yukari's Attack (up to a maximum of 31.2%/34.4%/33.2%/36.4%), and increase damage by 0.24% for every 100 points of Yukari's Attack (up to a maximum of 9.8%/10.8%/10.4%/11.4%) for 2 turns."
+        },
+        "skill3": {
+          "name": "Arrow of Life",
+          "element": "치료광역",
+          "type": "",
+          "sp": 27,
+          "cool": 0,
+          "description": "Restore HP to all allies equal to 39.1%/43.1%/41.5%/45.6% of Yukari's Attack + 2507/3158/3081/3773.\nSpend all Whisperwind stacks, and for each stack spent, increase the main target's Theurgy gauge by 17.5, and after the next time the target activates a Theurgy, increase Attack by 29.3%/32.3%/31.1%/34.1% for 2 turns. This effect stacks up to 2 times. If the Theurgy gauge is increased above the maximum, the amount above the maximum is temporarily reserved for up to 2 turns, and returned after the Theurgy is activated.\nIf the main target has a Highlight, the next time they activate a Highlight, increase final damage amplification by 9.8%/10.8%/10.4%/11.4% for every Whisperwind stack spent."
+        },
+        "skill_highlight": {
+          "name": "Cyclone Arrow",
+          "element": "질풍",
+          "type": "",
+          "description": "Can be activated when Theurgy gauge is at 70. Deal Wind damage to 1 foe equal to 406.0%/447.6%/431.0%/472.6% of Attack. Also, remove 2 buffs from the target, and inflict Windswept and Erosion.\nAlso, increase party's damage by 0.48% for every 100 points of Yukari's Attack (up to a maximum of 19.5%/21.5%/20.7%/22.7%) for 2 turns.",
+          "cool": 0
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "",
+          "description": "Remove 1 debuff from 1 ally.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "Tailwind's Air",
+          "element": "패시브",
+          "description": "When Yukari is present, increase party's Highlight and Theurgy damage by 45.0%. When an ally activates a Highlight or Theurgy, increase that ally's damage by 20.0% for 2 turns.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Archer's Courage",
+          "element": "패시브",
+          "description": "During battle, increase max HP by 60 for every 100 points of Yukari's Attack (up to a maximum of 2700).",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "makoto",
+      "sourceKey": "유키 마코토",
+      "codename": "MAKOTO",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%9C%A0%ED%82%A4%20%EB%A7%88%EC%BD%94%ED%86%A0/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Makoto Yuki",
+        "r0": "Pathfinder",
+        "r0_detail": "Makoto has 2 Theurgy: Cadenza and Ardhanari. At the start of battle, if Makoto's Theurgy Gauge is below 35, fill up to 35.\nWhen receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), gain 1 Moon Phase stack (up to 1 stack per turn). This effect lasts for 2 turns, and stacks up to 4 times.\nWith Moon Phase, increase pierce rate by 4%/8%/12% (effect changes at Lv. 1/50/70, respectively).",
+        "r1": "Result of Coincidence",
+        "r1_detail": "Additional effects are added to the following skills.\nMelody of Flames: This skill deals 1 more hit of Fire damage.\nNocturne of Battle: Increase party's pierce rate by 10% for 2 turns.\nScarlet Hades: When this skill is activated with 4 Moon Phase stacks, increase Makoto's critical rate by 16%.",
+        "r2": "Immovable Soul",
+        "r2_detail": "When Makoto has 4 Moon Phase stacks on his action, automatically activate Nocturne of Battle 1 time.\nCooldown time: 1 turn.",
+        "r3": "Under the Full Moon",
+        "r3_detail": "Increase the skill levels of Scarlet Hades and Combat Tactics by 3.",
+        "r4": "Thorny Path",
+        "r4_detail": "Additional effects are added to the following Theurgy.\nCadenza: Increase party's damage by 10% more for 2 turns.\nArdhanari: This skill deals 2 more hits of Fire damage.",
+        "r5": "Soul Flames",
+        "r5_detail": "Increase the skill levels of Melody of Flames and Nocturne of Battle by 3.",
+        "r6": "Burn My Dread",
+        "r6_detail": "When Makoto activates a Theurgy, the effects of the other Theurgy are activated at the same time.\nIncrease skill damage dealt by spending Full Moon stacks with Scarlet Hades by 35%.\nThe first time that Makoto takes fatal damage, he enters a special near-death state and survives with 1 HP, and will be KO'd at the end of the turn. If Makoto's HP is restored above 25%, this state is removed."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Makoto Yuki",
+        "weapon4-1": {
+          "name": "Translucent Blade",
+          "health": 1728.63,
+          "attack": 628.77,
+          "defense": 313.75,
+          "skill_name": "Silent Resolve",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Makoto grants a buff to an ally, increase party's damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2%, and also increase Makoto's damage by 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% more for 2 turns."
+        },
+        "weapon5-1": {
+          "name": "Deus Xiphos",
+          "health": 2160.41,
+          "attack": 786.22,
+          "defense": 391.98,
+          "skill_name": "Hour of Reversal",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nFor every 3 Moon Phase or Full Moon stacks gained, increase critical rate by 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% for 2 turns.\nWhen Makoto deals 4 or more hits of damage with 1 skill or Theurgy, increase that skill or Theurgy's damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%."
+        }
+      },
+      "weaponsKr": {
+        "name": "유키 마코토",
+        "weapon4-1": {
+          "name": "명도 토테츠",
+          "health": 1728.63,
+          "attack": 628.77,
+          "defense": 313.75,
+          "skill_name": "정수의 의지",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 아군 동료에게 버프 효과를 추가할 때 모든 동료의 대미지가 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% 증가하고, 자신의 대미지가 8.8%/11.6%/11.6%/14.4%/14.4%/17.2%/17.2% 추가 증가한다. 효과는 2턴 동안 증가한다."
+        },
+        "weapon5-1": {
+          "name": "데오스사이포스",
+          "health": 2160.41,
+          "attack": 786.22,
+          "defense": 391.98,
+          "highlight": true,
+          "skill_name": "역전의 순간",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n자신이 『월상』 또는 『특수 월상』을 누적 3중첩 획득할 때마다 2턴 동안 크리티컬 확률이 16.3%/21.2%/21.2%/26.1%/26.1%/31.0%/31.0% 증가한다. 자신이 페르소나 스킬/테우르기아를 시전해 4회 이상 대미지를 줄 경우, 대미지가 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Makoto Yuki",
+        "skill1": {
+          "name": "Melody of Flames",
+          "element": "화염",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 59.8%/66.0%/63.5%/69.6% of Attack (3 hits). Also, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times.\nAlso, when spending Moon Phase to use Scarlet Hades, increase skill multiplier by 32.5%/35.8%/34.5%/37.8% for 2 turns."
+        },
+        "skill2": {
+          "name": "Nocturne of Battle",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 20,
+          "cool": 0,
+          "description": "Increase party's critical damage by 23.4%/25.8%/24.9%/27.3%, and increase Makoto's Attack by 19.5%/21.5%/20.7%/22.7% for 2 turns.\nAlso, gain 2 Moon Phase stacks. This effect lasts for 2 turns, and stacks up to 4 times."
+        },
+        "skill3": {
+          "name": "Scarlet Hades",
+          "element": "화염",
+          "type": "단일피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Can be activated with 2 or more Moon Phase stacks. Spend all Moon Phase stacks, and deal Fire damage to 1 foe equal to 91.5%/100.8%/97.1%/106.5% of Makoto's Attack (1 hit per stack spent). Afterwards, spend all Full Moon stacks, and deal Fire damage to 1 foe equal to 150.7%/166.2%/160.0%/175.5% of Makoto's Attack (1 hit per stack spent).\nWhen this skill is activated with 4 Moon Phase stacks, increase Makoto's pierce rate by 11.7%/12.9%/12.4%/13.6%, and increase damage by 24.4%/26.9%/25.9%/28.4%."
+        },
+        "skill_highlight": {
+          "name": "Ardhanari",
+          "element": "화염",
+          "type": "",
+          "description": "Can be activated when Theurgy Gauge is at 100. Deal Fire damage to 1 foe equal to 147.5%/162.6%/156.5%/171.6% of Makoto's Attack (4 hits).\nAlso, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+          "cool": 0
+        },
+        "skill_highlight2": {
+          "name": "Cadenza",
+          "element": "버프",
+          "type": "버프",
+          "description": "Can be activated when Theurgy Gauge is at 100. Increase party's Attack by 24.4%/26.9%/25.9%/28.4%, and increase damage by 19.5%/21.5%/20.7%/22.7% for 2 turns. Also, gain 1 Full Moon stack. This effect lasts 2 turns, and stacks up to 4 times.",
+          "cool": 0
+        },
+        "skill_support": {
+          "name": "Assist",
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 ally's Attack by 20% for 1 turn.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "On-Site Leader",
+          "element": "패시브",
+          "description": "After activating a Theurgy, increase party's Attack by 40.0% for 2 turns, and increase Attack of SEES members by 30.0% more.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Entrusted Hope",
+          "element": "패시브",
+          "description": "When receiving buff, healing, or shield skill effects from an ally (excluding effects that also target foes), increase critical damage by 7.2% for 2 turns. Stacks up to 3 times.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "ange",
+      "sourceKey": "마나카",
+      "codename": "ANGE",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%A7%88%EB%82%98%EC%B9%B4/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%A7%88%EB%82%98%EC%B9%B4/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%A7%88%EB%82%98%EC%B9%B4/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Manaka Nagao",
+        "r0": "Andante",
+        "r0_detail": "On each ally's action, gain 1 Musical Note stack, up to a maximum of 12 stacks.\nBefore any ally's action, Manaka can activate Da Capo (the initial use count in each battle is 1). After activating Da Capo, when Wonder takes 7 actions other than additional actions, restore the use count by 1 (this effect activates only 1 time per battle).\nDa Capo: Remove 1 debuff effect from 1 ally. At the end of the target's next action, grant a special additional action. When entering this state, the target's HP, SP, buff/debuff effects, and skill cooldowns are reset to their state at the start of the previous action.",
+        "r1": "Allegro",
+        "r1_detail": "At the start of battle, gain the maximum number of Musical Note stacks, and reduce the first cooldown time by 4 actions.\nAlso, when using Melody of Steps, also increase party's critical rate by 12% for 2 turns.",
+        "r2": "Fortissimo",
+        "r2_detail": "Increase final damage amplification of allies with extra actions from Da Capo by 12%.\nWhen an ally is KO'd, restore their HP equal to 20% of Manaka's Attack + 2000. This effect can be activated once per battle.",
+        "r3": "Vibrato",
+        "r3_detail": "Increase the skill levels of Prayer Refrain and Melody of Steps by 3.",
+        "r4": "Symphonia",
+        "r4_detail": "At the start of battle, or when an ally activates a Highlight or Theurgy, gain 2 Musical Note stacks. Stacks gained from this effect can exceed the maximum limit up to 2 times.",
+        "r5": "Molto Vivace",
+        "r5_detail": "Increase the skill level of Winged Canon by 3.",
+        "r6": "Con Anima",
+        "r6_detail": "Increase the initial use count of Da Capo by 1."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Manaka Nagao",
+        "weapon4-1": {
+          "name": "Divine Muse",
+          "health": 1776.03,
+          "attack": 607.79,
+          "defense": 317.1,
+          "skill_name": "Luminous Glaze",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nAfter using a skill, permanently increase Manaka's Attack by 11.0%/14.5%/14.5%/18.0%/18.0%/21.5%/21.5%. Stacks up to 2 times."
+        },
+        "weapon5-1": {
+          "name": "Angel's Hymn",
+          "health": 2219.84,
+          "attack": 759.73,
+          "defense": 396.41,
+          "skill_name": "Divine Radiance",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nFor each Musical Note gained, grant 1 Angelic Chorus stack to all allies.\nAngelic Chorus: Permanently increase damage by 0.7%/0.9%/0.9%/1.1%/1.1%/1.3%/1.3%. Stacks up to 12 times. At 12 stacks, increase critical damage by 15.3%/19.9%/19.9%/24.5%/24.5%/29.1%/29.1%."
+        }
+      },
+      "weaponsKr": {
+        "name": "나가오 마나카",
+        "weapon4-1": {
+          "name": "꿈을 담은 노래",
+          "health": 1776.03,
+          "attack": 607.79,
+          "defense": 317.1,
+          "skill_name": "유리",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 나가오 마나카가 스킬 사용 후 자신의 공격력이 11.0%/14.5%/14.5%/18.0%/18.0%/21.5%/21.5% 증가한다(2회 중첩 가능, 해당 전투 내내 적용)."
+        },
+        "weapon5-1": {
+          "name": "천상의 속삭임",
+          "health": 2219.84,
+          "attack": 759.73,
+          "defense": 396.41,
+          "skill_name": "연비",
+          "highlight": true,
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n나가오 마나카가 『성가』를 1중첩 획득할 때마다 모든 동료가 『청음』을 1중첩 획득한다. 『청음』: 주는 대미지가 0.7%/0.9%/0.9%/1.1%/1.1%/1.3%/1.3% 증가한다(12회 중첩 가능, 해당 전투 내내 적용). 『청음』이 12중첩에 도달하면 크리티컬 효과가 15.3%/19.9%/19.9%/24.5%/24.5%/29.1%/29.1% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Manaka Nagao",
+        "skill1": {
+          "name": "Winged Canon",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's damage by 7.0%/7.7%/7.8%/8.5% for 2 turns (for every 164 points of Manaka's Attack, increase by 1% more, up to a maximum of 28.0%/30.8%/31.4%/34.2%).\nAlso, gain 4 Musical Note stacks.\nCooldown Time: 4 ally actions"
+        },
+        "skill2": {
+          "name": "Prayer Refrain",
+          "element": "치료광역",
+          "type": "치료",
+          "cool": 0,
+          "description": "Restore HP to party equal to 10.0%/10.0%/11.2%/11.2% of Manaka's Attack + 681/816/989/1124, and remove 1 debuff.\nWhen Manaka has Musical Note, spend 1 Musical Note stack, and reduce skill cooldown by 1 action. (this effect can reduce cooldowns by up to 4 actions).\nIf this skill is selected and used, increase healing by 50%.\nCooldown Time: 8 ally actions\nAutomatic Effect: For every 12 Musical Note stacks gained during battle, activate this skill's healing effect 1 time."
+        },
+        "skill3": {
+          "name": "Melody of Steps",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's Attack by 11% of Manaka's Attack + 128/140/143/156 for 2 turns.\nSpend all Musical Note stacks, and for each stack spent, increase party's pierce rate by 0.1% for every 460 points of Manaka's Attack, and increase party's Attack by 0.1% for every 460 points of Manaka's Attack. Lasts for 2 turns.\nThis skill applies up to 4600/5060/5980/6440 of Manaka's Attack.\nCooldown Time: 4 ally actions"
+        },
+        "skill_highlight": {
+          "name": "Stat Buff",
+          "element": "패시브",
+          "description": "Increase party's stats by 20% of Manaka's stats."
+        },
+        "passive1": {
+          "name": "Crescendo",
+          "element": "패시브",
+          "description": "Increase Attack of allies with Da Capo by 37.5%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Heavenly Voice",
+          "element": "패시브",
+          "description": "Based on the total number of Musical Note stacks gained, increase party's pierce rate by 1.0% for each stack. Counts up to 12 stacks.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "luce",
+      "sourceKey": "쇼키",
+      "codename": "LUCE",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%87%BC%ED%82%A4/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%87%BC%ED%82%A4/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%87%BC%ED%82%A4/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Shoki Ikenami",
+        "r0": "High School Heartthrob",
+        "r0_detail": "Shoki has 4 types of Improv states: Blazing Passion, Chilling Intensity, Electrifying Performance, and Tempestuous Drama. During battle, he can switch between states at the start of each turn.\nWhen dealing damage with a skill, there is a 75% chance to inflict all foes with an elemental ailment based on his current Improv state (Burn, Freeze, Shock, or Windswept).",
+        "r1": "In the Limelight",
+        "r1_detail": "When using a skill on an ally, for each Blessing stack on the target, increase the target's damage dealt by 3% (up to a maximum of 15%) for 2 turns.",
+        "r2": "Flawless Performance",
+        "r2_detail": "When using Adlib, also grant an additional effect: When the target next takes skill damage, decrease their final damage taken by 35% for 1 turn.",
+        "r3": "Heroic Climax",
+        "r3_detail": "Increase the skill levels of Followspot and Adlib by 2.",
+        "r4": "Standing Ovation",
+        "r4_detail": "Highlight Enhanced: Increase the main target's Attack by 10% for 2 turns, and grant 2 more Blessing stacks to all allies.",
+        "r5": "Flowers on the Stage",
+        "r5_detail": "Increase the skill levels of Improvise and Thief Tactics by 2.",
+        "r6": "Bright Future",
+        "r6_detail": "When the additional effects of Improvise are activated based on Improv state, extend the duration of the additional effects to 4 turns."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Shoki Ikenami",
+        "weapon4-1": {
+          "name": "Mattatóre",
+          "health": 1823.43,
+          "attack": 539.4,
+          "defense": 349.01,
+          "skill_name": "Fated Enthroning",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. When Shoki grants Blessing stacks, increase his Attack by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% and ailment accuracy by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% for 2 turns. Stacks up to 3 times."
+        },
+        "weapon4-2": {
+          "name": "Sipario",
+          "health": 2497.32,
+          "attack": 594.58,
+          "defense": 449.24,
+          "skill_name": "Innumerable Stages",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen using a skill on an ally, increase Shoki's ailment accuracy by 22.0%/28.0%/28.0%/34.0%/34.0%/40.0%/40.0% and grant 60% of this effect to all allies besides Shoki for 2 turns."
+        },
+        "weapon5-1": {
+          "name": "Ribalta",
+          "health": 2279.27,
+          "attack": 673.89,
+          "defense": 436.03,
+          "skill_name": "Starstruck Throne",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen using a skill on an ally, if the target has Blessing stacks, increase damage by 11.0%/14.0%/14.0%/17.0%/17.0%/20.0%/20.0% for 2 turns.\nEach time Followspot or Improvise is activated with a different Improv state, permanently increase Shoki's Attack by 14.0%/18.0%/18.0%/22.0%/22.0%/26.0%/26.0%. This effect stacks up to 3 times. Also, allies besides Shoki gain 50% of this effect."
+        }
+      },
+      "weaponsKr": {
+        "name": "이케나미 쇼키",
+        "weapon4-1": {
+          "name": "맹세의 성검",
+          "health": 1823.43,
+          "attack": 539.4,
+          "defense": 349.01,
+          "skill_name": "신탁의 관",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신에게 축복 효과가 추가되면 2턴 동안 자신의 공격력이 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% 증가하고, 효과 명중이 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% 증가한다(3회 중첩 가능)."
+        },
+        "weapon4-2": {
+          "name": "환영의 실루엣",
+          "health": 2497.32,
+          "attack": 594.58,
+          "defense": 449.24,
+          "skill_name": "막 속의 막",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 아군 동료에게 페르소나 스킬 시전 후 2턴 동안 자신의 효과 명중이 22.0%/28.0%/28.0%/34.0%/34.0%/40.0%/40.0% 증가하고, 스킬 목표는 해당 효과의 60%만큼 증가한다."
+        },
+        "weapon5-1": {
+          "name": "백야의 성흔",
+          "health": 2279.27,
+          "attack": 673.89,
+          "defense": 436.03,
+          "skill_name": "별의 낙궁",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n동료에게 페르소나 스킬 시전 시 목표가 축복 효과를 보유한 경우, 2턴 동안 해당 목표의 주는 대미지가 11.0%/14.0%/14.0%/17.0%/17.0%/20.0%/20.0% 증가한다. 자신이 각기 다른 『즉흥 공연』 상태에서 페르소나 스킬 시전 시 자신의 공격력이 14.0%/18.0%/18.0%/22.0%/22.0%/26.0%/26.0% 영구 증가하고(3회 중첩 가능), 모든 동료는 50%의 효과를 획득한다."
+        }
+      },
+      "skills": {
+        "name": "Shoki Ikenami",
+        "skill1": {
+          "name": "Followspot",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 151.8%/167.3%/158.0%/173.5% of Attack.\nAlso, grant 2 Blessing stacks to all allies, and for 2 turns, increase damage by 0.8% for every 100 points of Shoki's Attack (up to a maximum of 35.1%/38.7%/36.6%/40.2%)."
+        },
+        "skill2": {
+          "name": "Adlib",
+          "element": "버프",
+          "type": "버프",
+          "sp": 24,
+          "cool": 2,
+          "description": "Increase Defense of 1 ally except Shoki by 0.83% for every 100 points of Shoki's Attack (up to a maximum of 36.6%/40.4%/38.1%/41.8%), and nullify Dizzy, Sleep, Confuse, and Forget. Lasts for 2 turns.\nCooldown: 2 turns."
+        },
+        "skill3": {
+          "name": "Improvise",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 24,
+          "cool": 0,
+          "description": "Increase party's Attack by 15% of Shoki's Attack (up to a maximum of 569/627/592/650) for 2 turns.\nAlso, based on Shoki's Improv state, grant the following additional effect to the main target.\nBlazing Passion: Increase the main target's continuous damage by 14.0%/15.4%/14.5%/16.0%, and increase ailment accuracy by 30% for 2 turns.\nChilling Intensity: Increase the main target's Technical Precision by 655/723/682/749 for 2 turns. Also, when activating a technical, increase Attack by 20%.\nElectrifying Performance: Increase the main target's critical damage by 24.4%/26.9%/25.4%/27.9% for 2 turns.\nTempestuous Drama: Increase the main target's pierce rate by 12.0%/13.2%/12.5%/13.7% for 2 turns."
+        },
+        "skill_highlight": {
+          "element": "버프광역",
+          "type": "버프",
+          "description": "Increase party's Attack by 6.5% of Shoki's Attack (up to a maximum of 284/314/296/325), and increase ailment resistance by 82.0%/90.4%/85.3%/93.7% for 2 turns.\nAlso, grant 1 Blessing stack.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Supporting Role",
+          "element": "패시브",
+          "description": "When allies gain a Blessing, increase damage by 5% for each Blessing stack (up to a maximum of 25.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Method Acting",
+          "element": "패시브",
+          "description": "Increase Attack by 0.72% for every 1% of Shoki's ailment accuracy (up to a maximum of 72.0%).",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "crow",
+      "sourceKey": "아케치",
+      "codename": "CROW",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%95%84%EC%BC%80%EC%B9%98/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Goro Akechi",
+        "r0": "High School Detective",
+        "r0_detail": "At the start of battle, grant Mastermind to the ally with the highest Attack (prioritizing Sweepers or Assassins, select Akechi if no target found). At the start of each turn, can manually reselect a target to grant Mastermind. Only 1 ally can have Mastermind at one time (reselecting has a cooldown of 1 turn).\nAlso, increase Akechi's Attack by 25% of the Mastermind ally's Attack (up to a maximum of 500/750/1000, at level 1/50/70, respectively).\nWhen an ally besides Akechi has Mastermind and deals damage to all foes with an attack skill, Highlight, Theurgy, or Resonance, record the average damage dealt to all foes (if targeting 1 foe, record 40% of the damage dealt). At the start of Akechi's turn, gain 1 Arrow of Truth stack based on the amount of damage recorded, and reset the recorded damage. Arrow of Truth can be held for 2 turns.\nWhen Akechi has Mastermind, the effect of Rain of Justice changes, and Arrow of Truth deals Almighty damage based on the skill multiplier or Arrow of Perjury.",
+        "r1": "Detective Profile",
+        "r1_detail": "At the start of battle, gain Deduction, and the durations of Deduction and Stratagem are extended to 4 turns.\nAlso, when Deduction and Stratagem are both active, increase Akechi's critical rate by 16%, and increase the damage dealt by Akechi and allies with Mastermind by 25%.",
+        "r2": "Detective Advice",
+        "r2_detail": "When dealing damage with a skill, if the attribute of the last skill used was different, increase the Attack of Akechi and allies with Mastermind by 25%, and their critical damage by 30%. Lasts for 1 turn.",
+        "r3": "Detective Style",
+        "r3_detail": "Increase the skill levels of Rain of Justice and Thief Tactics by 3.",
+        "r4": "Detective Trick",
+        "r4_detail": "Highlight Enhanced: Increase the damage of Arrow of Perjury by 30% more for 4 turns.",
+        "r5": "Detective Logic",
+        "r5_detail": "Increase the skill levels of Flash of Intuition and Decisive Scheme by 3.",
+        "r6": "Masked Detective",
+        "r6_detail": "When using Rain of Justice, increase the effect of Arrow of Truth by 50%.\nAkechi and all allies are considered to have the Mastermind effect (the Attack increase from High School Detective is based on the ally with the highest Attack). During battle, increase Akechi's critical rate and critical damage more. This additional increase is equal to 40% of the critical rate of the Mastermind ally with the highest critical rate, and 40% of the highest critical multiplier exceeding 100% (up to a maximum of 20% and 40%, respectively)."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Goro Akechi",
+        "weapon4-1": {
+          "name": "Victory Beam",
+          "health": 1870.83,
+          "attack": 592.3,
+          "defense": 328.02,
+          "skill_name": "Planar Cohesion",
+          "description": "Increase Almighty damage by 9.6%/9.6%/12.8%/12.8%/16.0%/16.0%/19.2%.\nWhen gaining Suspicion, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+        },
+        "weapon5-1": {
+          "name": "Gordian Kopis",
+          "health": 2338.77,
+          "attack": 739.92,
+          "defense": 409.62,
+          "skill_name": "Divine Blessing",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen entering Deduction or Stratagem state, increase party's Attack by 21.0%/27.3%/27.3%/33.7%/33.7%/40.0%/40.0% for 2 turns.\nAlso, when an ally with Mastermind activates a skill, Highlight, Theurgy, or Resonance, increase Akechi's critical damage by 15.0%/19.5%/19.5%/24.0%/24.0%/28.5%/28.5% for 2 turns. Stacks up to 2 times."
+        }
+      },
+      "weaponsKr": {
+        "name": "아케치 고로",
+        "weapon4-1": {
+          "name": "아오누마 광선검",
+          "health": 1870.83,
+          "attack": 592.3,
+          "defense": 328.02,
+          "skill_name": "위상 융합",
+          "description": "만능 속성 대미지가 9.6%/9.6%/12.8%/12.8%/16.0%/16.0%/19.2% 증가한다. 자신이 『진실』 상태일 때 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "신의 심판",
+          "health": 2338.77,
+          "attack": 739.92,
+          "defense": 409.62,
+          "skill_name": "신의 축복",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다. 자신이 『명확』 또는 『혼돈』 상태를 획득하면 2턴 동안 아군 전체 동료의 공격력이 21.0%/27.3%/27.3%/33.7%/33.7%/40.0%/40.0% 증가한다. 탐정 동료가 페르소나 스킬/HIGHLIGHT/테우르기아/추가 효과를 시전하면 2턴 동안 아케치 고로의 크리티컬 효과가 15.0%/19.5%/19.5%/24.0%/24.0%/28.5%/28.5% 증가한다(2회 중첩 가능)."
+        }
+      },
+      "skills": {
+        "name": "Goro Akechi",
+        "skill1": {
+          "name": "Flash of Intuition",
+          "element": "축복광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to all foes equal to 93.2%/102.8%/98.9%/108.5% of Attack. Also, restore all allies' HP by 1561/1561/1657/1657 and grant 1 Blessing stack.\nAlso, gain Suspicion, and gain Deduction for 2 turns. With Deduction, increase party's damage by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "skill2": {
+          "name": "Decisive Scheme",
+          "element": "주원광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Curse damage to all foes equal to 116.5%/128.5%/123.7%/135.6% of Attack.\nAlso, gain Suspicion, and gain Stratagem for 2 turns. With Stratagem, decrease all foes' Defense by 25.4%/28.0%/26.9%/29.5%. Also increase Arrow of Perjury's number of hits by 1, and increase damage dealt by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "skill3": {
+          "name": "Rain of Justice",
+          "element": "만능광역",
+          "type": "광역피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Usable with Suspicion.\nSpend all Arrow of Truth stacks, deal a fixed amount of Almighty damage to all foes equal to 19.5%/21.5%/20.7%/22.7% of the damage recorded by each Arrow of Truth stack, and lose Suspicion.\nThen, activate Arrow of Perjury on random foes, dealing Almighty damage equal to 77.4%/85.3%/82.2%/90.1% (4 hits). From the second hit, prioritize new targets, and decrease damage to 15% for hits on the same target.\nIf Akechi has Mastermind, Arrow of Truth gains 240% of the Almighty damage of Arrow of Perjury."
+        },
+        "skill_highlight": {
+          "element": "만능",
+          "type": "광역피해",
+          "description": "Deal Bless damage to all foes equal to 124.1%/136.9%/131.8%/144.5% of Attack, and Curse damage equal to 124.1%/136.9%/131.8%/144.5% of Attack (1 hit each).\nAlso, for 4 turns, increase Arrow of Perjury's number of hits by 2.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Rival's Pride",
+          "element": "패시브",
+          "description": "Can activate Flames of Desire effects with all allies in the party. At the start of battle, for each Flames of Desire effect activated, increase Akechi's damage by 15.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Rending Arrow",
+          "element": "패시브",
+          "description": "When dealing Almighty damage, for every 1% of the target's decreased Defense, increase Akechi's damage dealt by 0.5% (up to a maximum of 120.0%).",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "turbo",
+      "sourceKey": "마유미",
+      "codename": "TURBO",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%A7%88%EC%9C%A0%EB%AF%B8/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%A7%88%EC%9C%A0%EB%AF%B8/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%A7%88%EC%9C%A0%EB%AF%B8/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Mayumi Hashimoto",
+        "r0": "Racing Game Lover",
+        "r0_detail": "At the start of battle, Mayumi gains 90 Velocity stacks. At the end of each action by an ally, gain 4 Velocity stacks (if Mayumi's Speed is over 100, gain 1 more Velocity stack for every 10 points of Speed over 100; up to 6 stacks).\nAt the start of Mayumi's turn, if Velocity is over 120 stacks, can spend Velocity to gain an extra action at the end of her current action (cooldown: 1 turn). When total Velocity stacks gained during battle reach 100/220/350 stacks, activate level 1/2/3 of Torque Boost.\nTorque Boost: Increase party's pierce rate by 5%/10%/15%.",
+        "r1": "Tire Change",
+        "r1_detail": "At the end of each action by an ally, gain 10 more Velocity stacks.\nOn an extra action, when using a skill different from the one used immediately before, activate the following additional effects.\nShockwave: When activating a skill, increase critical damage by 50%.\nAero Setup: Increase shield by 30%. Also, increase party's Defense by 30% more.\nPower Setup: Increase main target's pierce rate by 10% more.",
+        "r2": "High-Spec Engine",
+        "r2_detail": "When activating Torque Boost, activate the following additional effects.\nLevel 1: Increase party's critical damage by 20%.\nLevel 2: Increase party's damage by 20%.\nLevel 3: Increase party's Attack by 30%.",
+        "r3": "Output Control",
+        "r3_detail": "Increase the skill levels of Power Setup and Thief Tactics by 3.",
+        "r4": "Pole Position",
+        "r4_detail": "Highlight Enhanced: Increase party's damage by 10% more. Also, extend the duration of the Highlight's buffs by 1 turn.",
+        "r5": "Aerodynamic Control",
+        "r5_detail": "Increase the skill levels of Shockwave and Aero Setup by 3.",
+        "r6": "Circuit Queen",
+        "r6_detail": "The amount of Velocity stacks gained at the start of battle becomes 120. On Mayumi's extra action, spend 40 or 80 Velocity stacks, and activate the following additional effects the next time a skill is activated.\n40 Velocity spent\nShockwave: When activating a skill, increase Mayumi's critical rate by 20%. If the target is knocked down, increase party's Attack by 25% for 2 turns.\nAero Setup: Increase shield by 20%. Also, extend the shield duration by 1 turn.\nPower Setup: When used on an extra turn, change buff target from main target to all allies.\n80 Velocity spent\nShockwave: Increase party's damage dealt to downed foes by 15% for 1 turn.\nAero Setup: Decrease party's damage taken by 20% for 1 turn.\nPower Setup: Increase party's damage dealt by 25% for 1 turn."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Mayumi Hashimoto",
+        "weapon4-1": {
+          "name": "Formula Pennant",
+          "health": 1791.59,
+          "attack": 554.96,
+          "defense": 328.02,
+          "skill_name": "Wake Effect",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen activating Torque Boost, increase damage by 18.0%/23.4%/23.4%/28.8%/28.8%/34.2%/34.2%."
+        },
+        "weapon5-1": {
+          "name": "Nebula Pennant",
+          "health": 2239.65,
+          "attack": 693.7,
+          "defense": 409.62,
+          "skill_name": "Gravity Acceleration",
+          "description": "Increase Speed by 15/15/20/20/25/25/30. When Mayumi's Speed is over 100, for every 10 points of Speed above 100, increase Attack by 12.5%/16.2%/16.2%/20.0%/20.0%/23.8%/23.8% (up to a maximum of 100.0%/130.0%/130.0%/160.0%/160.0%/190.0%/190.0%).\nAfter activating a skill, for every 40 stacks of total Velocity, increase party's damage by 3.4%/4.4%/4.4%/5.4%/5.4%/6.4%/6.4% for 2 turns (up to a maximum of 17.0%/22.0%/22.0%/27.0%/27.0%/32.0%/32.0%)."
+        }
+      },
+      "weaponsKr": {
+        "name": "하시모토 마유미",
+        "weapon4-1": {
+          "name": "개척자",
+          "health": 1791.59,
+          "attack": 554.96,
+          "defense": 328.02,
+          "skill_name": "후류 효과",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『급속 광륜』 활성화 후 자신의 대미지가 18.0%/23.4%/23.4%/28.8%/28.8%/34.2%/34.2% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "승리 선언",
+          "health": 2239.65,
+          "attack": 693.7,
+          "defense": 409.62,
+          "highlight": true,
+          "skill_name": "중력 가속",
+          "description": "속도가 15/15/20/20/25/25/30 증가한다.\n자신의 속도가 100을 초과하는 경우, 초과분 10포인트마다 자신의 공격력이 12.5%/16.2%/16.2%/20.0%/20.0%/23.8%/23.8% 증가하며 최대 100.0%/130.0%/130.0%/160.0%/160.0%/190.0%/190.0% 증가한다.\n페르소나 스킬 시전 후 자신이 『시속』을 40km/h 누적할 때마다 2턴 동안 모든 동료의 대미지가 3.4%/4.4%/4.4%/5.4%/5.4%/6.4%/6.4% 증가하며 최대 17.0%/22.0%/22.0%/27.0%/27.0%/32.0%/32.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Mayumi Hashimoto",
+        "skill1": {
+          "name": "Shockwave",
+          "element": "물리광역",
+          "type": "광역피해",
+          "hp": 8,
+          "cool": 0,
+          "description": "Deal Physical damage to all foes equal to 134.2%/148.0%/142.5%/156.2% of Attack.\nAlso, increase party's damage by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 10 points of Speed, increase by 2% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%).\nWhen used on an extra action, increase skill damage by 50%, and activate a guaranteed critical hit on the main target."
+        },
+        "skill2": {
+          "name": "Aero Setup",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Increase party's Attack by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 10 points of Speed, increase by 2% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%). Also, increase party's Defense by 9.8%/10.8%/10.4%/11.4% for 2 turns (for every 10 points of Speed, increase by 2.22% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%).\nWhen used on an extra action, grant a shield to all allies equal to 2204/2354/2294/2444. This effect lasts for 2 turns."
+        },
+        "skill3": {
+          "name": "Power Setup",
+          "element": "버프광역",
+          "type": "버프",
+          "sp": 25,
+          "cool": 0,
+          "description": "Increase party's pierce rate by 1.0%/1.1%/1.0%/1.1% for 2 turns (for every 10 points of Speed, increase by 0.22% more, up to a maximum of 3.9%/4.3%/4.1%/4.5%). Also, increase party's Attack by 12.7%/14.0%/13.5%/14.8% for 2 turns (for every 10 points of Speed, increase by 2.89% more, up to a maximum of 50.8%/56.0%/53.9%/59.1%).\nWhen used on an extra action, also increase the main target's pierce rate by 2.0%/2.2%/2.1%/2.3% for 1 turn (for every 10 points of Speed, increase by 0.44% more, up to a maximum of 7.8%/8.6%/8.3%/9.1%)."
+        },
+        "skill_highlight": {
+          "element": "버프광역",
+          "type": "버프",
+          "description": "Increase party's Attack by 5.9%/6.5%/6.2%/6.8% for 2 turns (for every 10 points of Speed, increase by 1.33% more, up to a maximum of 23.4%/25.8%/24.9%/27.3%). Also, increase party's damage by 5.9%/6.5%/6.2%/6.8% for 2 turns (for every 10 points of Speed, increase by 1.33% more, up to a maximum of 23.4%/25.8%/24.9%/27.3%). Also, when the selected ally of this Highlight next deals direct damage to foes, decrease the selected foe's Down Points by 1 more.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Team Ambassador",
+          "element": "패시브",
+          "description": "When Mayumi is present, increase party's damage during extra actions by 45.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Overtaking",
+          "element": "패시브",
+          "description": "When Mayumi is present, increase party's damage dealt to downed foes by 30.0%. Also, when Mayumi knocks down a foe, deal more Physical damage equal to 60.0% of Attack.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "violet",
+      "sourceKey": "카스미",
+      "codename": "VIOLET",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%B9%B4%EC%8A%A4%EB%AF%B8/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Kasumi Yoshizawa",
+        "r0": "Masked Ball",
+        "r0_detail": "Kasumi's Highlight does not deplete the Highlight gauge, and can activate critical hits.\nOn an ally's action, with 2 or more Step stacks, can use Spellbound Cinders to enter Masquerade mode, and can activate Highlight 1 time (Spellbound Cinders has a cooldown time of 3 turns). This effect lasts until the start of Kasumi's second turn after entering Masquerade (or if Spellbound Cinders is used during her own turn, until the end of the following turn).\nAlso, for every Step stack gained while in Masquerade mode, increase Attack by 10% and critical rate by 4%.\nWhen Masquerade ends, lose all Step stacks. If Masquerade ends and Highlight has not been used, activate Highlight on 1 random foe.",
+        "r1": "Charming Invite",
+        "r1_detail": "Extend the duration of Dance Partner by 1 turn.\nWhen using Invitation, increase critical rate of Kasumi and her Dance Partner by 15% for 3 turns.",
+        "r2": "Blossoming Dance Floor",
+        "r2_detail": "With 2 Step stacks, increase Attack by 33%. With 3 or more stacks, increase critical damage by 33%. These effects are permanent.",
+        "r3": "Glittering Night",
+        "r3_detail": "Increase the skill levels of Cinderella Glow and Thief Tactics by 3.",
+        "r4": "Toll the Hour",
+        "r4_detail": "When activating a Highlight, gain 1 Stroke of Midnight stack. Spend 1 Stroke of Midnight stack when taking damage, and evade that damage (not activated by some skills).\nAlso, with 4 Step stacks, increase Highlight damage by 50%.",
+        "r5": "Neverending Dream",
+        "r5_detail": "Increase the skill levels of Invitation and Midnight Magic by 3.",
+        "r6": "Unmasked Ball",
+        "r6_detail": "After Kasumi activates her Highlight, she can activate her Highlight 1 more time while in Masquerade mode. This Highlight has 80% of its normal damage, and can be activated 1 time each time Masquerade mode is entered. Also, it will not activate automatically when Masquerade mode ends."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Kasumi Yoshizawa",
+        "weapon4-1": {
+          "name": "Divine Sword of Sinai",
+          "health": 1791.59,
+          "attack": 613.28,
+          "defense": 296.11,
+          "skill_name": "Blessing",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWith 2 or more Step stacks, increase damage by 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0%."
+        },
+        "weapon5-1": {
+          "name": "Royal Étoile",
+          "health": 2239.65,
+          "attack": 766.41,
+          "defense": 370,
+          "skill_name": "Sunrise",
+          "description": "Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0%.\nWhen gaining a Step stack, increase Attack by 21.0%/27.0%/27.0%/33.0%/33.0%/39.0%/39.0% for 2 turns. This effect does not stack.\nWhen an ally activates a Highlight or Theurgy, gain 1 Glass Slipper stack, and increase Kasumi's damage by 8.4%/11.1%/11.1%/13.8%/13.8%/16.5%/16.5% for 3 turns. Stacks up to 2 times.\nWhen Glass Slipper is at 2 stacks, increase Kasumi's Highlight damage by 30.0%/39.0%/39.0%/48.0%/48.0%/57.0%/57.0% more."
+        }
+      },
+      "weaponsKr": {
+        "name": "요시자와 카스미",
+        "weapon4-1": {
+          "name": "시나이의 신검",
+          "health": 1791.59,
+          "attack": 613.28,
+          "defense": 296.11,
+          "skill_name": "축복",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 자신의 춤사위가 2중첩 이상이면 대미지가 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "황금빛 햇살",
+          "health": 2239.65,
+          "attack": 766.41,
+          "defense": 370,
+          "highlight": true,
+          "skill_name": "아침 해",
+          "description": "크리티컬 효과가 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0% 증가한다. 자신이 춤사위를 획득할 때마다 2턴 동안 공격력이 21.0%/27.0%/27.0%/33.0%/33.0%/39.0%/39.0% 증가한다(1회 중첩 가능). 아군 괴도가 HIGHLIGHT/테우르기아를 사용하면 『소생』을 1중첩 획득하며 3턴 동안 자신이 주는 대미지가 8.4%/11.1%/11.1%/13.8%/13.8%/16.5%/16.5% 증가한다(2회 중첩 가능). 『소생』이 2중첩에 도달하면 자신이 주는 HIGHLIGHT 대미지가 추가로 30.0%/39.0%/39.0%/48.0%/48.0%/57.0%/57.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Kasumi Yoshizawa",
+        "skill1": {
+          "name": "Cinderella Glow",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 23,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 186.9%/206.1%/198.4%/217.5% of Attack, and gain Lead Step.\nIf this skill is activated by an ally with Dance Partner, deal Bless damage to 1 foe equal to 121.6%/134.1%/129.1%/141.5%, and gain 1 Lead Step.\nLead Step stacks up to 3 times."
+        },
+        "skill2": {
+          "name": "Invitation",
+          "element": "버프",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Grant Dance Partner to 1 ally for 1 turn. Only 1 ally may have Dance Partner at one time.\nIncrease Attack of Kasumi and the selected ally by 32.4%/35.7%/34.4%/37.7% for 3 turns. Also, Kasumi gains Follow Step. This effect does not stack.\nWhen an ally with Dance Partner uses a skill, immediately activate Cinderella Glow 1 time on 1 random foe (if the skill is activated on a foe, activate Cinderella Glow 1 time on that foe)."
+        },
+        "skill3": {
+          "name": "Midnight Magic",
+          "element": "축복",
+          "type": "단일피해",
+          "sp": 27,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 249.1%/274.6%/264.4%/289.9% of Attack.\nWhen using this skill while in Masquerade mode, increase skill damage by 30%, and critical damage by 29.3%/29.3%/31.1%/31.1%."
+        },
+        "skill_highlight": {
+          "element": "축복",
+          "type": "단일피해",
+          "unlock": "자신이 『가면무도회』 상태.",
+          "description": "Can be activated in Masquerade mode. Deal Bless damage to 1 foe equal to 273.1%/301.0%/289.8%/317.8% of Attack. Also, with Step stacks, gain additional effects accordingly.\nLead Step: Increase Highlight damage by 15% for each stack.\nFollow Step: Increase Highlight critical rate by 10%, and critical damage by 20%.",
+          "cool": 0
+        },
+        "passive1": {
+          "name": "Rhythm Count",
+          "element": "패시브",
+          "description": "For every Step stack, increase Bless damage by 15% (up to 45.0%).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Steps of Faith",
+          "element": "패시브",
+          "description": "When an ally except Kasumi uses a Highlight or Theurgy, increase Kasumi's Attack by 45.0% for 2 turns. Stacks up to 2 times.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "rin-firecracker",
+      "sourceKey": "야오링·사자무",
+      "codename": "RIN·Firecracker",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EC%95%BC%EC%98%A4%EB%A7%81%C2%B7%EC%82%AC%EC%9E%90%EB%AC%B4/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EC%95%BC%EC%98%A4%EB%A7%81%C2%B7%EC%82%AC%EC%9E%90%EB%AC%B4/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EC%95%BC%EC%98%A4%EB%A7%81%C2%B7%EC%82%AC%EC%9E%90%EB%AC%B4/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Firecracker Yaoling",
+        "r0": "New Year's Blast",
+        "r0_detail": "Firecracker Yaoling's melee attack can evolve to Yanhua Slash. When evolved, deal heavy Fire damage to targets, and can activate Fire Technical. Also, when Fireburn is activated, the damage increase effect becomes 20%.",
+        "r1": "Lunar Lanterns",
+        "r1_detail": "Reduce the first cooldown time for Orange Blossom Blade by 1 turn. Also, extend the duration of Flaming Sword Dance by 1 turn, and Yanhua Slash can be activated up to 2 times. Also, when Flaming Sword Dance is active, enhance Scarlet Surprise and Firework Finale.\nScarlet Surprise: When enhanced, increase the critical damage of Yanhua Slash by 40% more.\nFirework Finale: When enhanced, Yanhua Slash inflicts 1 more Year-End Flames stack.",
+        "r2": "Festival Colors",
+        "r2_detail": "When Firecracker Yaoling is present, for each foe that appears, permanently inflict 1 special limit-breaking Burn stack. When this Burn is removed, 1 more stack is immediately inflicted. This effect's cooldown time is 2 turns, calculated individually for each foe.\nDuring battle, when 1 foe is inflicted with Burn, increase Firecracker Yaoling's critical rate by 10%. Also, for each additional foe inflicted with Burn, increase by 3% more (up to a maximum of 16%).",
+        "r3": "Cleansing Blaze",
+        "r3_detail": "Increase the skill levels of Firework Finale and Orange Blossom Blade by 3.",
+        "r4": "Grand Lion Dance",
+        "r4_detail": "Highlight Enhanced: Increase Firecracker Yaoling's critical damage by 15% more for 2 turns. Also, extend the duration of all buffs gained from this Highlight by 2 turns.",
+        "r5": "Lucky Red",
+        "r5_detail": "Increase the skill levels of Scarlet Surprise and Thief Tactics by 3.",
+        "r6": "Sky Lantern Festival",
+        "r6_detail": "Flaming Sword Dance becomes permanent. Yanhua Slash evolves to Liuxing Slash, increasing damage dealt by 80%. Flaming Sword Dance is not removed even after Liuxing Slash is activated.\nAlso, Scarlet Surprise permanently maintains the critical rate increase and enhanced effects on Liuxing Slash. The duration of Firework Finale's Burn and enhanced effects on Liuxing Slash are extended by 1 turn."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Yaoling·Lion Dance",
+        "weapon4-1": {
+          "name": "Cleansing Blade",
+          "health": 1791.59,
+          "attack": 634.27,
+          "defense": 313.75,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen using Yanhua Slash, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0%."
+        },
+        "weapon5-1": {
+          "name": "New Year's Light",
+          "health": 2239.65,
+          "attack": 792.82,
+          "defense": 391.98,
+          "skill_name": "",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen Flaming Sword Dance is active, increase critical rate by 16.0%/21.0%/21.0%/26.0%/26.0%/31.0%/31.0%.\nWhen a Fire Technical is activated, increase that damage by 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0%."
+        }
+      },
+      "weaponsKr": {
+        "name": "리 야오링·사자무",
+        "weapon4-1": {
+          "name": "눈 속의 여인",
+          "health": 1791.59,
+          "attack": 634.27,
+          "defense": 313.75,
+          "skill_name": "섣달 말의 울음",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『불꽃놀이 유성』 시전 시, 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "따뜻한 봄볕",
+          "health": 2239.65,
+          "attack": 792.82,
+          "defense": 391.98,
+          "highlight": true,
+          "skill_name": "붉은 칼날의 황금새",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다. 『철꽃의 춤』 상태에서 크리티컬 확률이 16.0%/21.0%/21.0%/26.0%/26.0%/31.0%/31.0% 증가한다. 화염 속성 TECHNICAL을 줄 때 대미지가 34.0%/44.0%/44.0%/54.0%/54.0%/64.0%/64.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Firecracker Yaoling",
+        "skill1": {
+          "name": "Scarlet Surprise",
+          "element": "화염광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 120.4%/132.8%/127.8%/140.2% of Attack, and increase Firecracker Yaoling's critical rate by 10% for 2 turns.\nAlso, for 1 turn, Yanhua Slash deals more Fire damage equal to 72.8%/80.3%/77.3%/84.7% of Attack."
+        },
+        "skill2": {
+          "name": "Firework Finale",
+          "element": "화염광역",
+          "type": "광역피해",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 73.8%/81.3%/78.3%/85.9% of Attack, with a 90% chance to inflict Burn, and a 90% chance to inflict 1 Year-End Flames stack for 2 turns.\nAlso, for 1 turn, Yanhua Slash has a 90% chance to inflict 1 Year-End Flames stack.\nYear-End Flames: Take Fire damage equal to 63.4%/69.9%/67.3%/73.8% of Firecracker Yaoling's Attack for 2 turns. Stacks up to 4 times."
+        },
+        "skill3": {
+          "name": "Orange Blossom Blade",
+          "element": "버프",
+          "type": "버프",
+          "sp": 24,
+          "cool": 1,
+          "description": "Gain Flaming Sword Dance: Increase damage by 34.3%/37.8%/36.4%/39.9%, and melee attack evolves to Yanhua Slash. After activating Yanhua Slash, or at the end of the turn, remove this effect.\nThis skill has a cooldown time of 1 turn, and after using it, other skills can be used on the same turn (this skill is not treated as a normal skill).\nYanhua Slash: Deal Fire damage to all foes equal to 127.4%/140.4%/135.2%/148.2% of Attack, and can activate Fire Technicals. When Fireburn is activated, the damage increase effect becomes 20%."
+        },
+        "skill_highlight": {
+          "element": "화염광역",
+          "type": "광역피해",
+          "description": "Deal Fire damage to all foes equal to 226.5%/249.7%/240.5%/263.7% of Attack.\nIncrease Firecracker Yaoling's Attack by 19.5%/21.5%/20.7%/22.7%, and damage dealt by Yanhua Slash by 19.5%/21.5%/20.7%/22.7% for 2 turns.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Prosperity in Red",
+          "element": "패시브",
+          "description": "Increase damage to foes inflicted with Burn by 36.0%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Happy New Year!",
+          "element": "패시브",
+          "description": "At the start of battle, increase Attack by 42.0% for 2 turns. When Firecracker Yaoling or allies activate a Technical, this effect's duration is reset, and the increase effect becomes 51.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "matoi",
+      "sourceKey": "미오",
+      "codename": "MATOI",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%AF%B8%EC%98%A4/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Mio Natsukawa",
+        "r0": "Smothering Agony",
+        "r0_detail": "Some skills and Highlight can activate Ice Technicals. Also, when dealing Ice damage, ignore foes' Ice resistance.\nOn Natsukawa's action, gain 1 Extinguish stack. Stacks up to 4 times. When using Extinguishing Guidance, spend Extinguish stacks, and inflict 1 Damnation stack on all foes for each stack spent.\nDamnation: Increase damage taken by 6% for 2 turns. Stacks up to 4 times.",
+        "r1": "Cooling Spray",
+        "r1_detail": "When using Sub-Zero Torrent, gain 1 more Extinguish stack. When spending Extinguish stacks, increase all foes' critical damage taken by 30% for 2 turns.",
+        "r2": "Frozen Gateway",
+        "r2_detail": "When spending Extinguish stacks, increase party's Attack by 20%, Defense by 30%, and damage dealt by 15% for 2 turns.",
+        "r3": "Whirlpool Cannon",
+        "r3_detail": "Increase the skill levels of Extinguishing Guidance and Thief Tactics by 3.",
+        "r4": "Terrifying Chill",
+        "r4_detail": "Highlight Enhanced: Extend the duration of the damage taken increase effect by 1 turn. Also, when the Highlight activates Deepfreeze, the chance to inflict Icebound becomes 44%.",
+        "r5": "Wellspring of Grief",
+        "r5_detail": "Increase the skill levels of Sub-Zero Torrent and Freezing Prison by 3.",
+        "r6": "Firefighter's Soul",
+        "r6_detail": "If foes have Burn or Scald on Natsukawa's action, activate Sub-Zero Torrent on that foe 1 time.\nAlso, when the same foe is attacked repeatedly with Extinguishing Guidance or Requiem Guidance, increase the target's damage taken by 25% more for 1 turn.\nThe maximum number of Damnation stacks becomes 6."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Mio Natsukawa",
+        "weapon4-1": {
+          "name": "Abyssal Thorn",
+          "health": 1870.83,
+          "attack": 539.4,
+          "defense": 331.38,
+          "skill_name": "Waterflowing Afterglow",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nFor each Extinguish stack, increase ailment accuracy by 6.0%/7.8%/7.8%/9.6%/9.6%/11.4%/11.4%."
+        },
+        "weapon5-1": {
+          "name": "Entropy",
+          "health": 2338.77,
+          "attack": 673.89,
+          "defense": 414.04,
+          "skill_name": "Conflagrations, Dauntless",
+          "description": "Increase ailment accuracy by 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%.\nDuring battle, for every 66.0%/68.0%/68.0%/70.0%/70.0%/72.0%/72.0% of Natsukawa's ailment accuracy, increase Attack.\nAlso, each time an Ice Technical is activated, decrease the target's Defense by 23.3%/30.3%/30.3%/37.3%/37.3%/44.3%/44.3% more for 2 turns."
+        }
+      },
+      "weaponsKr": {
+        "name": "나츠카와 미오",
+        "weapon4-1": {
+          "name": "심연의 가시",
+          "health": 1870.83,
+          "attack": 539.4,
+          "defense": 331.38,
+          "skill_name": "흐르는 노을",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『불꽃 진압』 1중첩마다 효과 명중이 6.0%/7.8%/7.8%/9.6%/9.6%/11.4%/11.4% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "서리빛 스텔라",
+          "health": 2338.77,
+          "attack": 673.89,
+          "defense": 414.04,
+          "highlight": true,
+          "skill_name": "두려움 없는 들불",
+          "description": "효과 명중이 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0% 증가한다.\n전투 중 자신의 효과 명중 66.0%/68.0%/68.0%/70.0%/70.0%/72.0%/72.0%에 해당하는 공격력 보너스를 획득한다.\n빙결 속성 TECHNICAL을 줄 때마다 2턴 동안 목표의 방어력을 추가로 23.3%/30.3%/30.3%/37.3%/37.3%/44.3%/44.3% 감소시킨다."
+        }
+      },
+      "skills": {
+        "name": "Mio Natsukawa",
+        "skill1": {
+          "name": "Sub-Zero Torrent",
+          "element": "빙결광역",
+          "type": "버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Gain 1 Extinguish stack, and deal Ice damage to all foes equal to 97.6%/107.6%/103.6%/113.6% of Attack. 50% chance to inflict Freeze.\nAlso, decrease Defense by 7.8%/8.6%/8.3%/9.1% for 3 turns (for every 5.47% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 31.2%/34.4%/33.2%/36.4%). When an ally attacks a foe whose Defense has been decreased by this skill, increase Technical Precision by 195/195/207/207.\nIf at least 1 foe is inflicted with Burn, remove Burn and inflict Scald on all foes (cannot be inflicted if Scald is already active).\nScald: Counts as Burn. Lasts for 3 turns. When allies attack the affected foe, increase Technical Precision by 1186/1308/1259/1381."
+        },
+        "skill2": {
+          "name": "Freezing Prison",
+          "element": "빙결",
+          "type": "제어",
+          "sp": 24,
+          "cool": 0,
+          "description": "Deal Ice damage to 1 foe equal to 195.2%/215.2%/207.2%/227.2% of Attack, and can activate an Ice Technical. When Deepfreeze is activated, 48.0%/52.9%/51.0%/55.9% chance to inflict Icebound."
+        },
+        "skill3": {
+          "name": "Extinguishing Guidance",
+          "element": "빙결광역",
+          "type": "버프",
+          "sp": 25,
+          "cool": 0,
+          "description": "Can be used at 2 or more Extinguish stacks. Spend 2 Extinguish stacks to deal Ice damage to all foes equal to 109.8%/121.0%/116.6%/127.8% of Attack. Also, decrease Defense by 7.3%/8.1%/7.8%/8.5% for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 9.8%/10.8%/10.4%/11.4% (for every 4.38% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 39.0%/43.0%/41.4%/45.4%).\nAt 4 or more Extinguish stacks, evolve this skill to Requiem Guidance.\nSpend 4 Extinguish stacks to deal Ice damage to all foes equal to 131.8%/145.3%/139.9%/153.4% of Attack. Also, decrease Defense by 8.8%/9.7%/9.3%/10.2% for 2 turns (for every 4.86% of Natsukawa's ailment accuracy, decrease Defense by 1% more, up to a maximum of 35.1%/38.7%/37.3%/40.9%).\nAlso, can activate Ice Technical. When Iceburn is activated, this effect is guaranteed to evolve to Cold Flames.\nCold Flames: Increase damage taken by 11.7%/12.9%/12.4%/13.6% (for every 3.65% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 46.8%/51.6%/49.7%/54.5%)."
+        },
+        "skill_highlight": {
+          "element": "빙결광역",
+          "type": "디버프",
+          "description": "Deal Ice damage to all foes equal to 39.0%/43.0%/41.4%/45.4% of Attack, and increase their damage taken for 2 turns (for every 5.83% of Natsukawa's ailment accuracy, increase damage taken by 1% more, up to a maximum of 29.3%/32.3%/31.1%/34.1%).\nAlso, can activate Ice Technical. When Deepfreeze is activated, 32% chance to inflict Icebound. Also, increase damage taken by enemies inflicted with Freeze by this Highlight (for every 17.5% of Natsukawa's ailment accuracy, increase damage taken by 1%, up to a maximum of 9.8%/10.8%/10.4%/11.4%).\nThen, deal additional Ice damage to all foes equal to 117.1%/129.1%/124.3%/136.3% of Attack.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Disaster Preparedness",
+          "element": "패시브",
+          "description": "Each time Natsukawa activates a Technical, grant all allies a shield that protects against 1050 damage for 2 turns.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Biting Cold",
+          "element": "패시브",
+          "description": "When Natsukawa is present, increase damage taken of foes inflicted with Freeze by 27.0%, and increase damage taken of foes inflicted with Icebound by 27.0%.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "wind-tempest",
+      "sourceKey": "리코·매화",
+      "codename": "WIND·Tempest",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%A6%AC%EC%BD%94%C2%B7%EB%A7%A4%ED%99%94/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%A6%AC%EC%BD%94%C2%B7%EB%A7%A4%ED%99%94/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%A6%AC%EC%BD%94%C2%B7%EB%A7%A4%ED%99%94/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Tempest Riko",
+        "r0": "Fragrant Gale",
+        "r0_detail": "Increase Tempest Riko's max SP to 200, and increase her SP Recovery by 60%. When using a skill to restore her own SP, the amount recovered is affected by SP Recovery.\nWhen using Blossoming Season, spend all SP, and activate different effects based on the amount of SP spent.",
+        "r1": "Colors of Dawn",
+        "r1_detail": "The condition to activate the Falling Petals effect from Storm of Petals changes from Wind damage to any attribute damage. Also, increase the target's critical damage taken by 30%.\nArrival of Spring increases Sweeper allies' Attack by 25% more.",
+        "r2": "East Wind",
+        "r2_detail": "Increase Tempest Riko's max SP by 50 (also increase the maximum effect of Blossoming Season). Also, after activating Blossoming Season, immediately recover 50 SP.\nEnhance the effect of the Talent Vernal Splendor: Double the critical damage increase after gaining 5/10 Blossom stacks.",
+        "r3": "Swaying Boughs",
+        "r3_detail": "Increase the skill levels of Arrival of Spring and Blossoming Season by 3.",
+        "r4": "Sea Breeze",
+        "r4_detail": "Highlight Enhanced: The buff effect now applies to all allies besides Tempest Riko. Increase the main target's critical damage by 12% more, and restore 32 SP to all allies besides Tempest Riko.",
+        "r5": "Rage of Spring",
+        "r5_detail": "Increase the skill levels of Storm of Petals and Thief Tactics by 3.",
+        "r6": "Full Blossom",
+        "r6_detail": "Blossoming Season now affects all allies besides Tempest Riko. When the main target uses a skill, immediately activate Storm of Petals 1 time on the target foe. This effect can only be activated 1 time for each use of Blossoming Season. Also, extend the duration of Falling Petals from Storm of Petals by 1 turn.\nWhile Riko is on the field, when any ally deals damage, for every 1% of their critical rate that exceeds 100%, increase the critical damage of that damage by 2%."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Tempest Riko",
+        "weapon4-1": {
+          "name": "Sparrow's Leap",
+          "health": 1918.23,
+          "attack": 517.62,
+          "defense": 338.09,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Tempest Riko restores SP with a skill, increase her critical damage by 8.7%/11.3%/11.3%/13.9%/13.9%/16.5%/16.5% for 2 turns. Stacks up to 2 times."
+        },
+        "weapon5-1": {
+          "name": "Windplum Dance",
+          "health": 2398.2,
+          "attack": 647.48,
+          "defense": 422.82,
+          "skill_name": "",
+          "description": "Increase critical damage by 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0%.\nAfter using a skill on an ally, increase all allies' critical damage by 13.2%/17.2%/17.2%/21.2%/21.2%/25.2%/25.2% besides Tempest Riko for 2 turns. Also, when the main target deals damage with a skill, increase the damage by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% for every 50 SP spent by that skill for 2 turns."
+        }
+      },
+      "weaponsKr": {
+        "name": "타네무라 리코·매화",
+        "weapon4-1": {
+          "name": "맑은 날의 풍령",
+          "health": 1918.23,
+          "attack": 517.62,
+          "defense": 338.09,
+          "skill_name": "무자비",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 자신의 페르소나 스킬로 SP 회복 시 2턴 동안 자신의 크리티컬 효과가 8.7%/11.3%/11.3%/13.9%/13.9%/16.5%/16.5% 증가한다(2회 중첩 가능)."
+        },
+        "weapon5-1": {
+          "name": "겨울학의 날개짓",
+          "health": 2398.2,
+          "attack": 647.48,
+          "defense": 422.82,
+          "highlight": true,
+          "skill_name": "나긋한 눈바람",
+          "description": "크리티컬 효과가 36.3%/36.3%/47.2%/47.2%/58.1%/58.1%/69.0% 증가한다. 동료를 목표로 스킬 시전 시, 2턴 동안 자신을 제외한 모든 동료의 크리티컬 효과를 13.2%/17.2%/17.2%/21.2%/21.2%/25.2%/25.2% 증가시킨다. 스킬 사용 시, 스킬로 SP 50포인트를 소모할 때마다 스킬 메인 목표의 주는 대미지가 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% 증가하며 2턴 동안 지속된다."
+        }
+      },
+      "skills": {
+        "name": "Tempest Riko",
+        "skill1": {
+          "name": "Storm of Petals",
+          "element": "질풍",
+          "type": "단일 피해",
+          "cool": 0,
+          "description": "Deal Wind damage to 1 foe equal to 183.0%/201.8%/194.2%/213.0% of Attack, and inflict Windswept and Falling Petals for 2 turns.\nFalling Petals: When taking Wind damage, increase Attack for that damage. The increase is equal to 18.3% of the portion of Tempest Riko's critical multiplier that exceeds 100% (up to 388.0%/418.0%/418.0%/448.0% of critical multiplier).\nAlso, restore Tempest Riko's SP by 16.",
+          "sp": 0
+        },
+        "skill2": {
+          "name": "Arrival of Spring",
+          "element": "버프광역",
+          "type": "버프",
+          "cool": 0,
+          "description": "Increase party's Attack for 2 turns. The increase is equal to 12.8% of the portion of Tempest Riko's critical multiplier that exceeds 100% (up to 388.0%/418.0%/418.0%/448.0% of critical multiplier). Also, restore party's SP by 4.\nFor one time only while this effect is active, when an ally deals damage with a skill, Resonance, Highlight, or Theurgy, restore Tempest Riko's SP by 12.",
+          "sp": 0
+        },
+        "skill3": {
+          "name": "Blossoming Season",
+          "element": "버프",
+          "type": "버프",
+          "sp": "50 - 200",
+          "cool": 0,
+          "description": "Spend all SP, and increase 1 other ally's critical rate by 16.0%/17.0%/17.0%/18.0% for 2 turns. Also, apply the following effects based on the amount of SP spent. For every 2 SP spent, increase the effect by 1%.\n50 SP or higher: For every 1% of Tempest Riko's critical multiplier that exceeds 100%, increase Attack by 2.4.\n100 SP or higher: Increase critical damage by 12% of the portion of Tempest Riko's critical multiplier that exceeds 100%.\n150 SP or higher: Increase critical damage more by 6% of the portion of Tempest Riko's critical multiplier that exceeds 100%.\nThese effects count up to 388.0%/418.0%/418.0%/448.0% of Tempest Riko's critical multiplier."
+        },
+        "skill_highlight": {
+          "element": "버프",
+          "type": "버프",
+          "description": "Increase 1 other ally's Attack (for every 1% of Tempest Riko's critical multiplier that exceeds 100%, increase Attack by 2.5, up to 388.0%/418.0%/418.0%/448.0% of critical multiplier) and increase critical damage by 24.4%/26.9%/25.9%/28.4% for 2 turns.\nAlso, restore 20 SP to all allies besides Tempest Riko.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Vernal Splendor",
+          "element": "패시브",
+          "description": "After using Blossoming Season, grant Unravel to the target for 2 turns.\nUnravel: Each time skill damage is dealt, gain 1 Blossom stack.\nBlossom: Increase Attack by 30 for 3 turns. Stacks up to 10 times. After gaining 5 Blossom stacks, increase Attack more by 8.0% of the portion of Tempest Riko's critical multiplier that exceeds 100%, and increase critical damage by 5.0% of the portion of her critical multiplier that exceeds 100%. After gaining 10 Blossom stacks, critical damage is increased more. This increase is equal to 5.0% of the portion of her critical multiplier that exceeds 100%.",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Sun-kissed Blooms",
+          "element": "패시브",
+          "description": "During battle, increase critical damage and HP based on Tempest Riko's SP Recovery. At a maximum of 450.0% SP Recovery, increase critical damage by 84.0%, and HP by 1800.0.",
+          "cool": 0
+        }
+      }
+    },
+    {
+      "slug": "howler",
+      "sourceKey": "루우나",
+      "codename": "HOWLER",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%A3%A8%EC%9A%B0%EB%82%98/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%A3%A8%EC%9A%B0%EB%82%98/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%A3%A8%EC%9A%B0%EB%82%98/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Runa Dogenzaka",
+        "r0": "Station Square Mascot",
+        "r0_detail": "When Big Welcome or Furrocious Follow-Up are active, Runa can use Woof Woof Blaze. When using Woof Woof Blaze, 60% chance to decrease target's healing received by 30%/40%/50%, and Defense by 6%/12%/18% (effect changes at Lv. 1/50/70, respectively) for 2 turns.",
+        "r1": "Legendary Devotion",
+        "r1_detail": "After using Woof Woof Blaze and activating the effects of Big Welcome, increase target's Fire, Ice, Electric and Wind damage taken by 36% for 2 turns. When activating the effects of Furrocious Follow-Up, increase target's Resonance damage taken by 50% for 2 turns.",
+        "r2": "Trapped in Shibuya",
+        "r2_detail": "When a foe has a debuff inflicted by Runa, increase target's critical damage taken by 36%, and decrease healing received by 20%.",
+        "r3": "I ♥ Shichi-kun!",
+        "r3_detail": "Increase the skill levels of Woof Woof Blaze and Thief Tactics by 3.",
+        "r4": "Welcome to Shibuya!",
+        "r4_detail": "Highlight Enhanced: Increase number of Enthusiastic Fuse stacks inflicted on foes to 4, and increase the maximum number of stacks to 4.",
+        "r5": "I ♥ Shibuya!",
+        "r5_detail": "Increase the skill levels of Welcome Hug and Furrious Bark by 3.",
+        "r6": "Station Square Superstar",
+        "r6_detail": "At the start of battle, gain Big Welcome and Furrocious Follow-Up for 2 turns.\nExtend the duration of debuffs from Welcome Hug, Furrious Bark, and Woof Woof Blaze by 1 turn.\nWhen Big Welcome and Furrocious Follow-Up are both active, increase Woof Woof Blaze's Fire, Ice, Electric, and Wind damage taken effect on all foes by 30%, increase the Resonance damage taken effect on the main target by 60%, and the effects granted by Big Welcome and Furrocious Follow-Up will both activate (the damage taken increase effects do not stack, and the greater effect is applied)."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "weapon5-1": {
+          "name": "Cerberus Claws",
+          "health": 2140.53,
+          "attack": 700.3,
+          "defense": 431.6,
+          "skill_name": "",
+          "description": "Increase ailment accuracy by 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%.\nWhen an ally uses a Fire, Ice, Electric or Wind skill or activates a Resonance, increase Runa's ailment accuracy by 23.0%/28.0%/28.0%/33.0%/33.0%/38.0%/38.0% for 2 turns. This effect does not stack.\nWhen using Woof Woof Blaze and activating the effect of Big Welcome, decrease the target's Defense by 16.6%/21.6%/21.6%/26.6%/26.6%/31.6%/31.6% more for 3 turns. When the effect of Furrocious Follow-Up is activated, decrease the target's Defense by 33.3%/43.3%/43.3%/53.3%/53.3%/63.3%/63.3% more for 3 turns. These 2 debuffs do not stack."
+        },
+        "weapon4-1": {
+          "name": "Hunting Hound Claws",
+          "health": 1712.28,
+          "attack": 560.39,
+          "defense": 345.66,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. When Big Welcome or Furrocious Follow-Up is active, increase Runa's ailment accuracy by 22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5%."
+        }
+      },
+      "weaponsKr": {
+        "name": "도겐자카 루우나",
+        "weapon4-1": {
+          "name": "분노의 헌터",
+          "health": 1712.28,
+          "attack": 560.39,
+          "defense": 345.66,
+          "skill_name": "정밀 사냥",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『열렬한 환영』 또는 『집요한 추격』 상태 시 자신의 효과 명중이 22.0%/28.5%/28.5%/35.0%/35.0%/41.5%/41.5% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "바이트 클로우",
+          "health": 2140.53,
+          "attack": 700.3,
+          "defense": 431.6,
+          "highlight": true,
+          "skill_name": "송곳니와 발톱",
+          "description": "효과 명중이 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0% 증가한다. 아군 괴도가 화염, 전격, 빙결, 질풍 속성 스킬 또는 추격 스킬 사용 시 2턴 동안 자신의 효과 명중이 23.0%/28.0%/28.0%/33.0%/33.0%/38.0%/38.0% 증가한다(1회 중첩 가능). 『GOGO 멍멍!』 사용 『열렬한 환영』 발동 시, 3턴 동안 스킬 목표의 방어력이 추가로 16.6%/21.6%/21.6%/26.6%/26.6%/31.6%/31.6% 감소한다. 『집요한 추격』 발동 시 3턴 동안 스킬 목표의 방어력이 추가로 33.3%/43.3%/43.3%/53.3%/53.3%/63.3%/63.3% 감소한다(방어력 감소 효과는 중첩되지 않음)."
+        }
+      },
+      "skills": {
+        "skill1": {
+          "name": "Welcome Hug",
+          "element": "화염광역",
+          "type": "디버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Fire damage to all foes equal to 73.2%/80.7%/77.7%/85.2% of Attack.\nDecrease target's Defense by 15.4% of Runa's ailment accuracy for 2 turns (up to 26.4%/29.1%/28.0%/30.7%). Also, when the target of this effect takes Fire, Ice, Electric, or Wind skill damage, decrease Defense by 26.4%/26.4%/28.0%/28.0% more. The Defense decrease effects from this skill and Furrious Bark do not stack.\nAlso, 50% chance to inflict Burn on the target, and gain Big Welcome for 2 turns."
+        },
+        "skill2": {
+          "name": "Furrious Bark",
+          "element": "화염",
+          "type": "디버프",
+          "sp": 22,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 170.8%/188.3%/181.3%/198.8% of Attack.\nDecrease target's Defense by 14.6%/14.6%/15.5%/15.5% + 31.4% of Runa's ailment accuracy (up to 53.7%/59.2%/57.0%/62.5%) for 2 turns. The Defense decrease effects from this skill and Welcome Hug do not stack.\nAlso, gain Furrocious Follow-Up for 2 turns."
+        },
+        "skill3": {
+          "name": "Woof Woof Blaze",
+          "element": "화염광역",
+          "type": "디버프",
+          "sp": 26,
+          "cool": 0,
+          "description": "Usable when Big Welcome or Furrocious Follow-Up are active, and activates various effects based on which is active. If both effects are active at the same time, prioritize Big Welcome.\nRemove Big Welcome and Furrocious Follow-Up after effect activates.\nBig Welcome: Deal Fire damage to all foes equal to 109.8%/109.8%/116.6%/116.6% of Attack. This skill's damage is counted as a Resonance.\nIncrease target's damage taken by 24% of Runa's ailment accuracy (up to 41.0%/45.2%/43.5%/47.7%), and Fire, Ice, Electric and Wind damage taken by 20.5%/22.6%/21.8%/23.9% for 2 turns.\nFurrocious Follow-Up: Deal Fire damage to 1 foe equal to 219.6%/219.6%/233.1%/233.1% of Attack. This skill's damage is counted as a Resonance.\nIncrease target's damage taken by 34.3% of Runa's ailment accuracy (up to 58.6%/64.6%/62.2%/68.2%), and Resonance damage taken by 39.0%/43.0%/41.4%/45.4% for 2 turns."
+        },
+        "passive1": {
+          "name": "Peppy Guard Dog",
+          "element": "패시브",
+          "cool": 0,
+          "description": "During battle, increase Runa's Attack by 60.0% of her ailment accuracy."
+        },
+        "passive2": {
+          "name": "Faithful Dog",
+          "element": "패시브",
+          "cool": 0,
+          "description": "When Runa inflicts a debuff on a foe with a skill, increase her Attack by 33.0% for 1 turn. When an ally deals Fire, Ice, Electric or Wind damage or Resonance damage, grant them the same Attack increase effect."
+        },
+        "skill_highlight": {
+          "element": "화염광역",
+          "type": "디버프",
+          "cool": 4,
+          "description": "Deal Fire damage to all foes equal to 214.7%/236.7%/227.9%/249.9% of Attack.\nPermanently inflict 2 Enthusiastic Fuse stacks on foes. Stacks up to 2 times (remove as wave progresses).\nEnthusiastic Fuse: When any foe takes Fire, Ice, Electric, or Wind skill damage or Resonance damage, spend 1 Enthusiastic Fuse stack, and increase the damage by 22.9% of Runa's ailment accuracy (up to 53.7%/59.2%/57.0%/62.5%). If Runa's skills and Resonance activate this effect, Enthusiastic Fuse will not be spent."
+        },
+        "name": "Runa Dogenzaka"
+      }
+    },
+    {
+      "slug": "mont-frostgale",
+      "sourceKey": "몽타뉴·백조",
+      "codename": "MONT·Frostgale",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%EB%AA%BD%ED%83%80%EB%89%B4%C2%B7%EB%B0%B1%EC%A1%B0/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Frostgale Kotone",
+        "r0": "Swan on the Ice",
+        "r0_detail": "Frostgale Kotone has 2 modes: Spring and Winter. During battle, she can freely change between modes while Spring's Edge / Winter's Edge is not active. When changing modes, the attributes of her skills and Highlight change. At the start of battle, she will be in Spring mode, but if there are more allies in the party that have the Ice attribute than the Wind attribute, she will be in Winter mode.\nFor every 1 Spring's Vestige or Winter's Vestige stack she gains, permanently increase Attack by 5% (stacks up to 7 times).",
+        "r1": "Etched in Ice",
+        "r1_detail": "Spring mode: Each time Spring's Edge is activated, gain 1 Spring's Vestige stack. When Spring's Edge ends, increase Resonance damage by 8% for each Spring's Vestige stack (up to 40%).\nWinter mode: Each time Winter's Edge is activated, gain 1 Winter's Vestige stack. When Winter's Edge ends, increase Resonance damage by 8% for each Winter's Vestige stack (up to 40%).",
+        "r2": "Swan's Gaze",
+        "r2_detail": "Spring mode: While Spring's Edge is active, decrease all foes' Defense by 40%, and decrease party's SP costs for skills by 25%.\nWinter mode: While Winter's Edge is active, increase party's Ice damage by 30%, and decrease SP costs for skills by 25%.",
+        "r3": "Triple Axel",
+        "r3_detail": "Increase the skill levels of Zephyr / Sapphire Storm and Ailes au Vent / Frozen Wings by 3.",
+        "r4": "Queen of Ice and Wind",
+        "r4_detail": "Spring mode: When activating a Highlight, if Spring's Edge is active, gain 1 more Spring's Vestige stack (this additional stack can exceed the maximum limit). If Spring's Edge is not active, increase Highlight damage by 35%.\nWinter mode: When activating a Highlight, if Winter's Edge is active, gain 1 more Winter's Vestige stack (this additional stack can exceed the maximum limit). If Winter's Edge is not active, increase Highlight damage by 35%.",
+        "r5": "Seasonal Highlight",
+        "r5_detail": "Increase the skill levels of Éclat de Vent / Iceburst and Thief Tactics by 3.",
+        "r6": "Dance of Love",
+        "r6_detail": "Spring mode: After activating the Resonance when Spring's Edge ends, extend the duration of Spring's Edge by 1 turn. Regain up to 2 spent Spring's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again (the duration cannot be extended again). Also increase Resonance pierce rate by 4% for each Spring's Vestige stack (up to 20%).\nWinter mode: After activating the Resonance when Winter's Edge ends, extend the duration of Winter's Edge by 1 turn. Regain up to 2 spent Winter's Vestige stacks, and regain up to 2 stacks that exceeded the maximum limit. Afterwards, the Resonance can be activated again (the duration cannot be extended again). Also increase Resonance pierce rate by 4% for each Winter's Vestige stack (up to 20%)."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "weapon5-1": {
+          "name": "Lame de l'Amour",
+          "health": 2299.15,
+          "attack": 759.73,
+          "defense": 374.35,
+          "skill_name": "",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%. Each time Frostgale Kotone gains a Spring's Vestige or Winter's Vestige stack, increase critical rate by 5.4%/7.0%/7.0%/8.6%/8.6%/10.2%/10.2% for 2 turns. This effect can stack up to 3 times. When activating Spring's Edge or Winter's Edge, increase Wind or Ice damage by 27.0%/35.0%/35.0%/43.0%/43.0%/51.0%/51.0% for 2 turns."
+        },
+        "weapon4-1": {
+          "name": "Lame de l'Aube",
+          "health": 1838.99,
+          "attack": 607.79,
+          "defense": 299.47,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%. Each time Frostgale Kotone gains a Spring's Vestige or Winter's Vestige stack, permanently increase Attack by 1.8%/2.3%/2.3%/2.8%/2.8%/3.3%/3.3%. This effect can stack up to 10 times."
+        }
+      },
+      "weaponsKr": {
+        "name": "코토네 몽타뉴·백조",
+        "weapon4-1": {
+          "name": "북풍의 여인",
+          "health": 1838.99,
+          "attack": 607.79,
+          "defense": 299.47,
+          "skill_name": "번성하는 생명",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 『아침 이슬 결정』 또는 『겨울 서리 결정』을 획득할 때마다, 공격력이 영구적으로 1.8%/2.3%/2.3%/2.8%/2.8%/3.3%/3.3% 증가한다(10회 중첩 가능)."
+        },
+        "weapon5-1": {
+          "name": "백조의 꿈",
+          "health": 2299.15,
+          "attack": 759.73,
+          "defense": 374.35,
+          "highlight": true,
+          "skill_name": "계절의 변화",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다. 『아침 이슬 결정』 또는 『겨울 서리 결정』을 획득할 때마다, 크리티컬 확률이 5.4%/7.0%/7.0%/8.6%/8.6%/10.2%/10.2% 증가하며 2턴 동안 지속된다(3회 중첩 가능). 『봄의 결계』/『겨울밤의 결계』를 펼칠 때마다, 2턴 동안 질풍 대미지/빙결 대미지가 27.0%/35.0%/35.0%/43.0%/43.0%/51.0%/51.0% 증가한다."
+        }
+      },
+      "skills": {
+        "skill1": {
+          "name": "Éclat de Vent / Iceburst",
+          "element": "질풍빙결",
+          "type": "단일 피해",
+          "sp": 24,
+          "cool": 0,
+          "description": "Spring mode: Deal Wind damage to 1 foe equal to 73.8%/81.3%/78.3%/85.9% of Attack (3 hits), with a 30% chance to inflict Windswept. When Spring's Edge is active, also gain 1 Spring's Vestige stack and inflict Spiral Sequence for 2 turns. When Frostgale Kotone attacks a foe with Spiral Sequence, increase critical damage by 29.3%/29.3%/31.1%/31.1%.\nWinter mode: Deal Ice damage to 1 foe equal to 152.7%/168.4%/162.1%/177.8% of Attack, with a 97.6%/97.6%/103.6%/103.6% chance to inflict Freeze. If the target is already Frozen, inflict On Ice for 2 turns. Increase Ice damage taken by 13.7%/13.7%/14.5%/14.5% for foes with On Ice."
+        },
+        "skill2": {
+          "name": "Zephyr / Sapphire Storm",
+          "element": "질풍빙결광역",
+          "sp": 24,
+          "cool": 0,
+          "description": "Spring mode: Deal Wind damage to all foes equal to 31.3%/34.5%/33.3%/36.5% of Attack (3 hits). When Spring's Edge is active, also gain 2 Spring's Vestige stacks.\nWinter mode: Deal Ice damage to all foes equal to 83.8%/92.4%/89.0%/97.6% of Attack, with a 48.8%/48.8%/51.8%/51.8% chance to inflict Freeze. When Winter's Edge is active, increase this skill's damage by 20%."
+        },
+        "skill3": {
+          "name": "Ailes au Vent / Frozen Wings",
+          "element": "질풍빙결",
+          "type": "단일 피해",
+          "sp": 28,
+          "cool": 0,
+          "description": "Spring mode: Activate Spring's Edge for 1 turn, and deal Wind damage to 1 foe equal to 92.8%/102.3%/98.5%/108.0% of Attack (3 hits). While Spring's Edge is active, when allies deal Wind damage with a skill, Highlight, Theurgy or Resonance, deal Wind damage to the selected target equal to 20% of Frostgale Kotone's Attack, and gain 1 Spring's Vestige stack. When Spring's Edge ends, spend all Spring's Vestige stacks, and deal Wind damage to the target selected that turn equal to (number of Spring's Vestige stacks + 4) x 36.4%/40.1%/38.6%/42.3% of Attack. This damage is counted as a Resonance.\nWinter mode: Activate Winter's Edge for 1 turn, and deal Ice damage to 1 foe equal to 229.0%/252.5%/243.1%/266.5% of Attack. While Winter's Edge is active, when an ally takes an attack, grant Glacial Heart to all allies for 2 turns, protecting them from up to 1301/1301/1380/1380 damage. This effect can be activated up to 2 times. Also, when allies deal Ice damage with a skill, Highlight, Theurgy, or Resonance, gain 1 Winter's Vestige stack. When Winter's Edge ends, spend all Winter's Vestige stacks, and deal Ice damage to the target selected that turn equal to (number of Winter's Vestige stacks + 4) x 27.9%/30.8%/29.6%/32.5% of Attack. This damage is counted as a Resonance."
+        },
+        "passive1": {
+          "name": "Performance Scoring",
+          "element": "패시브",
+          "cool": 0,
+          "description": "At the start of battle, if a Wind ally is in the party, increase Frostgale Kotone's Wind damage by 33.0%.\nAt the start of battle, if an Ice ally is in the party, increase Frostgale Kotone's Ice damage by 33.0%."
+        },
+        "passive2": {
+          "name": "Technical Scoring",
+          "element": "패시브",
+          "cool": 0,
+          "description": "While in Spring mode, each time an ally attacks with the Wind attribute, increase party's Attack by 8.1% for 2 turns. Stacks up to 5 times.\nWhile in Winter mode, each time Frostgale Kotone gains a shield, increase party's Defense by 9.0% for 2 turns. Stacks up to 4 times."
+        },
+        "skill_highlight": {
+          "element": "질풍빙결",
+          "cool": 4,
+          "description": "Spring mode: Deal Wind damage to 1 foe equal to 212.5%/234.2%/225.5%/247.3% of Attack (3 hits). When Spring's Edge is active, gain 1 more Spring's Vestige stack (this additional stack can exceed the maximum limit). If Spring's Edge is not active, deal 1 more hit of Wind damage to selected target.\nWinter mode: Deal Ice damage to 1 foe equal to 380.6%/419.6%/404.0%/443.0% of Attack, with a 68.3%/68.3%/72.5%/72.5% chance to inflict Icebound. When Winter's Edge is active, increase chance to inflict Icebound by 29.3%/29.3%/31.1%/31.1%. If Winter's Edge is not active, increase Highlight damage by 20%."
+        },
+        "name": "Frostgale Kotone"
+      }
+    },
+    {
+      "slug": "j-c",
+      "sourceKey": "J&C",
+      "codename": "J&C",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/J%26C/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/J%26C/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/J%26C/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Justine & Caroline",
+        "r0": "Twin Wardens",
+        "r0_detail": "After obtaining Justine & Caroline, during battle, increase Wonder's skill and Thief Tactics levels by 1 (takes effect even when Justine & Caroline are not in battle).\nBefore entering battle, Justine & Caroline can select 2 of their 4 sets of Personas, and their Skill 1 and Skill 2 will change accordingly. During battle, Justine & Caroline will receive the following role effect based on the selected sets:\nMask of Mischief & Innocence + Mask of Service & Admonition: Medic\nMask of Mischief & Innocence + Mask of Absurdity & Nonsense: Strategist\nMask of Mischief & Innocence + Mask of Luck & Loss: Sweeper\nMask of Service & Admonition + Mask of Absurdity & Nonsense: Guardian\nMask of Service & Admonition + Mask of Luck & Loss: Saboteur\nMask of Absurdity & Nonsense + Mask of Luck & Loss: Assassin\nSkill effects are affected by Desire Level. At the start of battle, increase Desire Level by 25.",
+        "r1": "Strict Tolerance",
+        "r1_detail": "At the start of battle, depending on the selected Personas, gain 2 types of Facade.\nAt the start of Justine & Caroline's turn or end of their action, if they have 2 types of Facade, automatically activate Two Masks as One on a random target 1 time (prioritizing the target of the previous skill attack used).",
+        "r2": "Callous Kindness",
+        "r2_detail": "When a Facade is gained, gain the following buff based on the type of Facade:\nFacade of Mischief & Innocence: Increase party's Attack by 30% for 2 turns.\nFacade of Service & Admonition: Decrease party's damage taken by 20% for 2 turns.\nFacade of Absurdity & Nonsense: Increase critical damage of the Assassin or Sweeper ally with the highest Attack by 20% for 2 turns.\nFacade of Luck & Loss: Increase Justine & Caroline's skill damage by 10% for 2 turns.",
+        "r3": "Punitive Mercy",
+        "r3_detail": "Increase the skill levels of Selected Skill 1 and Two Masks as One by 3.",
+        "r4": "Execution of Rebirth",
+        "r4_detail": "When Justine & Caroline activate their Highlight, increase their Attack by 40%, damage dealt by 20%, and grant 50% of these effects to other allies for 2 turns.",
+        "r5": "Humane Prison",
+        "r5_detail": "Increase the skill levels of Selected Skill 2 and Thief Tactics by 3.",
+        "r6": "Power to Resist Ruin",
+        "r6_detail": "When this Awareness is unlocked, during battle, increase Wonder's skill and Thief Tactics levels by 1 (takes effect even when Justine & Caroline are not in battle). Also, increase Desire Level by 20%.\nAt the start of battle, gain True Desire. Afterwards, regain True Desire every 8 actions if it has been spent.\nAt the start of Justine & Caroline's turn, they can spend 1 True Desire stack to enhance the next activated Two Masks as One.\nEnhanced effect: Activate all Facade effects for Two Masks as One. Also, deal bonus damage to the main target equal to 40% of Attack (8 hits. Increase this skill's effect by 1% for every 1 point of Desire Level. These bonus hits deal 1 hit of Fire, Ice, Electric, Wind, Psychokinesis, Nuclear, Bless, and Curse damage each.)"
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "weapon5-1": {
+          "name": "Warden's Judgement",
+          "health": 2378.39,
+          "attack": 660.68,
+          "defense": 440.46,
+          "skill_name": "",
+          "description": "Increase Attack by 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0%.\nWhen Two Masks as One is activated, increase Desire Level by 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0%.\nWhen a Facade is gained, increase party's critical damage by 13.0%/17.0%/17.0%/21.0%/21.0%/25.0%/25.0% and damage dealt by 13.0%/17.0%/17.0%/21.0%/21.0%/25.0%/25.0% for 2 turns. Stacks up to 2 times."
+        },
+        "weapon4-1": {
+          "name": "Deliverance of Strength",
+          "health": 1902.74,
+          "attack": 528.55,
+          "defense": 352.36,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nWhen Two Masks as One is activated, increase Attack by 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% for 2 turns."
+        }
+      },
+      "weaponsKr": {
+        "weapon4-1": {
+          "name": "강인한 사자",
+          "attack": 528.55,
+          "defense": 352.36,
+          "health": 1902.74,
+          "skill_name": "",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다.\n자신이 『둘이 하나 되는 페르소나』를 시전한 후 2턴 동안 자신의 공격력이 22.0%/29.0%/29.0%/36.0%/36.0%/43.0%/43.0% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "군청의 심판",
+          "attack": 660.68,
+          "defense": 440.46,
+          "health": 2378.39,
+          "highlight": true,
+          "skill_name": "",
+          "description": "공격력이 30.0%/30.0%/39.0%/39.0%/48.0%/48.0%/57.0% 증가한다.\n『둘이 하나 되는 페르소나』 시전 시 자신의 『페르소나 성능』이 10.0%/13.0%/13.0%/16.0%/16.0%/19.0%/19.0% 증가한다.\n자신이 임의 『모습』 획득 후 2턴 동안 아군 전체의 크리티컬 효과가 13.0%/17.0%/17.0%/21.0%/21.0%/25.0%/25.0% 증가하고, 대미지가 13.0%/17.0%/17.0%/21.0%/21.0%/25.0%/25.0% 증가한다(2회 중첩 가능)."
+        }
+      },
+      "skills": {
+        "skill1": {
+          "name": "Mask of Mischief & Innocence",
+          "type": "단일 피해",
+          "element": "화염빙결",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Fire damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Ice damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, increase party's Attack by 39.0%/43.0%/41.4%/45.4% for every 100 points of Desire Level for 3 turns.\nGain Facade of Mischief & Innocence."
+        },
+        "skill2": {
+          "name": "Mask of Service & Admonition",
+          "type": "단일 피해",
+          "element": "전격질풍",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Electric damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Wind damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, decrease party's damage taken by 9.8%/10.8%/10.4%/11.4% and 9.8%/10.8%/10.4%/11.4% more for every 100 points of Desire Level for 3 turns. Also, restore party's HP by 34.7%/38.3%/36.9%/40.4% of Justine & Caroline's Attack + 2225/2934/2735/3480.\nGain Facade of Service & Admonition."
+        },
+        "skill3": {
+          "name": "Mask of Absurdity & Nonsense",
+          "type": "단일 피해",
+          "element": "염동핵열",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Nuclear damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every 1 point of Desire Level). Also, increase pierce rate for Justine & Caroline and the Sweeper or Assassin ally with the highest Attack by 4.9%/5.4%/5.2%/5.7% and 4.9%/5.4%/5.2%/5.7% more for every 100 points of Desire Level for 3 turns.\nGain Facade of Absurdity & Nonsense."
+        },
+        "skill4": {
+          "name": "Mask of Luck & Loss",
+          "type": "단일 피해",
+          "element": "축복주원",
+          "sp": 20,
+          "cool": 0,
+          "description": "Deal Bless damage to 1 foe equal to 74.5%/82.1%/79.0%/86.7% of Attack and Curse damage equal to 74.5%/82.1%/79.0%/86.7% of Attack (1 hit each; increase this effect by 1% for every point of Desire Level).\nAlso, increase Justine & Caroline's Attack by 14.6%/16.1%/15.5%/17.0% + 14.6%/16.1%/15.5%/17.0% for every 100 points of Desire Level, damage dealt by 9.8%/10.8%/10.4%/11.4% + 9.8%/10.8%/10.4%/11.4% for every 100 points of Desire Level, and critical rate by 4.9%/5.4%/5.2%/5.7% + 4.9%/5.4%/5.2%/5.7% for every 100 points of Desire Level for 3 turns.\nGain Facade of Luck & Loss."
+        },
+        "skill5": {
+          "name": "Two Masks as One",
+          "type": "단일 피해",
+          "element": "만능",
+          "sp": 25,
+          "cool": 0,
+          "description": "Usable when any 2 types of Facade have been gained. Deal Almighty damage to 1 foe equal to 126.9%/139.9%/134.7%/147.7% of Attack (increase this effect by 1% for every 1 point of Desire Level). Also, spend all Facades to activate the following effects based on their combination.\nFacade of Mischief & Innocence + Facade of Service & Admonition: Restore party's HP equal to 52.2%/57.6%/55.4%/60.8% of Attack + 3344/4409/4111/5230. Also, increase party's damage dealt by 43.9%/48.4%/46.6%/51.1% for every 100 points of Desire Level for 2 turns.\nFacade of Mischief & Innocence + Facade of Absurdity & Nonsense: Grant other allies 14.6%/16.1%/15.5%/17.0% of Skill Amplification for 2 turns. Also, increase party's critical damage by 19.5%/21.5%/20.7%/22.7% for every 100 points of Desire Level.\nSkill Amplification: Increase the values of skills and Thief Tactics that are increased when leveled up. This effect is calculated separately from other effects.\nFacade of Mischief & Innocence + Facade of Luck & Loss: Change this skill's target to all foes.\nFacade of Service & Admonition + Facade of Absurdity & Nonsense: Grant all allies a shield equal to 41.8%/46.1%/44.3%/48.6% of Justine & Caroline's Attack + 2675/3527/3289/4184 and 1 Down Point for 2 turns. Also, increase party's Defense by 48.8%/53.8%/51.8%/56.8% for every 100 points of Desire Level.\nFacade of Service & Admonition + Facade of Luck & Loss: Inflict Shock, Windswept and 2 Curse stacks on the main target, and gain 2 Blessing stacks. These effects last for 2 turns. Also, decrease all foes' Defense by 25.4%/28.0%/26.9%/29.5% + 25.4%/28.0%/26.9%/29.5% for every 100 point of Desire Level for 2 turns.\nFacade of Absurdity & Nonsense + Facade of Luck & Loss: This skill deals 1 more hit of Almighty damage. Also, gain Rebel Surveillance for 2 turns.\nRebel Surveillance: When using a skill, temporarily gain 4.9%/5.4%/5.2%/5.7% of Effects stats from the Sweeper or Assassin ally with the highest Attack (excluding Justine & Caroline)."
+        },
+        "passive1": {
+          "name": "Overseer of Rehabilitation",
+          "element": "패시브",
+          "description": "At the start of battle, increase Desire Level based on Justine & Caroline's base stats.\nFor every 100 points of Attack, increase Desire Level by 1 (up to 45).\nFor every 2% of Damage Mult. +, increase Desire Level by 1 (up to 15).\nFor every 6% of Critical Multiplier above 100%, increase Desire Level by 1 (up to 15).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Oxymoron",
+          "element": "패시브",
+          "description": "Gain stat bonuses based on the selected Persona combinations:\nMask of Mischief & Innocence + Mask of Service & Admonition: Increase healing by 21.0%. Also, when on the field, increase party's damage dealt by 24.0%.\nMask of Mischief & Innocence + Mask of Absurdity & Nonsense: Increase Speed by 5. Also, when on the field, increase party's Attack by 30.0%.\nMask of Mischief & Innocence + Mask of Luck & Loss: Increase critical rate by 15.0%.\nMask of Service & Admonition + Mask of Absurdity & Nonsense: Increase Justine & Caroline's shield by 21.0%.\nMask of Service & Admonition + Mask of Luck & Loss: Increase Speed by 5. Also, when on the field, increase all foes' damage taken by 24.0%.\nMask of Absurdity & Nonsense + Mask of Luck & Loss: Increase critical damage by 30.0%.",
+          "cool": 0
+        },
+        "skill_highlight": {
+          "element": "만능",
+          "cool": 4,
+          "description": "When activating a Highlight, choose 1 of the 2 selected Persona sets and activate its Highlight below (cooldown times for each Highlight are calculated independently).\nMask of Mischief & Innocence: Increase the party's Attack by 24.4%/26.9%/25.9%/28.4% and damage by 34.2%/37.7%/36.3%/39.8% for 2 turns.\nMask of Service & Admonition: Restore the party's HP by 43.4%/47.9%/46.1%/50.6% of Justine & Caroline's Attack + 2782/3667/3419/4350.\nIncrease the party's max HP by 9.8%/10.8%/10.4%/11.4% for 2 turns.\nMask of Absurdity & Nonsense: Deal Psychokinesis damage to 1 foe equal to 244.0%/269.0%/259.0%/284.0% of Attack, and Nuclear damage equal to 244.0%/269.0%/259.0%/284.0% of Attack (1 hit each, can inflict critical damage).\nIncrease Attack by 34.2%/37.7%/36.3%/39.8% for Justine & Caroline and the ally with the highest Attack (prioritizing Assassins or Sweepers).\nMask of Luck & Loss: Deal Bless damage to all foes equal to 122.0%/134.5%/129.5%/142.0% of Attack, and deal Curse damage equal to 122.0%/134.5%/129.5%/142.0% of Attack (1 hit each, can inflict critical damage).\nFor 2 turns, increase Justine & Caroline's Attack by 29.3%/32.3%/31.1%/34.1% and critical damage by 19.5%/21.5%/20.7%/22.7%."
+        },
+        "name": "Justine & Caroline"
+      }
+    },
+    {
+      "slug": "noir",
+      "sourceKey": "하루",
+      "codename": "NOIR",
+      "urls": {
+        "ritual": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/ritual.js?v=5.1.0",
+        "weapon": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/weapon.js?v=5.1.0",
+        "skill": "https://lufel.net/data/characters/%ED%95%98%EB%A3%A8/skill.js?v=5.1.0"
+      },
+      "awareness": {
+        "name": "Haru Okumura",
+        "r0": "My Name Is Beauty Thief",
+        "r0_detail": "For Haru's ranged attacks, deal Psychokinesis damage to all foes equal to 66% of Haru's Attack. When using certain skills, gain 1 corresponding Thoughtful Round stack and reload. Up to 3 stacks of Thoughtful Round with different effects can be stacked at the same time.\nFor each Thoughtful Round stack, grant unique effects to ranged attacks. When Haru uses a ranged attack, increase skill damage based on Thoughtful Round stacks (increase by 20%/40%/50% at 1/2/3 stacks, respectively). If at 2+ Thoughtful Round stacks, also increase Attack by 25%.\nAfter using a ranged attack, remove all Thoughtful Round stacks.",
+        "r1": "Expressing Emotions",
+        "r1_detail": "After a new foe appears, activate Extrasensory Aim for that foe at the start of Haru's next turn.\nBased on Haru's Target Audience stacks, increase Attack by 8% (up to 24%) and ranged attack critical rate by 6% (up to 18%).",
+        "r2": "Unwavering Faith",
+        "r2_detail": "When Haru has 1+ Target Audience stacks, decrease damage taken by 25%. When at 3+ Target Audience stacks, increase Psychokinesis damage by 60%.",
+        "r3": "Advancing Courage",
+        "r3_detail": "Increase the skill levels of Mindful Release and Thief Tactics by 3.",
+        "r4": "Straight to the Point",
+        "r4_detail": "Overload Round Enhanced: When using a ranged attack, increase critical damage by 30%.",
+        "r5": "Giving It My Best Shot",
+        "r5_detail": "Increase the skill levels of Extrasensory Aim and Precise Volley by 3.",
+        "r6": "Heroine of Justice",
+        "r6_detail": "When at 2+ Thoughtful Round stacks, evolve Haru's ranged attacks to Resonating Shots. Also, deal a ranged attack that activates all Thoughtful Round effects once. This additional attack's damage is 70% of the original attack.\nAt 2+ Thoughtful Round stacks, activate the following effects for Thoughtful Round gained from skills.\nFocused Round: When using a ranged attack, also decrease the foe's ailment resistance by 27% for 2 turns.\nPainpoint Round: When using a ranged attack and Haru has Target Audience, increase pierce rate by 12%.\nSpillover Round: When using a ranged attack and Haru has Target Audience, increase critical rate by 20% and critical damage by 20%."
+      },
+      "awarenessKr": null,
+      "weapons": {
+        "name": "Haru Okumura",
+        "weapon4-1": {
+          "name": "Gilgamesh Axe",
+          "health": 1712.28,
+          "attack": 607.79,
+          "defense": 341.44,
+          "skill_name": "",
+          "description": "Increase Attack by 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0%.\nIncrease Attack and ailment accuracy by 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% for each foe with a debuff (up to 9.9%/12.9%/12.9%/15.9%/15.9%/18.9%/18.9%)."
+        },
+        "weapon5-1": {
+          "name": "Last Quarter",
+          "health": 2140.53,
+          "attack": 759.73,
+          "defense": 427.25,
+          "skill_name": "",
+          "description": "Increase ailment accuracy by 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0%.\nWhen dealing Psychokinesis damage, if Haru has Target Audience, increase Psychokinesis damage by 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0%. Also, for each Thoughtful Round gained, increase Attack by 34.0%/43.0%/43.0%/52.0%/52.0%/61.0%/61.0% for 1 turn."
+        }
+      },
+      "weaponsKr": {
+        "name": "오쿠무라 하루",
+        "weapon4-1": {
+          "name": "길가메스 액스",
+          "health": 1712.28,
+          "attack": 607.79,
+          "defense": 341.44,
+          "skill_name": "무방비의 틈",
+          "description": "공격력이 12.0%/12.0%/16.0%/16.0%/20.0%/20.0%/24.0% 증가한다. 이상 상태의 적이 1명 있을 때마다 공격력, 효과 명중이 3.3%/4.3%/4.3%/5.3%/5.3%/6.3%/6.3% 증가하며, 최대 9.9%/12.9%/12.9%/15.9%/15.9%/18.9%/18.9% 증가한다."
+        },
+        "weapon5-1": {
+          "name": "신성한 전가",
+          "health": 2140.53,
+          "attack": 759.73,
+          "defense": 427.25,
+          "highlight": true,
+          "skill_name": "정밀 단련",
+          "description": "효과 명중이 36.0%/36.0%/47.0%/47.0%/58.0%/58.0%/69.0% 증가한다. 자신이 『조준점』을 보유할 때 염동 속성 대미지가 24.0%/31.0%/31.0%/38.0%/38.0%/45.0%/45.0% 증가한다. 『개조』를 획득할 때마다 1턴 동안 공격력이 34.0%/43.0%/43.0%/52.0%/52.0%/61.0%/61.0% 증가한다."
+        }
+      },
+      "skills": {
+        "name": "Haru Okumura",
+        "skill1": {
+          "name": "Extrasensory Aim",
+          "element": "염동광역",
+          "type": "광역피해",
+          "sp": 26,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to all foes equal to 75.8%/83.6%/80.5%/88.3% of Attack (2 hits). 97.6%/97.6%/103.6%/103.6% chance to inflict 1 Target Audience stack on the main target and 53.7%/53.7%/57.0%/57.0% chance to inflict 1 Target Audience stack on other foes. Then, transfer Target Audience stacks on foes to Haru and change Target Audience's duration to 3 turns. Also gain 1 Focused Round stack.\nFocused Round: When using a ranged attack with Target Audience, increase skill damage by 29.3%/32.3%/31.1%/34.1%. After the ranged attack, remove all Target Audience stacks granted to Haru."
+        },
+        "skill2": {
+          "name": "Precise Volley",
+          "element": "총격",
+          "type": "단일 피해",
+          "hp": 12,
+          "cool": 0,
+          "description": "Deal Gun damage to 1 foe equal to 151.6%/167.1%/160.9%/176.4% of Attack. When Haru has Target Audience, increase this skill's pierce rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Painpoint Round.\nPainpoint Round: When using a ranged attack, also deal Psychokinesis damage to the main target equal to 39.0%/43.0%/41.4%/45.4% of Attack (can gain skill damage increases from Focused Round)."
+        },
+        "skill3": {
+          "name": "Mindful Release",
+          "element": "염동광역",
+          "type": "광역피해",
+          "sp": 26,
+          "cool": 0,
+          "description": "Deal Psychokinesis damage to all foes equal to 142.1%/156.7%/150.8%/165.4% of Attack. When Haru has Target Audience, increase this skill's critical rate by 19.5%/19.5%/20.7%/20.7% and gain 1 Spillover Round stack.\nSpillover Round: When using a ranged attack, also deal Psychokinesis damage to all foes equal to 29.3%/32.3%/31.1%/34.1% of Attack (can gain skill damage increases from Focused Round)."
+        },
+        "skill_highlight": {
+          "element": "염동광역",
+          "type": "광역피해",
+          "description": "Deal Psychokinesis damage to all foes equal to 206.9%/228.1%/219.6%/240.8% of Attack. Gain 1 Overload Round if Haru doesn't have any Overload Round stacks and is below maximum Thoughtful Round stacks.\nOverload Round: When using a ranged attack, increase critical rate by 14.6%/14.6%/15.5%/15.5%.\nIf Haru hasn't gained any Overload Round stacks, increase this skill damage by 14.6%/16.1%/15.5%/17.0%.",
+          "cool": 4
+        },
+        "passive1": {
+          "name": "Heiress's Leadership",
+          "element": "패시브",
+          "description": "During battle, increase Attack by 1% for every 1.45% of ailment accuracy (up to 165.0% of Attack). Also increase critical damage by 20% for every 50% of ailment accuracy (stacks up to 3 times).",
+          "cool": 0
+        },
+        "passive2": {
+          "name": "Helping Others",
+          "element": "패시브",
+          "description": "Permanently gain 1 Area to Improve stack for each Thoughtful Round stack gained. Gain the following effects based on the number of Area to Improve stacks.\n1 stack: Increase ailment accuracy by 18.0% and ailment resistance by 18.0%.\n2 stacks: Increase Attack by 18.0% and Defense by 18.0%.\n3 stacks: Increase critical damage by 18.0%.",
+          "cool": 0
+        }
+      }
+    }
+  ]
+}

@@ -454,9 +454,6 @@ export class BattleEngine {
         ...(party.some(unit => unit.slug === 'akihiko') ? ['Akihiko Theurgy and Assist timing remain unavailable. The A1 Grit critical-rate duration and stacking rule are not stated, so that critical-rate bonus is omitted.'] : []),
         ...(party.some(unit => unit.slug === 'yukari') ? ['Yukari can fill and reserve Theurgy gauge, but Theurgy activation and reserve return remain unavailable. Reserve expiry uses the shared party-round clock.'] : []),
         ...(party.some(unit => unit.slug === 'makoto') ? ['Makoto Theurgy and Assist timing remain unavailable. Full Moon has no substitute generator while Theurgy is disabled. The A1 Melody extra-hit coefficient and A6 fatal-state ending boundary are not assumed.'] : []),
-        ...(this.personaDefinitions.some(persona => (this.config.personaIds || []).includes(persona.id)
-          && persona.skills?.some(skill => skill.sourceConfidence === 'source-tooltip-sp-cost-missing'))
-          ? ['Elec Break / Fire Break SP cost is missing from the source data; 0 SP is used until an in-game cost is confirmed.'] : []),
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
         ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),

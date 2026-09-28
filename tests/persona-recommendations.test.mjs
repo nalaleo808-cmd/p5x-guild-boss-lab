@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
 import { buildPersonaLoadoutCatalog, defaultPersonaSkillIds, legalTransferableSkillsForPersona, PERSONA_EQUIP_SLOT_COUNT } from '../src/persona-loadout.js';
 import { PERSONA_RECOMMENDATIONS, PERSONA_SKILL_NAME_ALIASES, withPersonaRecommendations } from '../src/persona-recommendations.js';
-import { PERSONA_SKILL_ADAPTERS } from '../src/hachiman-recorded-team.js';
+import { PERSONA_SKILL_ADAPTERS, adaptPersonaSkill } from '../src/hachiman-recorded-team.js';
 import { BattleEngine } from '../src/engine.js';
 import { withPersonaAdditions } from '../src/persona-additions.js';
 
@@ -75,6 +75,13 @@ test('Elec Break / Fire Break remove that element\'s resistance while active', (
   assert.equal(e.resistsElement(target, 'electric'), false);
   target.debuffs = [{ ...PERSONA_SKILL_ADAPTERS['Fire Break'].debuff, duration: 0 }];
   assert.equal(e.resistsElement(target, 'fire'), true);
+});
+
+test('Elec Break and Fire Break cost the in-game 20 SP and no longer report a missing cost', () => {
+  for (const name of ['Elec Break', 'Fire Break']) {
+    assert.equal(adaptPersonaSkill({ name, cost: 0 }).cost, 20, name);
+    assert.notEqual(PERSONA_SKILL_ADAPTERS[name].sourceConfidence, 'source-tooltip-sp-cost-missing', name);
+  }
 });
 
 test("Spirit Harmony is shown as Warrior's Unity and the list still resolves after renaming", async () => {
