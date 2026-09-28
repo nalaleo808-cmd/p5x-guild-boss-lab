@@ -187,6 +187,8 @@ body::before {
 .boss-effect-list { display: grid; gap: 5px; margin-top: 12px; border-left: 3px solid #35a9df; background: #0b1820; padding: 9px 10px; }
 .boss-effect-list > b { color: #60c9f5; font-size: 7px; letter-spacing: .13em; }
 .boss-effect-list > span { color: #9eb4bf; font-size: 8px; line-height: 1.35; }
+.boss-effect-list > a { color: #a9dff7; font-size: 9px; line-height: 1.4; text-decoration: underline; }
+.boss-effect-list > small { color: #9eb4bf; font-size: 8px; line-height: 1.35; }
 .launch-strip { max-width: 1450px; margin: 28px auto 0; border-top: 1px solid #34343b; padding-top: 20px; display: flex; align-items: center; gap: 36px; }
 .launch-strip > div { display: flex; align-items: center; gap: 10px; }
 .check { width: 25px; height: 25px; border-radius: 50%; display: grid; place-items: center; background: #183723; color: var(--green); font-size: 11px; }
