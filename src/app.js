@@ -11,6 +11,7 @@ import { kotoneBuildEditor, bindKotoneBuild, kotoneStatusMarkup, kotoneSkillSumm
 import { BattleEngine, calculateNightmareScore, simulate } from './engine.js';
 import { adaptRegisteredCharacter, characterModuleFor } from './characters/registry.js';
 import { bosses, elementMeta, navigator as baseNavigator, nightmareModes, recordedNightmareBenchmark, roster as baseRoster } from './data.js';
+import { guidesForEncounter } from './sleepy-guides.js';
 import { lufelCatalog } from './generated/lufel-catalog.js';
 import { applyRecordedDefaultStats, ichigoStatsPreset, berrySpPreset, marianRevelationPreset, marianSpPreset, wonderWeaponPreset, liveStatsPresetFields, wonderStatsPreset, qualiaPassivePreset } from './default-presets.js';
 import {
@@ -874,6 +875,7 @@ function renderSetup() {
               <div class="affinity-row"><span>WEAK ${iconFor(boss.weakness)} ${elementMeta[boss.weakness].label}</span><span>RESIST ${resistanceMarkup(boss)}</span></div>
               <ol>${setupPhases.map(phase => `<li><i></i><span>${escapeHtml(phase.name)}</span><b>${Number.isFinite(phase.threshold) ? `${Math.round(phase.threshold * 100)}%` : escapeHtml(phase.thresholdLabel || 'SCRIPTED')}</b></li>`).join('')}</ol>
               ${boss.specialEffects?.length ? `<div class="boss-effect-list"><b>SPECIAL EFFECTS</b>${boss.specialEffects.map(effect => `<span>${escapeHtml(effect)}</span>`).join('')}</div>` : ''}
+              ${guidesForEncounter(boss.name, ui.selectedMode).length ? `<div class="boss-effect-list"><b>SLEEPY VIDEO ROUTES</b>${guidesForEncounter(boss.name, ui.selectedMode).slice(0, 3).map(guide => `<a href="${escapeHtml(guide.url)}" target="_blank" rel="noopener noreferrer">Game ${escapeHtml(guide.version)} · ${escapeHtml(guide.bosses.join(' + '))} ↗</a>`).join('')}<small>Route references only. These videos have not calibrated battle damage or boss coefficients.</small></div>` : ''}
               ${boss.encounter?.thresholdNote ? `<p class="formula-note">${escapeHtml(boss.encounter.thresholdNote)}</p>` : ''}
               ${boss.id === 'vishnu' ? `<div class="threshold-config" aria-label="Provisional Vishnu HP gates">
                 <label><span>SPAWN TO 3</span><b><input type="number" min="1" max="99" value="${Math.round(ui.vishnuThresholds[0] * 100)}" data-vishnu-threshold="0">% HP</b></label>
