@@ -273,7 +273,7 @@ export class KotoneShiomiMechanics {
   }
   resolve(actor, skill, targetId, sourceType, options = {}) {
     if (!this.active || actor.id !== KOTONE_SHIOMI_ID || !skill.kotoneSkill) throw new Error('Invalid Kotone skill dispatch');
-    if (this.state.cold && !options.automatic) throw new Error('Kotone cannot act during Cold');
+    if (this.state.cold && !options.automatic && !this.engine.isVirtualConcertActive()) throw new Error('Kotone cannot act during Cold');
     const e = this.engine;
     const target = e.state.party.find(unit => unit.id === targetId && unit.hp > 0);
     if (['S1', 'S3'].includes(skill.kotoneSkill) && !target) throw new Error('Select a living ally');
@@ -362,12 +362,13 @@ export class KotoneShiomiMechanics {
   turnStart(actor) {
     if (!this.state) { this.refreshAuras(); return; }
     if (actor.id === KOTONE_SHIOMI_ID) {
-      // Go for Broke can open a Concert turn as well as a normal turn (2026-09-26
-      // DOD rotation, A6: first use at the start of Kotone's Concert turn).
+      // Go for Broke can open a Concert turn as well as a normal turn, and Cold
+      // skips normal turns only: Concert turns are neither blocked nor counted
+      // (user, 2026-09-28; 2026-09-26 DOD rotation, A6: both uses in B1).
       // Arcana Link stays normal-turn only.
       const concert = this.engine.isVirtualConcertActive();
-      const opening = !this.state.cold && !this.state.fortune;
-      this.state.linkWindow = opening && !concert; this.state.actionWindow = opening;
+      this.state.linkWindow = !this.state.cold && !this.state.fortune && !concert;
+      this.state.actionWindow = !this.state.fortune && (concert || !this.state.cold);
     }
     this.refreshAuras();
   }
@@ -389,7 +390,7 @@ export class KotoneShiomiMechanics {
   }
   decorateActions(actions) {
     if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID) return actions;
-    if (this.state.cold > 0) return [{ type: 'kotone_cold', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-cold', name: `Cold — wait (${this.state.cold} turns)`, target: 'self', enabled: true, cost: 0 }];
+    if (this.state.cold > 0 && !this.engine.isVirtualConcertActive()) return [{ type: 'kotone_cold', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-cold', name: `Cold — wait (${this.state.cold} turns)`, target: 'self', enabled: true, cost: 0 }];
     const controls = [];
     if (this.state.linkWindow) controls.push({ type: 'kotone_link', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-link', name: 'Select / reselect Arcana Link', target: 'ally', enabled: true, cost: 0, statusLabel: 'FREE' });
     const remaining = this.state.goForBroke.limit - this.state.goForBroke.used;
@@ -397,7 +398,8 @@ export class KotoneShiomiMechanics {
     return [...controls, ...actions];
   }
   activateGoForBroke() {
-    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !this.state.actionWindow || this.state.fortune || this.state.cold || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn and a living linked ally');
+    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !this.state.actionWindow || this.state.fortune
+      || (this.state.cold && !this.engine.isVirtualConcertActive()) || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn and a living linked ally');
     const activationId = `gfb-${this.state.goForBroke.used + 1}`;
     const result = spendGoForBrokeUse(this.state.goForBroke, activationId);
     if (!result.ok) throw new Error(`Go for Broke unavailable: ${result.reason}`);
