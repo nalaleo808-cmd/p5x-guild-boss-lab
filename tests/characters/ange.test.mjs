@@ -15,7 +15,8 @@ test('Ange Prayer Refrain converts up to four held notes into cooldown reduction
 const character = slug => structuredClone(lufelCatalog.characters.find(unit => unit.slug === slug));
 const angeEngine = () => {
   const ange = character('ange');
-  return new BattleEngine({ seed: 17, bossId: 'slaughter_drive', teamIds: ['wonder'],
+  // Live Nexus stops at 6 Attack Turns; a second Da Capo needs the pre-2.2 eight.
+  return new BattleEngine({ seed: 17, bossId: 'slaughter_drive', teamIds: ['wonder'], turnLimit: 8,
     navigatorDefinition: { ...ange, id: 'navigator-ange' } });
 };
 

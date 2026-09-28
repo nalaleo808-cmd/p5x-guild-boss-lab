@@ -42,9 +42,14 @@ test('optimizer baseline is the current seed 808 Full Auto policy', () => {
   assert.deepEqual(result.replayParity, { baseline: true, optimized: true });
 });
 
+// Live Nexus is 6 Attack Turns. These planner tests ask for 8 explicitly so
+// turn-7 plans and both Concert rounds stay reachable.
+const longNexus = { turnLimit: 8 };
+
 test('candidate replay has exact fast/full parity and preserves replay context', () => {
-  const result = optimizeSlaughter(tinySearch);
-  const replay = replayCandidate(result.optimized.candidate, { battleSeed: result.search.battleSeed });
+  const result = optimizeSlaughter({ ...tinySearch, ...longNexus });
+  assert.equal(result.search.turnLimit, 8);
+  const replay = replayCandidate(result.optimized.candidate, { battleSeed: result.search.battleSeed, turnLimit: result.search.turnLimit });
 
   assert.equal(replay.fastScore, replay.fullScore);
   assert.equal(replay.fullScore, result.optimized.score);
@@ -54,10 +59,10 @@ test('candidate replay has exact fast/full parity and preserves replay context',
 });
 
 test('True Desire plans can reserve each stack until its scheduled J&C turn', () => {
-  const baseline = optimizeSlaughter({ generations: 0, populationSize: 1, eliteCount: 1, refinePasses: 0 }).baseline.candidate;
+  const baseline = optimizeSlaughter({ generations: 0, populationSize: 1, eliteCount: 1, refinePasses: 0, ...longNexus }).baseline.candidate;
   const candidate = structuredClone(baseline);
   candidate.trueDesirePlan = [7, null];
-  const engine = runCandidate(candidate, { fastMode: false, battleSeed: 808 });
+  const engine = runCandidate(candidate, { fastMode: false, battleSeed: 808, ...longNexus });
   const toggles = engine.state.history.filter(frame => frame.label === 'True Desire On');
 
   assert.equal(toggles.length, 1);
@@ -66,13 +71,13 @@ test('True Desire plans can reserve each stack until its scheduled J&C turn', ()
 });
 
 test('J&C opening mask and Marian per-turn medicine plans reach the full replay', () => {
-  const baseline = optimizeSlaughter({ generations: 0, populationSize: 1, eliteCount: 1, refinePasses: 0 }).baseline.candidate;
+  const baseline = optimizeSlaughter({ generations: 0, populationSize: 1, eliteCount: 1, refinePasses: 0, ...longNexus }).baseline.candidate;
   const candidate = structuredClone(baseline);
   candidate.jcOpeningMask = 'mischief';
   candidate.medicinePlan = {
     7: { name: 'Fighter Salve', targetId: 'lufel-recent-puppet-wavecatcher' }
   };
-  const engine = runCandidate(candidate, { fastMode: false, battleSeed: 808 });
+  const engine = runCandidate(candidate, { fastMode: false, battleSeed: 808, ...longNexus });
   const firstManualMask = engine.state.history.find(frame => frame.label.startsWith('Mask of '));
   const medicines = engine.state.history.filter(frame => frame.label.startsWith('Medicine'));
 

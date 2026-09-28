@@ -8,7 +8,8 @@ export const unit = (id,role='Strategist',attack=1000) => ({id,name:id,codename:
 export function engine(build={}, options={}) {
  const config={seed:17,teamIds:[K,'wonder','test-dps','test-support'],characterDefinitions:[unit('test-dps','Sweeper',2000),unit('test-support')],
   bossDefinition:{id:'training-boss',name:'Training boss',maxHp:1e10,finiteHp:false,defense:150,weakness:'none',resistance:'none',turnLimit:30,downMax:30,defaultMode:'nexus',scoreMultiplier:1,scoreAttack:true,phases:[{threshold:1,name:'Training',defense:150}],summons:[]},
-  sharedHighlightStart:0, ...options,
+  // Live Nexus stops at 6 Attack Turns; these long runs ask for the training boss's 30.
+  turnLimit:30, sharedHighlightStart:0, ...options,
   loadouts:{wonder:{baseStats:{maxHp:100000,maxSp:1000,attack:1000}},...options.loadouts,[K]:{awareness:0,weaponId:'none',statsMode:'base',baseStats:{attack:2500,maxHp:100000,maxSp:1000,defense:300},...build}}
  };
  return new BattleEngine(config);

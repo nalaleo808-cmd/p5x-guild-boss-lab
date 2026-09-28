@@ -4,8 +4,10 @@ import { BattleEngine } from '../src/engine.js';
 import { getDefaultWonderWeaponProfileId } from '../src/wonder-weapons.js';
 
 function engineWithWeapon(weaponId, options = {}) {
+  // Base-stat builds: equipped totals already include the weapon's static
+  // Attack passive, so the engine skips that one buff for equipped builds.
   const wonderLoadout = {
-    statsMode: 'equipped',
+    ...(options.statsMode ? { statsMode: options.statsMode } : {}),
     baseStats: { maxHp: 10_000, maxSp: 500, attack: 5_000, defense: 2_000 },
     ...(weaponId ? { weaponId, weaponProfileId: getDefaultWonderWeaponProfileId(weaponId) } : {})
   };
@@ -189,4 +191,11 @@ test('selected unresolved weapon mechanics are emitted as limitations', () => {
   assert.ok(plasma.state.mechanicsLimitations.some(message => message.includes('Flames of Desire')));
   const iceAge = engineWithWeapon('ice-age');
   assert.ok(iceAge.state.mechanicsLimitations.some(message => message.includes('target-selection policy')));
+});
+
+test('equipped-total builds skip only the static Attack passive, which the totals already include', () => {
+  const equipped = engineWithWeapon('sennight-inferno', { statsMode: 'equipped' });
+  assert.equal(buffValue(equipped.actor, 'attack'), 0);
+  assert.equal(buffValue(equipped.actor, 'damage'), 0.36);
+  assert.equal(buffValue(engineWithWeapon('sennight-inferno').actor, 'attack'), 0.56);
 });

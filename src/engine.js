@@ -110,6 +110,9 @@ export class BattleEngine {
       jcA6Unlocked: typeof config.jcA6Unlocked === 'boolean' ? config.jcA6Unlocked : null,
       encounterThresholds: Array.isArray(config.encounterThresholds) ? clone(config.encounterThresholds) : null,
       lifeSustainment: config.lifeSustainment == null ? null : config.lifeSustainment === true,
+      // Explicit Attack Turn limit for tests and what-if runs. When omitted, the
+      // live Nexus (6) and Devourer (110) mode rules apply.
+      turnLimit: Number.isInteger(config.turnLimit) && config.turnLimit > 0 ? config.turnLimit : null,
       wavecatcherFollowUps: config.wavecatcherFollowUps !== false,
       wavecatcherSourceMechanics: typeof config.wavecatcherSourceMechanics === 'boolean'
         ? config.wavecatcherSourceMechanics
@@ -199,6 +202,13 @@ export class BattleEngine {
       // observed survival multiplier, as on Hachiman and Surt.
       bossData.previewAttackTurns = 6;
       bossData.turnLimit = 5;
+    }
+    if (this.config.turnLimit && ['nexus', 'devourer'].includes(modeId)) {
+      bossData.turnLimit = this.config.turnLimit;
+      if (modeId === 'devourer') {
+        bossData.previewAttackTurns = this.config.turnLimit;
+        if (bossData.dodRules) bossData.dodRules.turnLimit = this.config.turnLimit;
+      }
     }
     if (liveHachimanDreamscape && this.config.hachimanBaseDefense) {
       // Explicit base Defense override for what-if comparisons; the boss

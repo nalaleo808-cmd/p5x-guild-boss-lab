@@ -84,9 +84,9 @@ function recordedMikuAction(engine) {
   return engine.getNavigatorActions().find(action => action.enabled && action.name === plannedName) || null;
 }
 
-export function createSlaughterBenchmarkEngine({ seed = 808, wavecatcherFollowUps = true, fastMode = false, jcMaskPair = ['mischief', 'absurdity'], mechanicsProfile = RECORDED_MECHANICS_PROFILE } = {}) {
+export function createSlaughterBenchmarkEngine({ seed = 808, wavecatcherFollowUps = true, fastMode = false, jcMaskPair = ['mischief', 'absurdity'], mechanicsProfile = RECORDED_MECHANICS_PROFILE, turnLimit = null } = {}) {
   return new BattleEngine({
-    seed, bossId: 'slaughter_drive', mechanicsProfile,
+    seed, bossId: 'slaughter_drive', mechanicsProfile, turnLimit,
     characterDefinitions: recordedTeam,
     teamIds: ['wonder', ...recordedTeam.map(unit => unit.id)],
     personaDefinitions: [recordedPersona], personaIds: [recordedPersona.id],

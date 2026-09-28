@@ -149,8 +149,8 @@ function plannedMedicine(candidate, attackTurn) {
   return null;
 }
 
-export function runCandidate(candidate, { fastMode = true, battleSeed = DEFAULT_BATTLE_SEED, mechanicsProfile = CURRENT_MECHANICS_PROFILE } = {}) {
-  const engine = createSlaughterBenchmarkEngine({ fastMode, seed: battleSeed, jcMaskPair: candidate.jcMaskPair, mechanicsProfile });
+export function runCandidate(candidate, { fastMode = true, battleSeed = DEFAULT_BATTLE_SEED, mechanicsProfile = CURRENT_MECHANICS_PROFILE, turnLimit = null } = {}) {
+  const engine = createSlaughterBenchmarkEngine({ fastMode, seed: battleSeed, jcMaskPair: candidate.jcMaskPair, mechanicsProfile, turnLimit });
   const trueDesirePlan = candidate.trueDesirePlan || [candidate.trueDesireTurn, candidate.trueDesireTurn];
   let trueDesireUseIndex = 0;
   let safety = 0;
@@ -391,9 +391,9 @@ function summarize(engine, candidate) {
   };
 }
 
-export function replayCandidate(candidate, { battleSeed = DEFAULT_BATTLE_SEED, mechanicsProfile = CURRENT_MECHANICS_PROFILE } = {}) {
-  const fastEngine = runCandidate(candidate, { fastMode: true, battleSeed, mechanicsProfile });
-  const fullEngine = runCandidate(candidate, { fastMode: false, battleSeed, mechanicsProfile });
+export function replayCandidate(candidate, { battleSeed = DEFAULT_BATTLE_SEED, mechanicsProfile = CURRENT_MECHANICS_PROFILE, turnLimit = null } = {}) {
+  const fastEngine = runCandidate(candidate, { fastMode: true, battleSeed, mechanicsProfile, turnLimit });
+  const fullEngine = runCandidate(candidate, { fastMode: false, battleSeed, mechanicsProfile, turnLimit });
   const fastScore = fastEngine.state.result.score;
   const fullScore = fullEngine.state.result.score;
   if (fastScore !== fullScore) {
@@ -421,7 +421,8 @@ export function optimizeSlaughter({
   refinePasses = 3,
   searchSeed = DEFAULT_SEARCH_SEED,
   battleSeed = DEFAULT_BATTLE_SEED,
-  mechanicsProfile = CURRENT_MECHANICS_PROFILE
+  mechanicsProfile = CURRENT_MECHANICS_PROFILE,
+  turnLimit = null
 } = {}) {
   positiveInteger(generations, 'generations', { allowZero: true });
   positiveInteger(populationSize, 'populationSize');
@@ -432,13 +433,13 @@ export function optimizeSlaughter({
   if (eliteCount > populationSize) throw new Error('eliteCount cannot exceed populationSize');
 
   const random = makeRandom(searchSeed);
-  const seedEngine = createSlaughterBenchmarkEngine({ fastMode: true, seed: battleSeed, mechanicsProfile });
+  const seedEngine = createSlaughterBenchmarkEngine({ fastMode: true, seed: battleSeed, mechanicsProfile, turnLimit });
   const model = searchModel(seedEngine);
   const baseline = initialCandidate(seedEngine);
   const cache = new Map();
   const evaluate = candidate => {
     const signature = candidateSignature(candidate);
-    if (!cache.has(signature)) cache.set(signature, runCandidate(candidate, { fastMode: true, battleSeed, mechanicsProfile }).state.result.score);
+    if (!cache.has(signature)) cache.set(signature, runCandidate(candidate, { fastMode: true, battleSeed, mechanicsProfile, turnLimit }).state.result.score);
     return cache.get(signature);
   };
 
@@ -476,8 +477,8 @@ export function optimizeSlaughter({
     progress.push({ generation: generations, score: bestScore, phase: 'coordinate-refine' });
   }
 
-  const baselineReplay = replayCandidate(baseline, { battleSeed, mechanicsProfile });
-  const bestReplay = replayCandidate(best, { battleSeed, mechanicsProfile });
+  const baselineReplay = replayCandidate(baseline, { battleSeed, mechanicsProfile, turnLimit });
+  const bestReplay = replayCandidate(best, { battleSeed, mechanicsProfile, turnLimit });
   if (bestReplay.fastScore !== bestScore) throw new Error(`Cached search score ${bestScore} did not match replay score ${bestReplay.fastScore}`);
   return {
     metadata: {
@@ -492,7 +493,7 @@ export function optimizeSlaughter({
       autoBaselineScore: baselineReplay.fullScore,
       searchPolicy: 'seeded genetic search followed by coordinate refinement'
     },
-    search: { searchSeed, battleSeed, generations, populationSize, eliteCount, refinePasses, mechanicsProfile },
+    search: { searchSeed, battleSeed, generations, populationSize, eliteCount, refinePasses, mechanicsProfile, ...(turnLimit ? { turnLimit } : {}) },
     baseline: baselineReplay.result,
     optimized: bestReplay.result,
     replayParity: { baseline: baselineReplay.parity, optimized: bestReplay.parity },
@@ -571,7 +572,8 @@ function runCli(args) {
     const document = JSON.parse(readFileSync(resolve(replayPath), 'utf8'));
     const replay = replayCandidate(candidateFromDocument(document), {
       battleSeed: options.battleSeed ?? document?.search?.battleSeed ?? document?.battleSeed ?? DEFAULT_BATTLE_SEED,
-      mechanicsProfile: options.mechanicsProfile ?? document?.metadata?.mechanicsProfile ?? document?.search?.mechanicsProfile ?? document?.mechanicsProfile ?? (document?.metadata?.schemaVersion === 1 ? RECORDED_MECHANICS_PROFILE : CURRENT_MECHANICS_PROFILE)
+      mechanicsProfile: options.mechanicsProfile ?? document?.metadata?.mechanicsProfile ?? document?.search?.mechanicsProfile ?? document?.mechanicsProfile ?? (document?.metadata?.schemaVersion === 1 ? RECORDED_MECHANICS_PROFILE : CURRENT_MECHANICS_PROFILE),
+      turnLimit: document?.search?.turnLimit ?? null
     });
     output = {
       mode: 'replay',

@@ -66,7 +66,9 @@ test('live A6 recharges on every eighth counted Wonder action, skips an unspent 
       id: 'a6-recharge-target', name: 'A6 Recharge Target', maxHp: 1_000_000_000,
       finiteHp: false, attack: 0, defense: 385, turnLimit: 50, summons: [],
       phases: [{ threshold: 1, name: 'Stable', defense: 385 }]
-    }
+    },
+    // Live Nexus stops at 6 Attack Turns; three recharge cycles need the fixture's 50.
+    turnLimit: 50
   });
   const jc = engine.state.party[0];
 
