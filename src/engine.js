@@ -39,6 +39,11 @@ const jcMaskByName = Object.freeze({
 const jcSecondaryElement = Object.freeze({ mischief: 'ice', service: 'wind', absurdity: 'nuclear', luck: 'curse' });
 const defaultJcMasks = Object.freeze(['mischief', 'absurdity']);
 const jcPairKey = masks => [...masks].sort().join('+');
+// Navigator Revelation party effects. Labor 4-set (catalog): "When equipped by
+// Navigator Thieves: increase all allies' HP, ATK and DEF by 8%". Integrity
+// main + Labor: +2% HP/ATK/DEF per party member sharing the ally's attribute
+// (user, 2026-09-27: two Ice allies = 4%).
+const navigatorRevelationEffects = Object.freeze({ laborSet: 0.08, integrityLaborPerSameAttribute: 0.02 });
 const mikuSongs = Object.freeze(['Heaven', 'Spring Storm', 'Play-With-Fire']);
 const mikuTrackBySong = Object.freeze({ Heaven: 'Break', 'Spring Storm': 'Critical', 'Play-With-Fire': 'Expert' });
 // Direct live tooltip/readback costs from the 2026-09-05 Hachiman run. The
@@ -851,31 +856,44 @@ export class BattleEngine {
     this.emit('unmodeled_mechanic', message, { ...limitation, tone: 'system' });
   }
 
-  // Miku navigating shares 20% of her panel stats with every ally, and her
-  // Integrity & Labor 4-set then multiplies party HP, Attack and Defense by
-  // 1.08: (panel + share) x 1.08 reconciled Berry's in-battle HP and Defense
-  // within 1% on 2026-09-06. Recorded Hachiman routes add their own share.
+  // Miku navigating shares 20% of her panel stats with every ally (Ange's
+  // share lives in her own mechanics). Any navigator's Labor / Integrity +
+  // Labor Revelation then adds HP, Attack and Defense. Recorded Hachiman
+  // routes add their own share and Labor, so they are skipped.
   applyMikuNavigatorShare() {
-    if (!this.usesLiveMechanics() || this.navigatorDefinition?.codename !== 'MIKU') return;
+    if (!this.usesLiveMechanics()) return;
+    const sharesStats = this.navigatorDefinition?.codename === 'MIKU';
     const loadouts = Object.values(this.config.loadouts || {});
     if (loadouts.some(loadout => loadout?.navigatorShareApplied || loadout?.panelIncludesShareAndSetEffects)) return;
     const navigatorLoadout = loadoutForUnit(this.config.loadouts, this.navigatorDefinition) || {};
     const stats = navigatorLoadout.baseStats || {};
     const value = key => Number.isFinite(Number(stats[key])) ? Number(stats[key]) : 0;
+    const shareRatio = sharesStats ? 0.2 : 0;
     const share = {
-      maxHp: Math.round(value('maxHp') * 0.2), attack: value('attack') * 0.2, defense: value('defense') * 0.2,
-      crit: value('critRate') * 0.002, critMult: value('critMult') * 0.002,
-      pierceRate: value('pierceRate') * 0.002, damageBonus: value('damageBonus') * 0.002
+      maxHp: Math.round(value('maxHp') * shareRatio), attack: value('attack') * shareRatio, defense: value('defense') * shareRatio,
+      crit: value('critRate') * shareRatio / 100, critMult: value('critMult') * shareRatio / 100,
+      pierceRate: value('pierceRate') * shareRatio / 100, damageBonus: value('damageBonus') * shareRatio / 100
     };
-    const labor = Number(navigatorLoadout.partyStatMultiplier || 0);
-    if (!share.maxHp && !share.attack && !share.defense && !labor) return;
+    const laborSet = navigatorLoadout.revelationSet === 'Labor';
+    const labor = laborSet ? navigatorRevelationEffects.laborSet : 0;
+    // Integrity & Labor: HP, Attack and Defense +2% for each party member who
+    // shares the ally's attribute (user, 2026-09-27: two Ice allies = 4%).
+    // Wonder's attribute is his first Persona's element.
+    const integrityPerAlly = laborSet && navigatorLoadout.revelationMain === 'Integrity' ? navigatorRevelationEffects.integrityLaborPerSameAttribute : 0;
+    const attributeOf = unit => unit.id === 'wonder'
+      ? byId(this.personaDefinitions, this.config.personaIds?.[0])?.element || unit.element
+      : unit.element;
+    if (!share.maxHp && !share.attack && !share.defense && !labor && !integrityPerAlly) return;
     for (const ally of this.state.party) {
+      const attribute = attributeOf(ally);
+      const integrity = integrityPerAlly * this.state.party.filter(member => attribute && attributeOf(member) === attribute).length;
+      const bonus = labor + integrity;
       // Labor scales the level-80 base plus weapon when known, like other
       // % buffs; otherwise it multiplies the stat (2026-09-06 reading).
       const base = ally.statBase;
       const scaled = (value, add, key) => base?.[key] > 0
-        ? Number(value || 0) + add + base[key] * labor
-        : (Number(value || 0) + add) * (1 + labor);
+        ? Number(value || 0) + add + base[key] * bonus
+        : (Number(value || 0) + add) * (1 + bonus);
       ally.maxHp = Math.round(scaled(ally.maxHp, share.maxHp, 'maxHp'));
       ally.hp = ally.maxHp;
       if (Number.isFinite(Number(ally.mechanicMaxHp))) ally.mechanicMaxHp = Math.round(scaled(ally.mechanicMaxHp, share.maxHp, 'maxHp'));
@@ -886,9 +904,9 @@ export class BattleEngine {
       ally.critMult = Number(ally.critMult ?? 1.5) + share.critMult;
       ally.pierceRate = Number(ally.pierceRate || 0) + share.pierceRate;
       ally.damageBonus = Number(ally.damageBonus || 0) + share.damageBonus;
-      ally.navigatorShare = { ...share, labor };
+      ally.navigatorShare = { ...share, labor, integrity, attribute };
     }
-    this.emit('mechanic', `MIKU navigator share: +${share.maxHp} HP, +${Math.round(share.attack)} Attack, +${Math.round(share.defense)} Defense, +${(share.crit * 100).toFixed(1)}% crit, +${(share.critMult * 100).toFixed(1)}% crit mult${labor ? `, then Labor +${Math.round(labor * 100)}% HP/Attack/Defense` : ''}.`, { sourceType: 'navigator', tone: 'buff' });
+    if (sharesStats) this.emit('mechanic', `MIKU navigator share: +${share.maxHp} HP, +${Math.round(share.attack)} Attack, +${Math.round(share.defense)} Defense, +${(share.crit * 100).toFixed(1)}% crit, +${(share.critMult * 100).toFixed(1)}% crit mult${labor ? `, then Labor +${Math.round(labor * 100)}% HP/Attack/Defense` : ''}${integrityPerAlly ? `, Integrity & Labor +${Math.round(integrityPerAlly * 100)}% per same-attribute ally` : ''}.`, { sourceType: 'navigator', tone: 'buff' });
   }
 
   // Attack with Attack % buffs: on the level-80 base plus weapon when known,

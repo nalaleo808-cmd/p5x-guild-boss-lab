@@ -79,12 +79,12 @@ export const wavecatcherStatsPreset = Object.freeze({
 });
 
 export const mikuStatsPreset = Object.freeze({
-  id: 'miku-navigator-character-details-2026-09-27',
+  id: 'miku-navigator-integrity-labor-revelation-2026-09-27',
   characterId: 'navigator-miku',
   // Navigator panel: 20% of these is shared with every ally in battle. Damage
   // 42.5% is from the 2026-09-06 Pt Effect share (+8.5%); today's panel was cut.
-  // Integrity & Labor 4-set: party HP, Attack and Defense x1.08.
-  extraFields: Object.freeze({ partyStatMultiplier: 0.08 }),
+  // Revelation Integrity + Labor: the engine applies Labor's navigator 4-set and the Integrity + Labor per-attribute bonus.
+  extraFields: Object.freeze({ revelationMain: 'Integrity', revelationSet: 'Labor' }),
   baseStats: Object.freeze({ attack: 5635, defense: 1715, maxHp: 9037, maxSp: 100, speed: 100, critRate: 30.6, critMult: 84.2, spRecovery: 0, technicalPrecision: 0, pierceRate: 7.7, damageBonus: 42.5 })
 });
 
@@ -98,9 +98,10 @@ export const jcStatsPreset = Object.freeze({
 });
 
 export const wonderStatsPreset = Object.freeze({
-  id: 'wonder-dionysus-janosik-vasuki-character-details-2026-09-27',
+  id: 'wonder-sahimochi-dionysus-yurlungur-2026-09-27',
   characterId: 'wonder',
-  personaNames: Object.freeze(['Dionysus', 'Janosik', 'Vasuki']),
+  // Battle trio from the live in-battle panel; Ice first sets Wonder's attribute.
+  personaNames: Object.freeze(['Sahimochi-no-kami', 'Dionysus', 'Yurlungur']),
   // Ice Age: its +56% Attack is in the totals; Ancient Frost is modeled.
   wonderWeapon: Object.freeze({ weaponId: 'ice-age', weaponProfileId: null, weaponProcGranularity: null }),
   baseStats: Object.freeze({ attack: 3628, defense: 2365, maxHp: 11200, maxSp: 100, speed: 109, critRate: 39.8, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 0, damageReduction: 0 })
