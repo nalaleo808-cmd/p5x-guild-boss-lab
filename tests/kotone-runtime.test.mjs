@@ -270,7 +270,9 @@ test('Kotone Concert extra turns do not advance her normal counter, skill cooldo
  const original=e.isVirtualConcertActive;e.isVirtualConcertActive=()=>true;
  k.skillCooldowns[`${K}-s3`]=2;k.sp=100;const starts=k.characterTurnsStarted;
  e.beginActorTurn();assert.equal(k.characterTurnsStarted,starts);assert.equal(k.skillCooldowns[`${K}-s3`],2);assert.equal(k.sp,100);
- assert.equal(e.getAvailableActions().some(a=>a.type==='kotone_link'),false);assert.equal(e.getAvailableActions().find(a=>a.type==='kotone_assist').enabled,false);
+ assert.equal(e.getAvailableActions().some(a=>a.type==='kotone_link'),false);
+ // 2026-09-26 DOD rotation: Go for Broke can open a Concert turn.
+ assert.equal(e.getAvailableActions().find(a=>a.type==='kotone_assist').enabled,true);
  m.state.cold=2;act(e,'kotone_cold');assert.equal(m.state.cold,2);assert.equal(m.state.normalTurnsCompleted,0);
  e.isVirtualConcertActive=original;
 });

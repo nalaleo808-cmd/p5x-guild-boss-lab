@@ -362,8 +362,12 @@ export class KotoneShiomiMechanics {
   turnStart(actor) {
     if (!this.state) { this.refreshAuras(); return; }
     if (actor.id === KOTONE_SHIOMI_ID) {
-      const normalOpening = !this.state.cold && !this.state.fortune && !this.engine.isVirtualConcertActive();
-      this.state.linkWindow = normalOpening; this.state.actionWindow = normalOpening;
+      // Go for Broke can open a Concert turn as well as a normal turn (2026-09-26
+      // DOD rotation, A6: first use at the start of Kotone's Concert turn).
+      // Arcana Link stays normal-turn only.
+      const concert = this.engine.isVirtualConcertActive();
+      const opening = !this.state.cold && !this.state.fortune;
+      this.state.linkWindow = opening && !concert; this.state.actionWindow = opening;
     }
     this.refreshAuras();
   }
@@ -393,7 +397,7 @@ export class KotoneShiomiMechanics {
     return [...controls, ...actions];
   }
   activateGoForBroke() {
-    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !this.state.actionWindow || this.engine.isVirtualConcertActive() || this.state.fortune || this.state.cold || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires Kotone’s normal-turn opening and a living linked ally');
+    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !this.state.actionWindow || this.state.fortune || this.state.cold || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn and a living linked ally');
     const activationId = `gfb-${this.state.goForBroke.used + 1}`;
     const result = spendGoForBrokeUse(this.state.goForBroke, activationId);
     if (!result.ok) throw new Error(`Go for Broke unavailable: ${result.reason}`);
