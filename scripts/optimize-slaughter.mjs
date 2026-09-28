@@ -402,6 +402,7 @@ export function replayCandidate(candidate, { battleSeed = DEFAULT_BATTLE_SEED, m
   return {
     battleSeed,
     mechanicsProfile,
+    ...(turnLimit ? { turnLimit } : {}),
     fastScore,
     fullScore,
     parity: true,
@@ -430,6 +431,7 @@ export function optimizeSlaughter({
   positiveInteger(refinePasses, 'refinePasses', { allowZero: true });
   positiveInteger(searchSeed, 'searchSeed', { allowZero: true });
   positiveInteger(battleSeed, 'battleSeed', { allowZero: true });
+  if (turnLimit != null) positiveInteger(turnLimit, 'turnLimit');
   if (eliteCount > populationSize) throw new Error('eliteCount cannot exceed populationSize');
 
   const random = makeRandom(searchSeed);
@@ -537,7 +539,8 @@ function parseCliArgs(args) {
   let outputPath = null;
   const numberOptions = new Map([
     ['--generations', 'generations'], ['--population', 'populationSize'], ['--elite', 'eliteCount'],
-    ['--refine-passes', 'refinePasses'], ['--search-seed', 'searchSeed'], ['--battle-seed', 'battleSeed']
+    ['--refine-passes', 'refinePasses'], ['--search-seed', 'searchSeed'], ['--battle-seed', 'battleSeed'],
+    ['--turn-limit', 'turnLimit']
   ]);
   for (let index = 0; index < args.length; index += 1) {
     const flag = args[index];
@@ -573,12 +576,13 @@ function runCli(args) {
     const replay = replayCandidate(candidateFromDocument(document), {
       battleSeed: options.battleSeed ?? document?.search?.battleSeed ?? document?.battleSeed ?? DEFAULT_BATTLE_SEED,
       mechanicsProfile: options.mechanicsProfile ?? document?.metadata?.mechanicsProfile ?? document?.search?.mechanicsProfile ?? document?.mechanicsProfile ?? (document?.metadata?.schemaVersion === 1 ? RECORDED_MECHANICS_PROFILE : CURRENT_MECHANICS_PROFILE),
-      turnLimit: document?.search?.turnLimit ?? null
+      turnLimit: options.turnLimit ?? document?.search?.turnLimit ?? document?.turnLimit ?? null
     });
     output = {
       mode: 'replay',
       battleSeed: replay.battleSeed,
       mechanicsProfile: replay.mechanicsProfile,
+      ...(replay.turnLimit ? { turnLimit: replay.turnLimit } : {}),
       fastScore: replay.fastScore,
       fullScore: replay.fullScore,
       parity: replay.parity,

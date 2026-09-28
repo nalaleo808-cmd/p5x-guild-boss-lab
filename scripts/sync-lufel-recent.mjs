@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { get, assignedObject } from './lib/lufel-source.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const site = 'https://lufel.net';
@@ -31,41 +32,10 @@ const recentCharacters = [
   ['noir', '하루', 'NOIR', 'Sweeper', 'psychic']
 ];
 
-async function get(url) {
-  const response = await fetch(url, { headers: { 'user-agent': 'P5X-Guild-Boss-Simulator data sync' } });
-  if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`);
-  return response.text();
-}
-
 async function download(url, path) {
   const response = await fetch(url, { headers: { 'user-agent': 'P5X-Guild-Boss-Simulator artwork sync' } });
   if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`);
   await writeFile(path, new Uint8Array(await response.arrayBuffer()));
-}
-
-function assignedObject(source, marker) {
-  const markerIndex = source.indexOf(marker);
-  if (markerIndex < 0) throw new Error(`Assignment not found: ${marker}`);
-  const start = source.indexOf('{', markerIndex + marker.length);
-  let depth = 0;
-  let quote = '';
-  let escaped = false;
-  for (let index = start; index < source.length; index += 1) {
-    const char = source[index];
-    if (quote) {
-      if (escaped) escaped = false;
-      else if (char === '\\') escaped = true;
-      else if (char === quote) quote = '';
-      continue;
-    }
-    if (char === '"' || char === "'") { quote = char; continue; }
-    if (char === '{') depth += 1;
-    if (char === '}' && --depth === 0) {
-      const literal = source.slice(start, index + 1).replace(/,\s*([}\]])/g, '$1');
-      return JSON.parse(literal);
-    }
-  }
-  throw new Error(`Unterminated object: ${marker}`);
 }
 
 const records = [];

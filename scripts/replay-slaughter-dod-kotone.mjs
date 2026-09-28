@@ -24,8 +24,8 @@ import { bosses } from '../src/data.js';
 
 const arg = (name, fallback) => Number(process.argv.find(v => v.startsWith(`--${name}=`))?.split('=')[1] ?? fallback);
 
-// The simulator gives Slaughter Drive DOD its Nightmare 8-turn limit. The live
-// rotation runs T1-T9 plus four break turns, so the harness raises the limit.
+// Live DOD allows 110 Attack Turns; the rotation needs T1-T9 plus four break
+// turns, so the default of 20 is ample. Passed as the engine's turnLimit.
 // The break window uses its own 2-turn counter and is not affected.
 const DOD_TURN_LIMIT = arg('turn-limit', 20);
 
@@ -108,7 +108,7 @@ function makeEngine(seed) {
     revelationMain: 'Nativity', revelationSet: 'Strife', revelationCombat: structuredClone(strife.combat) };
   const bossDefinition = { ...structuredClone(bosses.find(boss => boss.id === 'slaughter_drive')), turnLimit: DOD_TURN_LIMIT };
   return new HachimanRecordedEngine({
-    seed, bossId: 'slaughter_drive', bossDefinition, modeId: 'devourer', lifeSustainment: true,
+    seed, bossId: 'slaughter_drive', bossDefinition, modeId: 'devourer', lifeSustainment: true, turnLimit: DOD_TURN_LIMIT,
     mechanicsProfile: CURRENT_MECHANICS_PROFILE, fastMode: true,
     teamIds: [jc.id, 'wonder', KOTONE, miyu.id], characterDefinitions: [jc, miyu],
     navigatorDefinition: navigatorDefinition(), personaDefinitions: [shark, dionysus, yurlungur],
@@ -212,8 +212,8 @@ function kotone(e, selector, target) {
   }
   return act(e, KOTONE, selector, target);
 }
-// Go for Broke as played live. The engine forbids it during Virtual Concert or an
-// active Fortune; the live B1 uses it twice inside the Concert, so any blocked use
+// Go for Broke as played live: both uses in B1's first Concert turn, the second
+// on the last Fortune action. The engine allows both; any use it still blocks
 // is let through here and logged with the rule it bypassed.
 function goForBroke(e) {
   expectActor(e, KOTONE);
@@ -242,7 +242,6 @@ function play(seed) {
   const kotoneUnit = e.state.party.find(unit => unit.id === KOTONE);
   Object.assign(kotoneUnit, { crit: .354, critMult: 1.634, speed: 106.8 });
   e.runnerForcedResources = [];
-  forced(e, { type: 'turn_limit_override', from: 8, to: DOD_TURN_LIMIT, evidence: 'live rotation runs T1-T9 plus B1-B4' });
   const rows = [];
   const J = jc.id, M = miyu.id;
   checkpoint(e, 'T1 opening Twin nuke', rows);
