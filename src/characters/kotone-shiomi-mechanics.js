@@ -273,7 +273,7 @@ export class KotoneShiomiMechanics {
   }
   resolve(actor, skill, targetId, sourceType, options = {}) {
     if (!this.active || actor.id !== KOTONE_SHIOMI_ID || !skill.kotoneSkill) throw new Error('Invalid Kotone skill dispatch');
-    if (this.state.cold && !options.automatic && !this.engine.isVirtualConcertActive()) throw new Error('Kotone cannot act during Cold');
+    if (this.state.cold && !options.automatic) throw new Error('Kotone cannot act during Cold');
     const e = this.engine;
     const target = e.state.party.find(unit => unit.id === targetId && unit.hp > 0);
     if (['S1', 'S3'].includes(skill.kotoneSkill) && !target) throw new Error('Select a living ally');
@@ -362,13 +362,13 @@ export class KotoneShiomiMechanics {
   turnStart(actor) {
     if (!this.state) { this.refreshAuras(); return; }
     if (actor.id === KOTONE_SHIOMI_ID) {
-      // Go for Broke can open a Concert turn as well as a normal turn, and Cold
-      // skips normal turns only: Concert turns are neither blocked nor counted
-      // (user, 2026-09-28; 2026-09-26 DOD rotation, A6: both uses in B1).
-      // Arcana Link stays normal-turn only.
-      const concert = this.engine.isVirtualConcertActive();
-      this.state.linkWindow = !this.state.cold && !this.state.fortune && !concert;
-      this.state.actionWindow = !this.state.fortune && (concert || !this.state.cold);
+      // Go for Broke can open a normal or a Concert turn. Cold blocks both and
+      // each Cold turn, Concert or normal, counts toward its two (user,
+      // 2026-09-28; 2026-09-26 DOD rotation, A6: Go for Broke in Concert round 1,
+      // Cold in round 2 and B3, acts again in B4). Arcana Link stays normal-turn only.
+      const opening = !this.state.cold && !this.state.fortune;
+      this.state.linkWindow = opening && !this.engine.isVirtualConcertActive();
+      this.state.actionWindow = opening;
     }
     this.refreshAuras();
   }
@@ -390,28 +390,31 @@ export class KotoneShiomiMechanics {
   }
   decorateActions(actions) {
     if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID) return actions;
-    if (this.state.cold > 0 && !this.engine.isVirtualConcertActive()) return [{ type: 'kotone_cold', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-cold', name: `Cold — wait (${this.state.cold} turns)`, target: 'self', enabled: true, cost: 0 }];
+    if (this.state.cold > 0) return [{ type: 'kotone_cold', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-cold', name: `Cold — wait (${this.state.cold} turns)`, target: 'self', enabled: true, cost: 0 }];
     const controls = [];
     if (this.state.linkWindow) controls.push({ type: 'kotone_link', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-link', name: 'Select / reselect Arcana Link', target: 'ally', enabled: true, cost: 0, statusLabel: 'FREE' });
     const remaining = this.state.goForBroke.limit - this.state.goForBroke.used;
-    // During Fortune, a second Go for Broke can replace the next Fortune action.
-    const chainable = this.state.fortune && this.state.fortuneActionsLeft > 0;
-    controls.push({ type: 'kotone_assist', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-go-for-broke', name: `Go for Broke (${remaining} left)`, target: 'self', enabled: remaining > 0 && (this.state.actionWindow || chainable) && this.linked?.hp > 0, cost: 0, statusLabel: remaining ? 'FREE' : 'SPENT' });
+    controls.push({ type: 'kotone_assist', actorId: KOTONE_SHIOMI_ID, skillId: 'kotone-go-for-broke', name: `Go for Broke (${remaining} left)`, target: 'self', enabled: remaining > 0 && this.canGoForBroke(), cost: 0, statusLabel: remaining ? 'FREE' : 'SPENT' });
     return [...controls, ...actions];
   }
+  // A second use replaces the last Fortune action with a fresh three, as in the
+  // 2026-09-26 DOD rotation (Go for Broke, two actions, Go for Broke, three
+  // actions = five in one turn). It is not offered earlier in the Fortune.
+  isFortuneChain() { return this.state.fortune && this.state.fortuneActionsLeft === 1; }
+  canGoForBroke() {
+    return this.active && this.engine.actor?.id === KOTONE_SHIOMI_ID && this.linked?.hp > 0
+      && (this.state.actionWindow || this.isFortuneChain());
+  }
   activateGoForBroke() {
-    // A second use during Fortune replaces the remaining Fortune action with a
-    // fresh three (user, 2026-09-28: Go for Broke, two actions, Go for Broke,
-    // three actions = five actions in one turn).
-    const chained = this.state.fortune && this.state.fortuneActionsLeft > 0;
-    const opening = this.state.actionWindow && !this.state.fortune && (!this.state.cold || this.engine.isVirtualConcertActive());
-    if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID || !(opening || chained) || !this.linked || this.linked.hp <= 0) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn, or a remaining Fortune action, and a living linked ally');
+    const chained = this.isFortuneChain();
+    if (!this.canGoForBroke()) throw new Error('Go for Broke requires the opening of Kotone’s normal or Concert turn, or her last Fortune action, and a living linked ally');
     const activationId = `gfb-${this.state.goForBroke.used + 1}`;
     const result = spendGoForBrokeUse(this.state.goForBroke, activationId);
     if (!result.ok) throw new Error(`Go for Broke unavailable: ${result.reason}`);
     this.state.fortune = true; this.state.fortuneActionsLeft = 3; this.state.linkWindow = false; this.state.actionWindow = false;
     this.state.activeFortuneId = activationId; this.state.fortuneChained = chained;
-    this.event('fortune', `Go for Broke ${this.state.goForBroke.used}/${this.state.goForBroke.limit}: Fortune, one normal action + two extra actions.`, { activationId, actionsLeft: 3, remainingUses: result.remaining, tone: 'phase' });
+    const kinds = chained || this.engine.isVirtualConcertActive() ? 'three extra actions' : 'one normal action + two extra actions';
+    this.event('fortune', `Go for Broke ${this.state.goForBroke.used}/${this.state.goForBroke.limit}: Fortune, ${kinds}.`, { activationId, actionsLeft: 3, remainingUses: result.remaining, tone: 'phase' });
     if (this.unit.awareness >= 1) this.automaticUltimate(this.unit, `${activationId}-own`);
   }
   automaticUltimate(actor, activationId) {
@@ -449,14 +452,16 @@ export class KotoneShiomiMechanics {
   deferCompletion() {
     if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID) return false;
     this.state.linkWindow = false; this.state.actionWindow = false;
-    if (this.engine.isVirtualConcertActive() && !this.state.fortune) { this.state.extraActions++; return false; }
+    const concert = this.engine.isVirtualConcertActive();
+    if (concert && !this.state.fortune) { this.state.extraActions++; return false; }
     if (!this.state.fortune) { this.state.normalActions++; return false; }
     const before = this.state.fortuneActionsLeft;
-    // After a chained Go for Broke, every remaining action in the turn is extra.
-    if (before === 3 && !this.state.fortuneChained) this.state.normalActions++;
+    // Concert turns are uncounted; after a chain every remaining action is extra.
+    const normalAction = before === 3 && !this.state.fortuneChained && !concert;
+    if (normalAction) this.state.normalActions++;
     else { this.state.extraActions++; this.engine.advanceSupportTiming(KOTONE_SHIOMI_ID, 'extra_action'); }
     this.state.fortuneActionsLeft--;
-    this.event('fortune_action', `Fortune actions left: ${this.state.fortuneActionsLeft}.`, { actionsLeft: this.state.fortuneActionsLeft, actionKind: before === 3 && !this.state.fortuneChained ? 'normal' : 'extra' });
+    this.event('fortune_action', `Fortune actions left: ${this.state.fortuneActionsLeft}.`, { actionsLeft: this.state.fortuneActionsLeft, actionKind: normalAction ? 'normal' : 'extra' });
     if (this.state.fortuneActionsLeft > 0) {
       // The next Fortune action is an extra action.
       this.engine.notifyExtraActionStart?.(this.unit, 'Fortune extra action');
@@ -472,10 +477,10 @@ export class KotoneShiomiMechanics {
     else if (action.type === 'kotone_assist') this.activateGoForBroke();
     else if (action.type === 'kotone_cold') {
       if (!this.state.cold) throw new Error('Cold is not active');
-      const extra = this.engine.isVirtualConcertActive();
-      if (!extra) this.state.cold--;
-      this.event('cold', `Cold ${extra ? 'extra action' : 'normal turn'} skipped; ${this.state.cold} remaining.`, { cold: this.state.cold, tone: 'system' });
-      this.engine.completeCountedAction({ actionType: 'kotone_cold', grantsSharedHighlight: false, wasConcertAction: extra });
+      const concert = this.engine.isVirtualConcertActive();
+      this.state.cold--;
+      this.event('cold', `Cold ${concert ? 'Concert' : 'normal'} turn passed without acting; ${this.state.cold} remaining.`, { cold: this.state.cold, tone: 'system' });
+      this.engine.completeCountedAction({ actionType: 'kotone_cold', grantsSharedHighlight: false, wasConcertAction: concert });
     } else throw new Error('Unknown Kotone control');
     this.engine.recordFrame(action.name);
     return { nextState: this.engine.config.fastMode ? null : this.engine.getObservation(), reward: 0,
@@ -485,13 +490,14 @@ export class KotoneShiomiMechanics {
     if (!this.active || this.engine.actor?.id !== KOTONE_SHIOMI_ID) return null;
     const enabled = actions.filter(action => action.enabled);
     let action = enabled.find(action => action.type === 'kotone_cold');
-    if (!action && !this.linked) {
+    const linkedAlive = this.linked?.hp > 0;
+    if (!action && !linkedAlive) {
       const ally = this.engine.state.party.filter(unit => unit.hp > 0 && unit.id !== KOTONE_SHIOMI_ID).sort((a,b) => this.currentAttack(b) - this.currentAttack(a))[0];
       action = enabled.find(item => item.type === 'kotone_link');
       if (action) return { ...action, targetId: ally.id, reason: 'Establish Arcana Link.', confidence: 1 };
     }
     if (!action && this.countPowerful() >= 1) action = enabled.find(item => item.type === 'kotone_assist');
-    if (!action && this.countPowerful() < 3) action = enabled.find(item => item.skill?.kotoneSkill === 'S1');
+    if (!action && linkedAlive && this.countPowerful() < 3) action = enabled.find(item => item.skill?.kotoneSkill === 'S1');
     if (!action && this.state.fortune && this.state.fortuneActionsLeft <= 1) action = enabled.find(item => item.skill?.kotoneSkill === 'S2');
     if (!action) action = enabled.find(item => item.skill?.kotoneSkill === 'S3');
     if (!action) action = enabled.find(item => item.skill?.kotoneSkill === 'S2') || enabled.find(item => item.type === 'guard');

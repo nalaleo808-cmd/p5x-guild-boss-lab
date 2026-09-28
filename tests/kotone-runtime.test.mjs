@@ -276,25 +276,36 @@ test('Kotone Concert extra turns do not advance her normal counter, skill cooldo
  e.isVirtualConcertActive=original;
 });
 
-// User, 2026-09-28: Cold skips normal turns only; during the Concert Kotone
-// acts, can open Go for Broke, and the Concert turn does not count toward Cold.
-test('Cold neither blocks nor counts down on Concert turns',()=>{
+// User, 2026-09-28 and the 2026-09-26 DOD rotation: in Concert round 2 Kotone
+// is in Cold, does not act, and that turn counts toward Cold's two turns.
+test('Cold blocks Concert turns and each one counts toward Cold',()=>{
  const e=engine({awareness:6}),m=e.kotoneMechanics;
  const original=e.isVirtualConcertActive;e.isVirtualConcertActive=()=>true;
  m.state.cold=2;e.beginActorTurn();
  const actions=e.getAvailableActions();
- assert.equal(actions.some(a=>a.type==='kotone_cold'),false);
- assert.equal(actions.find(a=>a.type==='kotone_assist').enabled,true);
- act(e,'kotone_assist');assert.equal(m.state.fortune,true);assert.equal(m.state.cold,2);
+ assert.deepEqual(actions.map(a=>a.type),['kotone_cold']);
+ act(e,'kotone_cold');assert.equal(m.state.cold,1);
+ e.isVirtualConcertActive=original;
+});
+
+test('A Go for Broke opened on a Concert turn has three extra actions and no normal action',()=>{
+ const e=engine({awareness:6}),k=get(e),m=e.kotoneMechanics;k.sp=1000;
+ const original=e.isVirtualConcertActive;e.isVirtualConcertActive=()=>true;
+ e.state.navigator.virtualConcert={active:true,roundsRemaining:2,damageByTarget:{},totalRecordedDamage:0,savedTurn:null};
+ e.beginActorTurn();act(e,'kotone_assist');
+ for(let i=0;i<3;i++)act(e,'S2');
+ assert.equal(m.state.normalActions,0);assert.equal(m.state.extraActions,3);assert.equal(m.state.cold,2);
  e.isVirtualConcertActive=original;
 });
 
 // User, 2026-09-28: Go for Broke, two actions, Go for Broke again before the
 // third action, then three more actions = five actions in one turn.
-test('A6 Go for Broke can be chained during Fortune for five actions in one turn',()=>{
+test('A6 Go for Broke can be chained on the last Fortune action for five actions in one turn',()=>{
  const e=engine({awareness:6}),k=get(e),m=e.kotoneMechanics;k.sp=1000;
+ const chainOffered=()=>e.getAvailableActions().find(a=>a.type==='kotone_assist').enabled;
  act(e,'kotone_assist');
- for(let i=0;i<2;i++){assert.equal(e.actor.id,K);act(e,'S2');}
+ for(let i=0;i<2;i++){assert.equal(e.actor.id,K);assert.equal(chainOffered(),false);act(e,'S2');}
+ assert.equal(chainOffered(),true);
  assert.equal(m.state.fortuneActionsLeft,1);
  act(e,'kotone_assist');assert.equal(m.state.goForBroke.used,2);assert.equal(m.state.fortuneActionsLeft,3);
  for(let i=0;i<3;i++){assert.equal(e.actor.id,K);act(e,'S2');}
