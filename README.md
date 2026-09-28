@@ -1,5 +1,19 @@
 # P5X Guild Boss Lab - Showdown Battle Room
 
+## v2.3 — Live stat sync
+
+Battle-start stats now follow in-game readings from a live Slaughter Drive Devourer of Dreams run.
+
+- Attack % buffs scale the level-80 base plus weapon Attack, not the panel total.
+- Navigators share their Pt Effect stats with the party; a navigator's Labor 4-set adds 8% HP/ATK/DEF and Integrity + Labor adds 2% per ally of the same attribute.
+- Reconciliation 4-set (+15% HP/ATK/DEF in combat) and Creation + Reconciliation (party damage +12%).
+- Persona static passives, including equipped Boost, Battle Acumen, Apt Pupil and Agility Master skills, apply while that Persona is active.
+- Skill and Resonance crit conversion on every boss; Slaughter Drive DOD Electric and Sweeper +20%.
+- Turn limits: Devourer of Dreams 110 before the break then 2 Weakened; Nexus and Multidimensional Dreamscape 6.
+- Wavecatcher A6 max SP 450; the battle Stats panel shows buffed in-battle values.
+- Thieves Den Qualia Level party passives as a player setting.
+- Shadow of Ruin and Abyssal Warden removed.
+
 ## v2.2 — A0–A6 settings for the entire packaged roster
 
 Open **Builds**, select any existing character in the searchable roster, and choose **A0** through **A6**. All **26 entries** are included: **23 combatant entries and 3 navigators**. Team preview also has quick awareness selectors. Each profile is saved independently in this browser. Changing awareness starts the next battle with that profile rather than modifying an active battle.
