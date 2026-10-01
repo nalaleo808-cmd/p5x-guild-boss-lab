@@ -1504,10 +1504,10 @@ function trueDesirePanel(state) {
     ? 'The enhancement is stored for the next Two Masks as One.'
     : available
       ? 'Spend 1 True Desire now to enhance the next Two Masks as One.'
-      : 'True Desire returns on every eighth normal Wonder action if spent. Extra turns do not count.';
+      : 'After Alt is used, True Desire returns once the party has taken 8 more actions, Concert turns included.';
   return `<section class="true-desire-panel" aria-label="J&C True Desire free action">
     <button type="button" class="true-desire-toggle ${stateLabel.toLowerCase()}" data-true-desire aria-pressed="${pending}" ${canActivate ? '' : 'disabled'}>
-      <span class="true-desire-mark">ALT</span><div><small>J&C FREE ALT</small><b>TRUE DESIRE ${stateLabel}</b><em>${detail} Next mask: ${escapeHtml(nextMask)}. True Desire ${stacks}/1 · Normal Wonder actions ${rechargeProgress}/8.</em></div><strong>${controlLabel}</strong>
+      <span class="true-desire-mark">ALT</span><div><small>J&C FREE ALT</small><b>TRUE DESIRE ${stateLabel}</b><em>${detail} Next mask: ${escapeHtml(nextMask)}. True Desire ${stacks}/1 · Party actions ${rechargeProgress}/8.</em></div><strong>${controlLabel}</strong>
     </button>
   </section>`;
 }

@@ -379,24 +379,17 @@ export class BattleEngine {
           trueDesirePrimed: false,
           jcTurnsStarted: 0,
           ...(this.usesLiveMechanics() && awareness >= 6 ? {
-            // Observed A6 recharge: it is a periodic clock of Wonder's
-            // completed normal-turn actions, starting at battle start.
-            trueDesireWonderActions: 0,
+            // A6: "regain True Desire every 8 actions if it has been spent".
+            // After Alt spends the stack, every counted party action, Concert
+            // turns included, advances the clock; at 8 the stack returns and
+            // Alt is offered at the start of J&C's next turn (user, 2026-10-01:
+            // pressed T9, back at T11 with Concert rounds T10 and T11).
+            trueDesireRechargeActions: 0,
             trueDesireRechargeProgress: 0,
             trueDesireRechargeInterval: 8,
-            // Hachiman live (user confirmed 2026-09-09): every counted party
-            // action advances the clock, Concert turns included. Elsewhere the
-            // earlier Wonder-only observation stands.
-            ...(liveHachiman ? {
-              trueDesireRechargeOwner: 'jc',
-              trueDesireRechargeCountBasis: 'jc_counted_actions_including_concert',
-              trueDesireRechargeExcludesExtraActions: false,
-              trueDesireRechargeEvidence: 'joker_live_dod_run_2026-09-10'
-            } : {
-              trueDesireRechargeOwner: 'wonder',
-              trueDesireRechargeCountBasis: 'normal_turn_wonder_actions',
-              trueDesireRechargeExcludesExtraActions: true
-            }),
+            trueDesireRecharging: false,
+            trueDesireRechargeOwner: 'party',
+            trueDesireRechargeCountBasis: 'party_counted_actions_since_spent_including_concert',
             trueDesireRechargeCountedActionTypes: ['attack', 'skill', 'gun', 'guard', 'item']
           } : {}),
           jcMaskActionsTaken: 0,
@@ -2258,7 +2251,14 @@ export class BattleEngine {
     }
     this.state.lastEvents = [];
     actor.trueDesirePrimed = next;
-    if (this.usesLiveMechanics() && next) actor.trueDesireStacks = Math.max(0, actor.trueDesireStacks - 1);
+    if (this.usesLiveMechanics() && next) {
+      actor.trueDesireStacks = Math.max(0, actor.trueDesireStacks - 1);
+      if (actor.trueDesireRechargeInterval && !actor.trueDesireRecharging) {
+        actor.trueDesireRecharging = true;
+        actor.trueDesireRechargeActions = 0;
+        actor.trueDesireRechargeProgress = 0;
+      }
+    }
     this.emit('resource', this.usesLiveMechanics() ? `${actor.codename} spent 1 True Desire to store Power to Resist Ruin for the next Two Masks as One.` : `${actor.codename} switched True Desire ${next ? 'ON. The next Two Masks as One will spend 1 stack.' : 'OFF. The stack remains available.'}`, {
       actorId: actor.id, resource: 'trueDesire', amount: actor.trueDesireStacks, enabled: next, tone: 'phase'
     });
@@ -4275,41 +4275,22 @@ export class BattleEngine {
   // Recharge clock (Joker, 2026-09-09, from Sleepy's DOD run pressing the A6 button at
   // T1, T18 and B3): every counted action by any party member, Concert turns
   // included, on an 8-action period. Replaces the earlier Wonder-only reading.
-  recordTrueDesireWonderAction(actionType, wasConcertAction = false) {
-    if (!this.usesLiveMechanics()) return;
-    // Hachiman live (Joker's DOD run, 2026-09-10): the button pressed at T1 was
-    // back at the start of T10 and not before, and after the T18 press it was
-    // absent at B3 and B4. That fits a clock of J&C's own counted actions
-    // (eight, Concert turns included) and rules out the party-action reading,
-    // under which it would have returned at T3 and again at B3. Other encounters
-    // keep the Wonder-only normal-turn clock their benchmarks were built on.
-    if (this.isHachimanLive()) {
-      if (!this.isJc(this.actor)) return;
-    } else if (wasConcertAction || this.actor?.id !== 'wonder') return;
-    if (!this.actor || this.actor.hp <= 0) return;
-    const recipients = this.state.party.filter(unit => this.isJc(unit) && unit.awareness >= 6
-      && Array.isArray(unit.trueDesireRechargeCountedActionTypes)
-      && unit.trueDesireRechargeCountedActionTypes.includes(actionType));
-    for (const jc of recipients) {
+  recordTrueDesireWonderAction(actionType) {
+    if (!this.usesLiveMechanics() || !this.actor || this.actor.hp <= 0) return;
+    for (const jc of this.state.party.filter(unit => this.isJc(unit) && unit.awareness >= 6 && unit.trueDesireRecharging
+      && unit.trueDesireRechargeCountedActionTypes?.includes(actionType))) {
       const interval = Number(jc.trueDesireRechargeInterval || 8);
-      jc.trueDesireWonderActions = Number(jc.trueDesireWonderActions || 0) + 1;
-      jc.trueDesireRechargeProgress = jc.trueDesireWonderActions % interval;
-      if (jc.trueDesireRechargeProgress !== 0) continue;
-
-      // A recharge is periodic even when the existing stack is unspent. Keep
-      // the live resource capped at one and leave a stored enhancement alone.
-      jc.trueDesireStacks = clamp(Number(jc.trueDesireStacks || 0), 0, 1);
-      if (jc.trueDesireStacks >= 1) continue;
+      jc.trueDesireRechargeActions = Number(jc.trueDesireRechargeActions || 0) + 1;
+      jc.trueDesireRechargeProgress = jc.trueDesireRechargeActions;
+      if (jc.trueDesireRechargeActions < interval) continue;
+      jc.trueDesireRecharging = false;
+      jc.trueDesireRechargeActions = 0;
+      jc.trueDesireRechargeProgress = 0;
       jc.trueDesireStacks = 1;
-      this.emit('resource', `${jc.codename} regained 1 True Desire after ${interval} counted ${this.isHachimanLive() ? 'J&C' : 'Wonder'} actions.`, {
+      this.emit('resource', `${jc.codename} regained 1 True Desire after ${interval} counted party actions.`, {
         actorId: jc.id, resource: 'trueDesire', amount: jc.trueDesireStacks, tone: 'buff',
-        rechargeOwner: jc.trueDesireRechargeOwner,
-        rechargeCountBasis: jc.trueDesireRechargeCountBasis,
-        countedActionType: actionType,
-        trueDesireWonderActions: jc.trueDesireWonderActions,
-        trueDesireRechargeProgress: jc.trueDesireRechargeProgress,
-        trueDesireRechargeInterval: interval,
-        evidence: jc.trueDesireRechargeEvidence
+        rechargeOwner: jc.trueDesireRechargeOwner, rechargeCountBasis: jc.trueDesireRechargeCountBasis,
+        countedActionType: actionType, countedActorId: this.actor.id, trueDesireRechargeInterval: interval
       });
     }
   }

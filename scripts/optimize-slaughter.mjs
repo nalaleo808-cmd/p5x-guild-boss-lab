@@ -156,7 +156,9 @@ export function runCandidate(candidate, { fastMode = true, battleSeed = DEFAULT_
   let safety = 0;
   while (engine.state.phase === 'battle' && safety++ < 300) {
     if (engine.canToggleTrueDesire()) {
-      const plannedTurn = trueDesirePlan[trueDesireUseIndex];
+      // Uses beyond the plan follow Full Auto: spend as soon as Alt is offered.
+      // The party-action recharge can return True Desire more than twice.
+      const plannedTurn = trueDesireUseIndex < trueDesirePlan.length ? trueDesirePlan[trueDesireUseIndex] : 1;
       const scheduled = Number.isInteger(plannedTurn) && engine.state.attackTurn >= plannedTurn;
       if (engine.actor.trueDesirePrimed !== scheduled) {
         const activationStacksBefore = Number(engine.actor.trueDesireStacks || 0);

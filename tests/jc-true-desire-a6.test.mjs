@@ -60,52 +60,48 @@ test('live A6 spends True Desire immediately and does not debit the stored enhan
   assert.equal(jc.trueDesirePrimed, false);
 });
 
-test('live A6 recharges on every eighth counted Wonder action, skips an unspent recharge, and keeps the periodic clock after Alt', () => {
+// A6: "regain True Desire every 8 actions if it has been spent". User,
+// 2026-10-01: pressed at T9, Alt back at T11, where T10 and T11 are MIKU's
+// Concert rounds; every party member's counted action advances the clock.
+test('live A6 regains True Desire after 8 counted party actions once it has been spent', () => {
   const engine = createJcEngine(CURRENT_MECHANICS_PROFILE, ['mischief', 'service'], {
     bossDefinition: {
       id: 'a6-recharge-target', name: 'A6 Recharge Target', maxHp: 1_000_000_000,
       finiteHp: false, attack: 0, defense: 385, turnLimit: 50, summons: [],
       phases: [{ threshold: 1, name: 'Stable', defense: 385 }]
     },
-    // Live Nexus stops at 6 Attack Turns; three recharge cycles need the fixture's 50.
     turnLimit: 50
   });
   const jc = engine.state.party[0];
+  assert.equal(jc.trueDesireRechargeOwner, 'party');
+  assert.equal(jc.trueDesireRecharging, false);
 
-  assert.equal(jc.trueDesireRechargeOwner, 'wonder');
-  assert.equal(jc.trueDesireRechargeCountBasis, 'normal_turn_wonder_actions');
-  assert.equal(jc.trueDesireRechargeExcludesExtraActions, true);
-  assert.deepEqual(jc.trueDesireRechargeCountedActionTypes, ['attack', 'skill', 'gun', 'guard', 'item']);
-  assert.equal(jc.trueDesireWonderActions, 0);
-  assert.equal(jc.trueDesireRechargeProgress, 0);
-  assert.ok(!Object.hasOwn(jc, 'rechargeTimingConfirmed'));
-  assert.ok(!engine.state.mechanicsLimitations.some(text => /True Desire recharge timing is provisional/i.test(text)));
-
-  for (const type of ['attack', 'skill', 'gun', 'guard', 'guard', 'guard', 'guard']) wonderAction(engine, type);
-  assert.equal(jc.trueDesireWonderActions, 7);
-  assert.equal(jc.trueDesireRechargeProgress, 7);
+  // Unspent: party actions do not build a reserve.
+  for (let count = 0; count < 12; count += 1) wonderAction(engine, 'guard');
   assert.equal(jc.trueDesireStacks, 1);
-  const resourceEventsBefore = engine.state.log.filter(event => event.type === 'resource' && event.resource === 'trueDesire').length;
-  wonderAction(engine, 'guard');
-  assert.equal(jc.trueDesireWonderActions, 8);
-  assert.equal(jc.trueDesireRechargeProgress, 0);
-  assert.equal(jc.trueDesireStacks, 1);
-  assert.equal(engine.state.log.filter(event => event.type === 'resource' && event.resource === 'trueDesire').length, resourceEventsBefore);
+  assert.equal(jc.trueDesireRechargeActions, 0);
 
   advanceToJc(engine, jc);
   engine.setTrueDesire(true);
   assert.equal(jc.trueDesireStacks, 0);
-  assert.equal(jc.trueDesirePrimed, true);
-  for (let count = 0; count < 8; count += 1) wonderAction(engine, 'guard');
-  assert.equal(jc.trueDesireWonderActions, 16);
-  assert.equal(jc.trueDesireRechargeProgress, 0);
+  assert.equal(jc.trueDesireRecharging, true);
+  for (let count = 0; count < 7; count += 1) {
+    const guard = engine.getAvailableActions().find(action => action.type === 'guard' && action.enabled);
+    engine.step({ type: 'guard', skillId: guard.skillId, targetId: 'self' });
+  }
+  assert.equal(jc.trueDesireRechargeProgress, 7);
+  assert.equal(jc.trueDesireStacks, 0);
+  const guard = engine.getAvailableActions().find(action => action.type === 'guard' && action.enabled);
+  engine.step({ type: 'guard', skillId: guard.skillId, targetId: 'self' });
   assert.equal(jc.trueDesireStacks, 1);
+  assert.equal(jc.trueDesireRecharging, false);
+  assert.ok(engine.state.log.some(event => event.resource === 'trueDesire' && event.rechargeOwner === 'party'));
+  // The first enhancement is still stored (J&C only guarded), which blocks a
+  // second press until a Two Masks as One spends it.
   assert.equal(jc.trueDesirePrimed, true);
-  assert.ok(engine.state.log.some(event => event.resource === 'trueDesire'
-    && event.trueDesireWonderActions === 16 && event.rechargeOwner === 'wonder'));
 });
 
-test('the live Hachiman A6 recharge counts J&C\'s own counted actions, Concert turns included, and not other members', () => {
+test('Concert actions advance the True Desire clock', () => {
   const engine = createJcEngine(CURRENT_MECHANICS_PROFILE, ['mischief', 'service'], {
     bossId: 'hachiman', modeId: 'multidimensional', navigatorDefinition: miku
   });
@@ -113,42 +109,22 @@ test('the live Hachiman A6 recharge counts J&C\'s own counted actions, Concert t
   engine.state.attackTurnsLeft = 50;
   engine.state.boss.turnLimit = 50;
   engine.state.boss.previewAttackTurns = 50;
-  assert.equal(jc.trueDesireRechargeOwner, 'jc');
-
-  // J&C's own guard counts; the other members' guards on the way back to J&C do not.
   advanceToJc(engine, jc);
-  const start = jc.trueDesireWonderActions;
-  engine.step({ type: 'guard', skillId: 'guard', targetId: 'self' });
-  assert.equal(jc.trueDesireWonderActions, start + 1);
-  advanceToJc(engine, jc);
-  assert.equal(jc.trueDesireWonderActions, start + 1);
-
-  // One short of a wrap: spend the stack, then J&C's next action restores it.
-  jc.trueDesireWonderActions = 15;
-  jc.trueDesireRechargeProgress = 7;
   engine.setTrueDesire(true);
-  assert.equal(jc.trueDesireStacks, 0);
-  engine.step({ type: 'guard', skillId: 'guard', targetId: 'self' });
-  assert.equal(jc.trueDesireWonderActions, 16);
-  assert.equal(jc.trueDesireRechargeProgress, 0);
-  assert.equal(jc.trueDesireStacks, 1);
-
-  // Concert turns count for J&C only.
   advanceToWonder(engine);
+  const before = jc.trueDesireRechargeActions;
   engine.state.navigator.tracks = ['Break', 'Critical', 'Expert'];
   const showstopper = engine.getNavigatorActions().find(action => action.name === 'Showstopper');
   engine.stepNavigator(showstopper.id);
   assert.equal(engine.isVirtualConcertActive(), true);
-  const beforeConcert = jc.trueDesireWonderActions;
-  let jcConcertActions = 0;
-  while (engine.isVirtualConcertActive()) {
-    const isJc = engine.actor.id === jc.id;
+  let concertActions = 0;
+  while (engine.isVirtualConcertActive() && jc.trueDesireRecharging) {
     const guard = engine.getAvailableActions().find(action => action.type === 'guard' && action.enabled);
     engine.step({ type: 'guard', skillId: guard.skillId, targetId: 'self' });
-    if (isJc) jcConcertActions += 1;
+    concertActions += 1;
   }
-  assert.ok(jcConcertActions > 0);
-  assert.equal(jc.trueDesireWonderActions, beforeConcert + jcConcertActions);
+  assert.ok(concertActions > 0);
+  assert.equal(jc.trueDesireRecharging ? jc.trueDesireRechargeActions : 8, Math.min(8, before + concertActions));
 });
 
 test('recorded profile retains its deferred True Desire debit at S3 resolution', () => {
