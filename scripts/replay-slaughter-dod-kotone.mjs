@@ -280,7 +280,10 @@ function play(seed) {
   persona(e, 'Yurlungur'); highlight(e, 'wonder');
   goForBroke(e);
   for (let i = 0; i < 3 && e.actor?.id === KOTONE; i++) kotone(e, { name: "Burning Moon's Cry" });
-  highlight(e, M); highlight(e, J, 'minion', 'absurdity'); act(e, M, { slot: 'S2' }, 'minion');
+  // Miyu's B1 Highlight is the automatic linked Highlight that fires when
+  // Kotone's Go for Broke ends (user, 2026-10-01); the engine already casts it,
+  // so it is not pressed here and spends no gauge or cooldown.
+  highlight(e, J, 'minion', 'absurdity'); act(e, M, { slot: 'S2' }, 'minion');
   checkpoint(e, 'B1 end', rows);
   // B2
   act(e, J, { slot: 'S1' }, 'minion'); wonder(e, 'Dionysus', 'Universal Theoria', 'twin'); kotone(e, { type: 'kotone_cold' });
