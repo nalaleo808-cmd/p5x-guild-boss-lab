@@ -288,6 +288,14 @@ test('Cold blocks Concert turns and each one counts toward Cold',()=>{
  e.isVirtualConcertActive=original;
 });
 
+test('A Cold turn still fills the shared Highlight gauge like a normal action',()=>{
+ const e=engine({awareness:6}),m=e.kotoneMechanics;
+ m.state.cold=2;e.beginActorTurn();e.state.sharedCombat.highlight=0;
+ act(e,'kotone_cold');
+ assert.equal(m.state.cold,1);
+ assert.equal(e.state.sharedCombat.highlight,e.state.sharedCombat.highlightNormalActionGain);
+});
+
 test('A Go for Broke opened on a Concert turn has three extra actions and no normal action',()=>{
  const e=engine({awareness:6}),k=get(e),m=e.kotoneMechanics;k.sp=1000;
  const original=e.isVirtualConcertActive;e.isVirtualConcertActive=()=>true;

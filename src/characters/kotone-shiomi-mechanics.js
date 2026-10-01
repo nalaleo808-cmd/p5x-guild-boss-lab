@@ -480,7 +480,12 @@ export class KotoneShiomiMechanics {
       const concert = this.engine.isVirtualConcertActive();
       this.state.cold--;
       this.event('cold', `Cold ${concert ? 'Concert' : 'normal'} turn passed without acting; ${this.state.cold} remaining.`, { cold: this.state.cold, tone: 'system' });
-      this.engine.completeCountedAction({ actionType: 'kotone_cold', grantsSharedHighlight: false, wasConcertAction: concert });
+      // A Cold turn still fills the shared Highlight gauge like a normal action
+      // (user, 2026-10-01).
+      const highlightActionContext = this.engine.createSharedHighlightActionContext({
+        actor: this.unit, actionType: 'kotone_cold', skill: { id: 'kotone-cold' }, concertAtActionStart: concert });
+      this.engine.completeCountedAction({ actionType: 'kotone_cold', wasConcertAction: concert,
+        grantsSharedHighlight: this.engine.usesLiveMechanics(), highlightSource: 'kotone_cold', highlightActionContext });
     } else throw new Error('Unknown Kotone control');
     this.engine.recordFrame(action.name);
     return { nextState: this.engine.config.fastMode ? null : this.engine.getObservation(), reward: 0,
