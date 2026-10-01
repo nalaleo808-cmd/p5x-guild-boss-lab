@@ -150,7 +150,11 @@ const SONGS = { H: 'Heaven', S: 'Spring Storm', F: 'Play-With-Fire' };
 const NAV_SKILLS = { 1: 'Feel the Beat', 2: 'Clear Sound', 3: 'Showstopper' };
 function miku(e, code) { // e.g. 'H1', 'S2', 'F2', 'S3'
   const song = SONGS[code[0]], name = NAV_SKILLS[code[1]];
-  if (song) { if (e.state.navigator.currentSong !== song) forced(e, { type: 'navigator_song', from: e.state.navigator.currentSong, to: song }); setSong(e, song); }
+  // Song choice is the player's (MIKU A0); only a change the engine refuses is forced.
+  if (song && e.state.navigator.currentSong !== song) {
+    if (e.canSelectMikuSong()) e.selectMikuSong(song);
+    else { forced(e, { type: 'navigator_song', from: e.state.navigator.currentSong, to: song }); setSong(e, song); }
+  }
   let action = e.getNavigatorActions().find(item => item.name === name && item.enabled);
   if (!action) {
     action = e.getNavigatorActions().find(item => item.name === name);

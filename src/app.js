@@ -1440,6 +1440,16 @@ function sharedHighlightMarkup(highlight) {
   </div>`;
 }
 
+// MIKU's song is the player's choice during ally turns (Lufel MIKU A0).
+function mikuSongPicker(state) {
+  if (!state.mikuSongs?.length) return '';
+  const locked = ui.fullAuto || !state.canSelectMikuSong;
+  return `<div class="miku-song-picker" role="group" aria-label="MIKU battle song"><small>SONG</small>${state.mikuSongs.map(song => {
+    const active = state.navigator.currentSong === song;
+    return `<button type="button" data-miku-song="${escapeHtml(song)}" class="${active ? 'active' : ''}" aria-pressed="${active}" ${locked ? 'disabled' : ''}>${escapeHtml(song)}</button>`;
+  }).join('')}</div>`;
+}
+
 function navigatorPanel(state) {
   const mikuStatus = state.navigator.codename === 'MIKU'
     ? `${state.navigator.currentSong} | TRACKS ${state.navigator.tracks.length}/3${state.navigator.virtualConcert?.active ? ` | CONCERT ${state.navigator.virtualConcert.roundsRemaining}` : ''}`
@@ -1449,6 +1459,7 @@ function navigatorPanel(state) {
   return `<section class="navigator-strip ${state.highlight?.mode === 'shared' ? 'with-shared-highlight' : ''}" aria-label="Navigator and Highlight interrupts">
     <div class="navigator-id">${portrait(state.navigator)}<div><small>INTERRUPT ACTIONS</small><b>${escapeHtml(state.navigator.codename)}</b><em>${escapeHtml(mikuStatus)}</em></div></div>
     ${sharedHighlightMarkup(state.highlight)}
+    ${mikuSongPicker(state)}
     <div class="navigator-actions">${supportsDevourerLifeSustainment ? `<button class="life-sustainment-interrupt ${state.weakened ? 'weakened' : state.boss.lifeSustainment ? 'on' : 'off'}" data-battle-life-sustainment ${ui.fullAuto || state.weakened ? 'disabled' : ''}><span class="nav-signal">HP</span><div><b>${state.weakened ? 'WEAKENED · INFINITE HP' : `LIFE SUSTAINMENT ${state.boss.lifeSustainment ? 'ON' : 'OFF'}`}</b><small>${state.weakened ? `The toggle is locked for ${state.weakenedTurnsLeft} remaining boss turn${state.weakenedTurnsLeft === 1 ? '' : 's'}. Damage points are 3x.` : ui.fullAuto ? 'Stop Full Auto to change this setting.' : state.boss.lifeSustainment ? (state.boss.id === 'hachiman' ? 'Switch off to let Hachiman reach 0 and begin Weakened.' : 'Switch off to let linked HP reach 0 and start Weakened.') : (state.boss.id === 'hachiman' ? 'Switch on to keep Hachiman at 1 HP floor.' : 'Switch on to stop every linked enemy at 1 HP.')}</small></div><em>${state.weakened ? '3X POINTS' : ui.fullAuto ? 'AUTO LOCK' : 'FREE TOGGLE'}</em></button>` : ''}${state.canBreakBoss ? `<button class="break-interrupt" data-break-boss><span class="nav-signal">!</span><div><b>BREAK HP LOCK</b><small>Open the 2-turn Weakened scoring window now.</small></div><em>READY</em></button>` : ''}${state.navigatorActions.map(action => `<button data-navigator="${action.id}" ${!action.enabled ? 'disabled' : ''}>
       <span class="nav-signal">⌁</span><div><b>${escapeHtml(action.name)}</b><small>${escapeHtml(action.unavailableReason || action.note)}</small></div><em>${escapeHtml(action.statusLabel || (action.enabled ? 'READY' : `CD ${action.remaining}`))}</em>
     </button>`).join('')}${state.highlightActions.map(highlightInterruptMarkup).join('')}</div>
@@ -1561,6 +1572,7 @@ function bindBattle(state) {
   document.querySelector('[data-break-boss]')?.addEventListener('click', executeBreak);
   document.querySelector('[data-battle-life-sustainment]')?.addEventListener('click', executeLifeSustainmentToggle);
   document.querySelector('[data-true-desire]')?.addEventListener('click', executeTrueDesireToggle);
+  document.querySelectorAll('[data-miku-song]').forEach(button => button.addEventListener('click', () => executeMikuSong(button.dataset.mikuSong)));
   document.querySelectorAll('[data-highlight]').forEach(button => button.addEventListener('click', () => chooseHighlight(button.dataset.highlight)));
   document.querySelectorAll('[data-medicine]').forEach(button => button.addEventListener('click', () => {
     ui.pendingAction = state.medicineActions.find(action => action.id === button.dataset.medicine) || null;
@@ -1662,6 +1674,16 @@ function executeTrueDesireToggle() {
     const actor = state.party[state.actorIndex];
     if (actor?.slug !== 'j-c' || actor.trueDesirePrimed || state.canToggleTrueDesire === false) return;
     const result = ui.engine.setTrueDesire(true);
+    showEvents(result?.events || []);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function executeMikuSong(song) {
+  if (ui.fullAuto) return;
+  try {
+    const result = ui.engine.selectMikuSong(song);
     showEvents(result?.events || []);
   } catch (error) {
     console.error(error);

@@ -2190,6 +2190,8 @@ export class BattleEngine {
       weakened: this.isBossWeakened(), weakenedTurnsLeft: this.weakenedTurnsLeft(),
       canBreakBoss: this.canBreakBoss(),
       canToggleTrueDesire: this.canToggleTrueDesire(),
+      canSelectMikuSong: this.canSelectMikuSong(),
+      mikuSongs: this.isMikuNavigator() ? [...mikuSongs] : [],
       berryAltActions: this.getBerryAltActions(),
       availableActions: this.getAvailableActions(), navigatorActions: this.getNavigatorActions(), highlightActions: this.getHighlightActions(), medicineActions: this.getMedicineActions(), itemActions: this.getItemActions() });
   }
@@ -2261,6 +2263,31 @@ export class BattleEngine {
       actorId: actor.id, resource: 'trueDesire', amount: actor.trueDesireStacks, enabled: next, tone: 'phase'
     });
     this.recordFrame(`True Desire ${next ? 'On' : 'Off'}`);
+    return { nextState: this.config.fastMode ? null : this.getObservation(), reward: 0, done: false, consumedAction: false, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events) };
+  }
+
+  // Lufel MIKU A0: during battle MIKU can change the battle scenery and song
+  // during her allies' turns. A player choice with no action or turn cost; the
+  // automatic switch when her skills come off cooldown still applies.
+  canSelectMikuSong() {
+    return this.usesLiveMechanics() && this.isMikuNavigator() && this.state.phase === 'battle'
+      && !this.isVirtualConcertActive();
+  }
+
+  selectMikuSong(song) {
+    if (!mikuSongs.includes(song)) throw new Error(`Unknown MIKU song: ${song}`);
+    if (!this.canSelectMikuSong()) throw new Error('MIKU can change the song during an ally turn outside Virtual Concert');
+    const navigator = this.state.navigator;
+    if (navigator.currentSong === song) {
+      return { nextState: this.config.fastMode ? null : this.getObservation(), reward: 0, done: false, consumedAction: false, events: [] };
+    }
+    this.state.lastEvents = [];
+    navigator.songIndex = mikuSongs.indexOf(song);
+    navigator.currentSong = song;
+    this.emit('song', `MIKU switched the battle song to ${song}.`, {
+      actorId: navigator.id, sourceType: 'navigator', song, playerChoice: true, tone: 'navigator'
+    });
+    this.recordFrame(`Song · ${song}`);
     return { nextState: this.config.fastMode ? null : this.getObservation(), reward: 0, done: false, consumedAction: false, events: this.config.fastMode ? [] : clone(this.state.history.at(-1).events) };
   }
 

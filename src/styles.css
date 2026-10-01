@@ -1303,3 +1303,10 @@ details.mechanics-limitations > summary::before { content: '▸'; color: #edb07d
 details.mechanics-limitations[open] > summary::before { content: '▾'; }
 details.mechanics-limitations > summary:focus-visible { outline: 2px solid #f9d68d; outline-offset: 2px; }
 details.mechanics-limitations[open] > ul { margin-top: 8px; }
+
+/* MIKU song picker (player choice during ally turns) */
+.miku-song-picker { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.miku-song-picker small { color: #8fd8d2; font-size: 7px; letter-spacing: .12em; }
+.miku-song-picker button { font-size: 8px; padding: 3px 6px; border: 1px solid #3fb8b0; background: transparent; color: #cfeeee; cursor: pointer; }
+.miku-song-picker button.active { background: #3fb8b0; color: #0b1414; }
+.miku-song-picker button:disabled { opacity: .45; cursor: default; }
