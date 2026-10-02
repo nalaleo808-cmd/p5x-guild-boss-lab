@@ -1,7 +1,7 @@
 {
   "marian": {
-    "fdp": 333403636,
-    "score": 2668229085,
+    "fdp": 352948219,
+    "score": 2824585752,
     "rows": [
       {
         "label": "T1 end",
@@ -25,8 +25,8 @@
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 19331200,
-        "damage": 15665571,
+        "fdp": 19609896,
+        "damage": 15854713,
         "highlight": 38,
         "live": 16370000
       },
@@ -34,8 +34,8 @@
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 36550935,
-        "damage": 25267878,
+        "fdp": 38703667,
+        "damage": 26504855,
         "highlight": 100,
         "live": 36400000
       },
@@ -43,8 +43,8 @@
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 101291483,
-        "damage": 53255883,
+        "fdp": 111896167,
+        "damage": 58145215,
         "highlight": 42,
         "live": 153000000
       },
@@ -52,8 +52,8 @@
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 285838748,
-        "damage": 140195234,
+        "fdp": 304895385,
+        "damage": 148736921,
         "highlight": 76,
         "live": 546000000
       },
@@ -61,8 +61,8 @@
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 305833210,
-        "damage": 150308845,
+        "fdp": 324889847,
+        "damage": 158850532,
         "highlight": 38,
         "live": 606000000
       },
@@ -70,8 +70,8 @@
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 333403636,
-        "damage": 164297485,
+        "fdp": 352948219,
+        "damage": 173086573,
         "highlight": 100,
         "live": null
       }
@@ -86,10 +86,10 @@
       }
     ],
     "damageByActor": {
-      "j-c": 1937058,
+      "j-c": 2061094,
       "wonder": 203811,
-      "marian-beachflower": 51772,
-      "bui-cosmic": 104641166
+      "marian-beachflower": 53304,
+      "bui-cosmic": 109652331
     },
     "yui": {
       "automaticVegOut": 9,
@@ -130,8 +130,8 @@
         "L"
       ]
     ],
-    "fdp": 709758518,
-    "score": 5679068142,
+    "fdp": 743770717,
+    "score": 5951165733,
     "rows": [
       {
         "label": "T1 end",
@@ -153,48 +153,48 @@
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 26338822,
-        "damage": 18967349,
+        "fdp": 26813930,
+        "damage": 19183282,
         "highlight": 21
       },
       {
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 49035527,
-        "damage": 29822987,
+        "fdp": 51212464,
+        "damage": 30850927,
         "highlight": 93
       },
       {
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 228221889,
-        "damage": 131608617,
+        "fdp": 245817217,
+        "damage": 141251092,
         "highlight": 42
       },
       {
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 615708949,
-        "damage": 330787473,
+        "fdp": 648722668,
+        "damage": 349044483,
         "highlight": 100
       },
       {
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 660300471,
-        "damage": 350973738,
+        "fdp": 693314190,
+        "damage": 369230748,
         "highlight": 38
       },
       {
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 709758518,
-        "damage": 375817106,
+        "fdp": 743770717,
+        "damage": 394576059,
         "highlight": 100
       }
     ],
@@ -208,10 +208,10 @@
       }
     ],
     "damageByActor": {
-      "j-c": 1866300,
+      "j-c": 1975265,
       "wonder": 261422,
-      "kotone-shiomi": 13785695,
-      "bui-cosmic": 209421446
+      "kotone-shiomi": 15872706,
+      "bui-cosmic": 217369888
     },
     "yui": {
       "automaticVegOut": 9,
@@ -252,8 +252,8 @@
         "B"
       ]
     ],
-    "fdp": 725790195,
-    "score": 5807321560,
+    "fdp": 755121795,
+    "score": 6041974363,
     "rows": [
       {
         "label": "T1 end",
@@ -275,48 +275,48 @@
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 26338822,
-        "damage": 18967349,
+        "fdp": 26813930,
+        "damage": 19183282,
         "highlight": 21
       },
       {
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 49035527,
-        "damage": 29822987,
+        "fdp": 51212464,
+        "damage": 30850927,
         "highlight": 93
       },
       {
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 222303871,
-        "damage": 109047680,
+        "fdp": 237513675,
+        "damage": 116094924,
         "highlight": 42
       },
       {
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 620930411,
-        "damage": 309764319,
+        "fdp": 649173083,
+        "damage": 322830867,
         "highlight": 100
       },
       {
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 671767867,
-        "damage": 336454653,
+        "fdp": 700010538,
+        "damage": 349521201,
         "highlight": 38
       },
       {
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 725790195,
-        "damage": 358817439,
+        "fdp": 755121795,
+        "damage": 372329996,
         "highlight": 100
       }
     ],
@@ -330,10 +330,10 @@
       }
     ],
     "damageByActor": {
-      "j-c": 1867101,
+      "j-c": 1976066,
       "wonder": 243164,
-      "kotone-shiomi": 6986265,
-      "bui-cosmic": 209750243
+      "kotone-shiomi": 8018594,
+      "bui-cosmic": 216102202
     },
     "yui": {
       "automaticVegOut": 9,
@@ -341,491 +341,1073 @@
       "havoc": 35
     }
   },
-  "kotoneSearch": {
-    "searched": 4590,
-    "top": [
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "P",
-            "B",
-            "G",
-            "B",
-            "B",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 736786165,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "B",
-            "P",
-            "G",
-            "B",
-            "B",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 735112695,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "B",
-            "B",
-            "G",
-            "P",
-            "B",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 733517949,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "B",
-            "B",
-            "G",
-            "B",
-            "P",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 731941615,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "B",
-            "B",
-            "G",
-            "B",
-            "B",
-            "P"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 730348829,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "L",
-            "L",
-            "G",
-            "L",
-            "P",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 709343524,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "L",
-            "L",
-            "G",
-            "P",
-            "L",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 709343524,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "L",
-            "L",
-            "G",
-            "P",
-            "B",
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 709343524,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "L",
-            "L",
-            "G",
-            "P",
-            "B",
-            "P"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 709343524,
-        "forced": 1
-      },
-      {
-        "plan": [
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "G",
-            "L",
-            "L",
-            "G",
-            "P",
-            "P",
-            "B"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ],
-          [
-            "L"
-          ]
-        ],
-        "fdp": 709343524,
-        "forced": 1
-      }
-    ],
-    "best": {
-      "plan": [
-        [
-          "L"
-        ],
-        [
-          "L"
-        ],
-        [
-          "L"
-        ],
-        [
-          "L"
-        ],
-        [
-          "G",
-          "L",
-          "L",
-          "G",
-          "P",
-          "B",
-          "B"
-        ],
-        [
-          "C"
-        ],
-        [
-          "C"
-        ],
-        [
-          "B"
-        ]
-      ],
-      "fdp": 725790195,
-      "score": 5807321560,
-      "rows": [
+  "impact": {
+    "seeds": 4,
+    "marian": {
+      "baseFdp": 348983551,
+      "removals": [
         {
-          "label": "T1 end",
-          "attackTurn": 2,
-          "concert": false,
-          "fdp": 1555175,
-          "damage": 3515697,
-          "highlight": 76
+          "kind": "Yui buff",
+          "id": "universal_theoria_damage",
+          "change": -15.4
         },
         {
-          "label": "T2 end",
-          "attackTurn": 3,
-          "concert": false,
-          "fdp": 8534119,
-          "damage": 10747347,
-          "highlight": 100
+          "kind": "Yui buff",
+          "id": "cosmic_weapon_summon",
+          "change": -13.4
         },
         {
-          "label": "T3 end",
-          "attackTurn": 4,
-          "concert": false,
-          "fdp": 26338822,
-          "damage": 18967349,
-          "highlight": 21
+          "kind": "boss debuff",
+          "id": "jc_two_masks_def_down",
+          "change": -12.8
         },
         {
-          "label": "T4 end",
-          "attackTurn": 5,
-          "concert": false,
-          "fdp": 49035527,
-          "damage": 29822987,
-          "highlight": 93
+          "kind": "Yui buff",
+          "id": "jc_two_masks_damage",
+          "change": -11.2
         },
         {
-          "label": "T5 end",
-          "attackTurn": 5,
-          "concert": true,
-          "fdp": 222303871,
-          "damage": 109047680,
-          "highlight": 42
+          "kind": "Yui buff",
+          "id": "marian_a6_refresh",
+          "change": -11.1
         },
         {
-          "label": "T6 end",
-          "attackTurn": 5,
-          "concert": false,
-          "fdp": 620930411,
-          "damage": 309764319,
-          "highlight": 100
+          "kind": "Yui buff",
+          "id": "cosmic_potato_power",
+          "change": -11
         },
         {
-          "label": "T7 end",
-          "attackTurn": 6,
-          "concert": false,
-          "fdp": 671767867,
-          "damage": 336454653,
-          "highlight": 38
+          "kind": "Yui buff",
+          "id": "jc_two_masks_amp",
+          "change": -10.6
         },
         {
-          "label": "T8 end",
-          "attackTurn": 6,
-          "concert": false,
-          "fdp": 725790195,
-          "damage": 358817439,
-          "highlight": 100
+          "kind": "Yui buff",
+          "id": "crit_rate_up",
+          "change": -10.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_mischief_attack",
+          "change": -9.1
+        },
+        {
+          "kind": "boss debuff",
+          "id": "def_down",
+          "change": -8.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_one_winged_butterfly_crit_damage",
+          "change": -8.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_breeze_crit_damage",
+          "change": -8.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_one_winged_butterfly_damage",
+          "change": -7.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_one_more_damage",
+          "change": -7.7
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_attack",
+          "change": -7
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_knight_rounds",
+          "change": -6.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_assemble_crit",
+          "change": -6.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "damage_up",
+          "change": -6.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_mixed_vegetables",
+          "change": -6.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_yellow",
+          "change": -6.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "observed_legendary_diva",
+          "change": -5.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_cyber_farmer",
+          "change": -5.7
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_heaven_pierce",
+          "change": -5.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_blessing_damage",
+          "change": -5.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_spring_weakness",
+          "change": -5.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_highlight_damage",
+          "change": -5.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_a2_damage",
+          "change": -5.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_assemble_attack",
+          "change": -5.3
+        },
+        {
+          "kind": "boss debuff",
+          "id": "sonic_def_down",
+          "change": -5.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "attack_up",
+          "change": -5.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_satellite",
+          "change": -5.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_feel_attack",
+          "change": -5.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a2_mischief",
+          "change": -5
+        },
+        {
+          "kind": "boss debuff",
+          "id": "bewitching_blossoms",
+          "change": -4.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_highlight_attack",
+          "change": -4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_crit_damage",
+          "change": -3.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_oxymoron_damage",
+          "change": -3.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_play_crit_rate",
+          "change": -3.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_crit_damage",
+          "change": -3.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_resonance_damage",
+          "change": -3.6
+        },
+        {
+          "kind": "boss debuff",
+          "id": "cosmic_spores_lufel-recent-bui-cosmic",
+          "change": -3.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_play_crit_damage",
+          "change": -3.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_damage",
+          "change": -3.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a4_party_attack",
+          "change": -2.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_clear_damage",
+          "change": -2.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_a4_highlight_attack",
+          "change": -2.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_fan_favorite",
+          "change": -2.7
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_highlight_damage",
+          "change": -2.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_highlight_crit_damage",
+          "change": -2.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_heaven_pierce",
+          "change": -2.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_crit_damage",
+          "change": -2.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "wonder_weapon_ex-machina_starting_element_damage_share",
+          "change": -2.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_spring_damage",
+          "change": -2.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_blossoms_attack",
+          "change": -2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_critical",
+          "change": -2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "observed_creation_reconciliation_damage",
+          "change": -1.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_expert",
+          "change": -1.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "imperial_purge_attack",
+          "change": -1.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a4_party_damage",
+          "change": -1.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_setlist_break",
+          "change": -1.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "revelation_trust_prosperity_damage",
+          "change": -1.3
+        },
+        {
+          "kind": "boss debuff",
+          "id": "sonic_damage_taken",
+          "change": -1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "wonder_weapon_ex-machina_flat_attack_aura",
+          "change": -0.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_break",
+          "change": -0.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_service_reduction",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_shield",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_defense",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-passive-pierce",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "revelation_nativity_strife_crit_kotone-shiomi",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-account-final",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-pierce",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-weapon-pb-crit",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-0",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-passive-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-pierce",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-1",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-a1-crit",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-final",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-2",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-crit",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-hl-crit",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-a4-damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-hl-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-copy:attack_up",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-copy:universal_theoria_damage",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_shock",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_windswept",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_curse_stacks",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "kotone-s2-damage-taken",
+          "change": 0
         }
       ],
-      "forcedResources": [
+      "plusTen": [
         {
-          "type": "highlight_gauge",
-          "actor": "lufel-recent-j-c",
-          "prior": 93,
-          "attackTurn": 5,
-          "concert": false
+          "stat": "Final damage +10%",
+          "change": 9.8
+        },
+        {
+          "stat": "Pierce +10%",
+          "change": 8.5
+        },
+        {
+          "stat": "Boss Defense Down +10%",
+          "change": 2.9
+        },
+        {
+          "stat": "Crit rate +10%",
+          "change": 2
+        },
+        {
+          "stat": "Attack +10%",
+          "change": 1.7
+        },
+        {
+          "stat": "Crit damage +10%",
+          "change": 1.7
+        },
+        {
+          "stat": "Damage +10%",
+          "change": 1.6
+        },
+        {
+          "stat": "Boss damage taken +10%",
+          "change": 1.6
         }
       ],
-      "damageByActor": {
-        "j-c": 1867101,
-        "wonder": 243164,
-        "kotone-shiomi": 6986265,
-        "bui-cosmic": 209750243
-      },
-      "yui": {
-        "automaticVegOut": 9,
-        "manualVegOut": 8,
-        "havoc": 35
-      }
+      "defenseCurve": [
+        {
+          "extraDefenseDown": "0%",
+          "change": 0
+        },
+        {
+          "extraDefenseDown": "25%",
+          "change": 7.5
+        },
+        {
+          "extraDefenseDown": "50%",
+          "change": 16.2
+        },
+        {
+          "extraDefenseDown": "75%",
+          "change": 26.6
+        },
+        {
+          "extraDefenseDown": "100%",
+          "change": 39.1
+        },
+        {
+          "extraDefenseDown": "150%",
+          "change": 73.9
+        },
+        {
+          "extraDefenseDown": "200%",
+          "change": 101.8
+        },
+        {
+          "extraDefenseDown": "305.9%",
+          "change": 122.4
+        }
+      ]
+    },
+    "kotone": {
+      "baseFdp": 767487468,
+      "removals": [
+        {
+          "kind": "Yui buff",
+          "id": "universal_theoria_damage",
+          "change": -15.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-passive-pierce",
+          "change": -12.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_damage",
+          "change": -12.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_amp",
+          "change": -10.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_weapon_summon",
+          "change": -10.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_potato_power",
+          "change": -10.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_assemble_crit",
+          "change": -9.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_heaven_pierce",
+          "change": -8.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-copy:universal_theoria_damage",
+          "change": -8.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_one_winged_butterfly_damage",
+          "change": -8.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_mischief_attack",
+          "change": -7.3
+        },
+        {
+          "kind": "boss debuff",
+          "id": "kotone-s2-damage-taken",
+          "change": -7
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_play_crit_rate",
+          "change": -6.4
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_two_masks_def_down",
+          "change": -6.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_one_winged_butterfly_crit_damage",
+          "change": -6.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_highlight_damage",
+          "change": -6.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_satellite",
+          "change": -5.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_mixed_vegetables",
+          "change": -5.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_yellow",
+          "change": -5.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_a2_damage",
+          "change": -5.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-atk",
+          "change": -5.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_spring_weakness",
+          "change": -5.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-a4-damage",
+          "change": -5.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_knight_rounds",
+          "change": -5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_cyber_farmer",
+          "change": -4.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-hl-atk",
+          "change": -4.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "observed_legendary_diva",
+          "change": -4.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "attack_up",
+          "change": -4.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "cosmic_assemble_attack",
+          "change": -4.3
+        },
+        {
+          "kind": "boss debuff",
+          "id": "def_down",
+          "change": -4.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_oxymoron_damage",
+          "change": -4.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_feel_attack",
+          "change": -4.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_a4_highlight_attack",
+          "change": -4.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a2_mischief",
+          "change": -4
+        },
+        {
+          "kind": "boss debuff",
+          "id": "cosmic_spores_lufel-recent-bui-cosmic",
+          "change": -3.9
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-1",
+          "change": -3.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-a1-crit",
+          "change": -3.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-2",
+          "change": -3.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_highlight_attack",
+          "change": -3.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s1-crit-0",
+          "change": -3.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-hl-crit",
+          "change": -3.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_heaven_pierce",
+          "change": -3.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_clear_damage",
+          "change": -3.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_fan_favorite",
+          "change": -3.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_crit_damage",
+          "change": -3.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_play_crit_damage",
+          "change": -2.7
+        },
+        {
+          "kind": "boss debuff",
+          "id": "sonic_def_down",
+          "change": -2.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a4_party_attack",
+          "change": -2.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_spring_damage",
+          "change": -2.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "revelation_nativity_strife_crit_kotone-shiomi",
+          "change": -2.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "wonder_weapon_ex-machina_starting_element_damage_share",
+          "change": -2.3
+        },
+        {
+          "kind": "Yui buff",
+          "id": "observed_creation_reconciliation_damage",
+          "change": -2.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-s3-copy:attack_up",
+          "change": -2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_crit_damage",
+          "change": -1.8
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_critical",
+          "change": -1.6
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_expert",
+          "change": -1.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_a4_party_damage",
+          "change": -1.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_concert_setlist_break",
+          "change": -1.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-passive-atk",
+          "change": -1.2
+        },
+        {
+          "kind": "boss debuff",
+          "id": "sonic_damage_taken",
+          "change": -1.2
+        },
+        {
+          "kind": "Yui buff",
+          "id": "imperial_purge_attack",
+          "change": -1.1
+        },
+        {
+          "kind": "Yui buff",
+          "id": "wonder_weapon_ex-machina_flat_attack_aura",
+          "change": -0.5
+        },
+        {
+          "kind": "Yui buff",
+          "id": "miku_setlist_break",
+          "change": -0.4
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_blossoms_attack",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "crit_rate_up",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_breeze_crit_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_blessing_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "revelation_trust_prosperity_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_highlight_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_highlight_crit_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "damage_up",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_service_reduction",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_one_more_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_crit_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "marian_a6_refresh",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_resonance_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_shield",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "jc_two_masks_defense",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_attack",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "medicine_damage",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-account-final",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-pierce",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-atk",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-weapon-pb-crit",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-pierce",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-pb-final",
+          "change": 0
+        },
+        {
+          "kind": "Yui buff",
+          "id": "kotone-lunar-crit",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "bewitching_blossoms",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_shock",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_windswept",
+          "change": 0
+        },
+        {
+          "kind": "boss debuff",
+          "id": "jc_curse_stacks",
+          "change": 0
+        }
+      ],
+      "plusTen": [
+        {
+          "stat": "Pierce +10%",
+          "change": 14.4
+        },
+        {
+          "stat": "Crit rate +10%",
+          "change": 13.4
+        },
+        {
+          "stat": "Final damage +10%",
+          "change": 9.5
+        },
+        {
+          "stat": "Damage +10%",
+          "change": 1.7
+        },
+        {
+          "stat": "Boss damage taken +10%",
+          "change": 1.7
+        },
+        {
+          "stat": "Attack +10%",
+          "change": 1.3
+        },
+        {
+          "stat": "Crit damage +10%",
+          "change": 1.3
+        },
+        {
+          "stat": "Boss Defense Down +10%",
+          "change": 1.3
+        }
+      ],
+      "defenseCurve": [
+        {
+          "extraDefenseDown": "0%",
+          "change": 0
+        },
+        {
+          "extraDefenseDown": "25%",
+          "change": 3.2
+        },
+        {
+          "extraDefenseDown": "50%",
+          "change": 6.6
+        },
+        {
+          "extraDefenseDown": "75%",
+          "change": 10.3
+        },
+        {
+          "extraDefenseDown": "100%",
+          "change": 14.2
+        },
+        {
+          "extraDefenseDown": "150%",
+          "change": 23.1
+        },
+        {
+          "extraDefenseDown": "200%",
+          "change": 28.5
+        },
+        {
+          "extraDefenseDown": "305.9%",
+          "change": 32.2
+        }
+      ]
     }
   },
   "limitations": [

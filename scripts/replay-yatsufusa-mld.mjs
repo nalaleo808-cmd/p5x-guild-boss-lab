@@ -13,7 +13,7 @@
 // Every step the simulator would not allow on its own (Highlight gauge or
 // cooldown, navigator cooldown, SP) is still played and listed under
 // forcedResources, so the route always matches the post.
-// Usage: node scripts/replay-yatsufusa-mld.mjs [--seeds=8] [--debug] [--search [--search-seeds=2] [--top=10]]
+// Usage: node scripts/replay-yatsufusa-mld.mjs [--seeds=8] [--debug] [--impact] [--search [--search-seeds=2] [--top=10]]
 // --search tries every Go for Broke placement (about 7 minutes); search
 // plans may not need any forced step for Kotone or more forced steps overall.
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -58,8 +58,13 @@ const bishamonten = personaDef('Bishamonten', [
   combatSkill(transferable('Rakunda'), 1, { cost: 22 })
 ]);
 const dionysus = dionysusDefinition().definition;
-const nian = personaDef('Nian', [combatSkill(transferable('Sonic Interference'), 0, {
-  cost: 22, debuff: { id: 'sonic_interference', name: 'SONIC INTERFERENCE', value: 0.30, duration: 3 } })]);
+// Sonic Interference (Lufel): all foes' Defense -35.2% and damage taken +11%
+// for 3 turns. The catalog drops the damage-taken half. Its own id keeps it
+// beside Rakunda's def_down instead of being overwritten, as Two Masks'
+// Defense Down coexists with Rakunda (user, 2026-09-06).
+const nian = personaDef('Nian', [combatSkill(transferable('Sonic Interference'), 0, { cost: 22, debuff: undefined, debuffs: [
+  { id: 'sonic_def_down', name: 'SONIC DEF DOWN', stat: 'defenseDown', value: 0.352, duration: 3 },
+  { id: 'sonic_damage_taken', name: 'SONIC DAMAGE TAKEN', damageTaken: true, value: 0.11, duration: 3 }] })]);
 
 const jc = character('j-c');
 const marian = character('marian-beachflower');
@@ -253,6 +258,7 @@ function checkpoint(e, label, rows) {
   rows.push({ label, attackTurn: e.state.attackTurn, concert: e.isVirtualConcertActive(),
     fdp: e.state.scoreBreakdown.foeDefensePoints, damage: e.state.totalDamage, highlight: e.state.sharedCombat.highlight,
     ...(debug ? {
+      bossDebuffs: e.state.boss.debuffs.map(d => `${d.sourceSkillId || ''}:${d.id}:${d.stat || ''}:${Math.round(Number(d.value) * 1000) / 1000}:${d.duration}`),
       yuiStats: { attack: unit.attack, crit: unit.crit, critMult: unit.critMult, pierce: unit.pierce, damageBonus: unit.damageBonus, speed: unit.speed },
       yuiBuffs: unit.buffs.map(buff => `${buff.id}:${buff.stat}:${Math.round(Number(buff.value) * 1000) / 1000}:${buff.duration}`),
       hits: e.state.log.slice(since).filter(event => event.type === 'damage').sort((a, b) => b.amount - a.amount).slice(0, 6)
@@ -263,8 +269,28 @@ function checkpoint(e, label, rows) {
 
 // The posted rotation, Marian in slot 3. `third` lets the Kotone search
 // replace Marian's moves turn by turn.
+// --impact probes Cosmic Yui's hits only: `yuiProbe` removes matching buffs
+// and boss debuffs, or adds test ones, for each of her damage calculations.
+let yuiProbe = null;
+function attachProbe(e) {
+  if (!yuiProbe) return;
+  const original = e.calculateDamage.bind(e);
+  e.calculateDamage = (actor, skill, target, ...rest) => {
+    if (actor?.id !== yui.id || !target) return original(actor, skill, target, ...rest);
+    const removedBuffs = yuiProbe.removeBuff ? actor.buffs.filter(buff => yuiProbe.removeBuff(buff)) : [];
+    const removedDebuffs = yuiProbe.removeDebuff ? target.debuffs.filter(debuff => yuiProbe.removeDebuff(debuff)) : [];
+    actor.buffs = actor.buffs.filter(buff => !removedBuffs.includes(buff)).concat(yuiProbe.addBuffs || []);
+    target.debuffs = target.debuffs.filter(debuff => !removedDebuffs.includes(debuff)).concat(yuiProbe.addDebuffs || []);
+    try { return original(actor, skill, target, ...rest); } finally {
+      actor.buffs = actor.buffs.filter(buff => !(yuiProbe.addBuffs || []).includes(buff)).concat(removedBuffs);
+      target.debuffs = target.debuffs.filter(debuff => !(yuiProbe.addDebuffs || []).includes(debuff)).concat(removedDebuffs);
+    }
+  };
+}
+
 function play(seed, variant = 'marian', kotonePlan = null) {
   const e = makeEngine(seed, variant);
+  attachProbe(e);
   const rows = [];
   const J = jc.id, Y = yui.id, M = marian.id;
   const k = turn => kotoneStep(e, kotonePlan[turn]);
@@ -404,6 +430,45 @@ if (process.argv.includes('--search')) {
     best: confirmed && { plan: best.plan, fdp: confirmed.fdp, score: confirmed.score,
       rows: confirmed.runs[0].rows.map((row, index) => ({ ...row, fdp: average(confirmed.runs, run => run.rows[index].fdp) })),
       forcedResources: confirmed.runs[0].forcedResources, damageByActor: confirmed.runs[0].damageByActor, yui: confirmed.runs[0].yui } };
+}
+if (process.argv.includes('--impact')) {
+  const impactSeeds = seeds.slice(0, arg('impact-seeds', 4));
+  const routes = { marian: ['marian', null], kotone: ['kotone', SEARCHED_KOTONE] };
+  const probe = (variant, plan, settings) => { yuiProbe = settings; try { return evaluate(variant, plan, impactSeeds).fdp; } finally { yuiProbe = null; } };
+  // Every buff/debuff id seen on Yui or the boss when she deals damage.
+  const seen = { buffs: new Map(), debuffs: new Map() };
+  const label = id => id.replace(/^support-copy\/.*\/([^/]+)$/, 'kotone-s3-copy:$1');
+  yuiProbe = { removeBuff: buff => { seen.buffs.set(label(buff.id), true); return false; },
+    removeDebuff: debuff => { seen.debuffs.set(debuff.id, true); return false; } };
+  for (const [variant, plan] of Object.values(routes)) evaluate(variant, plan, impactSeeds);
+  yuiProbe = null;
+  const impact = {};
+  for (const [name, [variant, plan]] of Object.entries(routes)) {
+    const base = probe(variant, plan, {});
+    const pct = fdp => Math.round((fdp / base - 1) * 1000) / 10;
+    const removals = [];
+    for (const id of seen.buffs.keys()) removals.push({ kind: 'Yui buff', id, change: pct(probe(variant, plan, { removeBuff: buff => label(buff.id) === id })) });
+    for (const id of seen.debuffs.keys()) removals.push({ kind: 'boss debuff', id, change: pct(probe(variant, plan, { removeDebuff: debuff => debuff.id === id })) });
+    removals.sort((a, b) => a.change - b.change);
+    const add = (stat, value) => ({ addBuffs: [{ id: `probe_${stat}`, name: 'PROBE', stat, value, duration: 999 }] });
+    const addDebuff = debuff => ({ addDebuffs: [{ id: 'probe_debuff', name: 'PROBE', duration: 999, ...debuff }] });
+    const plusTen = {
+      'Attack +10%': add('attack', 0.1), 'Crit damage +10%': add('critDamage', 0.1), 'Crit rate +10%': add('critRate', 0.1),
+      'Damage +10%': add('damage', 0.1), 'Pierce +10%': add('pierce', 0.1), 'Final damage +10%': add('finalDamage', 0.1),
+      'Boss Defense Down +10%': addDebuff({ stat: 'defenseDown', value: 0.1 }), 'Boss damage taken +10%': addDebuff({ damageTaken: true, value: 0.1 })
+    };
+    const stats = Object.entries(plusTen).map(([stat, settings]) => ({ stat, change: pct(probe(variant, plan, settings)) })).sort((a, b) => b.change - a.change);
+    const defenseCurve = [0, 0.25, 0.5, 0.75, 1, 1.5, 2, 3.059].map(extra => ({ extraDefenseDown: `${Math.round(extra * 1000) / 10}%`,
+      change: pct(probe(variant, plan, addDebuff({ stat: 'defenseDown', value: extra }))) }));
+    impact[name] = { baseFdp: base, removals, plusTen: stats, defenseCurve };
+  }
+  report.impact = { seeds: impactSeeds.length, ...impact };
+  for (const [name, data] of Object.entries(impact)) {
+    console.log(`\n== ${name}: biggest losses when one effect is removed from Yui's hits`);
+    console.table(data.removals.slice(0, 15));
+    console.log(`== ${name}: +10% of each stat for Yui`); console.table(data.plusTen);
+    console.log(`== ${name}: extra boss Defense Down for the whole fight`); console.table(data.defenseCurve);
+  }
 }
 report.limitations = marianResult.runs[0].limitations;
 report.seeds = seeds.length;
