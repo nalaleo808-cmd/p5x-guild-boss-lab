@@ -8,7 +8,7 @@ import { enqueueSupportAction, completeSupportAction } from './combat/support-ac
 import { KOTONE_SHIOMI_ID } from './characters/kotone-shiomi-data.js';
 import { withLocalCharacters, createCharacterMechanics } from './characters/kotone-overlay.js';
 import { bosses, navigator, personas, roster, multidimensionalDreamscapeEvidence } from './data.js';
-import { calculateDreamscapeResult, getMultidimensionalDreamscapeTurnScoreMultiplier, getObservedDreamscapeMultiplier } from './mode-scoring.js';
+import { calculateDreamscapeResult, getMultidimensionalDreamscapeTurnScoreMultiplier, getObservedDreamscapeMultiplier, resolveDreamscapeSurvivalBonus, MLD_SURVIVAL_BONUS_TIMES_DIFFICULTY } from './mode-scoring.js';
 import {
   CURSED_TIES_WEAPON_ID,
   getWonderWeaponDefinition,
@@ -159,6 +159,14 @@ export class BattleEngine {
     const bossData = clone(this.bossDefinition || byId(this.bossDefinitions, this.config.bossId) || bosses[0]);
     const modeId = this.config.modeId || bossData.defaultMode || 'nexus';
     const dreamscapeRun = this.usesLiveMechanics() && modeId === 'multidimensional';
+    // MLD scoring: a recorded Turns Survived Bonus, else 1,000,000 / Difficulty
+    // Bonus for an MLD boss, else a damage-only preview (see mode-scoring.js).
+    if (dreamscapeRun) {
+      const survival = resolveDreamscapeSurvivalBonus(bossData);
+      bossData.turnsSurvivedBonus = survival.bonus;
+      bossData.turnsSurvivedBonusSource = survival.source;
+      bossData.dreamscapeScoreVerified = survival.bonus != null;
+    }
     const dreamscapePreview = dreamscapeRun && bossData.dreamscapeScoreVerified !== true;
     const liveHachimanDreamscape = this.usesLiveMechanics() && bossData.id === 'hachiman' && modeId === 'multidimensional';
     const liveHachimanDevourer = this.usesLiveMechanics() && bossData.id === 'hachiman' && modeId === 'devourer';
@@ -447,6 +455,7 @@ export class BattleEngine {
         ...(party.some(unit => unit.slug === 'akihiko') ? ['Akihiko Theurgy and Assist timing remain unavailable. The A1 Grit critical-rate duration and stacking rule are not stated, so that critical-rate bonus is omitted.'] : []),
         ...(party.some(unit => unit.slug === 'yukari') ? ['Yukari can fill and reserve Theurgy gauge, but Theurgy activation and reserve return remain unavailable. Reserve expiry uses the shared party-round clock.'] : []),
         ...(party.some(unit => unit.slug === 'makoto') ? ['Makoto Theurgy and Assist timing remain unavailable. Full Moon has no substitute generator while Theurgy is disabled. The A1 Melody extra-hit coefficient and A6 fatal-state ending boundary are not assumed.'] : []),
+        ...(dreamscapeRun && bossData.turnsSurvivedBonusSource === 'derived_from_difficulty' ? [`${bossData.name} MLD: Turns Survived Bonus ${bossData.turnsSurvivedBonus.toLocaleString('en-US')} is derived from the recorded pattern (bonus x Difficulty Bonus ${bossData.difficultyBonus} = ${MLD_SURVIVAL_BONUS_TIMES_DIFFICULTY.toLocaleString('en-US')}). Confirm it with this boss's result screen.`] : []),
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
         ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),
@@ -510,6 +519,7 @@ export class BattleEngine {
         turnWeightedDamagePoints: 0, turnScoreBuckets: [], foeDefensePoints: 0,
         foeDefensePointsRounding: 'The preview rounds cumulative turn-weighted damage once to derive Foe Defense Points. The observed game rounding convention remains unverified.',
         turnsSurvivedBonus: dreamscapePreview ? null : Number(bossData.turnsSurvivedBonus || 0),
+        turnsSurvivedBonusSource: bossData.turnsSurvivedBonusSource || null,
         difficultyBonus: bossData.difficultyBonus || 1,
         observedSurvivalMultiplier: getObservedDreamscapeMultiplier(bossData.turnLimit),
         formulaEvidence: clone(multidimensionalDreamscapeEvidence.resultFormula)

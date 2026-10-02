@@ -139,6 +139,12 @@ export const multidimensionalDreamscapeEvidence = Object.freeze({
   })
 });
 
+// Adding an MLD (Multidimensional Dreamscape) boss: set defaultMode
+// 'multidimensional' (or list it in supportedModes) and difficultyBonus from the
+// stage screen. The score is (Foe Defense Points + Turns Survived Bonus) x
+// Difficulty Bonus. Without a recorded turnsSurvivedBonus the engine derives it
+// as 1,000,000 / difficultyBonus (src/mode-scoring.js) and flags it in the
+// limitations panel; add turnsSurvivedBonus once a result screen confirms it.
 export const bosses = [
   {
     id: 'slaughter_drive', name: 'Slaughter Drive', subtitle: 'Nexus of Dreams · Recorded Benchmark', level: 78,
