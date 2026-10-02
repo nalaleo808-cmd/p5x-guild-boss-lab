@@ -450,6 +450,8 @@ export class BattleEngine {
         ...(dreamscapePreview ? ['Multidimensional Dreamscape shows simulated damage only. Game point accumulation, survival bonus and the actual ending trigger remain unverified.'] : []),
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
         ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),
+        ...(this.usesLiveMechanics() && bossData.id !== 'surt' && bossData.encounter?.berserkStacksPerTurn ? [`${bossData.name} Berserk is shown only as a set amount. Its value is unknown, so stacks are tracked without changing enemy damage.`] : []),
+        ...(this.usesLiveMechanics() && bossData.encounterEvidence?.unknown?.includes('three further stage Special Effects') ? [`${bossData.name}: three stage Special Effects are not yet recorded and are not applied.`] : []),
         ...(liveSurt && modeId !== 'multidimensional' ? ['Surt is selectable in NOD and DOD, but the supplied screenshots only confirm the MLD encounter. NOD and DOD HP, score, and ending rules remain provisional.'] : []),
         ...(party.some(unit => unit.slug && unit.id !== KOTONE_SHIOMI_ID && !characterModuleFor(unit)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
@@ -813,7 +815,23 @@ export class BattleEngine {
     return Number(enemy.finalDamageDealtMultiplier ?? 1);
   }
 
+  // Data-driven Berserk for live encounters other than Surt (which also has
+  // Ragnarok): enemies gain stacks at each Attack Turn end, up to the cap. The
+  // damage amount is not shown in game, so the stacks change no damage.
+  advanceEncounterBerserk() {
+    const encounter = this.state.boss.encounter;
+    if (!this.usesLiveMechanics() || this.isSurtLive() || !encounter?.berserkStacksPerTurn) return;
+    const cap = Number(encounter.berserkStackCap || 3);
+    for (const enemy of this.enemies) {
+      enemy.berserkStacks = clamp(Number(enemy.berserkStacks || 0) + Number(encounter.berserkStacksPerTurn), 0, cap);
+    }
+    this.emit('mechanic', `${this.state.boss.name} reached Berserk ${this.state.boss.berserkStacks}/${cap}.`, {
+      actorId: this.state.boss.id, sourceType: 'encounter', tone: 'boss'
+    });
+  }
+
   advanceSurtEncounterStacks() {
+    this.advanceEncounterBerserk();
     if (!this.isSurtLive()) return;
     const encounter = this.state.boss.encounter || {};
     const berserkGain = Number(encounter.berserkStacksPerTurn || 1);

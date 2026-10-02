@@ -326,6 +326,39 @@ export const bosses = [
       unknown: ['numeric HP', 'Berserk damage amount', 'Ragnarok HP loss', 'ammo reload clock ownership', 'NOD and DOD score and ending rules', 'exact per-packet game rounding']
     },
     phases: [{ threshold: 1, name: "Surt and Jack-o'-Lantern · Escalating Shadows", defense: 2121.464, baseDefense: 821 }]
+  },
+  {
+    id: 'yatsufusa', name: 'Yatsufusa', subtitle: 'Multidimensional Dreamscape · Lufel and Screenshot Sourced', level: 82,
+    artwork: '/assets/bosses/yatsufusa.png',
+    // Lufelnet Defense Reduction Calc (data/kr/calc/boss.js, id 21, read
+    // 2026-10-02): base Defense 1280, boss Defense coefficient 305.9%, weak to
+    // Nuclear, no resistances. 1400 / (1400 + 1280 x 3.059) = 0.263.
+    maxHp: 99999999, finiteHp: false,
+    defense: 3915.52, baseDefense: 1280, defenseCoefficient: 3.059,
+    defenseEvidence: 'lufelnet_defense_calc_yatsufusa_2026-10-02',
+    weakness: 'nuclear', resistance: 'none', resistances: [],
+    turnLimit: 5, previewAttackTurns: 6,
+    previewLimitNote: 'Every MLD boss stops after six Attack Turns. The Yatsufusa result screen (Turns Survived Bonus) is not yet recorded, so results show simulated damage only.',
+    defaultMode: 'multidimensional', supportedModes: ['multidimensional'],
+    // Stage select screenshot, Nightmare (user, 2026-10-02): level 82, Diff. Bonus 8.
+    difficultyBonus: 8, scoreMultiplier: 1, scoreAttack: true,
+    scoreModel: 'multidimensional_dreamscape_observed',
+    specialEffects: [
+      'At the end of each turn, foes gain 1 Berserk stack, up to 3. Berserk increases damage by a set amount that is not shown.',
+      'Multidimensional Dreamscape: each turn, the boss\'s attacks grow stronger and you get more points.'
+    ],
+    encounter: {
+      kind: 'yatsufusa',
+      berserkStacksPerTurn: 1, berserkStackCap: 3,
+      note: 'Berserk is tracked per Attack Turn end, capped at 3. Its damage amount is not shown, so it changes no damage. Three further stage Special Effects are not yet recorded.'
+    },
+    summons: [],
+    encounterEvidence: {
+      status: 'lufel_defense_calc_and_stage_screenshot_2026-10-02',
+      confirmed: ['base Defense 1280', 'boss Defense coefficient 305.9%', 'Nuclear weakness', 'no resistances', 'level 82', 'Diff. Bonus 8', 'Berserk stack gain and cap'],
+      unknown: ['three further stage Special Effects', 'Turns Survived Bonus', 'Berserk damage amount', 'summons', 'Down gauge size']
+    },
+    phases: [{ threshold: 1, name: 'Yatsufusa · Score Phase', defense: 3915.52, baseDefense: 1280 }]
   }
 ];
 
