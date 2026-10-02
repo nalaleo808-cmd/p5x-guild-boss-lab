@@ -2,13 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { BattleEngine } from '../src/engine.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
+import { bosses } from '../src/data.js';
 
 const character = slug => structuredClone(lufelCatalog.characters.find(unit => unit.slug === slug));
 const guard = engine => engine.step({ type: 'guard', skillId: 'guard' });
 
+// Hachiman with its result screen removed: the damage-only preview mode still
+// applies to any MLD boss whose Turns Survived Bonus is not yet recorded.
+const unscoredHachiman = { ...structuredClone(bosses.find(boss => boss.id === 'hachiman')), dreamscapeScoreVerified: false };
+
 function previewFixture(extra = {}) {
   return new BattleEngine({
-    seed: 55, bossId: 'hachiman', modeId: 'multidimensional', teamIds: ['wonder'],
+    seed: 55, bossId: 'hachiman', bossDefinition: unscoredHachiman, modeId: 'multidimensional', teamIds: ['wonder'],
     loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }, ...extra
   });
 }
@@ -196,4 +201,19 @@ test('unsupported Assist and Theurgy cannot spend resources or advance an action
     assert.notEqual(engine.recommend()?.skillId, assist.skillId);
     assert.deepEqual(resources(), before);
   }
+});
+
+// Result screens: Hachiman (258,098,432 + 125,000) x 8, Surt (1,729,515,136 +
+// 250,000) x 4, Yatsufusa (723,875,072 + 125,000) x 8. One formula for all MLD.
+test('Hachiman MLD now scores (Foe Defense Points + 125,000) x 8 like Yatsufusa', () => {
+  const engine = new BattleEngine({
+    seed: 55, bossId: 'hachiman', modeId: 'multidimensional', teamIds: ['wonder'],
+    loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+  });
+  assert.equal(engine.isDreamscapePreview(), false);
+  while (engine.state.phase === 'battle') guard(engine);
+  const breakdown = engine.state.result.scoreBreakdown;
+  assert.equal(engine.state.result.attackTurns, 6);
+  assert.equal(breakdown.turnsSurvivedBonus, 125_000);
+  assert.equal(engine.state.result.score, (breakdown.foeDefensePoints + 125_000) * 8);
 });

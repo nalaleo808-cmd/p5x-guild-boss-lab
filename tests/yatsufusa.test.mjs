@@ -19,7 +19,7 @@ test('Yatsufusa uses the Lufel Defense calc row and the stage-select values', ()
   assert.equal(boss.difficultyBonus, 8);
 });
 
-test('Yatsufusa MLD tracks Berserk to 3, stops after six Attack Turns, and reports damage only', () => {
+test('Yatsufusa MLD tracks Berserk to 3, stops after six Attack Turns, and scores (Foe Defense Points + 125,000) x 8', () => {
   const engine = new BattleEngine({
     seed: 55, bossId: 'yatsufusa', modeId: 'multidimensional', teamIds: ['wonder'],
     loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
@@ -33,7 +33,11 @@ test('Yatsufusa MLD tracks Berserk to 3, stops after six Attack Turns, and repor
   while (engine.state.phase === 'battle') guard(engine);
   assert.equal(engine.state.boss.berserkStacks, 3);
   assert.equal(engine.state.result.attackTurns, 6);
-  assert.equal(engine.isDreamscapePreview(), true);
+  assert.equal(engine.isDreamscapePreview(), false);
+  const breakdown = engine.state.result.scoreBreakdown;
+  assert.equal(breakdown.turnsSurvivedBonus, 125_000);
+  assert.equal(breakdown.difficultyBonus, 8);
+  assert.equal(engine.state.result.score, (breakdown.foeDefensePoints + 125_000) * 8);
 });
 
 test('Yatsufusa applies the Guardian/Medic composition and the All-Out Attack stage bonus', () => {

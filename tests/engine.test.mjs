@@ -866,6 +866,8 @@ test('the stateful SEES trio completes a deterministic Dreamscape preview throug
   const definitions = ['akihiko', 'yukari', 'makoto'].map(slug => structuredClone(lufelCatalog.characters.find(unit => unit.slug === slug)));
   const config = {
     seed: 730, bossId: 'hachiman',
+    // Unscored copy keeps this the damage-only preview path.
+    bossDefinition: { ...structuredClone(bosses.find(boss => boss.id === 'hachiman')), dreamscapeScoreVerified: false },
     teamIds: definitions.map(unit => unit.id), characterDefinitions: definitions
   };
   const policy = engine => {

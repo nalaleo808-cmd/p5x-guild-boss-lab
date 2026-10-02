@@ -220,6 +220,9 @@ export const bosses = [
     previewLimitNote: 'Six party turns match the observed run length; this is a preview stop, not a verified game-end trigger.',
     defaultMode: 'multidimensional', difficultyBonus: 8,
     scoreModel: 'multidimensional_dreamscape_observed', scoreEvidence: multidimensionalDreamscapeEvidence,
+    // Its own result screen, (258,098,432 + 125,000) x 8 = 2,065,787,456, fits
+    // the MLD formula Surt (2026-09-20) and Yatsufusa (2026-10-02) confirm.
+    dreamscapeScoreVerified: true, turnsSurvivedBonus: 125000,
     finalDamageTakenMultiplier: 1.2, finalDamageDealtMultiplier: 0.4,
     specialEffect: 'Increase final damage taken by 20% and decrease final damage dealt by 60%.',
     scoreMultiplier: 1, scoreAttack: true,
@@ -338,11 +341,14 @@ export const bosses = [
     defenseEvidence: 'lufelnet_defense_calc_yatsufusa_2026-10-02',
     weakness: 'nuclear', resistance: 'none', resistances: [],
     turnLimit: 5, previewAttackTurns: 6,
-    previewLimitNote: 'Every MLD boss stops after six Attack Turns. The Yatsufusa result screen (Turns Survived Bonus) is not yet recorded, so results show simulated damage only.',
+    previewLimitNote: 'Every MLD boss stops after six Attack Turns. The result screen confirms six Turns Survived and a 125,000 Turns Survived Bonus.',
     defaultMode: 'multidimensional', supportedModes: ['multidimensional'],
     // Stage select screenshot, Nightmare (user, 2026-10-02): level 82, Diff. Bonus 8.
+    // Result screen (user, 2026-10-02): (723,875,072 + 125,000) x 8 = 5,792,000,576,
+    // the same MLD formula as Hachiman and Surt.
     difficultyBonus: 8, scoreMultiplier: 1, scoreAttack: true,
     scoreModel: 'multidimensional_dreamscape_observed',
+    dreamscapeScoreVerified: true, turnsSurvivedBonus: 125000,
     // Stage select Special Effect tooltips, Nightmare (user screenshots 2026-10-02).
     specialEffects: [
       'At the end of each turn, foes gain 1 Berserk stack, up to 3. Berserk increases damage by a set amount that is not shown.',
@@ -367,8 +373,15 @@ export const bosses = [
     summons: [],
     encounterEvidence: {
       status: 'lufel_defense_calc_and_stage_screenshot_2026-10-02',
-      confirmed: ['base Defense 1280', 'boss Defense coefficient 305.9%', 'Nuclear weakness', 'no resistances', 'level 82', 'Diff. Bonus 8', 'Berserk stack gain and cap', 'All-Out Attack damage +15%', 'Guardian/Medic composition effect', '+4% ally damage stack value, duration and cap'],
-      unknown: ['ally damage stack trigger and clock', 'Turns Survived Bonus', 'Berserk damage amount', 'summons', 'Down gauge size']
+      confirmed: ['base Defense 1280', 'boss Defense coefficient 305.9%', 'Nuclear weakness', 'no resistances', 'level 82', 'Diff. Bonus 8', 'MLD result formula', '125,000 Turns Survived Bonus', 'Berserk stack gain and cap', 'All-Out Attack damage +15%', 'Guardian/Medic composition effect', '+4% ally damage stack value, duration and cap'],
+      unknown: ['ally damage stack trigger and clock', 'Berserk damage amount', 'summons', 'Down gauge size'],
+      result: {
+        foeDefensePoints: 723_875_072, turnsSurvived: 6,
+        turnsSurvivedBonus: 125_000, difficultyBonus: 8,
+        finalScore: 5_792_000_576,
+        formula: '(723,875,072 + 125,000) x 8 = 5,792,000,576',
+        source: 'user result screen, Nightmare, 2026-10-02'
+      }
     },
     phases: [{ threshold: 1, name: 'Yatsufusa · Score Phase', defense: 3915.52, baseDefense: 1280 }]
   }
