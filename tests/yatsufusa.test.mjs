@@ -57,3 +57,30 @@ test('Yatsufusa applies the Guardian/Medic composition and the All-Out Attack st
   assert.deepEqual(bonuses, [['stage_all_out_attack_damage', 0.15]]);
   assert.deepEqual(without.stageDamageBonuses(without.actor, 'almighty', 'character_skill'), []);
 });
+
+test('Yatsufusa All-Out Attack stage bonus reaches Cosmic Yui Veg-Out, which the engine scores as All-Out damage', () => {
+  const engine = new BattleEngine({
+    seed: 55, bossId: 'yatsufusa', modeId: 'multidimensional', teamIds: ['wonder'],
+    loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+  });
+  assert.deepEqual(engine.stageDamageBonuses(engine.actor, 'nuclear', 'cosmic_all_out_attack'), [['stage_all_out_attack_damage', 0.15]]);
+  assert.deepEqual(engine.stageDamageBonuses(engine.actor, 'nuclear', 'resonance_follow_up'), []);
+});
+
+test('an attribute-targeted party buff reaches only allies of that attribute; Wonder uses his first Persona', () => {
+  const nuclear = { id: 'test-nuclear', name: 'Nuclear Ally', codename: 'Nuclear', role: 'Assassin', element: 'nuclear', attack: 1000, maxHp: 10_000, maxSp: 100, crit: 0, critMult: 1.5, actionLimit: 1, skills: [] };
+  const fire = { ...nuclear, id: 'test-fire', name: 'Fire Ally', codename: 'Fire', element: 'fire' };
+  const engine = new BattleEngine({
+    seed: 55, bossId: 'yatsufusa', modeId: 'multidimensional', teamIds: ['wonder', nuclear.id, fire.id],
+    characterDefinitions: [nuclear, fire], loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }
+  });
+  const wonder = engine.state.party.find(unit => unit.id === 'wonder');
+  const skill = { id: 'attribute-buff', name: 'Attribute buff', slot: 'S1', element: 'nuclear', power: 0, cost: 0, target: 'boss',
+    buff: { id: 'attribute_attack', name: 'ATTRIBUTE ATK', stat: 'attack', value: 0.22, duration: 2 },
+    buffTarget: 'party_attribute', buffAttribute: 'nuclear' };
+  engine.resolveSkill(wonder, skill, engine.state.boss.id, 'persona_skill');
+  const has = id => engine.state.party.find(unit => unit.id === id).buffs.some(buff => buff.id === 'attribute_attack');
+  assert.equal(has(nuclear.id), true);
+  assert.equal(has(fire.id), false);
+  assert.equal(has('wonder'), engine.unitAttribute(wonder) === 'nuclear');
+});

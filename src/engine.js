@@ -461,7 +461,7 @@ export class BattleEngine {
         ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),
         ...(this.usesLiveMechanics() && bossData.id !== 'surt' && bossData.encounter?.berserkStacksPerTurn ? [`${bossData.name} Berserk is shown only as a set amount. Its value is unknown, so stacks are tracked without changing enemy damage.`] : []),
         ...(this.usesLiveMechanics() && bossData.encounter?.allyDamageStack && !bossData.encounter.allyDamageStack.applied ? [`${bossData.name}: the +${Math.round(bossData.encounter.allyDamageStack.valuePerStack * 100)}% ally damage stack is not applied until its trigger (per hit or per action) and stack clock are confirmed.`] : []),
-        ...(this.usesLiveMechanics() && bossData.modeEffects?.[modeId]?.sourceDamage?.all_out_attack ? [`${bossData.name}: All-Out Attack damage +${Math.round(bossData.modeEffects[modeId].sourceDamage.all_out_attack * 100)}% is recorded, but All-Out Attack itself is not yet modeled.`] : []),
+        ...(this.usesLiveMechanics() && bossData.modeEffects?.[modeId]?.sourceDamage?.all_out_attack ? [`${bossData.name}: All-Out Attack damage +${Math.round(bossData.modeEffects[modeId].sourceDamage.all_out_attack * 100)}% applies to Cosmic Yui's Veg-Out; the shared All-Out Attack after every foe is Downed is not yet modeled.`] : []),
         ...(liveSurt && modeId !== 'multidimensional' ? ['Surt is selectable in NOD and DOD, but the supplied screenshots only confirm the MLD encounter. NOD and DOD HP, score, and ending rules remain provisional.'] : []),
         ...(party.some(unit => unit.slug && unit.id !== KOTONE_SHIOMI_ID && !characterModuleFor(unit)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
@@ -871,6 +871,14 @@ export class BattleEngine {
   }
 
   // Mode Special Effects that raise damage dealt, from boss modeEffects.
+  // A unit's attribute for "allies of attribute X" effects. Wonder's
+  // attribute is his first Persona's element.
+  unitAttribute(unit) {
+    return unit?.id === 'wonder'
+      ? byId(this.personaDefinitions, this.config.personaIds?.[0])?.element || unit.element
+      : unit?.element;
+  }
+
   stageDamageBonuses(unit, element, sourceType = null) {
     if (!this.usesLiveMechanics()) return [];
     const effects = this.state.boss.modeEffects?.[this.state.boss.modeId] || {};
@@ -883,7 +891,10 @@ export class BattleEngine {
     }
     if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
     if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
-    if (sourceType && Number(effects.sourceDamage?.[sourceType])) bonuses.push([`stage_${sourceType}_damage`, Number(effects.sourceDamage[sourceType])]);
+    // Cosmic Yui's Veg-Out is All-Out Attack damage (her Potato knight and
+    // 1More-Up already boost it as such), so an All-Out stage bonus reaches it.
+    const stageSource = sourceType === 'cosmic_all_out_attack' && !effects.sourceDamage?.[sourceType] ? 'all_out_attack' : sourceType;
+    if (stageSource && Number(effects.sourceDamage?.[stageSource])) bonuses.push([`stage_${stageSource}_damage`, Number(effects.sourceDamage[stageSource])]);
     return bonuses;
   }
 
@@ -952,9 +963,7 @@ export class BattleEngine {
     // shares the ally's attribute (user, 2026-09-27: two Ice allies = 4%).
     // Wonder's attribute is his first Persona's element.
     const integrityPerAlly = laborSet && navigatorLoadout.revelationMain === 'Integrity' ? navigatorRevelationEffects.integrityLaborPerSameAttribute : 0;
-    const attributeOf = unit => unit.id === 'wonder'
-      ? byId(this.personaDefinitions, this.config.personaIds?.[0])?.element || unit.element
-      : unit.element;
+    const attributeOf = unit => this.unitAttribute(unit);
     // Qualia flat stats join the share; Reconciliation's in-battle 4-set
     // ("During combat your HP, ATK, DEF increase by 15%") joins the multiplier.
     const qualia = this.config.qualia || {};
@@ -3929,6 +3938,7 @@ export class BattleEngine {
     if (skillBuffs.length && !this.isJc(actor) && !isOrangeBlossomBlade) {
       const buffTarget = skill.buffTarget || skill.target;
       const recipients = buffTarget === 'party' ? this.state.party
+        : buffTarget === 'party_attribute' ? this.state.party.filter(unit => unit.hp > 0 && this.unitAttribute(unit) === skill.buffAttribute)
         : buffTarget === 'ally' && this.isMarian(actor) ? this.allyTargetsForSkill(actor, skill, targetId)
           : buffTarget === 'ally' ? [byId(this.state.party, targetId) || actor] : [actor];
       for (const definition of skillBuffs) {
@@ -3938,7 +3948,9 @@ export class BattleEngine {
           buff.value = 0.091 + (this.usesLiveMechanics() ? cappedHp / 1200 : Math.floor(cappedHp / 1200)) * 0.032;
         }
         for (const unit of recipients) this.applyUnitBuff(unit, buff, sourceType, this.supportCastContext);
-        const recipientLabel = buffTarget === 'party' ? 'the party' : recipients[0].codename;
+        if (!recipients.length) continue;
+        const recipientLabel = buffTarget === 'party' ? 'the party'
+          : buffTarget === 'party_attribute' ? recipients.map(unit => unit.codename).join(', ') : recipients[0].codename;
         this.emit('buff', `${buff.name} applied to ${recipientLabel}.`, { targetId: buffTarget === 'party' ? 'party' : recipients[0].id, status: { ...clone(buff), sourceType }, sourceType, tone: 'buff' });
       }
     }

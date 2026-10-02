@@ -374,7 +374,7 @@ export const bosses = [
       berserkStacksPerTurn: 1, berserkStackCap: 3,
       guardianMedicComposition: true,
       allyDamageStack: { valuePerStack: 0.04, duration: 3, stackCap: 10, applied: false },
-      note: 'Berserk is tracked per Attack Turn end, capped at 3; its damage amount is not shown, so it changes no damage. All-Out Attack +15% is recorded, but All-Out Attack itself is not yet modeled. The +4% ally damage stack is recorded but not applied until its trigger and stack clock are confirmed.'
+      note: 'Berserk is tracked per Attack Turn end, capped at 3; its damage amount is not shown, so it changes no damage. All-Out Attack +15% applies to Cosmic Yui\'s Veg-Out (All-Out Attack damage); the shared All-Out Attack after every foe is Downed is not yet modeled. The +4% ally damage stack is recorded but not applied until its trigger and stack clock are confirmed.'
     },
     summons: [],
     encounterEvidence: {
