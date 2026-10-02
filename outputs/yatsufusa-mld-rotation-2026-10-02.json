@@ -1,0 +1,390 @@
+{
+  "marian": {
+    "fdp": 194016466,
+    "score": 1553131731,
+    "rows": [
+      {
+        "label": "T1 end",
+        "attackTurn": 2,
+        "concert": false,
+        "fdp": 552001,
+        "damage": 1166910,
+        "highlight": 76,
+        "live": 605000
+      },
+      {
+        "label": "T2 end",
+        "attackTurn": 3,
+        "concert": false,
+        "fdp": 3088460,
+        "damage": 3787674,
+        "highlight": 72,
+        "live": 5300000
+      },
+      {
+        "label": "T3 end",
+        "attackTurn": 4,
+        "concert": false,
+        "fdp": 11536806,
+        "damage": 9380906,
+        "highlight": 38,
+        "live": 16370000
+      },
+      {
+        "label": "T4 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 22835277,
+        "damage": 14949361,
+        "highlight": 100,
+        "live": 36400000
+      },
+      {
+        "label": "T5 end",
+        "attackTurn": 5,
+        "concert": true,
+        "fdp": 59730505,
+        "damage": 30889322,
+        "highlight": 42,
+        "live": 153000000
+      },
+      {
+        "label": "T6 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 164833249,
+        "damage": 80396437,
+        "highlight": 76,
+        "live": 546000000
+      },
+      {
+        "label": "T7 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 177299519,
+        "damage": 86584636,
+        "highlight": 38,
+        "live": 606000000
+      },
+      {
+        "label": "T8 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 194016466,
+        "damage": 95128541,
+        "highlight": 100,
+        "live": null
+      }
+    ],
+    "forcedResources": [
+      {
+        "type": "highlight_gauge",
+        "actor": "lufel-recent-marian-beachflower",
+        "prior": 76,
+        "attackTurn": 2,
+        "concert": false
+      }
+    ],
+    "damageByActor": {
+      "j-c": 1937058,
+      "wonder": 203811,
+      "marian-beachflower": 51772,
+      "bui-cosmic": 60212362
+    },
+    "yui": {
+      "automaticVegOut": 9,
+      "manualVegOut": 8,
+      "havoc": 34
+    }
+  },
+  "kotoneBase": {
+    "plan": [
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "G",
+        "P",
+        "B",
+        "G",
+        "B",
+        "B",
+        "B"
+      ],
+      [
+        "C"
+      ],
+      [
+        "C"
+      ],
+      [
+        "L"
+      ]
+    ],
+    "fdp": 504905004,
+    "score": 4040240033,
+    "rows": [
+      {
+        "label": "T1 end",
+        "attackTurn": 2,
+        "concert": false,
+        "fdp": 1058467,
+        "damage": 2260635,
+        "highlight": 76
+      },
+      {
+        "label": "T2 end",
+        "attackTurn": 3,
+        "concert": false,
+        "fdp": 6205124,
+        "damage": 7486390,
+        "highlight": 100
+      },
+      {
+        "label": "T3 end",
+        "attackTurn": 4,
+        "concert": false,
+        "fdp": 19387991,
+        "damage": 14992545,
+        "highlight": 21
+      },
+      {
+        "label": "T4 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 34497266,
+        "damage": 22318301,
+        "highlight": 93
+      },
+      {
+        "label": "T5 end",
+        "attackTurn": 5,
+        "concert": true,
+        "fdp": 166436340,
+        "damage": 90427549,
+        "highlight": 42
+      },
+      {
+        "label": "T6 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 437751884,
+        "damage": 220094805,
+        "highlight": 100
+      },
+      {
+        "label": "T7 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 470833325,
+        "damage": 234127210,
+        "highlight": 38
+      },
+      {
+        "label": "T8 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 504905004,
+        "damage": 251577369,
+        "highlight": 100
+      }
+    ],
+    "forcedResources": [
+      {
+        "type": "highlight_gauge",
+        "actor": "lufel-recent-j-c",
+        "prior": 93,
+        "attackTurn": 5,
+        "concert": false
+      }
+    ],
+    "damageByActor": {
+      "j-c": 1866300,
+      "wonder": 261422,
+      "kotone-shiomi": 13785695,
+      "bui-cosmic": 136775700
+    },
+    "yui": {
+      "automaticVegOut": 9,
+      "manualVegOut": 8,
+      "havoc": 35
+    }
+  },
+  "kotoneSearched": {
+    "plan": [
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "L"
+      ],
+      [
+        "G",
+        "L",
+        "L",
+        "G",
+        "P",
+        "B",
+        "B"
+      ],
+      [
+        "C"
+      ],
+      [
+        "C"
+      ],
+      [
+        "B"
+      ]
+    ],
+    "fdp": 520828222,
+    "score": 4167625779,
+    "rows": [
+      {
+        "label": "T1 end",
+        "attackTurn": 2,
+        "concert": false,
+        "fdp": 1058467,
+        "damage": 2260635,
+        "highlight": 76
+      },
+      {
+        "label": "T2 end",
+        "attackTurn": 3,
+        "concert": false,
+        "fdp": 6205124,
+        "damage": 7486390,
+        "highlight": 100
+      },
+      {
+        "label": "T3 end",
+        "attackTurn": 4,
+        "concert": false,
+        "fdp": 19387991,
+        "damage": 14992545,
+        "highlight": 21
+      },
+      {
+        "label": "T4 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 34497266,
+        "damage": 22318301,
+        "highlight": 93
+      },
+      {
+        "label": "T5 end",
+        "attackTurn": 5,
+        "concert": true,
+        "fdp": 164338924,
+        "damage": 87752817,
+        "highlight": 42
+      },
+      {
+        "label": "T6 end",
+        "attackTurn": 5,
+        "concert": false,
+        "fdp": 445043433,
+        "damage": 229800991,
+        "highlight": 100
+      },
+      {
+        "label": "T7 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 481147827,
+        "damage": 248430269,
+        "highlight": 38
+      },
+      {
+        "label": "T8 end",
+        "attackTurn": 6,
+        "concert": false,
+        "fdp": 520828222,
+        "damage": 265131223,
+        "highlight": 100
+      }
+    ],
+    "forcedResources": [
+      {
+        "type": "highlight_gauge",
+        "actor": "lufel-recent-j-c",
+        "prior": 93,
+        "attackTurn": 5,
+        "concert": false
+      }
+    ],
+    "damageByActor": {
+      "j-c": 1867101,
+      "wonder": 243164,
+      "kotone-shiomi": 6986265,
+      "bui-cosmic": 152293348
+    },
+    "yui": {
+      "automaticVegOut": 9,
+      "manualVegOut": 8,
+      "havoc": 35
+    }
+  },
+  "limitations": [
+    "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
+    "J&C A6 grants Wonder +1 Skill Level and +1 Thief Tactics Level. Per-level coefficients are unavailable, so no numeric multiplier is applied.",
+    "Yatsufusa Berserk is shown only as a set amount. Its value is unknown, so stacks are tracked without changing enemy damage.",
+    "Yatsufusa: the +4% ally damage stack is not applied until its trigger (per hit or per action) and stack clock are confirmed.",
+    "Yatsufusa: All-Out Attack damage +15% applies to Cosmic Yui's Veg-Out; the shared All-Out Attack after every foe is Downed is not yet modeled.",
+    "Bishamonten passive Tower of Purification III: Battle-start, turn-timed, and duration clauses are reference-only.",
+    "Bishamonten passive Tower of Purification III: Conditional and triggered clauses are reference-only.",
+    "Bishamonten passive Tower of Purification III: Stack generation and consumption clauses are reference-only.",
+    "j-c: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "j-c: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "j-c: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "j-c: Signature Two Masks Desire increase and facade-gain party buffs require explicit gain callbacks; four-star post-Two-Masks Attack duration deferred.",
+    "j-c: Optional Attack buff does not recalculate base-stat Desire. If weapon passive belongs in the source's base stats, provide already-equipped totals before constructor computes Desire.",
+    "j-c: Rebel Surveillance stat list/sampling and A6 off-field Wonder ownership remain tied to existing user evidence.",
+    "wonder: Wonder has no replacement character kit or invented awareness bonuses.",
+    "wonder: Weapon panel stats are not silently added to equipped totals; unresolved trigger rules remain evidence-gated.",
+    "marian-beachflower: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "marian-beachflower: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "marian-beachflower: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "marian-beachflower: Signature medicine-target critical damage needs an afterMedicine hook; Summer Garden main-target selection remains unresolved.",
+    "marian-beachflower: Four-star max HP changes require stat construction integration; four-star on-ally-skill critical multiplier has unspecified duration/stacking.",
+    "marian-beachflower: Medicine observed 1.58 multiplier is unresolved. Weapon enablement is not a retrospective fit.",
+    "miku: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "miku: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "miku: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "miku: Navigator base Attack and weapon Attack require a real navigator stat/scaling pipeline; current song methods use capped constants.",
+    "miku: Weapon track gains, three-turn critical stacks, four-star Attack and Concert Skill Amplification require actual track-acquisition and concert-enter hooks.",
+    "miku: Current r0 says repeat a track's effect; skill text says only when absent. Source contradiction must not silently replace observed behavior.",
+    "miku: Awareness-dependent Concert final amplification versus ordinary damage and sync_description variants require review; sync text is not executed.",
+    "Cosmic Yui uses current Lufel source data, not a calibrated live-battle replay. The unspecified extra party All-Out Attack coefficient and Brainwash chance/accuracy interaction are excluded.",
+    "Cosmic Yui timing model: capped summons are skipped in source order; A1 energy resolves after all battle-start passives; color changes precede end-action Harvest Havoc. A2 seed potato is additional to the regular four-potato cap. These boundary rules need live confirmation.",
+    "Lower-awareness color selection is modeled as one free choice before the normal action. Energy is checked at cast boundaries; Asparagus self-healing is capped per cast. Four-star conditional Attack lasts two owner turns after Resonance. These details need live confirmation.",
+    "Automatic Veg-Out divides each attack coefficient across the targets present when it starts; defense and affinity then apply per target. Exact split/critical behavior and Highlight-specific Havoc rules beyond one same-target strike need live confirmation.",
+    "Dionysus passive Feast of the Frenzied III: Battle-start, turn-timed, and duration clauses are reference-only.",
+    "Dionysus passive Feast of the Frenzied III: Conditional and triggered clauses are reference-only.",
+    "Shared Highlight automatic follow-up contribution is unconfirmed. No unverified additional charge is added.",
+    "Nian passive Year-End Harbinger III: Battle-start, turn-timed, and duration clauses are reference-only.",
+    "Nian passive Year-End Harbinger III: Conditional and triggered clauses are reference-only.",
+    "J&C Two Masks as One is not resolved: missing Skill Amplification scope beyond direct skill damage. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Down Point duration and expiry. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Blessing duration and expiry. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented."
+  ],
+  "seeds": 8,
+  "liveTotalScore": 5300000000
+}
