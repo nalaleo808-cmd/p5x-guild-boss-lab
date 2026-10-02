@@ -6,9 +6,9 @@
 // (Mischief & Innocence + Service & Admonition = Medic), Marian Beachflower,
 // Cosmic Yui, navigator MIKU. The posted player's stats are not known, so the
 // user's own builds stand in where the simulator has them (J&C, Wonder, Marian
-// and Kotone from the Surt and DOD replays). Cosmic Yui has no user build:
-// she uses the user's Miyu panel numbers (same A6 R6 signature investment),
-// minus Mermaid Dreamer's +69% crit damage; her own weapon is added by the engine.
+// and Kotone from the Surt and DOD replays). Cosmic Yui uses the user's own
+// pre-battle Character Details (2026-10-02) plus MIKU's party share; her
+// awareness is not on those screens, so A6 follows the posted route.
 //
 // Every step the simulator would not allow on its own (Highlight gauge or
 // cooldown, navigator cooldown, SP) is still played and listed under
@@ -17,7 +17,7 @@
 // --search tries every Go for Broke placement (about 7 minutes); search
 // plans may not need any forced step for Kotone or more forced steps overall.
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { HachimanRecordedEngine, character, combatSkill, dionysusDefinition, navigatorDefinition } from '../src/hachiman-recorded-team.js';
+import { HachimanRecordedEngine, character, combatSkill, dionysusDefinition, navigatorDefinition, withNavigatorShare } from '../src/hachiman-recorded-team.js';
 import { CURRENT_MECHANICS_PROFILE } from '../src/engine.js';
 import { buildPersonaLoadoutCatalog } from '../src/persona-loadout.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
@@ -68,8 +68,13 @@ const stats = {
   [jc.id]: { attack: 3123, defense: 2784, maxHp: 13100, maxSp: 100, speed: 113.4, critRate: 48.5, critMult: 223.8, damageBonus: 52.5, spRecovery: 5 },
   wonder: { attack: 2846, defense: 2910, maxHp: 13823, maxSp: 100, speed: 111.8, critRate: 47.1, critMult: 241.065, pierceRate: 3.1 },
   [marian.id]: { attack: 2572, defense: 2403, maxHp: 17853, maxSp: 100, speed: 106.8, critRate: 20.2, critMult: 265.665, pierceRate: 6.6 },
-  [yui.id]: { attack: 3121, defense: 2163, maxHp: 11142, maxSp: 100, speed: 98.8, critRate: 35.3, critMult: 304.465, pierceRate: 34.6 }
 };
+// User's Cosmic Yui, Character Details before battle (screenshots 2026-10-02):
+// Starlight Decimators Lv80 R6 (crit rate +34.3% is in the totals). Pre-battle
+// totals carry no navigator share, so MIKU's share is added like the
+// recorded-team units.
+const yuiLoadout = withNavigatorShare(yui, { baseStats: { attack: 5425, defense: 1561, maxHp: 8102, maxSp: 100, speed: 99.6,
+  critRate: 51.2, critMult: 239.3, spRecovery: 27.5, pierceRate: 17.7, damageBonus: 27.4 } });
 const strife = withRevelationSetOverlay(lufelCatalog.revelationSets).find(set => set.name === 'Strife');
 
 function makeEngine(seed, variant) {
@@ -79,7 +84,8 @@ function makeEngine(seed, variant) {
   }]));
   loadouts[jc.id].jcDesireLevel = 120;
   loadouts[jc.id].characterResearch = { weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: false };
-  loadouts[yui.id].cosmicYui = { awareness: 6, sourceTier: 3, weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: false };
+  loadouts[yui.id] = { ...structuredClone(yuiLoadout), statsMode: 'equipped', panelIncludesShareAndSetEffects: true,
+    cosmicYui: { awareness: 6, sourceTier: 3, weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true } };
   loadouts.wonder.weaponId = 'ex-machina';
   if (third === marian.id) Object.assign(loadouts[marian.id], { revelationMain: 'Trust', revelationSet: 'Prosperity' });
   // Kotone: the user's A6 Vetri Vel Muruga +6 totals (DOD replay, 2026-09-26).
@@ -247,6 +253,7 @@ function checkpoint(e, label, rows) {
   rows.push({ label, attackTurn: e.state.attackTurn, concert: e.isVirtualConcertActive(),
     fdp: e.state.scoreBreakdown.foeDefensePoints, damage: e.state.totalDamage, highlight: e.state.sharedCombat.highlight,
     ...(debug ? {
+      yuiStats: { attack: unit.attack, crit: unit.crit, critMult: unit.critMult, pierce: unit.pierce, damageBonus: unit.damageBonus, speed: unit.speed },
       yuiBuffs: unit.buffs.map(buff => `${buff.id}:${buff.stat}:${Math.round(Number(buff.value) * 1000) / 1000}:${buff.duration}`),
       hits: e.state.log.slice(since).filter(event => event.type === 'damage').sort((a, b) => b.amount - a.amount).slice(0, 6)
         .map(event => `${event.actorId?.replace('lufel-recent-', '')}:${event.sourceType}:${Math.round(event.amount).toLocaleString()}`),
@@ -331,7 +338,8 @@ report.kotoneBase = { plan: BASE_KOTONE, fdp: kotoneBase.fdp, score: kotoneBase.
   rows: kotoneBase.runs[0].rows.map((row, index) => ({ ...row, fdp: average(kotoneBase.runs, run => run.rows[index].fdp) })),
   forcedResources: kotoneBase.runs[0].forcedResources, damageByActor: kotoneBase.runs[0].damageByActor, yui: kotoneBase.runs[0].yui };
 
-// Best legal plan from --search (2026-10-02, 2 seeds): Lyre's Melody on Yui
+// Best legal plan from --search (2026-10-02, re-checked on 8 seeds with the
+// user's Cosmic Yui): Lyre's Melody on Yui
 // T1-T4; Concert round 1 Go for Broke, Lyre x2, chained Go for Broke, Lunar
 // Phaseshift, Burning Moon's Cry x2; Cold T6-T7; Burning Moon's Cry on T8.
 const SEARCHED_KOTONE = [['L'], ['L'], ['L'], ['L'], ['G', 'L', 'L', 'G', 'P', 'B', 'B'], ['C'], ['C'], ['B']];
@@ -384,7 +392,14 @@ if (process.argv.includes('--search')) {
       }
     }
   }
-  const confirmed = best ? evaluate('kotone', best.plan, seeds) : null;
+  // Two search seeds are noisy: re-check the leaders and the saved plan on
+  // every seed and keep the highest average.
+  const finalists = [...results.slice(0, 10), ...(best ? [best] : []), { plan: SEARCHED_KOTONE }];
+  let confirmed = null;
+  for (const candidate of finalists) {
+    const result = evaluate('kotone', candidate.plan, seeds);
+    if (legal(result) && (!confirmed || result.fdp > confirmed.fdp)) { confirmed = result; best = { ...candidate, fdp: result.fdp }; }
+  }
   report.kotoneSearch = { searched: results.length, top: results.slice(0, arg('top', 10)),
     best: confirmed && { plan: best.plan, fdp: confirmed.fdp, score: confirmed.score,
       rows: confirmed.runs[0].rows.map((row, index) => ({ ...row, fdp: average(confirmed.runs, run => run.rows[index].fdp) })),

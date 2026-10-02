@@ -121,6 +121,17 @@ export const wonderStatsPreset = Object.freeze({
   baseStats: Object.freeze({ attack: 3913, defense: 2176, maxHp: 10234, maxSp: 100, speed: 109, critRate: 25, critMult: 190, spRecovery: 0, technicalPrecision: 0, pierceRate: 0, downPoints: 0, ailmentAccuracy: 80, ailmentResistance: 40, damageBonus: 8.7, damageReduction: 0 })
 });
 
+// Character Details before battle (user screenshots 2026-10-02). Starlight
+// Decimators Lv80 R6: its crit rate +34.3% is in the totals; the summon
+// Attack stacks and Veg-Out crit damage are battle effects the engine adds.
+// Awareness is not shown on these screens, so it is left to the build.
+export const cosmicYuiStatsPreset = Object.freeze({
+  id: 'cosmic-yui-starlight-decimators-6-character-details-2026-10-02',
+  characterId: 'lufel-recent-bui-cosmic',
+  cosmicYui: Object.freeze({ sourceTier: 3, weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true }),
+  baseStats: Object.freeze({ attack: 5425, defense: 1561, maxHp: 8102, maxSp: 100, speed: 99.6, critRate: 51.2, critMult: 239.3, spRecovery: 27.5, technicalPrecision: 0, pierceRate: 17.7, downPoints: 0, ailmentAccuracy: 0, ailmentResistance: 0, damageBonus: 27.4, damageReduction: 0 })
+});
+
 // Thieves Den Qualia Level party passives for the user's account (in-game
 // "takes effect in battle" list, 2026-09-27). Mode-specific entries (Realm
 // of Repression, Sea of Souls, Nightmare Catcher gates) do not apply here.
@@ -133,7 +144,7 @@ export const qualiaPassivePreset = Object.freeze({
   personaDamage: 0.038, protagonistDamage: 0.038
 });
 
-export const liveStatsPresets = Object.freeze([kotoneStatsPreset, wavecatcherStatsPreset, mikuStatsPreset, jcStatsPreset, wonderStatsPreset]);
+export const liveStatsPresets = Object.freeze([kotoneStatsPreset, wavecatcherStatsPreset, mikuStatsPreset, jcStatsPreset, wonderStatsPreset, cosmicYuiStatsPreset]);
 
 // Fields a live preset sets the first time it is applied. Returns null when
 // the loadout already carries this preset.
@@ -149,7 +160,8 @@ export function liveStatsPresetFields(characterId, loadout = {}) {
     ...(preset.extraFields || {}),
     ...(preset.elementBonus ? { elementBonus: { ...preset.elementBonus } } : {}),
     ...(preset.wonderWeapon ? { ...preset.wonderWeapon, weaponPresetId: wonderWeaponPreset.id } : {}),
-    ...(preset.kotone ? { ...preset.kotone, equippedTotalsFor: `${preset.kotone.weaponId}+${preset.kotone.enhancement}` } : {})
+    ...(preset.kotone ? { ...preset.kotone, equippedTotalsFor: `${preset.kotone.weaponId}+${preset.kotone.enhancement}` } : {}),
+    ...(preset.cosmicYui ? { cosmicYui: { ...(loadout.cosmicYui || {}), ...preset.cosmicYui } } : {})
   };
 }
 

@@ -54,3 +54,16 @@ test('Marian and Wonder presets apply once while characters without presets keep
   });
   assert.equal(applyRecordedDefaultStats('wonder', wonder), wonder);
 });
+
+test('Cosmic Yui preset carries the pre-battle Character Details and Starlight Decimators R6, keeping her saved awareness', () => {
+  const saved = { awareness: 4, cosmicYui: { awareness: 4, sourceTier: 2, weapon: 'none', refinement: 0, staticWeaponStatsIncluded: false } };
+  const loadout = applyRecordedDefaultStats('lufel-recent-bui-cosmic', saved);
+  assert.equal(loadout.statsMode, 'equipped');
+  assert.equal(loadout.awareness, 4);
+  assert.deepEqual(loadout.cosmicYui, { awareness: 4, sourceTier: 3, weapon: 'signature', refinement: 6, staticWeaponStatsIncluded: true });
+  assert.equal(loadout.baseStats.attack, 5425);
+  assert.equal(loadout.baseStats.critRate, 51.2);
+  assert.equal(loadout.baseStats.critMult, 239.3);
+  assert.equal(loadout.baseStats.damageBonus, 27.4);
+  assert.equal(applyRecordedDefaultStats('lufel-recent-bui-cosmic', loadout), loadout);
+});

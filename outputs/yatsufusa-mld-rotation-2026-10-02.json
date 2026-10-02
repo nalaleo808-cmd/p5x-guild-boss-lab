@@ -1,14 +1,14 @@
 {
   "marian": {
-    "fdp": 194016466,
-    "score": 1553131731,
+    "fdp": 333403636,
+    "score": 2668229085,
     "rows": [
       {
         "label": "T1 end",
         "attackTurn": 2,
         "concert": false,
-        "fdp": 552001,
-        "damage": 1166910,
+        "fdp": 904869,
+        "damage": 1856865,
         "highlight": 76,
         "live": 605000
       },
@@ -16,8 +16,8 @@
         "label": "T2 end",
         "attackTurn": 3,
         "concert": false,
-        "fdp": 3088460,
-        "damage": 3787674,
+        "fdp": 5106352,
+        "damage": 6093514,
         "highlight": 72,
         "live": 5300000
       },
@@ -25,8 +25,8 @@
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 11536806,
-        "damage": 9380906,
+        "fdp": 19331200,
+        "damage": 15665571,
         "highlight": 38,
         "live": 16370000
       },
@@ -34,8 +34,8 @@
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 22835277,
-        "damage": 14949361,
+        "fdp": 36550935,
+        "damage": 25267878,
         "highlight": 100,
         "live": 36400000
       },
@@ -43,8 +43,8 @@
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 59730505,
-        "damage": 30889322,
+        "fdp": 101291483,
+        "damage": 53255883,
         "highlight": 42,
         "live": 153000000
       },
@@ -52,8 +52,8 @@
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 164833249,
-        "damage": 80396437,
+        "fdp": 285838748,
+        "damage": 140195234,
         "highlight": 76,
         "live": 546000000
       },
@@ -61,8 +61,8 @@
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 177299519,
-        "damage": 86584636,
+        "fdp": 305833210,
+        "damage": 150308845,
         "highlight": 38,
         "live": 606000000
       },
@@ -70,8 +70,8 @@
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 194016466,
-        "damage": 95128541,
+        "fdp": 333403636,
+        "damage": 164297485,
         "highlight": 100,
         "live": null
       }
@@ -89,7 +89,7 @@
       "j-c": 1937058,
       "wonder": 203811,
       "marian-beachflower": 51772,
-      "bui-cosmic": 60212362
+      "bui-cosmic": 104641166
     },
     "yui": {
       "automaticVegOut": 9,
@@ -130,71 +130,71 @@
         "L"
       ]
     ],
-    "fdp": 504905004,
-    "score": 4040240033,
+    "fdp": 709758518,
+    "score": 5679068142,
     "rows": [
       {
         "label": "T1 end",
         "attackTurn": 2,
         "concert": false,
-        "fdp": 1058467,
-        "damage": 2260635,
+        "fdp": 1555175,
+        "damage": 3515697,
         "highlight": 76
       },
       {
         "label": "T2 end",
         "attackTurn": 3,
         "concert": false,
-        "fdp": 6205124,
-        "damage": 7486390,
+        "fdp": 8534119,
+        "damage": 10747347,
         "highlight": 100
       },
       {
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 19387991,
-        "damage": 14992545,
+        "fdp": 26338822,
+        "damage": 18967349,
         "highlight": 21
       },
       {
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 34497266,
-        "damage": 22318301,
+        "fdp": 49035527,
+        "damage": 29822987,
         "highlight": 93
       },
       {
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 166436340,
-        "damage": 90427549,
+        "fdp": 228221889,
+        "damage": 131608617,
         "highlight": 42
       },
       {
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 437751884,
-        "damage": 220094805,
+        "fdp": 615708949,
+        "damage": 330787473,
         "highlight": 100
       },
       {
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 470833325,
-        "damage": 234127210,
+        "fdp": 660300471,
+        "damage": 350973738,
         "highlight": 38
       },
       {
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 504905004,
-        "damage": 251577369,
+        "fdp": 709758518,
+        "damage": 375817106,
         "highlight": 100
       }
     ],
@@ -211,7 +211,7 @@
       "j-c": 1866300,
       "wonder": 261422,
       "kotone-shiomi": 13785695,
-      "bui-cosmic": 136775700
+      "bui-cosmic": 209421446
     },
     "yui": {
       "automaticVegOut": 9,
@@ -252,71 +252,71 @@
         "B"
       ]
     ],
-    "fdp": 520828222,
-    "score": 4167625779,
+    "fdp": 725790195,
+    "score": 5807321560,
     "rows": [
       {
         "label": "T1 end",
         "attackTurn": 2,
         "concert": false,
-        "fdp": 1058467,
-        "damage": 2260635,
+        "fdp": 1555175,
+        "damage": 3515697,
         "highlight": 76
       },
       {
         "label": "T2 end",
         "attackTurn": 3,
         "concert": false,
-        "fdp": 6205124,
-        "damage": 7486390,
+        "fdp": 8534119,
+        "damage": 10747347,
         "highlight": 100
       },
       {
         "label": "T3 end",
         "attackTurn": 4,
         "concert": false,
-        "fdp": 19387991,
-        "damage": 14992545,
+        "fdp": 26338822,
+        "damage": 18967349,
         "highlight": 21
       },
       {
         "label": "T4 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 34497266,
-        "damage": 22318301,
+        "fdp": 49035527,
+        "damage": 29822987,
         "highlight": 93
       },
       {
         "label": "T5 end",
         "attackTurn": 5,
         "concert": true,
-        "fdp": 164338924,
-        "damage": 87752817,
+        "fdp": 222303871,
+        "damage": 109047680,
         "highlight": 42
       },
       {
         "label": "T6 end",
         "attackTurn": 5,
         "concert": false,
-        "fdp": 445043433,
-        "damage": 229800991,
+        "fdp": 620930411,
+        "damage": 309764319,
         "highlight": 100
       },
       {
         "label": "T7 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 481147827,
-        "damage": 248430269,
+        "fdp": 671767867,
+        "damage": 336454653,
         "highlight": 38
       },
       {
         "label": "T8 end",
         "attackTurn": 6,
         "concert": false,
-        "fdp": 520828222,
-        "damage": 265131223,
+        "fdp": 725790195,
+        "damage": 358817439,
         "highlight": 100
       }
     ],
@@ -333,12 +333,499 @@
       "j-c": 1867101,
       "wonder": 243164,
       "kotone-shiomi": 6986265,
-      "bui-cosmic": 152293348
+      "bui-cosmic": 209750243
     },
     "yui": {
       "automaticVegOut": 9,
       "manualVegOut": 8,
       "havoc": 35
+    }
+  },
+  "kotoneSearch": {
+    "searched": 4590,
+    "top": [
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "P",
+            "B",
+            "G",
+            "B",
+            "B",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 736786165,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "B",
+            "P",
+            "G",
+            "B",
+            "B",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 735112695,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "B",
+            "B",
+            "G",
+            "P",
+            "B",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 733517949,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "B",
+            "B",
+            "G",
+            "B",
+            "P",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 731941615,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "B",
+            "B",
+            "G",
+            "B",
+            "B",
+            "P"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 730348829,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "L",
+            "L",
+            "G",
+            "L",
+            "P",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 709343524,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "L",
+            "L",
+            "G",
+            "P",
+            "L",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 709343524,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "L",
+            "L",
+            "G",
+            "P",
+            "B",
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 709343524,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "L",
+            "L",
+            "G",
+            "P",
+            "B",
+            "P"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 709343524,
+        "forced": 1
+      },
+      {
+        "plan": [
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "G",
+            "L",
+            "L",
+            "G",
+            "P",
+            "P",
+            "B"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ],
+          [
+            "L"
+          ]
+        ],
+        "fdp": 709343524,
+        "forced": 1
+      }
+    ],
+    "best": {
+      "plan": [
+        [
+          "L"
+        ],
+        [
+          "L"
+        ],
+        [
+          "L"
+        ],
+        [
+          "L"
+        ],
+        [
+          "G",
+          "L",
+          "L",
+          "G",
+          "P",
+          "B",
+          "B"
+        ],
+        [
+          "C"
+        ],
+        [
+          "C"
+        ],
+        [
+          "B"
+        ]
+      ],
+      "fdp": 725790195,
+      "score": 5807321560,
+      "rows": [
+        {
+          "label": "T1 end",
+          "attackTurn": 2,
+          "concert": false,
+          "fdp": 1555175,
+          "damage": 3515697,
+          "highlight": 76
+        },
+        {
+          "label": "T2 end",
+          "attackTurn": 3,
+          "concert": false,
+          "fdp": 8534119,
+          "damage": 10747347,
+          "highlight": 100
+        },
+        {
+          "label": "T3 end",
+          "attackTurn": 4,
+          "concert": false,
+          "fdp": 26338822,
+          "damage": 18967349,
+          "highlight": 21
+        },
+        {
+          "label": "T4 end",
+          "attackTurn": 5,
+          "concert": false,
+          "fdp": 49035527,
+          "damage": 29822987,
+          "highlight": 93
+        },
+        {
+          "label": "T5 end",
+          "attackTurn": 5,
+          "concert": true,
+          "fdp": 222303871,
+          "damage": 109047680,
+          "highlight": 42
+        },
+        {
+          "label": "T6 end",
+          "attackTurn": 5,
+          "concert": false,
+          "fdp": 620930411,
+          "damage": 309764319,
+          "highlight": 100
+        },
+        {
+          "label": "T7 end",
+          "attackTurn": 6,
+          "concert": false,
+          "fdp": 671767867,
+          "damage": 336454653,
+          "highlight": 38
+        },
+        {
+          "label": "T8 end",
+          "attackTurn": 6,
+          "concert": false,
+          "fdp": 725790195,
+          "damage": 358817439,
+          "highlight": 100
+        }
+      ],
+      "forcedResources": [
+        {
+          "type": "highlight_gauge",
+          "actor": "lufel-recent-j-c",
+          "prior": 93,
+          "attackTurn": 5,
+          "concert": false
+        }
+      ],
+      "damageByActor": {
+        "j-c": 1867101,
+        "wonder": 243164,
+        "kotone-shiomi": 6986265,
+        "bui-cosmic": 209750243
+      },
+      "yui": {
+        "automaticVegOut": 9,
+        "manualVegOut": 8,
+        "havoc": 35
+      }
     }
   },
   "limitations": [
