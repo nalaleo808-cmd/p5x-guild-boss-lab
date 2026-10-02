@@ -343,20 +343,32 @@ export const bosses = [
     // Stage select screenshot, Nightmare (user, 2026-10-02): level 82, Diff. Bonus 8.
     difficultyBonus: 8, scoreMultiplier: 1, scoreAttack: true,
     scoreModel: 'multidimensional_dreamscape_observed',
+    // Stage select Special Effect tooltips, Nightmare (user screenshots 2026-10-02).
     specialEffects: [
       'At the end of each turn, foes gain 1 Berserk stack, up to 3. Berserk increases damage by a set amount that is not shown.',
+      'Allies\' All-Out Attack damage is increased by 15%.',
+      'Whenever an ally deals damage, that ally\'s damage is increased by 4% for 3 turns, stacking up to 10 times.',
+      'With a Guardian or Medic, foes deal 60% less final damage and take 20% more. Without one, foes deal 60% more final damage.',
       'Multidimensional Dreamscape: each turn, the boss\'s attacks grow stronger and you get more points.'
     ],
+    modeEffects: {
+      multidimensional: {
+        source: 'Stage select Special Effect tooltips, 2026-10-02',
+        sourceDamage: { all_out_attack: 0.15 }
+      }
+    },
     encounter: {
       kind: 'yatsufusa',
       berserkStacksPerTurn: 1, berserkStackCap: 3,
-      note: 'Berserk is tracked per Attack Turn end, capped at 3. Its damage amount is not shown, so it changes no damage. Three further stage Special Effects are not yet recorded.'
+      guardianMedicComposition: true,
+      allyDamageStack: { valuePerStack: 0.04, duration: 3, stackCap: 10, applied: false },
+      note: 'Berserk is tracked per Attack Turn end, capped at 3; its damage amount is not shown, so it changes no damage. All-Out Attack +15% is recorded, but All-Out Attack itself is not yet modeled. The +4% ally damage stack is recorded but not applied until its trigger and stack clock are confirmed.'
     },
     summons: [],
     encounterEvidence: {
       status: 'lufel_defense_calc_and_stage_screenshot_2026-10-02',
-      confirmed: ['base Defense 1280', 'boss Defense coefficient 305.9%', 'Nuclear weakness', 'no resistances', 'level 82', 'Diff. Bonus 8', 'Berserk stack gain and cap'],
-      unknown: ['three further stage Special Effects', 'Turns Survived Bonus', 'Berserk damage amount', 'summons', 'Down gauge size']
+      confirmed: ['base Defense 1280', 'boss Defense coefficient 305.9%', 'Nuclear weakness', 'no resistances', 'level 82', 'Diff. Bonus 8', 'Berserk stack gain and cap', 'All-Out Attack damage +15%', 'Guardian/Medic composition effect', '+4% ally damage stack value, duration and cap'],
+      unknown: ['ally damage stack trigger and clock', 'Turns Survived Bonus', 'Berserk damage amount', 'summons', 'Down gauge size']
     },
     phases: [{ threshold: 1, name: 'Yatsufusa · Score Phase', defense: 3915.52, baseDefense: 1280 }]
   }

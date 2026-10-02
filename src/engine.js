@@ -451,7 +451,8 @@ export class BattleEngine {
         ...(liveHachimanDreamscape ? ['Hachiman Daisoujou defeat stacks add 10% boss damage taken each, up to four stacks. Their duration is unknown, so the stored stack bonus remains active without an invented expiry rule.'] : []),
         ...(liveSurt ? ['Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.'] : []),
         ...(this.usesLiveMechanics() && bossData.id !== 'surt' && bossData.encounter?.berserkStacksPerTurn ? [`${bossData.name} Berserk is shown only as a set amount. Its value is unknown, so stacks are tracked without changing enemy damage.`] : []),
-        ...(this.usesLiveMechanics() && bossData.encounterEvidence?.unknown?.includes('three further stage Special Effects') ? [`${bossData.name}: three stage Special Effects are not yet recorded and are not applied.`] : []),
+        ...(this.usesLiveMechanics() && bossData.encounter?.allyDamageStack && !bossData.encounter.allyDamageStack.applied ? [`${bossData.name}: the +${Math.round(bossData.encounter.allyDamageStack.valuePerStack * 100)}% ally damage stack is not applied until its trigger (per hit or per action) and stack clock are confirmed.`] : []),
+        ...(this.usesLiveMechanics() && bossData.modeEffects?.[modeId]?.sourceDamage?.all_out_attack ? [`${bossData.name}: All-Out Attack damage +${Math.round(bossData.modeEffects[modeId].sourceDamage.all_out_attack * 100)}% is recorded, but All-Out Attack itself is not yet modeled.`] : []),
         ...(liveSurt && modeId !== 'multidimensional' ? ['Surt is selectable in NOD and DOD, but the supplied screenshots only confirm the MLD encounter. NOD and DOD HP, score, and ending rules remain provisional.'] : []),
         ...(party.some(unit => unit.slug && unit.id !== KOTONE_SHIOMI_ID && !characterModuleFor(unit)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
@@ -795,14 +796,22 @@ export class BattleEngine {
     return this.usesSourceScaleDamageFormula() && this.state.itemMaxUses > 0;
   }
 
+  // Stage effect shared by Hachiman, Surt and bosses that list it in their
+  // encounter data: with a Guardian or Medic, foes deal 60% less final damage
+  // and take 20% more; without one, foes deal 60% more.
+  usesGuardianMedicComposition() {
+    return this.isHachimanLive() || this.isSurtLive()
+      || (this.usesLiveMechanics() && this.state.boss.encounter?.guardianMedicComposition === true);
+  }
+
   hasDreamscapeGuardianOrMedic() {
-    return (this.isHachimanLive() || this.isSurtLive())
+    return this.usesGuardianMedicComposition()
       && (this.config.dreamscapeObservedCompositionEffect
         || this.state.party.some(unit => ['Guardian', 'Medic'].includes(unit.combatRole || unit.role)));
   }
 
   dreamscapeDamageTakenMultiplier(target) {
-    if (this.isHachimanLive() || this.isSurtLive()) return this.hasDreamscapeGuardianOrMedic() ? 1.2 : 1;
+    if (this.usesGuardianMedicComposition()) return this.hasDreamscapeGuardianOrMedic() ? 1.2 : 1;
     return Number(target.finalDamageTakenMultiplier ?? 1);
   }
 
@@ -812,6 +821,7 @@ export class BattleEngine {
       const compositionMultiplier = this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
       return compositionMultiplier * (1 + Number(enemy.ragnarokStacks || 0) * 0.05);
     }
+    if (this.usesGuardianMedicComposition()) return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
     return Number(enemy.finalDamageDealtMultiplier ?? 1);
   }
 
@@ -863,6 +873,7 @@ export class BattleEngine {
     }
     if (Number(effects.elementDamage?.[element])) bonuses.push([`stage_${element}_damage`, Number(effects.elementDamage[element])]);
     if (unit.role && Number(effects.roleDamage?.[unit.role])) bonuses.push([`stage_${unit.role.toLowerCase()}_damage`, Number(effects.roleDamage[unit.role])]);
+    if (sourceType && Number(effects.sourceDamage?.[sourceType])) bonuses.push([`stage_${sourceType}_damage`, Number(effects.sourceDamage[sourceType])]);
     return bonuses;
   }
 
