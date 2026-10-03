@@ -435,6 +435,27 @@ function createEnemyTimingEngine() {
   });
 }
 
+test('Vishnu guide gates spawn two clones at 90% and two more at 60%, with editable overrides', () => {
+  const definition = bosses.find(boss => boss.id === 'vishnu');
+  assert.deepEqual(definition.encounter.cloneThresholds.map(gate => gate.hpRatio), [0.9, 0.6]);
+  assert.deepEqual(definition.phases.map(phase => phase.threshold), [1, 0.9, 0.6]);
+  const engine = new BattleEngine({ bossId: 'vishnu' });
+  const boss = engine.state.boss;
+  const actor = engine.actor;
+  const hpAt = ratio => Math.round(boss.maxHp * ratio);
+  engine.processEncounterDamageTriggers(actor, boss, hpAt(.92), hpAt(.91));
+  assert.equal(engine.enemies.length, 1);
+  engine.processEncounterDamageTriggers(actor, boss, hpAt(.91), hpAt(.90));
+  assert.equal(engine.enemies.length, 3);
+  engine.processEncounterDamageTriggers(actor, boss, hpAt(.62), hpAt(.61));
+  assert.equal(engine.enemies.length, 3);
+  engine.processEncounterDamageTriggers(actor, boss, hpAt(.61), hpAt(.60));
+  assert.equal(engine.enemies.length, 5);
+  assert.deepEqual(engine.state.log.filter(event => event.type === 'encounter_threshold').map(event => event.hpRatio), [.9, .6]);
+  const custom = new BattleEngine({ bossId: 'vishnu', encounterThresholds: [.8, .4] });
+  assert.deepEqual(custom.state.boss.encounter.cloneThresholds.map(gate => gate.hpRatio), [.8, .4]);
+});
+
 function timingMark(engine, enemy, duration = 2) {
   return engine.applyEnemyStatus(enemy, 'debuffs', {
     id: 'timing_mark', name: 'TIMING MARK', value: 0.1, duration

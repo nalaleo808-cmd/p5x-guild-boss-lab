@@ -182,15 +182,16 @@ export const bosses = [
     ]
   },
   {
-    id: 'vishnu', name: 'Vishnu', subtitle: 'Video Timing Model · Provisional 75% / 50% Gates', level: 90,
+    id: 'vishnu', name: 'Vishnu', subtitle: 'Video Timing Model · 90% / 60% Gates', level: 90,
     artwork: '/assets/bosses/vishnu.png',
     maxHp: 450000, defense: 385, weakness: 'electric', resistance: 'none', turnLimit: 8,
     scoreMultiplier: 1, scoreAttack: true, defaultMode: 'nexus', downMax: 5, actionScale: 0.25,
     enemyTimingModel: 'anchored_enemy_turns',
     encounter: {
       kind: 'threshold_clones',
-      thresholdConfidence: 'provisional',
-      thresholdNote: 'The recording confirms 1, then 3, then 5 Vishnus. Exact HP gates and clone HP remain unverified; the gates are editable below.',
+      thresholdConfidence: 'guide_transcript',
+      thresholdNote: 'The 3.2 guild boss guide names 90% and 60% HP gates for 1 → 3 → 5 Vishnus. Clone HP and cross-version behavior remain unverified; the gates are editable below.',
+      thresholdSource: 'https://www.youtube.com/watch?v=hYrUPt6r0RU&t=541s',
       initialEnemyAnchor: 'before_last_party',
       cloneDefinitions: [
         { id: 'vishnu_copy_2', name: 'Vishnu II', maxHp: 999999999, position: 'far-left' },
@@ -199,14 +200,14 @@ export const bosses = [
         { id: 'vishnu_copy_5', name: 'Vishnu V', maxHp: 999999999, position: 'far-right' }
       ],
       cloneThresholds: [
-        { hpRatio: 0.75, totalEnemies: 3, cloneIds: ['vishnu_copy_2', 'vishnu_copy_3'] },
-        { hpRatio: 0.5, totalEnemies: 5, cloneIds: ['vishnu_copy_4', 'vishnu_copy_5'] }
+        { hpRatio: 0.9, totalEnemies: 3, cloneIds: ['vishnu_copy_2', 'vishnu_copy_3'] },
+        { hpRatio: 0.6, totalEnemies: 5, cloneIds: ['vishnu_copy_4', 'vishnu_copy_5'] }
       ]
     },
     phases: [
       { threshold: 1, name: 'One Vishnu', defense: 385 },
-      { threshold: 0.75, name: 'Three Vishnus', defense: 385 },
-      { threshold: 0.5, name: 'Five Vishnus', defense: 385 }
+      { threshold: 0.9, name: 'Three Vishnus', defense: 385 },
+      { threshold: 0.6, name: 'Five Vishnus', defense: 385 }
     ]
   },
   {

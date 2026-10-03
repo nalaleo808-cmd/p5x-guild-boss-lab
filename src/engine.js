@@ -3672,7 +3672,7 @@ export class BattleEngine {
           if (enemy) spawned.push(enemy);
         }
         this.state.boss.phaseIndex = Math.min(index + 1, this.state.boss.phases.length - 1);
-        this.emit('encounter_threshold', `${this.state.boss.name} crossed the provisional ${Math.round(hpRatio * 100)}% gate. ${this.enemies.length} targets are active.`, {
+        this.emit('encounter_threshold', `${this.state.boss.name} crossed the ${Math.round(hpRatio * 100)}% gate. ${this.enemies.length} targets are active.`, {
           thresholdId: id, hpRatio, activeEnemies: this.enemies.length, beforeActorId: anchorId,
           sourceType: 'encounter', tone: 'phase'
         });

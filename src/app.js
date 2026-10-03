@@ -676,7 +676,7 @@ const ui = {
   seed: hachimanRecordedFlagSaved() ? HACHIMAN_RECORDED_SEED : 808,
   hachimanRecordedPreset: hachimanRecordedFlagSaved(),
   hachimanRouteOutcome: null,
-  vishnuThresholds: [0.75, 0.5],
+  vishnuThresholds: bosses.find(boss => boss.id === 'vishnu').encounter.cloneThresholds.map(gate => gate.hpRatio),
   aiAssist: true,
   fullAuto: false,
   commandTab: 'moves',
@@ -875,7 +875,7 @@ function renderSetup() {
               <ol>${setupPhases.map(phase => `<li><i></i><span>${escapeHtml(phase.name)}</span><b>${Number.isFinite(phase.threshold) ? `${Math.round(phase.threshold * 100)}%` : escapeHtml(phase.thresholdLabel || 'SCRIPTED')}</b></li>`).join('')}</ol>
               ${boss.specialEffects?.length ? `<div class="boss-effect-list"><b>SPECIAL EFFECTS</b>${boss.specialEffects.map(effect => `<span>${escapeHtml(effect)}</span>`).join('')}</div>` : ''}
               ${boss.encounter?.thresholdNote ? `<p class="formula-note">${escapeHtml(boss.encounter.thresholdNote)}</p>` : ''}
-              ${boss.id === 'vishnu' ? `<div class="threshold-config" aria-label="Provisional Vishnu HP gates">
+              ${boss.id === 'vishnu' ? `<div class="threshold-config" aria-label="Vishnu HP gates">
                 <label><span>SPAWN TO 3</span><b><input type="number" min="1" max="99" value="${Math.round(ui.vishnuThresholds[0] * 100)}" data-vishnu-threshold="0">% HP</b></label>
                 <label><span>SPAWN TO 5</span><b><input type="number" min="1" max="99" value="${Math.round(ui.vishnuThresholds[1] * 100)}" data-vishnu-threshold="1">% HP</b></label>
               </div>` : ''}
@@ -2401,5 +2401,4 @@ function render() {
 }
 
 render();
-
 
