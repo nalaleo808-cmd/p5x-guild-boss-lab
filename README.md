@@ -1,5 +1,18 @@
 # P5X Guild Boss Lab - Showdown Battle Room
 
+## v2.4 — Yatsufusa, Kotone Concert rules, MLD scoring
+
+- **Yatsufusa** added as a Multidimensional Dreamscape boss: Lufel Defense row (base 1280, coefficient 305.9%), Nuclear weakness, level 82, difficulty bonus 8, Berserk stacks, the Guardian/Medic composition effect, and Cosmic Yui's Veg-Out takes the +15% All-Out Attack stage bonus. The +4% ally damage stack and Berserk's damage amount are shown as limitations, not guessed.
+- **One MLD result formula for every boss**: (Foe Defense Points + Turns Survived Bonus) x Difficulty Bonus, with the bonus derived when a future MLD boss only supplies its difficulty.
+- **Kotone**: Go for Broke can open a Concert turn and chain a second use on the last Fortune action (5 actions in one turn); Cold blocks and counts Concert turns; a Cold turn still fills the shared Highlight gauge.
+- **J&C True Desire** returns after 8 party actions once spent, Concert included.
+- **MIKU song picker**, Elec Break and Fire Break at 20 SP, Lufel 5.1.0 Awareness and weapon data (`npm run sync:lufel-awareness`).
+- **Presets**: your Cosmic Yui Character Details and Starlight Decimators R6.
+- **Persona skills on allies by attribute** (Bishamonten's Imperial Purge buffs Nuclear allies only).
+- **Replay tools**: `scripts/replay-yatsufusa-mld.mjs` replays a posted Yatsufusa route, compares Kotone in Marian's slot (`--search`) and ranks which buffs matter for Cosmic Yui (`--impact`).
+
+Known limits: 31 of 568 tests still fail. All 31 also failed in v2.3.0, which had 43; none are new (the recorded-route fingerprints need re-recording, plus crit-conversion edge cases). Simulated Yatsufusa Concert turns have not been checked against a live run and run below the posted route.
+
 ## v2.3 — Live stat sync
 
 Battle-start stats now follow in-game readings from a live Slaughter Drive Devourer of Dreams run.

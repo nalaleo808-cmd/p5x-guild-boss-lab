@@ -742,7 +742,7 @@ function header(active = ui.screen) {
       <span class="brand-copy"><b>GUILD BOSS</b><small>SIMULATOR LAB</small></span>
     </button>
     <nav aria-label="Primary">${navItems.map(([id, label]) => `<button data-nav="${id}" class="${active === id ? 'active' : ''}" ${id === 'battle' && !ui.engine ? 'disabled' : ''}>${label}</button>`).join('')}</nav>
-    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.3</b></div>
+    <div class="header-meta"><span class="live-dot"></span> LOCAL SIM <b>v2.4</b></div>
   </header>${startErrorBanner()}`;
 }
 
