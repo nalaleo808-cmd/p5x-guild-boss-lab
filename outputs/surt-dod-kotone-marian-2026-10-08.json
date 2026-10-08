@@ -47,8 +47,21 @@
     ],
     "B4": [
       "M:attack_tablet",
-      "G"
+      "S1"
     ]
+  },
+  "kotonePlan": {
+    "T7": "L",
+    "T8": "L",
+    "T9": "L",
+    "B1": [
+      "P",
+      "L",
+      "B",
+      "B",
+      "B"
+    ],
+    "B4": "P"
   },
   "seeds": 8,
   "rows": [
@@ -159,8 +172,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 2050760068,
-      "totalDamage": 171242134
+      "score": 2192966396,
+      "totalDamage": 183092661
     },
     {
       "label": "B2 end",
@@ -169,8 +182,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 10362603926,
-      "totalDamage": 863895789
+      "score": 11143020224,
+      "totalDamage": 928930480
     },
     {
       "label": "B3 end",
@@ -179,8 +192,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 11962189322,
-      "totalDamage": 997194572
+      "score": 12965754722,
+      "totalDamage": 1080825022
     },
     {
       "label": "B4 end",
@@ -189,8 +202,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 13297912244,
-      "totalDamage": 1108421482
+      "score": 14612048898,
+      "totalDamage": 1217932870
     }
   ],
   "forcedResources": [
@@ -221,10 +234,10 @@
     }
   ],
   "damageByActor": {
-    "marian-beachflower": 455776,
-    "wonder": 486932,
-    "kotone-shiomi": 19051647,
-    "puppet-wavecatcher": 664850178
+    "marian-beachflower": 777707,
+    "wonder": 594102,
+    "kotone-shiomi": 13829285,
+    "puppet-wavecatcher": 741389682
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
@@ -263,5 +276,5 @@
     "one_more is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented.",
     "all_out_attack is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 13297912244
+  "finalScore": 14612048898
 }

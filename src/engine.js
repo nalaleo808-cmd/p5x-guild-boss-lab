@@ -4337,12 +4337,16 @@ export class BattleEngine {
       effectiveValue: action.effectiveValue, effectiveDuration: action.effectiveDuration,
       magnitudeSource: 'Base tooltip plus sourced A1 and preceding Highlight bonus; observed 1.58 remains unresolved.'
     });
-    this.applyUnitBuff(target, medicineBuff, sourceType);
+    // Marian's own Flower Basket Pharmacy medicines are her casts, so Kotone's
+    // Lunar Phaseshift can copy them (user, 2026-10-08). Dream items are not.
+    const medicineCast = isLiveMarianMedicine && sourceType === 'medicine'
+      ? { casterId: actor.id, skillId: `medicine:${action.id}`, castId: `cast-${++this.state.supportRuntime.castSequence}` } : null;
+    this.applyUnitBuff(target, medicineBuff, sourceType, medicineCast);
     this.emit('buff', `${medicineBuff.name} applied to ${target.codename}.`, { targetId: target.id, status: { ...clone(medicineBuff), sourceType }, sourceType, tone: 'buff' });
     if (!isMarianMedicine) return { medicineBuff, healed: 0 };
     const critMult = this.marianScalingCriticalMultiplier(actor);
     const critDamage = Math.max(0, (critMult - 1) / 6);
-    if (critDamage > 0) this.applyUnitBuff(target, { id: 'medicine_crit_damage', name: 'MEDICINE CRIT DMG', stat: 'critDamage', value: critDamage, duration: 1 }, sourceType);
+    if (critDamage > 0) this.applyUnitBuff(target, { id: 'medicine_crit_damage', name: 'MEDICINE CRIT DMG', stat: 'critDamage', value: critDamage, duration: 1 }, sourceType, medicineCast);
     if (actor.awareness >= 6) this.applyUnitBuff(target, { id: 'marian_a6_refresh', name: 'SUMMERTIME REFRESH', stat: 'finalDamage', value: 0.15, duration: 1 }, 'awareness');
     const healed = Math.min(Math.round(actor.maxHp * 0.08), target.maxHp - target.hp);
     target.hp += healed;

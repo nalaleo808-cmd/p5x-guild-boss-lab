@@ -80,10 +80,10 @@ const stats = {
   // Marian, Trust + Prosperity, from the live-calibrated Surt MLD replay (2026-09-20).
   [marian.id]: { attack: 2572, defense: 2403, maxHp: 17853, maxSp: 100, speed: 106.8, critRate: 20.2, critMult: 265.665, pierceRate: 6.6 }
 };
-// --team=marian puts Marian in J&C's slot; --wonder-buffs=miyu aims Wonder's
-// ally buffs at Miyu instead of J&C (Marian runs always buff Miyu).
+// --team=marian puts Marian in J&C's slot. Wonder's ally buffs go to Miyu by
+// default (1.5b more than aiming them at J&C); --wonder-buffs=twin restores that.
 let TEAM = process.argv.find(v => v.startsWith('--team='))?.split('=')[1] || 'jc';
-let WONDER_BUFFS = process.argv.find(v => v.startsWith('--wonder-buffs='))?.split('=')[1] || 'twin';
+let WONDER_BUFFS = process.argv.find(v => v.startsWith('--wonder-buffs='))?.split('=')[1] || 'miyu';
 const strife = withRevelationSetOverlay(lufelCatalog.revelationSets).find(set => set.name === 'Strife');
 
 function makeEngine(seed) {
@@ -246,11 +246,22 @@ function checkpoint(e, label, rows) {
 // 'S2' Summer Garden, 'S3' Gentle Sea Breeze on Miyu, 'HL' her Highlight on
 // Miyu, 'M:<id>' a Flower Basket Pharmacy medicine on Miyu. Highlights and
 // medicines must be legal on their own; a plan that needs more is rejected.
-// Best legal plan from --search (2026-10-08, 4 seeds, wider medicine set).
 let MARIAN_PLAN = {
   T1: ['S1'], T2: ['S1'], T3: ['S1'], T4: ['S2'], T5: ['S2'], T6: ['S2'], T7: ['G'], T8: ['HL', 'S3'],
-  T9: ['M:attack_tablet', 'S2'], B1: ['M:reso_up', 'S3'], B2: ['HL', 'M:fighter_salve', 'S1'], B3: ['S2'], B4: ['M:attack_tablet', 'G']
+  T9: ['M:attack_tablet', 'S2'], B1: ['M:reso_up', 'S3'], B2: ['HL', 'M:fighter_salve', 'S1'], B3: ['S2'], B4: ['M:attack_tablet', 'S1']
 };
+// Kotone's choices: 'L' Lyre's Melody on Miyu, 'P' Lunar Phaseshift naming
+// J&C or Marian as the buff caster (copies their buffs on Miyu), 'B' Burning
+// Moon's Cry. B1 lists her five Fortune actions around the chained Go for Broke.
+// Best plans from --search (2026-10-08, 4 search seeds, Kotone copying Marian's medicines).
+let KOTONE_PLAN = TEAM === 'marian'
+  ? { T7: 'L', T8: 'L', T9: 'L', B1: ['P', 'L', 'B', 'B', 'B'], B4: 'P' }
+  : { T7: 'P', T8: 'L', T9: 'L', B1: ['P', 'L', 'B', 'B', 'B'], B4: 'P' };
+function kotoneMove(e, code) {
+  if (code === 'L') return kotone(e, { name: "Lyre's Melody" }, 'miyu');
+  if (code === 'P') return kotone(e, { name: 'Lunar Phaseshift' }, 'twin');
+  return kotone(e, { name: "Burning Moon's Cry" });
+}
 function marianTurn(e, moves) {
   expectActor(e, marian.id);
   for (const code of moves) {
@@ -273,7 +284,7 @@ function marianTurn(e, moves) {
   }
 }
 
-function play(seed, marianPlan = MARIAN_PLAN) {
+function play(seed, marianPlan = MARIAN_PLAN, kotonePlan = KOTONE_PLAN) {
   const e = makeEngine(seed);
   // J&C's slot: her posted moves, or Marian's plan for that turn.
   const slot = (key, jcMoves) => TEAM === 'jc' ? jcMoves() : marianTurn(e, marianPlan[key]);
@@ -301,23 +312,23 @@ function play(seed, marianPlan = MARIAN_PLAN) {
   checkpoint(e, 'T6 end', rows);
   // T7
   miku(e, 'H1'); slot('T7', () => act(e, J, { slot: 'S1' })); wonder(e, 'Dionysus', 'Universal Theoria', 'buff'); if (TEAM === 'jc') highlight(e, J, 'boss', 'absurdity');
-  kotone(e, { name: "Lyre's Melody" }, 'miyu'); paddle(e); checkpoint(e, 'T7 end', rows);
+  kotoneMove(e, kotonePlan.T7); paddle(e); checkpoint(e, 'T7 end', rows);
   // T8
-  miku(e, 'S2'); slot('T8', () => act(e, J, { slot: 'S2' })); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth'); kotone(e, { name: "Lyre's Melody" }, 'miyu');
+  miku(e, 'S2'); slot('T8', () => act(e, J, { slot: 'S2' })); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth'); kotoneMove(e, kotonePlan.T8);
   paddle(e); act(e, M, { slot: 'S1' }); checkpoint(e, 'T8 end', rows);
   // T9
   miku(e, 'F2'); slot('T9', () => { highlight(e, J, 'boss', 'mischief'); trueDesire(e); act(e, J, { slot: 'S1' }); });
-  wonder(e, 'Dionysus', 'Cohesion', 'buff'); kotone(e, { name: "Lyre's Melody" }, 'miyu');
+  wonder(e, 'Dionysus', 'Cohesion', 'buff'); kotoneMove(e, kotonePlan.T9);
   paddle(e);
   // HP lock stays on for all of T9 and is switched off at the end of the turn.
   forced(e, { type: 'hp_lock_off' }); e.state.boss.lifeSustainment = false;
   checkpoint(e, 'T9 end (lock off)', rows);
   // B1
   miku(e, 'S3'); slot('B1', () => act(e, J, { slot: 'S2' }, 'minion')); highlight(e, 'wonder'); wonder(e, 'Yurlungur', 'Matarukaja', 'party');
-  goForBroke(e); kotone(e, { name: 'Lunar Phaseshift' }, 'twin'); kotone(e, { name: "Burning Moon's Cry" });
+  goForBroke(e); kotoneMove(e, kotonePlan.B1[0]); kotoneMove(e, kotonePlan.B1[1]);
   persona(e, 'Yurlungur'); highlight(e, 'wonder');
   goForBroke(e);
-  for (let i = 0; i < 3 && e.actor?.id === KOTONE; i++) kotone(e, { name: "Burning Moon's Cry" });
+  for (let i = 0; i < 3 && e.actor?.id === KOTONE; i++) kotoneMove(e, kotonePlan.B1[2 + i]);
   // Miyu's B1 Highlight is the automatic linked Highlight that fires when
   // Kotone's Go for Broke ends (user, 2026-10-01); the engine already casts it,
   // so it is not pressed here and spends no gauge or cooldown.
@@ -332,7 +343,7 @@ function play(seed, marianPlan = MARIAN_PLAN) {
   // B4 (only if the simulated battle is still running)
   if (e.state.phase !== 'battle') { forced(e, { type: 'battle_ended_before', step: 'B4', reason: e.state.result?.reason || e.state.phase }); checkpoint(e, 'B4 end', rows); return finish(e, rows); }
   miku(e, 'F1'); slot('B4', () => { highlight(e, J, 'boss', 'mischief'); act(e, J, { slot: 'S1' }, 'minion'); }); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth');
-  kotone(e, { name: "Lyre's Melody" }, 'miyu'); act(e, M, { slot: 'S2' }); checkpoint(e, 'B4 end', rows);
+  kotoneMove(e, kotonePlan.B4); act(e, M, { slot: 'S2' }); checkpoint(e, 'B4 end', rows);
   return finish(e, rows);
 }
 
@@ -347,36 +358,43 @@ const seeds = Array.from({ length: arg('seeds', 24) }, (_, i) => i + 1);
 // play without errors and need no more forced steps than the posted J&C route
 // (4: two Takemedics, the Stamina Kit and switching the HP lock off).
 if (process.argv.includes('--search')) {
-  TEAM = 'marian';
   const searchSeeds = seeds.slice(0, arg('search-seeds', 2));
   const forcedCap = 4;
-  const evaluate = plan => {
+  const evaluate = (marianPlan, kotonePlan) => {
     try {
-      const results = searchSeeds.map(seed => play(seed, plan));
+      const results = searchSeeds.map(seed => play(seed, marianPlan, kotonePlan));
       if (results.some(run => run.forcedResources.length > forcedCap)) return null;
       return results.reduce((sum, run) => sum + run.finalScore, 0) / results.length;
     } catch { return null; }
   };
-  const keys = Object.keys(MARIAN_PLAN);
   const skills = ['G', 'S1', 'S2', 'S3'];
-  const options = key => key.startsWith('T') && Number(key.slice(1)) <= 4 ? skills.map(code => [code])
+  const marianOptions = key => key.startsWith('T') && Number(key.slice(1)) <= 4 ? skills.map(code => [code])
     : ['', 'HL'].flatMap(hl => ['', 'M:attack_tablet', 'M:fighter_salve', 'M:reso_up', 'M:highlight_up', 'M:one_more_up'].flatMap(med => skills.map(code => [hl, med, code].filter(Boolean))));
-  // Start from guarding everywhere, then improve one turn at a time.
-  let best = Object.fromEntries(keys.map(key => [key, ['G']]));
-  let bestScore = evaluate(best);
+  // One list of tweakable slots: Marian's turns (Marian team only) and Kotone's choices.
+  const slots = [
+    ...(TEAM === 'marian' ? Object.keys(MARIAN_PLAN).map(key => ({ who: 'marian', key, options: marianOptions(key) })) : []),
+    ...['T7', 'T8', 'T9', 'B4'].map(key => ({ who: 'kotone', key, options: ['L', 'P', 'B'] })),
+    ...[0, 1, 2, 3, 4].map(index => ({ who: 'kotoneB1', key: index, options: ['L', 'P', 'B'] }))
+  ];
+  const apply = (state, slot, option) => slot.who === 'marian' ? { ...state, marian: { ...state.marian, [slot.key]: option } }
+    : slot.who === 'kotone' ? { ...state, kotone: { ...state.kotone, [slot.key]: option } }
+      : { ...state, kotone: { ...state.kotone, B1: state.kotone.B1.map((code, index) => index === slot.key ? option : code) } };
+  let best = { marian: TEAM === 'marian' ? MARIAN_PLAN : null, kotone: KOTONE_PLAN };
+  let bestScore = evaluate(best.marian, best.kotone);
   for (let pass = 0; pass < arg('passes', 3); pass++) {
     let improved = false;
-    for (const key of keys) {
-      for (const option of options(key)) {
-        const plan = { ...best, [key]: option };
-        const score = evaluate(plan);
-        if (score != null && score > bestScore) { best = plan; bestScore = score; improved = true; }
+    for (const slot of slots) {
+      for (const option of slot.options) {
+        const state = apply(best, slot, option);
+        const score = evaluate(state.marian, state.kotone);
+        if (score != null && (bestScore == null || score > bestScore)) { best = state; bestScore = score; improved = true; }
       }
     }
     console.log(`pass ${pass + 1}: ${Math.round(bestScore).toLocaleString()} ${JSON.stringify(best)}`);
     if (!improved) break;
   }
-  MARIAN_PLAN = best;
+  if (TEAM === 'marian') MARIAN_PLAN = best.marian;
+  KOTONE_PLAN = best.kotone;
 }
 const runs = [];
 for (const seed of seeds) {
@@ -387,7 +405,7 @@ if (runs.length === seeds.length) {
   const rows = runs[0].rows.map((row, index) => ({ label: row.label, attackTurn: row.attackTurn, phase: row.phase,
     weakened: row.weakened, lifeSustainment: row.lifeSustainment, enemies: row.enemies,
     score: avg(index, 'score'), totalDamage: avg(index, 'totalDamage') }));
-  const output = { boss: 'surt', mode: 'devourer', team: TEAM, wonderBuffTarget: TEAM === 'marian' ? 'miyu' : WONDER_BUFFS, marianPlan: TEAM === 'marian' ? MARIAN_PLAN : null, seeds: seeds.length, rows, forcedResources: runs[0].forcedResources,
+  const output = { boss: 'surt', mode: 'devourer', team: TEAM, wonderBuffTarget: TEAM === 'marian' ? 'miyu' : WONDER_BUFFS, marianPlan: TEAM === 'marian' ? MARIAN_PLAN : null, kotonePlan: KOTONE_PLAN, seeds: seeds.length, rows, forcedResources: runs[0].forcedResources,
     damageByActor: runs[0].damageByActor, limitations: runs[0].limitations,
     finalScore: Math.round(runs.reduce((sum, run) => sum + run.finalScore, 0) / runs.length) };
   mkdirSync('outputs', { recursive: true });

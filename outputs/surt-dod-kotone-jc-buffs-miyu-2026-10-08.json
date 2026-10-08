@@ -4,6 +4,19 @@
   "team": "jc",
   "wonderBuffTarget": "miyu",
   "marianPlan": null,
+  "kotonePlan": {
+    "T7": "P",
+    "T8": "L",
+    "T9": "L",
+    "B1": [
+      "P",
+      "L",
+      "B",
+      "B",
+      "B"
+    ],
+    "B4": "P"
+  },
   "seeds": 8,
   "rows": [
     {
@@ -113,8 +126,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 2674129957,
-      "totalDamage": 223189624
+      "score": 2762146691,
+      "totalDamage": 230524352
     },
     {
       "label": "B2 end",
@@ -123,8 +136,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 11154768200,
-      "totalDamage": 929909478
+      "score": 11424567392,
+      "totalDamage": 952392744
     },
     {
       "label": "B3 end",
@@ -133,8 +146,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 12911384435,
-      "totalDamage": 1076294164
+      "score": 13263856012,
+      "totalDamage": 1105666796
     },
     {
       "label": "B4 end",
@@ -143,8 +156,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 14401091021,
-      "totalDamage": 1200353046
+      "score": 14918104824,
+      "totalDamage": 1243437530
     }
   ],
   "forcedResources": [
@@ -175,10 +188,10 @@
     }
   ],
   "damageByActor": {
-    "j-c": 12498782,
-    "wonder": 1567884,
-    "kotone-shiomi": 49706842,
-    "puppet-wavecatcher": 695514033
+    "j-c": 11732493,
+    "wonder": 1437796,
+    "kotone-shiomi": 35990601,
+    "puppet-wavecatcher": 758168312
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
@@ -223,5 +236,5 @@
     "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
     "all_out_attack is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 14401091021
+  "finalScore": 14918104824
 }

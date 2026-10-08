@@ -5,13 +5,17 @@
  */
 export const COPYABLE_SUPPORT_STATS = Object.freeze([
   'attack', 'damage', 'critRate', 'critDamage', 'pierce', 'defense',
-  'dotDamage', 'weaknessDamage', 'highlightDamage', 'finalDamage'
+  'dotDamage', 'weaknessDamage', 'highlightDamage', 'finalDamage',
+  // Marian medicine stats (Reso-Up, 1More-Up, Technica-Up).
+  'resonanceDamage', 'oneMoreDamage', 'technicalPrecision'
 ]);
 export const SUPPORT_CLOCKS = Object.freeze(['recipient_normal_turn_end', 'caster_normal_turn_end']);
 const knownFields = new Set([
   'id', 'name', 'stat', 'value', 'duration', 'sourceType', 'sourceSkillId', 'sourceActorId',
   'baseValue', 'amplifiedBySkillAmplification', 'provenance', 'copy', 'supportClock',
-  'copyEligible', 'ownerId', 'durationKnown', 'durationClock'
+  'copyEligible', 'ownerId', 'durationKnown', 'durationClock',
+  // Marian medicine bookkeeping; a copy keeps only stat, value and duration.
+  'potentMedicineType', 'baseDuration', 'effectiveValue', 'effectiveDuration', 'magnitudeSource'
 ]);
 const finiteNonnegative = (value, label) => {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) throw new TypeError(`${label} must be a finite nonnegative number`);
