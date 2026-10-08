@@ -172,3 +172,41 @@ test('Surt field starts everyone at Ragnarok x2 and adds two each Attack Turn', 
   assert.deepEqual([surt.berserkStacks, surt.ragnarokStacks], [3, 10]);
   assert.deepEqual([jack.berserkStacks, jack.ragnarokStacks], [3, 10]);
 });
+
+test('Surt DOD follows the shared DOD rules: HP lock with two Baphomets, then four Jack-o\'-Lanterns at the break', () => {
+  const engine = new BattleEngine({
+    seed: 3, bossId: 'surt', modeId: 'devourer', lifeSustainment: true, teamIds: ['wonder'],
+    loadouts: { wonder: { statsMode: 'equipped', baseStats: { attack: 200_000, maxHp: 1_000_000 } } }
+  });
+  const boss = engine.state.boss;
+  assert.equal(boss.finiteHp, true);
+  assert.equal(boss.lifeSustainment, true);
+  assert.equal(boss.scoreModel, 'recorded_nightmare');
+  assert.deepEqual(boss.summons.map(enemy => enemy.species), ['baphomet', 'baphomet']);
+  assert.equal(boss.downedDamageTaken, 0.8);
+  assert.equal(engine.usesGuardianMedicComposition(), false);
+  assert.ok(engine.state.mechanicsLimitations.some(text => /Surt DOD follows the shared DOD rules/.test(text)));
+  const hit = () => {
+    const action = engine.getAvailableActions().find(item => item.enabled && !['guard', 'skip_extra_actions'].includes(item.type))
+      || engine.getAvailableActions().find(item => item.enabled);
+    engine.step({ type: action.type, skillId: action.skillId, targetId: engine.state.boss.id });
+  };
+  for (let n = 0; n < 12 && engine.state.phase === 'battle'; n++) hit();
+  assert.equal(engine.enemies.reduce((sum, enemy) => sum + enemy.hp, 0), 3, 'the HP lock leaves every linked foe at 1 HP');
+  assert.equal(boss.weakenedActive, false, 'the HP lock holds the break back');
+  engine.state.boss.lifeSustainment = false;
+  for (let n = 0; n < 12 && !engine.state.boss.weakenedActive; n++) hit();
+  assert.equal(engine.state.boss.weakenedActive, true);
+  assert.deepEqual(engine.state.boss.summons.map(enemy => enemy.species), Array(4).fill('jack_o_lantern'));
+  assert.ok(engine.state.boss.summons.every(enemy => enemy.downedDamageTaken === 0.8));
+  const breakdown = engine.state.scoreBreakdown;
+  assert.equal(breakdown.difficultyBonus, 4);
+  assert.equal(engine.state.score, (breakdown.baseDamagePoints + breakdown.weakenedDamagePoints + breakdown.bossAttackPoints) * 4);
+});
+
+test('Surt MLD keeps the Guardian/Medic rule and starts with the Jack-o\'-Lanterns', () => {
+  const engine = new BattleEngine({ seed: 3, bossId: 'surt', modeId: 'multidimensional', teamIds: ['wonder'],
+    loadouts: { wonder: { baseStats: { maxHp: 100_000 } } } });
+  assert.equal(engine.usesGuardianMedicComposition(), true);
+  assert.ok(engine.state.boss.summons.every(enemy => enemy.species === 'jack_o_lantern'));
+});

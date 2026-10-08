@@ -75,6 +75,17 @@ const marianMedicines = [
 // DOT-Up and HL-Up items are listed in Sleepy's DOD rotation (2026-09-09).
 const observedDreamscapeItems = Object.freeze(['attack_tablet', 'fighter_salve', 'dot_up', 'highlight_up']);
 
+function summonState(summon, index, encounter, attackTurn) {
+  return {
+    ...summon, hp: summon.maxHp, alive: true, downMax: summon.downMax || 1,
+    downPoints: summon.downMax || 1, downed: false, buffs: [], debuffs: [],
+    berserkStacks: Number(summon.berserkStacks || 0),
+    ragnarokStacks: Number(summon.ragnarokStacks ?? encounter?.initialRagnarokStacks ?? 0),
+    spawnOrdinal: Number(summon.spawnOrdinal ?? index + 1), spawnedAttackTurn: attackTurn,
+    eligibleAttackTurn: attackTurn, lastActedAttackTurn: 0
+  };
+}
+
 export class BattleEngine {
   constructor(config = {}) {
     if ((config.teamIds || []).includes(KOTONE_SHIOMI_ID) && config.mechanicsProfile === RECORDED_MECHANICS_PROFILE) throw new Error('Kotone is available in the live ordinary Global profile, not archived recorded replays');
@@ -217,6 +228,20 @@ export class BattleEngine {
         bossData.previewAttackTurns = this.config.turnLimit;
         if (bossData.dodRules) bossData.dodRules.turnLimit = this.config.turnLimit;
       }
+    }
+    // Data-driven DOD setup for bosses whose base entry is their MLD encounter
+    // (Surt, user 2026-10-08): finite linked HP behind the HP Lock, pre-break
+    // minions, and the MLD minions held back until the break opens.
+    if (this.usesLiveMechanics() && modeId === 'devourer' && bossData.devourerProfile) {
+      const profile = bossData.devourerProfile;
+      bossData.weakenedSummons = (bossData.summons || []).map(summon => ({ ...summon, downedDamageTaken: profile.downedDamageTaken ?? summon.downedDamageTaken }));
+      bossData.summons = clone(profile.preBreakSummons || []);
+      Object.assign(bossData, {
+        maxHp: profile.maxHp, finiteHp: true, scoreModel: profile.scoreModel, difficultyBonus: profile.difficultyBonus,
+        bossAttackPoints: profile.bossAttackPoints, basePointScale: profile.basePointScale, weakenedTurns: profile.weakenedTurns,
+        downedDamageTaken: profile.downedDamageTaken, phases: clone(profile.phases), dodProfileSource: profile.source
+      });
+      bossData.encounter = { ...bossData.encounter, soulLink: true, lifeSustainment: true, guardianMedicComposition: profile.guardianMedicComposition };
     }
     if (liveHachimanDreamscape && this.config.hachimanBaseDefense) {
       // Explicit base Defense override for what-if comparisons; the boss
@@ -433,14 +458,7 @@ export class BattleEngine {
     const wonderLevelBonus = this.usesLiveMechanics()
       && (this.config.jcA6Unlocked ?? party.some(unit => unit.slug === 'j-c' && unit.awareness >= 6))
       ? 1 : 0;
-    const summons = (bossData.summons || []).map((summon, index) => ({
-      ...summon, hp: summon.maxHp, alive: true, downMax: summon.downMax || 1,
-      downPoints: summon.downMax || 1, downed: false, buffs: [], debuffs: [],
-      berserkStacks: Number(summon.berserkStacks || 0),
-      ragnarokStacks: Number(summon.ragnarokStacks ?? bossData.encounter?.initialRagnarokStacks ?? 0),
-      spawnOrdinal: Number(summon.spawnOrdinal ?? index + 1), spawnedAttackTurn: 1,
-      eligibleAttackTurn: 1, lastActedAttackTurn: 0
-    }));
+    const summons = (bossData.summons || []).map((summon, index) => summonState(summon, index, bossData.encounter, 1));
     this.state = {
       ...(this.usesLiveMechanics() ? { supportRuntime: createSupportRuntime() } : {}),
       mechanicsProfile: this.config.mechanicsProfile,
@@ -462,7 +480,8 @@ export class BattleEngine {
         ...(this.usesLiveMechanics() && bossData.id !== 'surt' && bossData.encounter?.berserkStacksPerTurn ? [`${bossData.name} Berserk is shown only as a set amount. Its value is unknown, so stacks are tracked without changing enemy damage.`] : []),
         ...(this.usesLiveMechanics() && bossData.encounter?.allyDamageStack && !bossData.encounter.allyDamageStack.applied ? [`${bossData.name}: the +${Math.round(bossData.encounter.allyDamageStack.valuePerStack * 100)}% ally damage stack is not applied until its trigger (per hit or per action) and stack clock are confirmed.`] : []),
         ...(this.usesLiveMechanics() && bossData.modeEffects?.[modeId]?.sourceDamage?.all_out_attack ? [`${bossData.name}: All-Out Attack damage +${Math.round(bossData.modeEffects[modeId].sourceDamage.all_out_attack * 100)}% applies to Cosmic Yui's Veg-Out; the shared All-Out Attack after every foe is Downed is not yet modeled.`] : []),
-        ...(liveSurt && modeId !== 'multidimensional' ? ['Surt is selectable in NOD and DOD, but the supplied screenshots only confirm the MLD encounter. NOD and DOD HP, score, and ending rules remain provisional.'] : []),
+        ...(liveSurt && modeId === 'nexus' ? ['Surt is selectable in NOD, but the supplied screenshots only confirm the MLD encounter. NOD HP, score, and ending rules remain provisional.'] : []),
+        ...(this.usesLiveMechanics() && modeId === 'devourer' && bossData.devourerProfile ? [`${bossData.name} DOD follows the shared DOD rules (user, 2026-10-08). Not yet known, using stand-ins: ${bossData.devourerProfile.provisional.join('; ')}. These only change Base Damage Points.`] : []),
         ...(party.some(unit => unit.slug && unit.id !== KOTONE_SHIOMI_ID && !characterModuleFor(unit)) ? ['Some selected characters use generic direct effects; their full stateful kits are not implemented. Assist and Theurgy actions are unavailable.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID && !unit.wonderWeapon.procGranularity) ? ['Cursed Ties is equipped, but Evil Eye does not proc until its timing is configured as per-hit or per-cast.'] : []),
         ...(party.some(unit => unit.wonderWeapon?.weaponId === CURSED_TIES_WEAPON_ID) ? ["Cursed Ties applies its 36% Attack condition to holder Wonder only. Whether 'an ally' includes Wonder, ailment-accuracy interaction with the stated 70% chance, and Evil Eye reapplication behavior remain unverified."] : [])
@@ -810,6 +829,7 @@ export class BattleEngine {
   // encounter data: with a Guardian or Medic, foes deal 60% less final damage
   // and take 20% more; without one, foes deal 60% more.
   usesGuardianMedicComposition() {
+    if (this.state.boss.encounter?.guardianMedicComposition === false) return false;
     return this.isHachimanLive() || this.isSurtLive()
       || (this.usesLiveMechanics() && this.state.boss.encounter?.guardianMedicComposition === true);
   }
@@ -828,7 +848,7 @@ export class BattleEngine {
   dreamscapeDamageDealtMultiplier(enemy) {
     if (this.isHachimanLive()) return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
     if (this.isSurtLive()) {
-      const compositionMultiplier = this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
+      const compositionMultiplier = !this.usesGuardianMedicComposition() ? 1 : this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
       return compositionMultiplier * (1 + Number(enemy.ragnarokStacks || 0) * 0.05);
     }
     if (this.usesGuardianMedicComposition()) return this.hasDreamscapeGuardianOrMedic() ? 0.4 : 1.6;
@@ -1673,6 +1693,14 @@ export class BattleEngine {
     this.state.attackTurnsLeft = Math.max(this.state.attackTurnsLeft, 2);
     this.state.boss.phaseIndex = Math.min(1, this.state.boss.phases.length - 1);
     this.emit('break', `${this.state.boss.name} reached 0 HP. Weakened is active for 2 boss turns with infinite HP and 3x damage points.`, { tone: 'phase' });
+    if (Array.isArray(this.state.boss.weakenedSummons)) {
+      const encounter = this.state.boss.encounter;
+      this.state.boss.summons = this.state.boss.weakenedSummons.map((summon, index) => summonState(summon, index, {
+        initialRagnarokStacks: Number(this.state.boss.ragnarokStacks ?? encounter?.initialRagnarokStacks ?? 0)
+      }, this.state.attackTurn));
+      this.state.boss.weakenedSummons = null;
+      this.emit('summon', `${this.state.boss.summons.map(enemy => enemy.name).join(', ')} appeared for the break.`, { tone: 'boss' });
+    }
     return true;
   }
 

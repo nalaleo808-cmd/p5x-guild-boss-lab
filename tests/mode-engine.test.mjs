@@ -75,8 +75,8 @@ test('Surt MLD converts Foe Defense Points into the verified six-turn result', (
   assert.equal(engine.state.result.scoreStatus, 'simulated_score');
 });
 
-test('NOD and DOD use the same shared turn score multiplier for Surt', () => {
-  for (const modeId of ['nexus', 'devourer']) {
+test('NOD uses the shared turn score multiplier for Surt', () => {
+  for (const modeId of ['nexus']) {
     const engine = new BattleEngine({
       seed: 55, bossId: 'surt', modeId, teamIds: ['wonder'],
       loadouts: { wonder: { baseStats: { maxHp: 100_000 } } }

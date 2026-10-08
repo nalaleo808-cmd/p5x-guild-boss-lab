@@ -334,7 +334,31 @@ export const bosses = [
       },
       unknown: ['numeric HP', 'Berserk damage amount', 'Ragnarok HP loss', 'ammo reload clock ownership', 'NOD and DOD score and ending rules', 'exact per-packet game rounding']
     },
-    phases: [{ threshold: 1, name: "Surt and Jack-o'-Lantern · Escalating Shadows", defense: 2121.464, baseDefense: 821 }]
+    phases: [{ threshold: 1, name: "Surt and Jack-o'-Lantern · Escalating Shadows", defense: 2121.464, baseDefense: 821 }],
+    // Devourer of Dreams (user, 2026-10-08): DOD works the same for every boss
+    // (HP Lock, break into a 2-boss-turn Weakened window, Base + Weakened +
+    // 250,000 Boss Attack Points, x4). Surt keeps his MLD stats and Special
+    // Effects except the Guardian/Medic rule, and Downed foes take +80%. Two
+    // Baphomets stand beside him before the break; the four Jack-o'-Lanterns
+    // spawn when it opens. Pre-break HP and Baphomet stats are not known:
+    // Slaughter Drive's DOD HP values stand in. They only set Base Damage
+    // Points (Slaughter Drive's were 827,135 of an 11.1b score).
+    devourerProfile: {
+      source: 'user_dod_rules_2026-10-08',
+      scoreModel: 'recorded_nightmare', difficultyBonus: 4, bossAttackPoints: 250000, basePointScale: 1, weakenedTurns: 2,
+      maxHp: 209244, downedDamageTaken: 0.8, guardianMedicComposition: false,
+      provisional: ['pre-break HP (Slaughter Drive DOD values)', 'Baphomet HP, Defense and affinities'],
+      preBreakSummons: ['left', 'right'].map((position, index) => ({
+        id: `baphomet_${index + 1}`, species: 'baphomet', name: index ? 'Baphomet II' : 'Baphomet I',
+        artwork: '/assets/bosses/surt.png', maxHp: 154474, finiteHp: true, soulLinked: true,
+        defense: 2121.464, baseDefense: 821, defenseCoefficient: 2.584,
+        weakness: 'none', resistance: 'none', resistances: [], downMax: 4, downedDamageTaken: 0.8, scoreAttack: true, position
+      })),
+      phases: [
+        { threshold: 1, name: 'Life Sustainment · HP Lock · Surt and two Baphomets', defense: 2121.464, baseDefense: 821 },
+        { threshold: 0.25, name: "Weakened · Infinite HP · 2 Boss Turns · Jack-o'-Lanterns", defense: 2121.464, baseDefense: 821 }
+      ]
+    }
   },
   {
     id: 'yatsufusa', name: 'Yatsufusa', subtitle: 'Multidimensional Dreamscape · Lufel and Screenshot Sourced', level: 82,

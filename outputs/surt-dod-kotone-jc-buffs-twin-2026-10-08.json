@@ -1,0 +1,227 @@
+{
+  "boss": "surt",
+  "mode": "devourer",
+  "team": "jc",
+  "wonderBuffTarget": "twin",
+  "marianPlan": null,
+  "seeds": 8,
+  "rows": [
+    {
+      "label": "T1 opening Twin nuke",
+      "attackTurn": 1,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 197122,
+      "totalDamage": 49281
+    },
+    {
+      "label": "T1 end",
+      "attackTurn": 2,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T2 end",
+      "attackTurn": 3,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T3 end",
+      "attackTurn": 4,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T4 end",
+      "attackTurn": 5,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T5 end",
+      "attackTurn": 6,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T6 end",
+      "attackTurn": 7,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T7 end",
+      "attackTurn": 8,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T8 end",
+      "attackTurn": 9,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": true,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "T9 end (lock off)",
+      "attackTurn": 10,
+      "phase": "battle",
+      "weakened": false,
+      "lifeSustainment": false,
+      "enemies": "surt,baphomet_1,baphomet_2",
+      "score": 2072756,
+      "totalDamage": 518189
+    },
+    {
+      "label": "B1 end",
+      "attackTurn": 10,
+      "phase": "battle",
+      "weakened": true,
+      "lifeSustainment": false,
+      "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
+      "score": 2674129957,
+      "totalDamage": 223189624
+    },
+    {
+      "label": "B2 end",
+      "attackTurn": 10,
+      "phase": "battle",
+      "weakened": true,
+      "lifeSustainment": false,
+      "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
+      "score": 10163158544,
+      "totalDamage": 847275340
+    },
+    {
+      "label": "B3 end",
+      "attackTurn": 11,
+      "phase": "battle",
+      "weakened": true,
+      "lifeSustainment": false,
+      "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
+      "score": 11625780772,
+      "totalDamage": 969160526
+    },
+    {
+      "label": "B4 end",
+      "attackTurn": 11,
+      "phase": "results",
+      "weakened": false,
+      "lifeSustainment": false,
+      "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
+      "score": 12850170879,
+      "totalDamage": 1071109701
+    }
+  ],
+  "forcedResources": [
+    {
+      "type": "harness_item",
+      "item": "Takemedic",
+      "actor": "kotone-shiomi",
+      "target": "party",
+      "attackTurn": 4
+    },
+    {
+      "type": "harness_item",
+      "item": "Stamina Kit L",
+      "actor": "kotone-shiomi",
+      "target": "wonder",
+      "attackTurn": 5
+    },
+    {
+      "type": "harness_item",
+      "item": "Takemedic",
+      "actor": "kotone-shiomi",
+      "target": "party",
+      "attackTurn": 6
+    },
+    {
+      "type": "hp_lock_off",
+      "attackTurn": 10
+    }
+  ],
+  "damageByActor": {
+    "j-c": 13530783,
+    "wonder": 1567884,
+    "kotone-shiomi": 49706842,
+    "puppet-wavecatcher": 606292574
+  },
+  "limitations": [
+    "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
+    "J&C A6 grants Wonder +1 Skill Level and +1 Thief Tactics Level. Per-level coefficients are unavailable, so no numeric multiplier is applied.",
+    "Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.",
+    "Surt DOD follows the shared DOD rules (user, 2026-10-08). Not yet known, using stand-ins: pre-break HP (Slaughter Drive DOD values); Baphomet HP, Defense and affinities. These only change Base Damage Points.",
+    "Sahimochi-no-kami passive Swift Returner III: Battle-start, turn-timed, and duration clauses are reference-only.",
+    "Sahimochi-no-kami passive Swift Returner III: Conditional and triggered clauses are reference-only.",
+    "Sahimochi-no-kami passive Swift Returner III: Stack generation and consumption clauses are reference-only.",
+    "Ancient Frost: The source says 1 ally at battle start but does not expose target-selection policy.",
+    "j-c: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "j-c: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "j-c: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "j-c: Signature Two Masks Desire increase and facade-gain party buffs require explicit gain callbacks; four-star post-Two-Masks Attack duration deferred.",
+    "j-c: Optional Attack buff does not recalculate base-stat Desire. If weapon passive belongs in the source's base stats, provide already-equipped totals before constructor computes Desire.",
+    "j-c: Rebel Surveillance stat list/sampling and A6 off-field Wonder ownership remain tied to existing user evidence.",
+    "wonder: Wonder has no replacement character kit or invented awareness bonuses.",
+    "wonder: Weapon panel stats are not silently added to equipped totals; unresolved trigger rules remain evidence-gated.",
+    "puppet-wavecatcher: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "puppet-wavecatcher: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "puppet-wavecatcher: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "puppet-wavecatcher: A1 cost reduction and Offshore cap, A2 every-fourth free wave and A6 full turn-end reset need audit/extraction. Existing resolveAllyTurnFollowUps uses cost 30*(stacks+1) and cap 4.",
+    "puppet-wavecatcher: Four-star Surf Attack and signature SP-spend damage stacks deferred pending gain/spend event ownership.",
+    "puppet-wavecatcher: Surf follow-up timing must distinguish ally turn end from counted action end, including Concert; exact boundaries need live evidence.",
+    "miku: Existing kit is only partially modeled. Extracted methods preserve existing approximations; extraction does not verify them.",
+    "miku: No optional weapon is selected by default. Refinement indexes 0-6 use the seven published entries. Weapon base item HP/Attack/Defense are not added.",
+    "miku: Static weapon effects are skipped for equipped stat totals unless explicitly declared excluded. Attack buffs affect outgoing damage; mechanicAttack/support scaling and base-stat Desire are not recomputed.",
+    "miku: Navigator base Attack and weapon Attack require a real navigator stat/scaling pipeline; current song methods use capped constants.",
+    "miku: Weapon track gains, three-turn critical stacks, four-star Attack and Concert Skill Amplification require actual track-acquisition and concert-enter hooks.",
+    "miku: Current r0 says repeat a track's effect; skill text says only when absent. Source contradiction must not silently replace observed behavior.",
+    "miku: Awareness-dependent Concert final amplification versus ordinary damage and sync_description variants require review; sync text is not executed.",
+    "With Kotone, forced Ardhanari/Cyclone Arrow/Lightning Spike are executable using the uploaded beta tooltip. Natural Theurgy gauges and manual Theurgy remain outside this adapter.",
+    "Kotone: Lufel v5.1.0 ordinary Global values. Fortune, copy and Cold timing are engine policies because the source is tooltip data, not combat scripts.",
+    "J&C Two Masks as One is not resolved: missing Skill Amplification scope beyond direct skill damage. No effect is invented.",
+    "Shared Highlight automatic follow-up contribution is unconfirmed. No unverified additional charge is added.",
+    "Yurlungur passive Rainbow Snake's Thunder II: Conditional and triggered clauses are reference-only.",
+    "Dionysus passive Feast of the Frenzied III: Battle-start, turn-timed, and duration clauses are reference-only.",
+    "Dionysus passive Feast of the Frenzied III: Conditional and triggered clauses are reference-only.",
+    "one_more is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Down Point duration and expiry. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Blessing duration and expiry. No effect is invented.",
+    "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
+    "all_out_attack is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
+  ],
+  "finalScore": 12850170879
+}
