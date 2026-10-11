@@ -87,12 +87,28 @@ export const legacyMethods = {
     return unit?.slug === 'puppet-wavecatcher';
   },
 
+  // Entering Surf with Paddle Out adds 1 turn to every timed buff already on
+  // Miyu, from any source (user, 2026-10-11). Leaving Surf does not.
+  extendWavecatcherBuffsOnSurfEntry(unit) {
+    let extended = 0;
+    for (const buff of unit.buffs) {
+      if (!Number.isFinite(buff.duration) || buff.duration <= 0 || buff.duration >= 900) continue;
+      buff.duration += 1;
+      if (buff.expiresAfterOwnerTurn != null) buff.expiresAfterOwnerTurn += 1;
+      extended += 1;
+    }
+    return extended;
+  },
+
   cleanseWavecatcher(unit) {
     const before = unit.debuffs.length;
     unit.debuffs = unit.debuffs.filter(status => !this.isSpiritualOrControlStatus(status));
     return before - unit.debuffs.length;
   },
 
+  // Buffs and debuffs Miyu receives while surfing last 1 more turn (tooltip).
+  // Keeping this is what matches the live Surt MLD run (2026-09-20), where
+  // Miyu surfs the whole fight; without it the replay lands 35% low.
   surfAdjustedStatus(unit, status) {
     const adjusted = clone(status);
     if (this.isWavecatcher(unit) && unit.surfActive && Number.isFinite(adjusted.duration) && adjusted.duration < 900) {

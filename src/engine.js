@@ -4210,6 +4210,10 @@ export class BattleEngine {
       } else {
         actor.surfActive = true;
         this.emit('stance', `${actor.codename} entered Surf state.`, { actorId: actor.id, stance: 'surf', active: true, sourceType, tone: 'buff' });
+        if (this.usesLiveMechanics()) {
+          const extended = this.extendWavecatcherBuffsOnSurfEntry(actor);
+          if (extended) this.emit('buff', `${actor.codename}'s ${extended} buff${extended === 1 ? '' : 's'} gained 1 turn on entering Surf.`, { actorId: actor.id, amount: extended, sourceType, tone: 'buff' });
+        }
         // Observed live: entering Surf ends her turn and triggers two Catch a Waves,
         // one on entry and the usual one at the end of her turn.
         if (this.config.wavecatcherSourceMechanics && this.config.wavecatcherFollowUps && sourceType === 'character_skill') this.resolveCatchAWave(actor, 'on entering Surf');

@@ -532,6 +532,33 @@ test('Surf extends incoming status duration and rejects spiritual control ailmen
   assert.equal(miyu.debuffs.length, 0);
 });
 
+test('getting on Surf adds 1 turn to every timed buff already on Miyu; getting off adds none', () => {
+  const wavecatcher = lufelCatalog.characters.find(character => character.slug === 'puppet-wavecatcher');
+  const engine = new BattleEngine({ seed: 808, characterDefinitions: [{ ...wavecatcher, awareness: 0 }], teamIds: [wavecatcher.id, 'wonder', 'joker', 'mona'],
+    loadouts: { [wavecatcher.id]: { awareness: 0 } } });
+  const miyu = engine.state.party[0];
+  miyu.sp = 300;
+  assert.equal(engine.actor.id, miyu.id);
+  assert.equal(miyu.surfActive, false);
+  engine.applyUnitBuff(miyu, { id: 'item_reso_up', name: 'RESO-UP', stat: 'resonanceDamage', value: 0.1, duration: 1 }, 'item');
+  engine.applyUnitBuff(miyu, { id: 'party_attack', name: 'ATK UP', stat: 'attack', value: 0.2, duration: 2 }, 'test');
+  const paddle = engine.getAvailableActions().find(item => item.skill?.name === 'Paddle Out');
+  engine.step({ type: paddle.type, skillId: paddle.skillId, targetId: miyu.id });
+  assert.equal(miyu.surfActive, true);
+  assert.equal(miyu.buffs.find(buff => buff.id === 'item_reso_up')?.duration, 2);
+  assert.equal(miyu.buffs.find(buff => buff.id === 'party_attack')?.duration, 3);
+  // A 1-turn item used before getting on is still there on her next turn.
+  while (engine.actor.id !== miyu.id) engine.step({ type: 'guard', skillId: 'guard', targetId: engine.actor.id });
+  assert.ok(miyu.buffs.some(buff => buff.id === 'item_reso_up'));
+  // Getting off adds nothing.
+  const before = miyu.buffs.find(buff => buff.id === 'party_attack').duration;
+  miyu.sp = 300;
+  const getOff = engine.getAvailableActions().find(item => item.skill?.name === 'Paddle Out');
+  engine.step({ type: getOff.type, skillId: getOff.skillId, targetId: miyu.id });
+  assert.equal(miyu.surfActive, false);
+  assert.equal(miyu.buffs.find(buff => buff.id === 'party_attack').duration, before);
+});
+
 test('Marian passives grant party Attack and Summer Garden damage scales continuously with max HP up to 13,632', () => {
   const marian = lufelCatalog.characters.find(character => character.slug === 'marian-beachflower');
   const garden = marian.skills.find(skill => skill.name === 'Summer Garden');

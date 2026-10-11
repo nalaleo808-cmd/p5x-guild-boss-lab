@@ -36,7 +36,8 @@ export const characterResearch = {
     }
   ],
   "implemented": [
-    "Legacy engine methods mixed into BattleEngine: isWavecatcher, cleanseWavecatcher, surfAdjustedStatus."
+    "Legacy engine methods mixed into BattleEngine: isWavecatcher, extendWavecatcherBuffsOnSurfEntry, cleanseWavecatcher, surfAdjustedStatus.",
+    "Entering Surf with Paddle Out adds 1 turn to every timed buff already on Miyu (user, 2026-10-11); buffs received while surfing also last 1 more turn."
   ],
   "weaponEffects": "Excluded: source weapon rules are evidence only and do not create selectable loadout options or runtime effects.",
   "missing": [
@@ -59,6 +60,7 @@ export const characterResearch = {
   "integration": {
     "removeEngineMethods": [
       "isWavecatcher",
+      "extendWavecatcherBuffsOnSurfEntry",
       "cleanseWavecatcher",
       "surfAdjustedStatus"
     ],

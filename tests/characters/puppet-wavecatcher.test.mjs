@@ -4,7 +4,7 @@ import { BattleEngine } from '../../src/engine.js';
 import { legacyMethods } from '../../src/characters/puppet-wavecatcher-mechanics.js';
 
 test('Wavecatcher is installed as a legacy mixin without character hooks', () => {
-  assert.deepEqual(Object.keys(legacyMethods), ['isWavecatcher', 'cleanseWavecatcher', 'surfAdjustedStatus']);
+  assert.deepEqual(Object.keys(legacyMethods), ['isWavecatcher', 'extendWavecatcherBuffsOnSurfEntry', 'cleanseWavecatcher', 'surfAdjustedStatus']);
   assert.equal(legacyMethods.characterMechanics, undefined);
-  for (const name of ['isWavecatcher', 'cleanseWavecatcher', 'surfAdjustedStatus']) assert.equal(BattleEngine.prototype[name], legacyMethods[name]);
+  for (const name of ['isWavecatcher', 'extendWavecatcherBuffsOnSurfEntry', 'cleanseWavecatcher', 'surfAdjustedStatus']) assert.equal(BattleEngine.prototype[name], legacyMethods[name]);
 });

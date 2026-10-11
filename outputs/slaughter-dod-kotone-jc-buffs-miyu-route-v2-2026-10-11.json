@@ -127,8 +127,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "slaughter_drive,crimson_turret_1,crimson_turret_2,crimson_turret_3,crimson_turret_4",
-      "score": 1687390477,
-      "totalDamage": 141167300
+      "score": 3106040835,
+      "totalDamage": 259388163
     },
     {
       "label": "B2 end",
@@ -137,8 +137,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "slaughter_drive,crimson_turret_1,crimson_turret_2,crimson_turret_3,crimson_turret_4",
-      "score": 6540181954,
-      "totalDamage": 545566590
+      "score": 10792980163,
+      "totalDamage": 899966440
     },
     {
       "label": "B3 end",
@@ -147,8 +147,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "slaughter_drive,crimson_turret_1,crimson_turret_2,crimson_turret_3,crimson_turret_4",
-      "score": 7541310106,
-      "totalDamage": 628993936
+      "score": 12011153050,
+      "totalDamage": 1001480848
     },
     {
       "label": "B4 end",
@@ -157,8 +157,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "slaughter_drive,crimson_turret_1,crimson_turret_2,crimson_turret_3,crimson_turret_4",
-      "score": 8473734368,
-      "totalDamage": 706612624
+      "score": 13137572549,
+      "totalDamage": 1095265806
     }
   ],
   "forcedResources": [
@@ -197,9 +197,9 @@
   ],
   "damageByActor": {
     "j-c": 10327192,
-    "wonder": 1426226,
+    "wonder": 1484227,
     "kotone-shiomi": 29453225,
-    "puppet-wavecatcher": 370953335
+    "puppet-wavecatcher": 586410075
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
@@ -241,5 +241,5 @@
     "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
     "one_more is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 8473734368
+  "finalScore": 13137572549
 }
