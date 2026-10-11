@@ -23,6 +23,7 @@ import { buildPersonaLoadoutCatalog } from '../src/persona-loadout.js';
 import { lufelCatalog } from '../src/generated/lufel-catalog.js';
 import { getDefaultWonderWeaponProfileId } from '../src/wonder-weapons.js';
 import { withRevelationSetOverlay } from '../src/revelation-overlay.js';
+import { bosses } from '../src/data.js';
 import { KOTONE_SHIOMI_ID as KOTONE } from '../src/characters/kotone-shiomi-data.js';
 
 const arg = (name, fallback) => Number(process.argv.find(v => v.startsWith(`--${name}=`))?.split('=')[1] ?? fallback);
@@ -84,6 +85,12 @@ const stats = {
 // default (1.5b more than aiming them at J&C); --wonder-buffs=twin restores that.
 let TEAM = process.argv.find(v => v.startsWith('--team='))?.split('=')[1] || 'jc';
 let WONDER_BUFFS = process.argv.find(v => v.startsWith('--wonder-buffs='))?.split('=')[1] || 'miyu';
+// --route=v2: the user's revised rotation (2026-10-11). J&C attacks from T4
+// (S1 T4, S2 T5, S1 T6, S2 T7, S1 T8), uses a Resonance item instead of S1
+// after True Desire on T9, and T9's Cohesion names Kotone. The break is unchanged.
+const ROUTE = process.argv.find(v => v.startsWith('--route='))?.split('=')[1] || 'posted';
+// --boss=slaughter_drive plays the same route on Slaughter Drive DOD.
+const BOSS = process.argv.find(v => v.startsWith('--boss='))?.split('=')[1] || 'surt';
 const strife = withRevelationSetOverlay(lufelCatalog.revelationSets).find(set => set.name === 'Strife');
 
 function makeEngine(seed) {
@@ -105,8 +112,9 @@ function makeEngine(seed) {
     equippedTotalsFor: 'vetri-vel-muruga+6',
     baseStats: { attack: arg('kotone-attack', 5543), maxHp: 7927, defense: 1732, maxSp: 240 },
     revelationMain: 'Nativity', revelationSet: 'Strife', revelationCombat: structuredClone(strife.combat) };
+  const bossDefinition = BOSS === 'slaughter_drive' ? { ...structuredClone(bosses.find(boss => boss.id === BOSS)), turnLimit: DOD_TURN_LIMIT } : undefined;
   return new HachimanRecordedEngine({
-    seed, bossId: 'surt', modeId: 'devourer', lifeSustainment: true, turnLimit: DOD_TURN_LIMIT,
+    seed, bossId: BOSS, ...(bossDefinition ? { bossDefinition } : {}), modeId: 'devourer', lifeSustainment: true, turnLimit: DOD_TURN_LIMIT,
     mechanicsProfile: CURRENT_MECHANICS_PROFILE, fastMode: true,
     teamIds: [third, 'wonder', KOTONE, miyu.id], characterDefinitions: third === jc.id ? [jc, miyu] : [marian, miyu],
     navigatorDefinition: navigatorDefinition(), personaDefinitions: [shark, dionysus, yurlungur],
@@ -115,10 +123,10 @@ function makeEngine(seed) {
   });
 }
 
-const MINION = 'jack_o_lantern';
+const MINION = BOSS === 'slaughter_drive' ? 'crimson_turret_1' : 'jack_o_lantern';
 const thirdId = () => TEAM === 'marian' ? marian.id : jc.id;
 const targetId = (e, target) => target === 'miyu' ? miyu.id : target === 'twin' ? thirdId()
-  : target === 'buff' ? (TEAM === 'marian' || WONDER_BUFFS === 'miyu' ? miyu.id : jc.id) : target === 'wonder' ? 'wonder'
+  : target === 'buff' ? (TEAM === 'marian' || WONDER_BUFFS === 'miyu' ? miyu.id : jc.id) : target === 'wonder' ? 'wonder' : target === 'kotone' ? KOTONE
   : target === 'party' ? 'party' : target === 'minion' ? (e.enemies.find(x => x.id !== e.state.boss.id && x.alive !== false)?.id || MINION)
     : e.state.boss.id;
 const forced = (e, entry) => e.runnerForcedResources.push({ ...entry, attackTurn: e.state.attackTurn });
@@ -193,6 +201,13 @@ const takemedic = e => consumable(e, KOTONE, 'Takemedic', 'party', () => {
   for (const unit of e.state.party.filter(member => member.hp > 0)) unit.hp = unit.maxHp;
   return 'party HP fully restored';
 });
+// "Resonance item" (route v2, T9): taken as Reso-Up, Resonance damage +10%
+// for 1 turn on Miyu (base item tooltip). It is J&C's counted action.
+const resoItem = e => consumable(e, jc.id, 'Reso-Up', 'miyu', () => {
+  const unit = e.state.party.find(member => member.id === miyu.id);
+  e.applyUnitBuff(unit, { id: 'item_reso_up', name: 'RESO-UP', stat: 'resonanceDamage', value: 0.1, duration: 1 }, 'item');
+  return `${unit.codename} Resonance damage +10% for 1 turn`;
+});
 const staminaKit = (e, target) => consumable(e, KOTONE, 'Stamina Kit L', target, () => {
   const unit = e.state.party.find(member => member.id === targetId(e, target));
   const before = unit.sp;
@@ -254,7 +269,11 @@ let MARIAN_PLAN = {
 // J&C or Marian as the buff caster (copies their buffs on Miyu), 'B' Burning
 // Moon's Cry. B1 lists her five Fortune actions around the chained Go for Broke.
 // Best plans from --search (2026-10-08, 4 search seeds, Kotone copying Marian's medicines).
-let KOTONE_PLAN = TEAM === 'marian'
+// --kotone=posted uses the Kotone moves as written in the rotation (route v2
+// always does): Lyre's Melody T7-T9 and B4, B1 Lunar Phaseshift then Burning
+// Moon's Cry.
+const POSTED_KOTONE = { T7: 'L', T8: 'L', T9: 'L', B1: ['P', 'B', 'B', 'B', 'B'], B4: 'L' };
+let KOTONE_PLAN = process.argv.includes('--kotone=posted') || process.argv.includes('--route=v2') ? POSTED_KOTONE : TEAM === 'marian'
   ? { T7: 'L', T8: 'L', T9: 'L', B1: ['P', 'L', 'B', 'B', 'B'], B4: 'P' }
   : { T7: 'P', T8: 'L', T9: 'L', B1: ['P', 'L', 'B', 'B', 'B'], B4: 'P' };
 function kotoneMove(e, code) {
@@ -292,7 +311,7 @@ function play(seed, marianPlan = MARIAN_PLAN, kotonePlan = KOTONE_PLAN) {
   Object.assign(kotoneUnit, { crit: .354, critMult: 1.634, speed: 106.8 });
   e.runnerForcedResources = [];
   const rows = [];
-  const J = jc.id, M = miyu.id;
+  const J = jc.id, M = miyu.id, v2 = ROUTE === 'v2';
   checkpoint(e, 'T1 opening Twin nuke', rows);
   // T1 (HP lock on from battle start)
   slot('T1', () => act(e, J, 'guard')); wonder(e, 'Sahimochi-no-kami', 'Wild Thunder'); kotone(e, 'guard');
@@ -303,22 +322,22 @@ function play(seed, marianPlan = MARIAN_PLAN, kotonePlan = KOTONE_PLAN) {
     checkpoint(e, `T${turn} end`, rows);
   }
   // T4
-  slot('T4', () => act(e, J, 'guard')); wonder(e, 'Sahimochi-no-kami', 'Wild Thunder'); takemedic(e); act(e, M, 'guard'); checkpoint(e, 'T4 end', rows);
+  slot('T4', () => act(e, J, v2 ? { slot: 'S1' } : 'guard')); wonder(e, 'Sahimochi-no-kami', 'Wild Thunder'); takemedic(e); act(e, M, 'guard'); checkpoint(e, 'T4 end', rows);
   // T5
-  slot('T5', () => act(e, J, { slot: 'S1' })); wonder(e, 'Sahimochi-no-kami', 'Rebellion', 'buff'); staminaKit(e, 'wonder'); paddle(e);
+  slot('T5', () => act(e, J, { slot: v2 ? 'S2' : 'S1' })); wonder(e, 'Sahimochi-no-kami', 'Rebellion', 'buff'); staminaKit(e, 'wonder'); paddle(e);
   checkpoint(e, 'T5 end', rows);
   // T6
-  highlight(e, M); slot('T6', () => act(e, J, { slot: 'S2' })); wonder(e, 'Yurlungur', 'Tarukaja', 'buff'); takemedic(e); paddle(e); act(e, M, 'guard');
+  highlight(e, M); slot('T6', () => act(e, J, { slot: v2 ? 'S1' : 'S2' })); wonder(e, 'Yurlungur', 'Tarukaja', 'buff'); takemedic(e); paddle(e); act(e, M, 'guard');
   checkpoint(e, 'T6 end', rows);
   // T7
-  miku(e, 'H1'); slot('T7', () => act(e, J, { slot: 'S1' })); wonder(e, 'Dionysus', 'Universal Theoria', 'buff'); if (TEAM === 'jc') highlight(e, J, 'boss', 'absurdity');
+  miku(e, 'H1'); slot('T7', () => act(e, J, { slot: v2 ? 'S2' : 'S1' })); wonder(e, 'Dionysus', 'Universal Theoria', 'buff'); if (TEAM === 'jc') highlight(e, J, 'boss', 'absurdity');
   kotoneMove(e, kotonePlan.T7); paddle(e); checkpoint(e, 'T7 end', rows);
   // T8
-  miku(e, 'S2'); slot('T8', () => act(e, J, { slot: 'S2' })); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth'); kotoneMove(e, kotonePlan.T8);
+  miku(e, 'S2'); slot('T8', () => act(e, J, { slot: v2 ? 'S1' : 'S2' })); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth'); kotoneMove(e, kotonePlan.T8);
   paddle(e); act(e, M, { slot: 'S1' }); checkpoint(e, 'T8 end', rows);
   // T9
-  miku(e, 'F2'); slot('T9', () => { highlight(e, J, 'boss', 'mischief'); trueDesire(e); act(e, J, { slot: 'S1' }); });
-  wonder(e, 'Dionysus', 'Cohesion', 'buff'); kotoneMove(e, kotonePlan.T9);
+  miku(e, 'F2'); slot('T9', () => { highlight(e, J, 'boss', 'mischief'); trueDesire(e); if (v2) resoItem(e); else act(e, J, { slot: 'S1' }); });
+  wonder(e, 'Dionysus', 'Cohesion', v2 ? 'kotone' : 'buff'); kotoneMove(e, kotonePlan.T9);
   paddle(e);
   // HP lock stays on for all of T9 and is switched off at the end of the turn.
   forced(e, { type: 'hp_lock_off' }); e.state.boss.lifeSustainment = false;
@@ -405,11 +424,11 @@ if (runs.length === seeds.length) {
   const rows = runs[0].rows.map((row, index) => ({ label: row.label, attackTurn: row.attackTurn, phase: row.phase,
     weakened: row.weakened, lifeSustainment: row.lifeSustainment, enemies: row.enemies,
     score: avg(index, 'score'), totalDamage: avg(index, 'totalDamage') }));
-  const output = { boss: 'surt', mode: 'devourer', team: TEAM, wonderBuffTarget: TEAM === 'marian' ? 'miyu' : WONDER_BUFFS, marianPlan: TEAM === 'marian' ? MARIAN_PLAN : null, kotonePlan: KOTONE_PLAN, seeds: seeds.length, rows, forcedResources: runs[0].forcedResources,
+  const output = { boss: BOSS, route: ROUTE, mode: 'devourer', team: TEAM, wonderBuffTarget: TEAM === 'marian' ? 'miyu' : WONDER_BUFFS, marianPlan: TEAM === 'marian' ? MARIAN_PLAN : null, kotonePlan: KOTONE_PLAN, seeds: seeds.length, rows, forcedResources: runs[0].forcedResources,
     damageByActor: runs[0].damageByActor, limitations: runs[0].limitations,
     finalScore: Math.round(runs.reduce((sum, run) => sum + run.finalScore, 0) / runs.length) };
   mkdirSync('outputs', { recursive: true });
-  writeFileSync(`outputs/surt-dod-kotone-${TEAM}${TEAM === 'jc' ? `-buffs-${WONDER_BUFFS}` : ''}-2026-10-08.json`, JSON.stringify(output, null, 2) + '\n');
+  writeFileSync(`outputs/${BOSS === 'surt' ? 'surt' : 'slaughter'}-dod-kotone-${TEAM}${TEAM === 'jc' ? `-buffs-${WONDER_BUFFS}` : ''}${ROUTE === 'v2' ? '-route-v2-2026-10-11' : '-2026-10-08'}.json`, JSON.stringify(output, null, 2) + '\n');
   console.table(rows.map(row => ({ checkpoint: row.label, turn: row.attackTurn, weakened: row.weakened, hpLock: row.lifeSustainment,
     points: Math.round(row.score / DIFFICULTY_COEFFICIENT).toLocaleString(), score: row.score.toLocaleString(), enemies: row.enemies })));
   console.log('forced/harness steps:', runs[0].forcedResources.length, '| final score', output.finalScore.toLocaleString());
