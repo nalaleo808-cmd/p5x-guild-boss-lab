@@ -115,6 +115,9 @@ function makeEngine(seed) {
   const bossDefinition = BOSS === 'slaughter_drive' ? { ...structuredClone(bosses.find(boss => boss.id === BOSS)), turnLimit: DOD_TURN_LIMIT } : undefined;
   return new HachimanRecordedEngine({
     seed, bossId: BOSS, ...(bossDefinition ? { bossDefinition } : {}), modeId: 'devourer', lifeSustainment: true, turnLimit: DOD_TURN_LIMIT,
+    // User, 2026-10-12: the break ended after Wonder's B4 turn (Showstopper
+    // was pressed after Wonder's turn), so Kotone's and Miyu's B4 turns never happen.
+    breakWindowEndsAfterActorId: process.argv.includes('--full-b4') ? null : 'wonder',
     mechanicsProfile: CURRENT_MECHANICS_PROFILE, fastMode: true,
     teamIds: [third, 'wonder', KOTONE, miyu.id], characterDefinitions: third === jc.id ? [jc, miyu] : [marian, miyu],
     navigatorDefinition: navigatorDefinition(), personaDefinitions: [shark, dionysus, yurlungur],
@@ -362,7 +365,8 @@ function play(seed, marianPlan = MARIAN_PLAN, kotonePlan = KOTONE_PLAN) {
   // B4 (only if the simulated battle is still running)
   if (e.state.phase !== 'battle') { forced(e, { type: 'battle_ended_before', step: 'B4', reason: e.state.result?.reason || e.state.phase }); checkpoint(e, 'B4 end', rows); return finish(e, rows); }
   miku(e, 'F1'); slot('B4', () => { highlight(e, J, 'boss', 'mischief'); act(e, J, { slot: 'S1' }, 'minion'); }); wonder(e, 'Sahimochi-no-kami', 'Chilling Depth');
-  kotoneMove(e, kotonePlan.B4); act(e, M, { slot: 'S2' }); checkpoint(e, 'B4 end', rows);
+  if (e.state.phase === 'battle') { kotoneMove(e, kotonePlan.B4); act(e, M, { slot: 'S2' }); }
+  checkpoint(e, 'B4 end', rows);
   return finish(e, rows);
 }
 

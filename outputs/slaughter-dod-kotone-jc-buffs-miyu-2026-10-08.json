@@ -157,8 +157,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "slaughter_drive,crimson_turret_1,crimson_turret_2,crimson_turret_3,crimson_turret_4",
-      "score": 13240789645,
-      "totalDamage": 1103867230
+      "score": 12454747381,
+      "totalDamage": 1038363708
     }
   ],
   "forcedResources": [
@@ -192,7 +192,7 @@
     "j-c": 11618869,
     "wonder": 1627621,
     "kotone-shiomi": 35149705,
-    "puppet-wavecatcher": 583901788
+    "puppet-wavecatcher": 518545204
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
@@ -234,5 +234,5 @@
     "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
     "one_more is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 13240789645
+  "finalScore": 12454747381
 }

@@ -157,8 +157,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 21604578711,
-      "totalDamage": 1800594899
+      "score": 20335569578,
+      "totalDamage": 1694844138
     }
   ],
   "forcedResources": [
@@ -192,7 +192,7 @@
     "j-c": 12498782,
     "wonder": 1614244,
     "kotone-shiomi": 49706842,
-    "puppet-wavecatcher": 1047496788
+    "puppet-wavecatcher": 942671867
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
@@ -237,5 +237,5 @@
     "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
     "all_out_attack is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 21604578711
+  "finalScore": 20335569578
 }

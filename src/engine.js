@@ -115,6 +115,12 @@ export class BattleEngine {
         ? config.weaponProcGranularity : null,
       jcMaskPair: Array.isArray(config.jcMaskPair) ? config.jcMaskPair : null,
       jcOpeningAutoTargetId: config.jcOpeningAutoTargetId || null,
+      // DOD: the boss takes its last Weakened turn partway through the round,
+      // at its place in the turn order. Naming the ally whose turn comes just
+      // before it ends the break there (user's Slaughter Drive run, 2026-10-12:
+      // Showstopper pressed after Wonder, and the break ended after Wonder's
+      // B4 turn). Unset keeps the boss at the end of the round.
+      breakWindowEndsAfterActorId: config.breakWindowEndsAfterActorId || null,
       // When omitted, the live bonus follows an A6 J&C in the selected party.
       // Callers that model the account-wide A6 effect while J&C is off-party
       // can provide an explicit boolean.
@@ -4728,6 +4734,13 @@ export class BattleEngine {
   }
 
   advanceActor() {
+    const lastBreakActor = this.config.breakWindowEndsAfterActorId;
+    if (lastBreakActor && this.actor?.id === lastBreakActor && this.state.boss.modeId === 'devourer'
+      && this.state.boss.weakenedActive && !this.isVirtualConcertActive() && Number(this.state.boss.weakenedTurnsLeft) === 1) {
+      this.state.boss.weakenedTurnsLeft = 0;
+      this.emit('break', `${this.state.boss.name} took its last Weakened turn after ${this.actor.codename}; the break window closed.`, { tone: 'phase' });
+      return this.finish('break_window_complete');
+    }
     if (this.usesEnemyTimeline() && !this.isVirtualConcertActive()) return this.advanceActorWithEnemyTimeline();
     if (this.actor) this.actor.surfReentryLocked = false;
     this.state.actorIndex += 1;

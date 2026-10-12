@@ -210,3 +210,21 @@ test('Surt MLD keeps the Guardian/Medic rule and starts with the Jack-o\'-Lanter
   assert.equal(engine.usesGuardianMedicComposition(), true);
   assert.ok(engine.state.boss.summons.every(enemy => enemy.species === 'jack_o_lantern'));
 });
+
+test('a DOD break can close after a named ally in the final Weakened round', () => {
+  const make = breakWindowEndsAfterActorId => {
+    const engine = new BattleEngine({ seed: 3, bossId: 'surt', modeId: 'devourer', teamIds: ['wonder', 'joker'], breakWindowEndsAfterActorId,
+      loadouts: { wonder: { baseStats: { maxHp: 1_000_000 } }, joker: { baseStats: { maxHp: 1_000_000 } } } });
+    Object.assign(engine.state.boss, { weakenedActive: true, weakenedTurnsLeft: 1, lifeSustainment: false });
+    assert.equal(engine.actor.id, 'wonder');
+    engine.step({ type: 'guard', skillId: 'guard', targetId: 'wonder' });
+    return engine;
+  };
+  const ended = make('wonder');
+  assert.equal(ended.state.phase, 'results');
+  assert.equal(ended.state.result.outcome, 'break_window_complete');
+  assert.equal(ended.state.scoreBreakdown.bossAttackPoints, 250_000);
+  const unset = make(null);
+  assert.equal(unset.state.phase, 'battle');
+  assert.equal(unset.actor.id, 'joker');
+});
