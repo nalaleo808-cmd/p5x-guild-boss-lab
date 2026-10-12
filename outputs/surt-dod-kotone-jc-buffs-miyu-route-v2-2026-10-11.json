@@ -37,8 +37,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T2 end",
@@ -47,8 +47,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T3 end",
@@ -57,8 +57,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T4 end",
@@ -67,8 +67,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T5 end",
@@ -77,8 +77,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T6 end",
@@ -87,8 +87,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T7 end",
@@ -97,8 +97,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T8 end",
@@ -107,8 +107,8 @@
       "weakened": false,
       "lifeSustainment": true,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "T9 end (lock off)",
@@ -117,8 +117,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "surt,baphomet_1,baphomet_2",
-      "score": 2072756,
-      "totalDamage": 518189
+      "score": 1780028,
+      "totalDamage": 445007
     },
     {
       "label": "B1 end",
@@ -127,8 +127,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 4733476036,
-      "totalDamage": 394801798
+      "score": 4733183308,
+      "totalDamage": 394728616
     },
     {
       "label": "B2 end",
@@ -137,8 +137,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 17588595266,
-      "totalDamage": 1466061734
+      "score": 17588302538,
+      "totalDamage": 1465988552
     },
     {
       "label": "B3 end",
@@ -147,8 +147,8 @@
       "weakened": true,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 19699888435,
-      "totalDamage": 1642002831
+      "score": 19699595707,
+      "totalDamage": 1641929649
     },
     {
       "label": "B4 end",
@@ -157,8 +157,8 @@
       "weakened": false,
       "lifeSustainment": false,
       "enemies": "surt,jack_o_lantern,jack_o_lantern_2,jack_o_lantern_3,jack_o_lantern_4",
-      "score": 21509923886,
-      "totalDamage": 1792755785
+      "score": 21509631158,
+      "totalDamage": 1792682603
     }
   ],
   "forcedResources": [
@@ -199,13 +199,13 @@
     "j-c": 11306883,
     "wonder": 1418094,
     "kotone-shiomi": 41698555,
-    "puppet-wavecatcher": 1050746660
+    "puppet-wavecatcher": 1050673478
   },
   "limitations": [
     "Highlight owner-action clocks use an explicit same-owner-turn grace rule; live same-turn grace remains unverified.",
     "J&C A6 grants Wonder +1 Skill Level and +1 Thief Tactics Level. Per-level coefficients are unavailable, so no numeric multiplier is applied.",
     "Surt Berserk damage and Ragnarok HP loss are shown only as set amounts. Their numeric values are unknown, so Berserk is tracked without a damage multiplier and Ragnarok HP loss is omitted.",
-    "Surt DOD follows the shared DOD rules (user, 2026-10-08). Not yet known, using stand-ins: pre-break HP (Slaughter Drive DOD values); Baphomet HP, Defense and affinities. These only change Base Damage Points.",
+    "Surt DOD follows the shared DOD rules (user, 2026-10-08). Not yet known: how the 445,010 pre-break HP splits between Surt and the Baphomets; Baphomet Defense and affinities. Neither changes the score.",
     "Sahimochi-no-kami passive Swift Returner III: Battle-start, turn-timed, and duration clauses are reference-only.",
     "Sahimochi-no-kami passive Swift Returner III: Conditional and triggered clauses are reference-only.",
     "Sahimochi-no-kami passive Swift Returner III: Stack generation and consumption clauses are reference-only.",
@@ -244,5 +244,5 @@
     "J&C Two Masks as One is not resolved: missing Rebel Surveillance Effects Share stat effect. No effect is invented.",
     "all_out_attack is not resolved: missing source, trigger, action timing, supported action-count rule, supported damage owner, Highlight gain rule, owner-turn limit, damage coefficient, target rule, damage element and scaling stat, SP cost, critical rule, Down consumption rule. No effect is invented."
   ],
-  "finalScore": 21509923886
+  "finalScore": 21509631158
 }

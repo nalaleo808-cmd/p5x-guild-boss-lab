@@ -40,9 +40,9 @@ const sharkSource = persona('Sahimochi-no-kami');
 const nian = {
   id: nianSource.id, name: nianSource.name, element: nianSource.element, arcana: nianSource.position,
   passive: structuredClone(nianSource.passive || []), maxRankPassive: structuredClone(nianSource.maxRankPassive || null),
-  skills: [combatSkill(transferable('Sonic Interference'), 0, {
-    cost: 22, debuff: { id: 'sonic_interference', name: 'SONIC INTERFERENCE', value: 0.30, duration: 3 }
-  })]
+  skills: [combatSkill(transferable('Sonic Interference'), 0, { cost: 22, debuff: undefined, debuffs: [
+    { id: 'sonic_def_down', name: 'SONIC DEF DOWN', stat: 'defenseDown', value: 0.352, duration: 3 },
+    { id: 'sonic_damage_taken', name: 'SONIC DAMAGE TAKEN', damageTaken: true, value: 0.11, duration: 3 }] })]
 };
 const shark = {
   id: sharkSource.id, name: sharkSource.name, element: sharkSource.element, arcana: sharkSource.position,

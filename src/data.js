@@ -340,17 +340,20 @@ export const bosses = [
     // 250,000 Boss Attack Points, x4). Surt keeps his MLD stats and Special
     // Effects except the Guardian/Medic rule, and Downed foes take +80%. Two
     // Baphomets stand beside him before the break; the four Jack-o'-Lanterns
-    // spawn when it opens. Pre-break HP and Baphomet stats are not known:
-    // Slaughter Drive's DOD HP values stand in. They only set Base Damage
-    // Points (Slaughter Drive's were 827,135 of an 11.1b score).
+    // spawn when it opens. A Nightmare result screen (stylishnineperf,
+    // 2026-10-09: Base 445,010 + Weakened 3,959,601,152 + Boss 250,000, x4 =
+    // 15,841,184,648) fixes the linked pre-break HP at 445,010 in total. How
+    // it splits between Surt and the Baphomets, and Baphomet Defense and
+    // affinities, are not known; the split keeps Slaughter Drive's proportions.
     devourerProfile: {
       source: 'user_dod_rules_2026-10-08',
       scoreModel: 'recorded_nightmare', difficultyBonus: 4, bossAttackPoints: 250000, basePointScale: 1, weakenedTurns: 2,
-      maxHp: 209244, downedDamageTaken: 0.8, guardianMedicComposition: false,
-      provisional: ['pre-break HP (Slaughter Drive DOD values)', 'Baphomet HP, Defense and affinities'],
+      maxHp: 179688, downedDamageTaken: 0.8, guardianMedicComposition: false,
+      preBreakHpTotal: 445010, preBreakHpEvidence: 'nightmare_result_screen_base_445010_2026-10-09',
+      provisional: ['how the 445,010 pre-break HP splits between Surt and the Baphomets', 'Baphomet Defense and affinities'],
       preBreakSummons: ['left', 'right'].map((position, index) => ({
         id: `baphomet_${index + 1}`, species: 'baphomet', name: index ? 'Baphomet II' : 'Baphomet I',
-        artwork: '/assets/bosses/surt.png', maxHp: 154474, finiteHp: true, soulLinked: true,
+        artwork: '/assets/bosses/surt.png', maxHp: 132661, finiteHp: true, soulLinked: true,
         defense: 2121.464, baseDefense: 821, defenseCoefficient: 2.584,
         weakness: 'none', resistance: 'none', resistances: [], downMax: 4, downedDamageTaken: 0.8, scoreAttack: true, position
       })),
